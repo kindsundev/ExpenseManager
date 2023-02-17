@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "514328716614",
+    "project_id": "expense-manager-9de90",
+    "storage_bucket": "expense-manager-9de90.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:514328716614:android:ceca454159c0ec3821b147",
+        "android_client_info": {
+          "package_name": "com.kindsundev.expense.manager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "514328716614-1sulpc3f6n9mdq3ndd0bdrlhejc50nn3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiXQ4XBbF_1_jvFQGYZWM16gIAX0b5LLA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "514328716614-1sulpc3f6n9mdq3ndd0bdrlhejc50nn3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
