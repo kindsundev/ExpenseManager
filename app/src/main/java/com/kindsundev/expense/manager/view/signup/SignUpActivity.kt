@@ -5,10 +5,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import com.kindsundev.expense.manager.databinding.ActivitySignUpBinding
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 class SignUpActivity : AppCompatActivity(), SignUpContract.View {
     private lateinit var binding: ActivitySignUpBinding
@@ -55,9 +51,6 @@ class SignUpActivity : AppCompatActivity(), SignUpContract.View {
     override fun onSuccess() {
         binding.progressBar.visibility = View.GONE
         Toast.makeText(this, "Success, please login!", Toast.LENGTH_LONG).show()
-        runBlocking {
-            delay(500)
-        }
         finish()
     }
 
