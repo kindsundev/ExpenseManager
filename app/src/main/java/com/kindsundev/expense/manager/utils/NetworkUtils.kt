@@ -21,6 +21,7 @@ fun isNetWorkAvailable(context: Context): Boolean {
             else -> false
         }
     } else {
+        @Suppress("DEPRECATION")
         connectivityManager.run {
             connectivityManager.activeNetworkInfo?.run {
                 result = when (type) {
