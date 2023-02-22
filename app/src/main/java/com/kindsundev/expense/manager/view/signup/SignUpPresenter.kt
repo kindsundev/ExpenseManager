@@ -1,4 +1,4 @@
-package com.kindsundev.expense.manager.view.signin
+package com.kindsundev.expense.manager.view.signup
 
 import com.kindsundev.expense.manager.common.Logger
 import com.kindsundev.expense.manager.common.Status
@@ -8,26 +8,25 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class SignInPresenter(
-    private var viewInterface: SignInContract.ViewInterface
-) : SignInContract.PresenterInterface {
+class SignUpPresenter(
+    private val viewInterface: SignUpContract.ViewInterface
+) : SignUpContract.PresenterInterface {
 
     private val firebaseAuthentication by lazy { FirebaseAuthentication() }
     private val user by lazy { firebaseAuthentication.currentUser() }
     private val disposables = CompositeDisposable()
 
-    override fun handlerSignIn(email: String, password: String) {
+    override fun handlerSignUp(email: String, password: String) {
         checkDataFromInput(email, password)
         viewInterface.onLoading()
-        val disposable = firebaseAuthentication.login(email, password)
+        val disposable = firebaseAuthentication.signup(email, password)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 viewInterface.onSuccess()
-                Logger.info("User name: ${user!!.displayName}, email verified: ${user!!.isEmailVerified}")
             }, {
-                viewInterface.onError("Login failed")
-                Logger.error("Sign In: ${it.message!!}")
+                viewInterface.onError("Register failed")
+                Logger.error("Sign Up: ${it.message!!}")
             })
         disposables.add(disposable)
     }

@@ -15,6 +15,13 @@
         android:theme="@style/Theme.ExpenseManager"
         tools:targetApi="32">
         <activity
+            android:name=".view.signup.SignUpActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".view.signin.SignInActivity"
             android:exported="true">
             <intent-filter>

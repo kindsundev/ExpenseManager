@@ -52,7 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="140dp"
-        android:text="@string/login_welcome"
+        android:text="@string/login_welcome_sign_in"
         android:textColor="@color/loginText"
         android:textSize="40sp"
         android:textStyle="bold"
@@ -163,7 +163,7 @@
                 android:layout_marginEnd="32dp"
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/bg_blue_corner"
-                android:text="@string/login"
+                android:text="@string/sign_in"
                 android:textColor="#ffffff"
                 android:textSize="20sp" />
 
@@ -173,7 +173,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="32dp"
                 android:clickable="true"
-                android:text="@string/signup"
+                android:text="@string/to_sign_up"
                 android:textAlignment="center"
                 android:textColor="@color/loginText" />
         </LinearLayout>

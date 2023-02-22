@@ -2,12 +2,16 @@
     <string name="app_name">Expense Manager</string>
     <string name="image_login_top">Image Login Top</string>
     <string name="image_login_center_end">Image Login Center End</string>
-    <string name="login_welcome">Hi \nPlease login</string>
+    <string name="login_welcome_sign_in">Hi \nPlease login</string>
+    <string name="login_welcome_sign_up">Hi \nPlease Register</string>
     <string name="email">Email</string>
     <string name="enter_here">Enter here</string>
     <string name="password">Password</string>
     <string name="forget_password">Forget Password</string>
     <string name="login">Login</string>
-    <string name="signup">Don\'t Have Account? Signup</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="sign_in">Sign In</string>
+    <string name="to_sign_up">Don\'t Have Account? Signup</string>
+    <string name="to_sign_in">Do you already have an account? Signin</string>
 
 </resources>
