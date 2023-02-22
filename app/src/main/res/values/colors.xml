@@ -16,4 +16,7 @@
     <color name="secondaryDarkColor">#c88719</color>
     <color name="primaryTextColor">#fafafa</color>
     <color name="secondaryTextColor">#fafafa</color>
+
+    <color name="loginBackground">#DCEBFE</color>
+    <color name="loginText">#434D94</color>
 </resources>

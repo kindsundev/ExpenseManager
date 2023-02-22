@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Expense Manager</string>
+    <string name="image_login_top">Image Login Top</string>
+    <string name="image_login_center_end">Image Login Center End</string>
+    <string name="login_welcome">Hi \nPlease login</string>
+    <string name="email">Email</string>
+    <string name="enter_here">Enter here</string>
+    <string name="password">Password</string>
+    <string name="forget_password">Forget Password</string>
+    <string name="login">Login</string>
+    <string name="signup">Don\'t Have Account? Signup</string>
+
 </resources>
