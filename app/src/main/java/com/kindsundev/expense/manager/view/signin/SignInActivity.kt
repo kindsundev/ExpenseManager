@@ -9,7 +9,7 @@ import android.widget.Toast
 import com.kindsundev.expense.manager.databinding.ActivitySignInBinding
 import com.kindsundev.expense.manager.view.signup.SignUpActivity
 
-class SignInActivity : AppCompatActivity(), SignInContract.ViewInterface {
+class SignInActivity : AppCompatActivity(), SignInContract.View {
     private lateinit var binding: ActivitySignInBinding
     private lateinit var signInPresenter: SignInPresenter
 

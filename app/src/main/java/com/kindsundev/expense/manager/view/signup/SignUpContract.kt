@@ -1,12 +1,12 @@
 package com.kindsundev.expense.manager.view.signup
 
-class SignUpContract {
+interface SignUpContract {
 
-    interface PresenterInterface {
+    interface Presenter {
         fun handlerSignUp(email: String, password: String)
     }
 
-    interface ViewInterface {
+    interface View {
         fun onLoading()
 
         fun onError(message: String)

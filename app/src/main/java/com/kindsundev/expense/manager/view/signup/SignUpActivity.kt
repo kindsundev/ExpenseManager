@@ -10,7 +10,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
-class SignUpActivity : AppCompatActivity(), SignUpContract.ViewInterface {
+class SignUpActivity : AppCompatActivity(), SignUpContract.View {
     private lateinit var binding: ActivitySignUpBinding
     private lateinit var signUpPresenter : SignUpPresenter
 

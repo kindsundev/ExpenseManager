@@ -9,8 +9,8 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
 class SignUpPresenter(
-    private val viewInterface: SignUpContract.ViewInterface
-) : SignUpContract.PresenterInterface {
+    private val view: SignUpContract.View
+) : SignUpContract.Presenter {
 
     private val firebaseAuthentication by lazy { FirebaseAuthentication() }
     private val user by lazy { firebaseAuthentication.currentUser() }
@@ -18,14 +18,14 @@ class SignUpPresenter(
 
     override fun handlerSignUp(email: String, password: String) {
         checkDataFromInput(email, password)
-        viewInterface.onLoading()
+        view.onLoading()
         val disposable = firebaseAuthentication.signup(email, password)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                viewInterface.onSuccess()
+                view.onSuccess()
             }, {
-                viewInterface.onError("Register failed")
+                view.onError("Register failed")
                 Logger.error("Sign Up: ${it.message!!}")
             })
         disposables.add(disposable)
@@ -34,19 +34,19 @@ class SignUpPresenter(
     private fun checkDataFromInput(email: String, password: String) {
         when(emailAndPasswordIsValid(email, password)) {
             Status.WRONG_EMAIL_EMPTY -> {
-                viewInterface.onError("Email mus not be null")
+                view.onError("Email mus not be null")
             }
             Status.WRONG_EMAIL_PATTERN -> {
-                viewInterface.onError("Email invalidate")
+                view.onError("Email invalidate")
             }
             Status.WRONG_PASSWORD_EMPTY -> {
-                viewInterface.onError("Password must not be null")
+                view.onError("Password must not be null")
             }
             Status.WRONG_PASSWORD_LENGTH -> {
-                viewInterface.onError("Password must be greater than or equal to 6")
+                view.onError("Password must be greater than or equal to 6")
             }
             Status.WRONG_EMAIL_PASSWORD_EMPTY -> {
-                viewInterface.onError("Please input full email and password")
+                view.onError("Please input full email and password")
             }
             else -> { }
         }
