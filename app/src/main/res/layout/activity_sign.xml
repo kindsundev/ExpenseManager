@@ -119,29 +119,37 @@
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_facebook_login"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:clickable="true"
                     android:src="@drawable/facebook" />
 
                 <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_gmail_login"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:clickable="true"
                     android:src="@drawable/google" />
 
                 <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_twitter_login"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:clickable="true"
                     android:src="@drawable/twitter" />
             </LinearLayout>
 
             <TextView
+                android:id="@+id/tv_forget_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
+                android:clickable="true"
                 android:text="@string/forget_password"
                 android:textAlignment="center"
                 android:textColor="@color/loginText" />
@@ -160,9 +168,11 @@
                 android:textSize="20sp" />
 
             <TextView
+                android:id="@+id/tv_signup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="32dp"
+                android:clickable="true"
                 android:text="@string/signup"
                 android:textAlignment="center"
                 android:textColor="@color/loginText" />

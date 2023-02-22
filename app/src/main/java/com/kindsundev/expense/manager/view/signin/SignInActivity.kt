@@ -23,13 +23,25 @@ class SignInActivity : AppCompatActivity(), SignInContract.ViewInterface {
 
     private fun registerSignInListener() {
         binding.btnLogin.setOnClickListener { onClickLogin() }
-        // more
+        binding.ivFacebookLogin.setOnClickListener { onFeatureIsDevelop() }
+        binding.ivGmailLogin.setOnClickListener { onFeatureIsDevelop() }
+        binding.ivTwitterLogin.setOnClickListener { onFeatureIsDevelop() }
+        binding.tvForgetPassword.setOnClickListener { onFeatureIsDevelop() }
+        binding.tvSignup.setOnClickListener { onClickSignup() }
     }
 
     private fun onClickLogin() {
         val email = binding.edtEmail.text.toString().trim()
         val password = binding.edtPassword.text.toString().trim()
         signInPresenter.handlerSignIn(email, password)
+    }
+
+    private fun onFeatureIsDevelop() {
+        Toast.makeText(this, "This feature is in development", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun onClickSignup() {
+
     }
 
     override fun onLoading() {
