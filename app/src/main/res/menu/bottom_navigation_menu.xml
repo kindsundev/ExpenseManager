@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/walletFragment"
+        android:icon="@drawable/ic_account_balance"
+        android:title="@string/wallet" />
+
+    <item
+        android:id="@+id/budgetFragment"
+        android:icon="@drawable/ic_budget"
+        android:title="@string/budget" />
+
+    <item
+        android:id="@+id/noteFragment"
+        android:icon="@drawable/ic_add"
+        android:title="@string/add" />
+
+    <item
+        android:id="@+id/reportFragment"
+        android:icon="@drawable/ic_chart"
+        android:title="@string/report" />
+
+    <item
+        android:id="@+id/menuFragment"
+        android:icon="@drawable/ic_menu"
+        android:title="@string/other" />
+</menu>

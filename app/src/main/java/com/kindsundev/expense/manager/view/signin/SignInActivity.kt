@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Toast
 
 import com.kindsundev.expense.manager.databinding.ActivitySignInBinding
+import com.kindsundev.expense.manager.utils.startHomeActivity
 import com.kindsundev.expense.manager.view.signup.SignUpActivity
 
 class SignInActivity : AppCompatActivity(), SignInContract.View {
@@ -55,8 +56,8 @@ class SignInActivity : AppCompatActivity(), SignInContract.View {
 
     override fun onSuccess() {
         binding.progressBar.visibility = View.GONE
-        Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show()
-        // next to home activity
+        Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
+        startHomeActivity()
     }
 
     override fun onStop() {

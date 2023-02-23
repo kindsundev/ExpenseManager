@@ -13,5 +13,11 @@
     <string name="sign_in">Sign In</string>
     <string name="to_sign_up">Don\'t Have Account? Signup</string>
     <string name="to_sign_in">Do you already have an account? Signin</string>
+    <string name="wallet">Wallet</string>
+    <string name="budget">Budget</string>
+    <string name="add_note">Add Note</string>
+    <string name="other">Other</string>
+    <string name="report">Report</string>
+    <string name="add">Add</string>
 
 </resources>
