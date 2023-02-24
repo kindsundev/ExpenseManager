@@ -2,8 +2,8 @@ package com.kindsundev.expense.manager.view.signup
 
 import com.kindsundev.expense.manager.common.Logger
 import com.kindsundev.expense.manager.common.Status
-import com.kindsundev.expense.manager.data.firebase.FirebaseAuthentication
-import com.kindsundev.expense.manager.utils.emailAndPasswordIsValid
+import com.kindsundev.expense.manager.data.firebase.AuthFirebase
+import com.kindsundev.expense.manager.utils.checkEmailAndPassword
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -12,27 +12,18 @@ class SignUpPresenter(
     private val view: SignUpContract.View
 ) : SignUpContract.Presenter {
 
-    private val firebaseAuthentication by lazy { FirebaseAuthentication() }
-    private val user by lazy { firebaseAuthentication.currentUser() }
-    private val disposables = CompositeDisposable()
+    private val compositeDisposable = CompositeDisposable()
+    private val authFirebase by lazy { AuthFirebase() }
 
     override fun handlerSignUp(email: String, password: String) {
         checkDataFromInput(email, password)
         view.onLoading()
-        val disposable = firebaseAuthentication.signup(email, password)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                view.onSuccess()
-            }, {
-                view.onError("Register failed")
-                Logger.error("Sign Up: ${it.message!!}")
-            })
-        disposables.add(disposable)
+        val disposableSignUp = initDisposableSignUp(email, password)
+        compositeDisposable.add(disposableSignUp)
     }
 
     private fun checkDataFromInput(email: String, password: String) {
-        when(emailAndPasswordIsValid(email, password)) {
+        when (checkEmailAndPassword(email, password)) {
             Status.WRONG_EMAIL_EMPTY -> {
                 view.onError("Email mus not be null")
             }
@@ -48,11 +39,22 @@ class SignUpPresenter(
             Status.WRONG_EMAIL_PASSWORD_EMPTY -> {
                 view.onError("Please input full email and password")
             }
-            else -> { }
+            else -> {}
         }
     }
 
+    private fun initDisposableSignUp(email: String, password: String) =
+        authFirebase.signup(email, password)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                view.onSuccess()
+            }, {
+                view.onError("Register failed")
+                Logger.error("Sign Up: ${it.message!!}")
+            })
+
     fun onCleared() {
-        disposables.dispose()
+        compositeDisposable.dispose()
     }
 }

@@ -19,10 +19,10 @@ class SignInActivity : AppCompatActivity(), SignInContract.View {
         binding = ActivitySignInBinding.inflate(layoutInflater)
         setContentView(binding.root)
         signInPresenter = SignInPresenter(this)
-        registerSignInListener()
+        initListener()
     }
 
-    private fun registerSignInListener() {
+    private fun initListener() {
         binding.btnLogin.setOnClickListener { onClickSignIn() }
         binding.ivFacebookLogin.setOnClickListener { onFeatureIsDevelop() }
         binding.ivGmailLogin.setOnClickListener { onFeatureIsDevelop() }

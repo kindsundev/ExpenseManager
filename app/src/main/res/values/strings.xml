@@ -29,5 +29,6 @@
     <string name="security_policy">Security Policy</string>
     <string name="contact">Contact</string>
     <string name="feedback">Feed Back</string>
+    <string name="name">Name</string>
 
 </resources>

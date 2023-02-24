@@ -3,7 +3,7 @@ package com.kindsundev.expense.manager.utils
 import android.util.Patterns
 import com.kindsundev.expense.manager.common.Status
 
-fun emailAndPasswordIsValid(email: String, password: String): Status {
+fun checkEmailAndPassword(email: String, password: String): Status {
     return if (email.isEmpty()) {
         Status.WRONG_EMAIL_EMPTY
     } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {

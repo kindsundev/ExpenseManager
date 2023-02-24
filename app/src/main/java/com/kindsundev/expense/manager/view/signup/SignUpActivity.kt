@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import com.kindsundev.expense.manager.databinding.ActivitySignUpBinding
+import com.kindsundev.expense.manager.utils.startHomeActivity
 
 class SignUpActivity : AppCompatActivity(), SignUpContract.View {
     private lateinit var binding: ActivitySignUpBinding
@@ -15,10 +16,10 @@ class SignUpActivity : AppCompatActivity(), SignUpContract.View {
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
         signUpPresenter = SignUpPresenter(this)
-        registerSignUpListener()
+        initListener()
     }
 
-    private fun registerSignUpListener() {
+    private fun initListener() {
         binding.btnLogin.setOnClickListener { onClickSignUp() }
         binding.ivFacebookLogin.setOnClickListener { onFeatureIsDevelop() }
         binding.ivGmailLogin.setOnClickListener { onFeatureIsDevelop() }
@@ -50,8 +51,8 @@ class SignUpActivity : AppCompatActivity(), SignUpContract.View {
 
     override fun onSuccess() {
         binding.progressBar.visibility = View.GONE
-        Toast.makeText(this, "Success, please login!", Toast.LENGTH_LONG).show()
-        finish()
+        Toast.makeText(this, "Register successful", Toast.LENGTH_SHORT).show()
+        startHomeActivity()
     }
 
     override fun onStop() {

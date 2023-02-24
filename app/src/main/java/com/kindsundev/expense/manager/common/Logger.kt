@@ -6,10 +6,10 @@ object Logger {
     private const val TAG = "debug"
 
     fun error(message: String) {
-        Log.e(TAG, "Error: $message")
+        Log.e(TAG, message)
     }
 
     fun info(message: String) {
-        Log.i(TAG, "Info: $message")
+        Log.i(TAG, message)
     }
 }
