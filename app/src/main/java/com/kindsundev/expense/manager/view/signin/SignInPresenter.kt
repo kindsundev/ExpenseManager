@@ -17,9 +17,8 @@ class SignInPresenter(
 
     override fun handlerSignIn(email: String, password: String) {
         checkDataFromInput(email, password)
-        view.onLoading()
-        val disposable = initDisposableSignIn(email, password)
-        compositeDisposable.add(disposable)
+        view.onLoad()
+        sendRequestSignIn(email, password)
     }
 
     private fun checkDataFromInput(email: String, password: String) {
@@ -43,8 +42,8 @@ class SignInPresenter(
         }
     }
 
-    private fun initDisposableSignIn(email: String, password: String) =
-        authFirebase.login(email, password)
+    private fun sendRequestSignIn(email: String, password: String) {
+        val disposable = authFirebase.login(email, password)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
@@ -53,8 +52,10 @@ class SignInPresenter(
                 view.onError("Login failed")
                 Logger.error("Sign In: ${it.message!!}")
             })
+        compositeDisposable.add(disposable)
+    }
 
-    fun onCleared() {
+    fun cleanUp() {
         compositeDisposable.dispose()
     }
 }

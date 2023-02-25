@@ -45,7 +45,7 @@ class SignInActivity : AppCompatActivity(), SignInContract.View {
         startActivity(Intent(this, SignUpActivity::class.java))
     }
 
-    override fun onLoading() {
+    override fun onLoad() {
         binding.progressBar.visibility = View.VISIBLE
     }
 
@@ -63,12 +63,12 @@ class SignInActivity : AppCompatActivity(), SignInContract.View {
     override fun onStop() {
         super.onStop()
         binding.progressBar.visibility = View.GONE
-        signInPresenter.onCleared()
+        signInPresenter.cleanUp()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         binding.progressBar.visibility = View.GONE
-        signInPresenter.onCleared()
+        signInPresenter.cleanUp()
     }
 }

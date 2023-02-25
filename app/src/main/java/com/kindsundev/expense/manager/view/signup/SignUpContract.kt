@@ -7,7 +7,7 @@ interface SignUpContract {
     }
 
     interface View {
-        fun onLoading()
+        fun onLoad()
 
         fun onError(message: String)
 

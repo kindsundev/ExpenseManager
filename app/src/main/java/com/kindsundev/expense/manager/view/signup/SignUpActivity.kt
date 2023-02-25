@@ -40,7 +40,7 @@ class SignUpActivity : AppCompatActivity(), SignUpContract.View {
 
     private fun onClickSignIn() { finish() }
 
-    override fun onLoading() {
+    override fun onLoad() {
         binding.progressBar.visibility = View.VISIBLE
     }
 
@@ -58,12 +58,12 @@ class SignUpActivity : AppCompatActivity(), SignUpContract.View {
     override fun onStop() {
         super.onStop()
         binding.progressBar.visibility = View.GONE
-        signUpPresenter.onCleared()
+        signUpPresenter.cleanUp()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         binding.progressBar.visibility = View.GONE
-        signUpPresenter.onCleared()
+        signUpPresenter.cleanUp()
     }
 }

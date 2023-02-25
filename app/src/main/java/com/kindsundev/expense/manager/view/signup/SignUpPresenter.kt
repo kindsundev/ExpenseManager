@@ -15,11 +15,10 @@ class SignUpPresenter(
     private val compositeDisposable = CompositeDisposable()
     private val authFirebase by lazy { AuthFirebase() }
 
-    override fun handlerSignUp(email: String, password: String) {
+    override fun handlerSignUp( email: String, password: String) {
         checkDataFromInput(email, password)
-        view.onLoading()
-        val disposableSignUp = initDisposableSignUp(email, password)
-        compositeDisposable.add(disposableSignUp)
+        view.onLoad()
+        sendRequestSignUp(email, password)
     }
 
     private fun checkDataFromInput(email: String, password: String) {
@@ -43,18 +42,20 @@ class SignUpPresenter(
         }
     }
 
-    private fun initDisposableSignUp(email: String, password: String) =
-        authFirebase.signup(email, password)
+    private fun sendRequestSignUp(email: String, password: String) {
+        val disposableSignUp = authFirebase.signUp(email, password)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 view.onSuccess()
             }, {
                 view.onError("Register failed")
-                Logger.error("Sign Up: ${it.message!!}")
+                Logger.error("Sign Up: ${it.message}")
             })
+        compositeDisposable.add(disposableSignUp)
+    }
 
-    fun onCleared() {
+    fun cleanUp() {
         compositeDisposable.dispose()
     }
 }
