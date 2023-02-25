@@ -2,10 +2,24 @@ package com.kindsundev.expense.manager.view.home
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.ktx.app
 import com.kindsundev.expense.manager.R
+import com.kindsundev.expense.manager.common.Logger
+import com.kindsundev.expense.manager.data.firebase.UserFirebase
 import com.kindsundev.expense.manager.databinding.ActivityHomeBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import kotlin.system.exitProcess
 
 class HomeActivity : AppCompatActivity() {
@@ -16,6 +30,9 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setupBottomNav()
+        val user = UserFirebase().user
+        Logger.warn(user?.displayName.toString())
+        Logger.warn(user?.email.toString())
     }
 
     private fun setupBottomNav() {
