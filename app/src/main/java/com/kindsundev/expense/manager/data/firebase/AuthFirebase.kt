@@ -1,6 +1,7 @@
 package com.kindsundev.expense.manager.data.firebase
 
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.UserProfileChangeRequest
 import io.reactivex.Completable
 
 class AuthFirebase {
@@ -19,19 +20,17 @@ class AuthFirebase {
             }
     }
 
-    fun signup(email: String, password: String) = Completable.create { emitter ->
+    fun signUp(email: String, password: String) = Completable.create { emitter ->
         firebaseAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener {
                 if (!emitter.isDisposed) {
-                    if (it.isSuccessful)
+                    if (it.isSuccessful) {
                         emitter.onComplete()
-                    else
+                    } else
                         emitter.onError(it.exception!!)
                 }
             }
     }
 
     fun logout() = firebaseAuth.signOut()
-
-    fun currentUser() = firebaseAuth.currentUser
 }
