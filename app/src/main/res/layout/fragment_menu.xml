@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -53,7 +54,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
-                    android:src="@drawable/ic_logout" />
+                    android:src="@drawable/ic_logout"
+                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/img_user_avatar"
@@ -105,8 +107,7 @@
                 <RelativeLayout
                     android:id="@+id/rl_expenditure_plan"
                     android:layout_width="match_parent"
-                    android:layout_marginTop="5dp"
-                    android:layout_height="50dp">
+                    android:layout_height="55dp">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ic_expenditure_plan"
@@ -160,8 +161,7 @@
                 <RelativeLayout
                     android:id="@+id/rl_save_money"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="5dp">
+                    android:layout_height="55dp">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ic_save_money"
@@ -214,8 +214,7 @@
                 <RelativeLayout
                     android:id="@+id/rl_debt_book"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="5dp">
+                    android:layout_height="55dp">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ic_debt_book"
@@ -268,9 +267,7 @@
                 <RelativeLayout
                     android:id="@+id/rl_wallet"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp">
+                    android:layout_height="55dp">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ic_wallet"
@@ -318,10 +315,9 @@
             <RelativeLayout
                 android:id="@+id/rl_settings"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="55dp"
                 android:layout_marginHorizontal="6dp"
                 android:layout_marginVertical="8dp"
-                android:paddingVertical="5dp"
                 android:background="@color/white"
                 android:paddingHorizontal="16dp">
 
@@ -371,8 +367,7 @@
                 <RelativeLayout
                     android:id="@+id/rl_feedback"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="5dp">
+                    android:layout_height="55dp">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ic_feedback"
@@ -418,8 +413,7 @@
                 <RelativeLayout
                     android:id="@+id/rl_policy"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="5dp">
+                    android:layout_height="55dp">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ic_policy"
@@ -465,9 +459,7 @@
                 <RelativeLayout
                     android:id="@+id/rl_contact"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp">
+                    android:layout_height="55dp">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ic_contact"
