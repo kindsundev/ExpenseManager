@@ -11,16 +11,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kindsundev.expense.manager.R
-import com.kindsundev.expense.manager.databinding.DialogWarningBinding
+import com.kindsundev.expense.manager.databinding.DialogLogoutBinding
+import com.kindsundev.expense.manager.utils.startSignInActivity
 
-class WarningDialog(
+class LogoutDialog(
     private val message: String
 ) : DialogFragment() {
-    private var _binding: DialogWarningBinding? = null
+    private var _binding: DialogLogoutBinding? = null
     private val binding get() = _binding
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        _binding = DialogWarningBinding.inflate(layoutInflater)
+        _binding = DialogLogoutBinding.inflate(layoutInflater)
 
         val dialog = MaterialAlertDialogBuilder(
             requireActivity(), R.style.Theme_ExpenseManager).apply {
@@ -46,14 +47,12 @@ class WarningDialog(
         return binding!!.root
     }
 
-    /*
-    * WHY I JUS STOP EVERY DIALOG
-    * This is a generic class, so will disable the currently displayed dialog.
-    * Some of the behind-the-scenes logic will depend on the class calling it and handling it
-    * */
     private fun initListener() {
         binding!!.btnNo.setOnClickListener { dialog!!.dismiss() }
-        binding!!.btnYes.setOnClickListener { dialog!!.dismiss() }
+        binding!!.btnYes.setOnClickListener {
+            dialog!!.dismiss()
+            activity?.startSignInActivity()
+        }
     }
 
     override fun onDestroy() {

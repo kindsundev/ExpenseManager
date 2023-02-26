@@ -11,7 +11,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.databinding.DialogLoadingBinding
 
-class LoadingFragment : DialogFragment() {
+class LoadingDialog : DialogFragment() {
     private var _binding: DialogLoadingBinding? = null
     private val binding get() = _binding
 
