@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.navigation.NavDirections
+import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseUser
 import com.kindsundev.expense.manager.R
@@ -19,10 +21,15 @@ import com.kindsundev.expense.manager.utils.startLoadingDialog
 class MenuFragment : Fragment(), MenuContract.View {
     private var _binding: FragmentMenuBinding? = null
     private val binding get() = _binding
-    private var menuFragmentManager: FragmentManager? = null
-    private lateinit var auth: AuthFirebase
+
     private lateinit var menuPresenter: MenuPresenter
+    private lateinit var auth: AuthFirebase
     private var user: FirebaseUser? = null
+    private var menuFragmentManager: FragmentManager? = null
+
+    private val action: NavDirections by lazy {
+        MenuFragmentDirections.actionMenuFragmentToProfileFragment()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +65,8 @@ class MenuFragment : Fragment(), MenuContract.View {
 
     private fun initListener() {
         binding!!.btnLogout.setOnClickListener { onCLickLogout() }
+        binding!!.tvUserName.setOnClickListener { onStartUserInfo() }
+        binding!!.imgUserAvatar.setOnClickListener { onStartUserInfo() }
     }
 
     private fun onCLickLogout() {
@@ -66,6 +75,14 @@ class MenuFragment : Fragment(), MenuContract.View {
             menuFragmentManager?.let {
                 LogoutDialog(message).show(it, Constant.LOGOUT_DIALOG_NAME)
             }
+        }
+    }
+
+    private fun onStartUserInfo() {
+        if (binding!!.imgUserAvatar.isClickable) {
+            binding!!.imgUserAvatar.findNavController().navigate(action)
+        } else {
+            binding!!.tvUserName.findNavController().navigate(action)
         }
     }
 
