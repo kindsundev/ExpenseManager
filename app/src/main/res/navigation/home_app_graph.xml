@@ -6,22 +6,22 @@
 
     <fragment
         android:id="@+id/walletFragment"
-        android:name="com.kindsundev.expense.manager.view.home.wallet.WalletFragment"
+        android:name="com.kindsundev.expense.manager.ui.home.wallet.WalletFragment"
         android:label="WalletFragment" />
     <fragment
         android:id="@+id/budgetFragment"
-        android:name="com.kindsundev.expense.manager.view.home.budget.BudgetFragment"
+        android:name="com.kindsundev.expense.manager.ui.home.budget.BudgetFragment"
         android:label="BudgetFragment" />
     <fragment
         android:id="@+id/noteFragment"
-        android:name="com.kindsundev.expense.manager.view.home.note.NoteFragment"
+        android:name="com.kindsundev.expense.manager.ui.home.note.NoteFragment"
         android:label="NoteFragment" />
     <fragment
         android:id="@+id/reportFragment"
-        android:name="com.kindsundev.expense.manager.view.home.report.ReportFragment"
+        android:name="com.kindsundev.expense.manager.ui.home.report.ReportFragment"
         android:label="ReportFragment" />
     <fragment
         android:id="@+id/menuFragment"
-        android:name="com.kindsundev.expense.manager.view.home.menu.MenuFragment"
+        android:name="com.kindsundev.expense.manager.ui.home.menu.MenuFragment"
         android:label="MenuFragment" />
 </navigation>
