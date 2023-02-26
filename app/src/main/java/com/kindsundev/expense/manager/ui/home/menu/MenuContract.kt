@@ -1,11 +1,12 @@
-package com.kindsundev.expense.manager.view.home.menu
+package com.kindsundev.expense.manager.ui.home.menu
 
-import com.kindsundev.expense.manager.base.BaseView
+import com.google.firebase.auth.FirebaseUser
+import com.kindsundev.expense.manager.ui.base.BaseView
 
 interface MenuContract {
 
     interface Presenter {
-        fun loadCurrentUserInfo()
+        fun getCurrentUser() : FirebaseUser?
     }
 
     interface View : BaseView {
