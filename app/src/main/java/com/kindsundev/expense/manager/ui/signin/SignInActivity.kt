@@ -1,44 +1,49 @@
-package com.kindsundev.expense.manager.view.signup
+package com.kindsundev.expense.manager.ui.signin
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import com.kindsundev.expense.manager.databinding.ActivitySignUpBinding
-import com.kindsundev.expense.manager.utils.startHomeActivity
 
-class SignUpActivity : AppCompatActivity(), SignUpContract.View {
-    private lateinit var binding: ActivitySignUpBinding
-    private lateinit var signUpPresenter : SignUpPresenter
+import com.kindsundev.expense.manager.databinding.ActivitySignInBinding
+import com.kindsundev.expense.manager.utils.startHomeActivity
+import com.kindsundev.expense.manager.ui.signup.SignUpActivity
+
+class SignInActivity : AppCompatActivity(), SignInContract.View {
+    private lateinit var binding: ActivitySignInBinding
+    private lateinit var signInPresenter: SignInPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySignUpBinding.inflate(layoutInflater)
+        binding = ActivitySignInBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        signUpPresenter = SignUpPresenter(this)
+        signInPresenter = SignInPresenter(this)
         initListener()
     }
 
     private fun initListener() {
-        binding.btnLogin.setOnClickListener { onClickSignUp() }
+        binding.btnLogin.setOnClickListener { onClickSignIn() }
         binding.ivFacebookLogin.setOnClickListener { onFeatureIsDevelop() }
         binding.ivGmailLogin.setOnClickListener { onFeatureIsDevelop() }
         binding.ivTwitterLogin.setOnClickListener { onFeatureIsDevelop() }
         binding.tvForgetPassword.setOnClickListener { onFeatureIsDevelop() }
-        binding.tvSignup.setOnClickListener { onClickSignIn() }
+        binding.tvSignup.setOnClickListener { onClickSignUp() }
     }
 
-    private fun onClickSignUp() {
+    private fun onClickSignIn() {
         val email = binding.edtEmail.text.toString().trim()
         val password = binding.edtPassword.text.toString().trim()
-        signUpPresenter.handlerSignUp(email, password)
+        signInPresenter.handlerSignIn(email, password)
     }
 
     private fun onFeatureIsDevelop() {
         Toast.makeText(this, "This feature is in development", Toast.LENGTH_SHORT).show()
     }
 
-    private fun onClickSignIn() { finish() }
+    private fun onClickSignUp() {
+        startActivity(Intent(this, SignUpActivity::class.java))
+    }
 
     override fun onLoad() {
         binding.progressBar.visibility = View.VISIBLE
@@ -51,19 +56,19 @@ class SignUpActivity : AppCompatActivity(), SignUpContract.View {
 
     override fun onSuccess() {
         binding.progressBar.visibility = View.GONE
-        Toast.makeText(this, "Register successful", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
         startHomeActivity()
     }
 
     override fun onStop() {
         super.onStop()
         binding.progressBar.visibility = View.GONE
-        signUpPresenter.cleanUp()
+        signInPresenter.cleanUp()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         binding.progressBar.visibility = View.GONE
-        signUpPresenter.cleanUp()
+        signInPresenter.cleanUp()
     }
 }

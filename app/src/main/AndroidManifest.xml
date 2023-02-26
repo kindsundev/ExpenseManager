@@ -15,14 +15,14 @@
         android:theme="@style/Theme.ExpenseManager"
         tools:targetApi="32">
         <activity
-            android:name=".view.home.HomeActivity"
+            android:name=".ui.home.HomeActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".view.splash.SplashingActivity"
+            android:name=".ui.splash.SplashingActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,14 +35,14 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".view.signup.SignUpActivity"
+            android:name=".ui.signup.SignUpActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".view.signin.SignInActivity"
+            android:name=".ui.signin.SignInActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

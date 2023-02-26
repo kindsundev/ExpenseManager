@@ -1,4 +1,4 @@
-package com.kindsundev.expense.manager.view.signup
+package com.kindsundev.expense.manager.ui.signup
 
 import com.kindsundev.expense.manager.common.Logger
 import com.kindsundev.expense.manager.common.Status

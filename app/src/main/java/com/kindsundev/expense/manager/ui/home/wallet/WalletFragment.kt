@@ -1,14 +1,14 @@
-package com.kindsundev.expense.manager.view.home.note
+package com.kindsundev.expense.manager.ui.home.wallet
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.kindsundev.expense.manager.databinding.FragmentNoteBinding
+import com.kindsundev.expense.manager.databinding.FragmentWalletBinding
 
-class NoteFragment : Fragment() {
-    private var _binding : FragmentNoteBinding? = null
+class WalletFragment : Fragment() {
+    private var _binding : FragmentWalletBinding? = null
     private val binding get() = _binding
 
     override fun onCreateView(
@@ -16,7 +16,7 @@ class NoteFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentNoteBinding.inflate(inflater, container, false)
+        _binding = FragmentWalletBinding.inflate(inflater, container, false)
 
         return binding!!.root
     }

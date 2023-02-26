@@ -1,14 +1,14 @@
-package com.kindsundev.expense.manager.view.home.report
+package com.kindsundev.expense.manager.ui.home.budget
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.kindsundev.expense.manager.databinding.FragmentReportBinding
+import com.kindsundev.expense.manager.databinding.FragmentBudgetBinding
 
-class ReportFragment : Fragment() {
-    private var _binding : FragmentReportBinding? = null
+class BudgetFragment : Fragment() {
+    private var _binding : FragmentBudgetBinding? = null
     private val binding get() = _binding
 
     override fun onCreateView(
@@ -16,7 +16,7 @@ class ReportFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentReportBinding.inflate(inflater, container, false)
+        _binding = FragmentBudgetBinding.inflate(inflater, container, false)
 
         return binding!!.root
     }
