@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseUser
+import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Constant
 import com.kindsundev.expense.manager.data.firebase.AuthFirebase
 import com.kindsundev.expense.manager.databinding.FragmentMenuBinding
@@ -42,14 +44,16 @@ class MenuFragment : Fragment(), MenuContract.View {
     }
 
     private fun displayUserInfo() {
-        var name: String? = user?.displayName.toString()
-        if (name.isNullOrEmpty()) {
-            name = "Please enter your name!"
+        user?.let {
+            val name: String? = it.displayName.toString()
+            val email = it.email.toString()
+            val photoUrl = it.photoUrl
+            binding!!.tvUserName.text = name ?: "Please enter your name!"
+            binding!!.tvUserEmail.text = email
+            Glide.with(binding!!.imgUserAvatar).load(photoUrl)
+                .placeholder(R.drawable.img_user_default).centerCrop()
+                .into(binding!!.imgUserAvatar)
         }
-        val email = user?.email.toString()
-
-        binding!!.tvUserName.text = name
-        binding!!.tvUserEmail.text = email
     }
 
     private fun initListener() {
