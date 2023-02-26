@@ -1,4 +1,5 @@
-package com.kindsundev.expense.manager.base
+package com.kindsundev.expense.manager.ui.base
+
 
 interface BaseView {
 
