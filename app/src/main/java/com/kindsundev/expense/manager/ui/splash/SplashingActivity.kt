@@ -1,23 +1,21 @@
-package com.kindsundev.expense.manager.view.splash
+package com.kindsundev.expense.manager.ui.splash
 
-import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Window
 import android.view.WindowInsets
 import android.view.WindowManager
-import android.view.animation.AnimationUtils
 import android.widget.Toast
-import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.databinding.ActivitySplashingBinding
 import com.kindsundev.expense.manager.utils.isNetWorkAvailable
-import com.kindsundev.expense.manager.view.signin.SignInActivity
+import com.kindsundev.expense.manager.utils.startHomeActivity
+import com.kindsundev.expense.manager.utils.startSignInActivity
 import kotlinx.coroutines.*
 
-class SplashingActivity : AppCompatActivity() {
+class SplashingActivity : AppCompatActivity(), SplashingContact.View {
     private lateinit var binding: ActivitySplashingBinding
     private val activityScope = CoroutineScope(Dispatchers.Main)
+    private val splashPresenter = SplashingPresenter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +23,7 @@ class SplashingActivity : AppCompatActivity() {
         setContentView(binding.root)
         setLayoutFullScreen()
         checkNetworkStatus()
-        waitAndNextActivity()
+        splashPresenter.checkLoggedIn()
     }
 
     private fun setLayoutFullScreen() {
@@ -40,14 +38,6 @@ class SplashingActivity : AppCompatActivity() {
         }
     }
 
-    private fun waitAndNextActivity() {
-        activityScope.launch {
-            delay(1000)
-            startActivity(Intent(this@SplashingActivity, SignInActivity::class.java))
-            finishAffinity()
-        }
-    }
-
     private fun checkNetworkStatus() {
         if (isNetWorkAvailable(this)) {
             Toast.makeText(this, "Network connected", Toast.LENGTH_SHORT).show()
@@ -59,5 +49,20 @@ class SplashingActivity : AppCompatActivity() {
     override fun onPause() {
         activityScope.cancel()
         super.onPause()
+    }
+
+    override fun isLoggedIn() {
+        activityScope.launch {
+            delay(1000)
+            startHomeActivity()
+        }
+    }
+
+    override fun notLoggedIn() {
+        activityScope.launch {
+            delay(1000)
+            startSignInActivity()
+            finishAffinity()
+        }
     }
 }

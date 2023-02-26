@@ -1,14 +1,17 @@
 package com.kindsundev.expense.manager.ui.splash
 
-import com.kindsundev.expense.manager.ui.base.BaseView
 
-interface SplashContact {
+interface SplashingContact {
 
     interface Presenter {
-
+        fun checkLoggedIn()
     }
 
-    interface View : BaseView {
+    interface View {
+
+        fun isLoggedIn()
+
+        fun notLoggedIn()
 
     }
 }
