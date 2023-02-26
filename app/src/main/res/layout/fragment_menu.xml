@@ -55,6 +55,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:src="@drawable/ic_logout"
+                    android:backgroundTint="@android:color/transparent"
                     tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                 <com.google.android.material.imageview.ShapeableImageView

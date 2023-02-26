@@ -30,12 +30,17 @@
     <string name="contact">Contact</string>
     <string name="feedback">Feed Back</string>
     <string name="name">Name</string>
-    <string name="please_wait">Please wait...</string>
+    <string name="please_wait">Please wait…</string>
     <string name="logout">Logout</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
     <string name="alert">Alert!</string>
     <string name="do_you_really_want_logout">Do you really want logout?</string>
-    <string name="do_you_want_really_anything">Do you want really...</string>
+    <string name="do_you_want_really_anything">Do you want really…</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="change_picture">Change Picture</string>
+    <string name="update">Update</string>
+    <string name="username">Username</string>
+    <string name="phone_number">Phone Number</string>
 
 </resources>

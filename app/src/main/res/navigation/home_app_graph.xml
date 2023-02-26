@@ -23,5 +23,17 @@
     <fragment
         android:id="@+id/menuFragment"
         android:name="com.kindsundev.expense.manager.ui.home.menu.MenuFragment"
-        android:label="MenuFragment" />
+        android:label="MenuFragment" >
+        <action
+            android:id="@+id/action_menuFragment_to_profileFragment"
+            app:destination="@id/profileFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.kindsundev.expense.manager.ui.home.menu.profile.ProfileFragment"
+        android:label="ProfileFragment" />
 </navigation>
