@@ -42,8 +42,10 @@ class MenuFragment : Fragment(), MenuContract.View {
     }
 
     private fun displayUserInfo() {
-        var name = user?.displayName.toString()
-        if (name.isEmpty()) name = "Please enter your name!"
+        var name: String? = user?.displayName.toString()
+        if (name.isNullOrEmpty()) {
+            name = "Please enter your name!"
+        }
         val email = user?.email.toString()
 
         binding!!.tvUserName.text = name
