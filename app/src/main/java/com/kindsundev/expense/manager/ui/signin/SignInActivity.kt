@@ -9,6 +9,7 @@ import android.widget.Toast
 import com.kindsundev.expense.manager.databinding.ActivitySignInBinding
 import com.kindsundev.expense.manager.utils.startHomeActivity
 import com.kindsundev.expense.manager.ui.signup.SignUpActivity
+import com.kindsundev.expense.manager.utils.onFeatureIsDevelop
 
 class SignInActivity : AppCompatActivity(), SignInContract.View {
     private lateinit var binding: ActivitySignInBinding
@@ -35,10 +36,6 @@ class SignInActivity : AppCompatActivity(), SignInContract.View {
         val email = binding.edtEmail.text.toString().trim()
         val password = binding.edtPassword.text.toString().trim()
         signInPresenter.handlerSignIn(email, password)
-    }
-
-    private fun onFeatureIsDevelop() {
-        Toast.makeText(this, "This feature is in development", Toast.LENGTH_SHORT).show()
     }
 
     private fun onClickSignUp() {

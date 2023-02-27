@@ -2,6 +2,7 @@ package com.kindsundev.expense.manager.utils
 
 import android.content.Context
 import android.content.Intent
+import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import com.kindsundev.expense.manager.common.Constant
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
@@ -19,6 +20,10 @@ fun Context.startHomeActivity() =
         it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(it)
     }
+
+fun Context.onFeatureIsDevelop() {
+    Toast.makeText(this, "This feature is in development", Toast.LENGTH_SHORT).show()
+}
 
 fun startLoadingDialog(manager: FragmentManager, status: Boolean) {
     val progress = LoadingDialog()

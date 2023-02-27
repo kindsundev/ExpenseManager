@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import com.kindsundev.expense.manager.databinding.ActivitySignUpBinding
+import com.kindsundev.expense.manager.utils.onFeatureIsDevelop
 import com.kindsundev.expense.manager.utils.startHomeActivity
 
 class SignUpActivity : AppCompatActivity(), SignUpContract.View {
@@ -32,10 +33,6 @@ class SignUpActivity : AppCompatActivity(), SignUpContract.View {
         val email = binding.edtEmail.text.toString().trim()
         val password = binding.edtPassword.text.toString().trim()
         signUpPresenter.handlerSignUp(email, password)
-    }
-
-    private fun onFeatureIsDevelop() {
-        Toast.makeText(this, "This feature is in development", Toast.LENGTH_SHORT).show()
     }
 
     private fun onClickSignIn() { finish() }
