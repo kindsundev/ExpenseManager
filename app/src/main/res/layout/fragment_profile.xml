@@ -31,19 +31,19 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_toStartOf="@id/btn_share"
+            android:layout_toStartOf="@id/btn_change_password"
             android:layout_toEndOf="@id/btn_back"
             android:text="@string/edit_profile"
             android:textAlignment="center" />
 
         <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/btn_share"
+            android:id="@+id/btn_change_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="16dp"
-            android:background="@drawable/ic_share" />
+            android:background="@drawable/ic_key" />
 
     </RelativeLayout>
 
@@ -78,6 +78,7 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:paddingVertical="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView16">
 
@@ -127,19 +128,6 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPhonetic" />
 
-            <TextView
-                style="@style/TextProfileTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/password" />
-
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/edt_password"
-                style="@style/EditTextProfile"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword" />
-
             <Button
                 android:id="@+id/edt_update"
                 android:layout_width="250dp"
@@ -148,7 +136,7 @@
                 android:backgroundTint="@color/secondaryDarkColor"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="35dp"
+                android:layout_marginTop="60dp"
                 android:text="@string/update" />
 
         </LinearLayout>
