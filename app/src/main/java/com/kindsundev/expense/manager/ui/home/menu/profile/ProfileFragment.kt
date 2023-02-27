@@ -17,23 +17,35 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
+import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Logger
 import com.kindsundev.expense.manager.databinding.FragmentProfileBinding
+import com.kindsundev.expense.manager.ui.custom.LoadingDialog
+import com.kindsundev.expense.manager.utils.startLoadingDialog
 
-class ProfileFragment : Fragment() {
+class ProfileFragment : Fragment(), ProfileContact.View {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding
     private val args : ProfileFragmentArgs by navArgs()
 
+    private lateinit var profilePresenter: ProfilePresenter
+    private var profileFragmentManager: FragmentManager? = null
+    private val loadingDialog by lazy { LoadingDialog() }
+
     private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
+    private var uri: Uri? = null
     private var bitmap: Bitmap? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        profileFragmentManager = activity?.supportFragmentManager
         registerActivityResult()
         registerReadExternalPermissions()
+
     }
 
     private fun registerActivityResult() {
@@ -45,7 +57,7 @@ class ProfileFragment : Fragment() {
                 if (intent == null || intent.data == null) {
                     Logger.error("Loading image from gallery failed")
                 } else {
-                    val uri = intent.data
+                    uri = intent.data
                     uri?.let { initBitmap(it) }
                     binding!!.imgUser.setImageBitmap(bitmap)
                 }
@@ -90,6 +102,7 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentProfileBinding.inflate(layoutInflater)
+        profilePresenter = ProfilePresenter(this)
         displayUserInfo()
         initListener()
         return binding!!.root
@@ -100,6 +113,12 @@ class ProfileFragment : Fragment() {
         binding!!.edtName.hint = userDetail.name
         binding!!.edtEmail.hint = userDetail.email
         binding!!.edtPhoneNumber.hint = userDetail.phoneNumber
+        Glide.with(binding!!.imgUser)
+            .load(userDetail.photoUrl)
+            .placeholder(R.drawable.img_user_default)
+            .error(R.drawable.img_user_default)
+            .centerCrop()
+            .into(binding!!.imgUser)
     }
 
     private fun initListener() {
@@ -115,11 +134,26 @@ class ProfileFragment : Fragment() {
     }
 
     private fun onClickUpdateProfile() {
-
+        val name = binding!!.edtName.text.toString().trim()
+        profilePresenter.updateProfile(uri, name)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        profilePresenter.cleanUp()
+    }
+
+    override fun onLoad() {
+        profileFragmentManager?.let { startLoadingDialog(loadingDialog, it, true) }
+    }
+
+    override fun onError(message: String) {
+        profileFragmentManager?.let { startLoadingDialog(loadingDialog, it, false) }
+        Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onSuccess() {
+        profileFragmentManager?.let { startLoadingDialog(loadingDialog, it, false) }
     }
 }

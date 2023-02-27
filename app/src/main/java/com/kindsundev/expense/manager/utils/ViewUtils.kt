@@ -25,8 +25,7 @@ fun Context.onFeatureIsDevelop() {
     Toast.makeText(this, "This feature is in development", Toast.LENGTH_SHORT).show()
 }
 
-fun startLoadingDialog(manager: FragmentManager, status: Boolean) {
-    val progress = LoadingDialog()
+fun startLoadingDialog(progress: LoadingDialog, manager: FragmentManager, status: Boolean) {
     if (status) {
         progress.show(manager, Constant.LOADING_DIALOG_NAME)
     } else {

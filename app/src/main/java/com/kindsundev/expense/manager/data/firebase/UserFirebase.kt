@@ -1,11 +1,15 @@
 package com.kindsundev.expense.manager.data.firebase
 
 
+import android.net.Uri
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.ktx.Firebase
 import com.kindsundev.expense.manager.common.Logger
+import io.reactivex.Completable
 
 class UserFirebase {
     private var _user = Firebase.auth.currentUser
@@ -16,13 +20,27 @@ class UserFirebase {
     }
 
     private fun getCurrentUser() {
-        Logger.info("First get current user: ${user?.email}")
         FirebaseAuth.AuthStateListener { listener ->
             _user?.let {
                 _user = listener.currentUser as FirebaseUser
             }
         }
-        Logger.info("Last get current user: ${user?.email}")
+    }
+
+    fun updateProfile(uri: Uri?, name: String) = Completable.create() { emitter ->
+        val profileUpdates = userProfileChangeRequest  {
+            displayName = name
+            photoUri = uri
+        }
+        user?.updateProfile(profileUpdates)?.addOnCompleteListener {
+            if (!emitter.isDisposed) {
+                if (it.isSuccessful) {
+                    emitter.onComplete()
+                } else {
+                    emitter.onError(it.exception!!)
+                }
+            }
+        }
     }
 
 }

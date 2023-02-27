@@ -15,13 +15,14 @@ import com.kindsundev.expense.manager.common.Constant
 import com.kindsundev.expense.manager.data.firebase.AuthFirebase
 import com.kindsundev.expense.manager.data.model.UserModel
 import com.kindsundev.expense.manager.databinding.FragmentMenuBinding
+import com.kindsundev.expense.manager.ui.custom.LoadingDialog
 import com.kindsundev.expense.manager.ui.custom.LogoutDialog
 import com.kindsundev.expense.manager.utils.startLoadingDialog
 
 class MenuFragment : Fragment(), MenuContract.View {
     private var _binding: FragmentMenuBinding? = null
     private val binding get() = _binding
-
+    private val loadingDialog by lazy { LoadingDialog() }
     private lateinit var menuPresenter: MenuPresenter
     private lateinit var auth: AuthFirebase
     private var user: UserModel? = null
@@ -56,8 +57,11 @@ class MenuFragment : Fragment(), MenuContract.View {
             }
             binding!!.tvUserName.text = name
             binding!!.tvUserEmail.text = email
-            Glide.with(binding!!.imgUserAvatar).load(photoUrl)
-                .placeholder(R.drawable.img_user_default).centerCrop()
+            Glide.with(binding!!.imgUserAvatar)
+                .load(photoUrl)
+                .placeholder(R.drawable.img_user_default)
+                .error(R.drawable.img_user_default)
+                .centerCrop()
                 .into(binding!!.imgUserAvatar)
         }
     }
@@ -89,7 +93,7 @@ class MenuFragment : Fragment(), MenuContract.View {
     }
 
     override fun onLoad() {
-        menuFragmentManager?.let { startLoadingDialog(it, true) }
+        menuFragmentManager?.let { startLoadingDialog(loadingDialog, it, true) }
     }
 
     override fun onError(message: String) {
@@ -97,6 +101,6 @@ class MenuFragment : Fragment(), MenuContract.View {
     }
 
     override fun onSuccess() {
-        menuFragmentManager?.let { startLoadingDialog(it, false) }
+        menuFragmentManager?.let { startLoadingDialog(loadingDialog, it, false) }
     }
 }
