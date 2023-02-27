@@ -24,9 +24,8 @@ class MenuFragment : Fragment(), MenuContract.View {
 
     private lateinit var menuPresenter: MenuPresenter
     private lateinit var auth: AuthFirebase
-    private var user: FirebaseUser? = null
+    private var user: UserModel? = null
     private var menuFragmentManager: FragmentManager? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +48,7 @@ class MenuFragment : Fragment(), MenuContract.View {
 
     private fun displayUserInfo() {
         user?.let {
-            var name: String? = it.displayName.toString()
+            var name: String? = it.name.toString()
             val email = it.email.toString()
             val photoUrl = it.photoUrl
             if (name.isNullOrEmpty()) {
@@ -78,15 +77,8 @@ class MenuFragment : Fragment(), MenuContract.View {
     }
 
     private fun onStartUserInfo() {
-        user?.let {
-            val id = user?.uid
-            val name = user?.displayName
-            val email = user?.email!!
-            val photo = user?.photoUrl
-            val phoneNumber = user?.phoneNumber
-
-            val data = UserModel(id, photo, name, email, phoneNumber)
-            val action = MenuFragmentDirections.actionMenuFragmentToProfileFragment(data)
+        val action = user?.let { MenuFragmentDirections.actionMenuFragmentToProfileFragment(it) }
+        if (action != null) {
             binding!!.imgUserAvatar.findNavController().navigate(action)
         }
     }

@@ -20,6 +20,7 @@ class ProfileFragment : Fragment() {
     ): View {
         _binding = FragmentProfileBinding.inflate(layoutInflater)
         displayUserInfo()
+        initListener()
         return binding!!.root
     }
 
@@ -28,6 +29,19 @@ class ProfileFragment : Fragment() {
         binding!!.edtName.hint = userDetail.name
         binding!!.edtEmail.hint = userDetail.email
         binding!!.edtPhoneNumber.hint = userDetail.phoneNumber
+    }
+
+    private fun initListener() {
+        binding!!.btnBack.setOnClickListener {  }
+        binding!!.btnChangePassword.setOnClickListener {  }
+
+        binding!!.imgUser.setOnClickListener {
+
+        }
+        binding!!.btnUpdate.setOnClickListener {
+
+        }
+
     }
 
     override fun onDestroyView() {

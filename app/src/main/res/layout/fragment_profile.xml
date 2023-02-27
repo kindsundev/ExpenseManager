@@ -129,7 +129,7 @@
                 android:inputType="textPhonetic" />
 
             <Button
-                android:id="@+id/edt_update"
+                android:id="@+id/btn_update"
                 android:layout_width="250dp"
                 android:textStyle="bold"
                 android:minHeight="48dp"
