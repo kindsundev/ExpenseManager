@@ -10,7 +10,7 @@ class MenuPresenter(
     override fun getCurrentUser(): UserModel {
         val userAuth =  UserFirebase().user
         val id = userAuth?.uid
-        val photoUri = userAuth?.photoUrl
+        val photoUri = userAuth?.photoUrl.toString()
         val name = userAuth?.displayName
         val email = userAuth?.email
         val phoneNumber = userAuth?.phoneNumber

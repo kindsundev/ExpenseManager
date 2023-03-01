@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
-import com.google.firebase.auth.FirebaseUser
 import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Constant
 import com.kindsundev.expense.manager.data.firebase.AuthFirebase
@@ -32,7 +31,6 @@ class MenuFragment : Fragment(), MenuContract.View {
         super.onCreate(savedInstanceState)
         menuPresenter = MenuPresenter(this)
         auth = AuthFirebase()
-        user = menuPresenter.getCurrentUser()
         menuFragmentManager = activity?.supportFragmentManager
     }
 
@@ -42,6 +40,7 @@ class MenuFragment : Fragment(), MenuContract.View {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMenuBinding.inflate(inflater, container, false)
+        user = menuPresenter.getCurrentUser()
         displayUserInfo()
         initListener()
         return binding!!.root

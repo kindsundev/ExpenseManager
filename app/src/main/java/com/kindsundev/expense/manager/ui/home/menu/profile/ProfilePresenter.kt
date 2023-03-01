@@ -1,6 +1,5 @@
 package com.kindsundev.expense.manager.ui.home.menu.profile
 
-import android.net.Uri
 import com.kindsundev.expense.manager.common.Logger
 import com.kindsundev.expense.manager.data.firebase.UserFirebase
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -14,7 +13,7 @@ class ProfilePresenter(
     private val compositeDisposable = CompositeDisposable()
     private val user = UserFirebase()
 
-    override fun updateProfile(uri: Uri?, name: String) {
+    override fun updateProfile(uri: String?, name: String) {
         if (name.isEmpty()) {
             view.onError("Please enter your name")
         }
@@ -22,7 +21,7 @@ class ProfilePresenter(
         sendRequestUpdateProfile(uri, name)
     }
 
-    private fun sendRequestUpdateProfile(uri: Uri?, name: String) {
+    private fun sendRequestUpdateProfile(uri: String?, name: String) {
         val disposable = user.updateProfile(uri, name)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

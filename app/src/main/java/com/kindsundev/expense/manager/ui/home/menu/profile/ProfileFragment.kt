@@ -18,12 +18,14 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Logger
 import com.kindsundev.expense.manager.databinding.FragmentProfileBinding
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
+import com.kindsundev.expense.manager.utils.onFeatureIsDevelop
 import com.kindsundev.expense.manager.utils.startLoadingDialog
 
 class ProfileFragment : Fragment(), ProfileContact.View {
@@ -122,10 +124,14 @@ class ProfileFragment : Fragment(), ProfileContact.View {
     }
 
     private fun initListener() {
-        binding!!.btnBack.setOnClickListener {  }
-        binding!!.btnChangePassword.setOnClickListener {  }
+        binding!!.btnBack.setOnClickListener { onClickBack()}
+        binding!!.btnChangePassword.setOnClickListener { activity?.onFeatureIsDevelop() }
         binding!!.imgUser.setOnClickListener { onClickUpdateImage() }
         binding!!.btnUpdate.setOnClickListener { onClickUpdateProfile() }
+    }
+
+    private fun onClickBack() {
+        binding!!.btnBack.findNavController().popBackStack(R.id.menuFragment, false)
     }
 
     private fun onClickUpdateImage() {
@@ -135,7 +141,7 @@ class ProfileFragment : Fragment(), ProfileContact.View {
 
     private fun onClickUpdateProfile() {
         val name = binding!!.edtName.text.toString().trim()
-        profilePresenter.updateProfile(uri, name)
+        profilePresenter.updateProfile(uri.toString(), name)
     }
 
     override fun onDestroyView() {

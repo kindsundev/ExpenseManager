@@ -1,14 +1,11 @@
 package com.kindsundev.expense.manager.data.firebase
 
-
 import android.net.Uri
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.ktx.Firebase
-import com.kindsundev.expense.manager.common.Logger
 import io.reactivex.Completable
 
 class UserFirebase {
@@ -27,10 +24,10 @@ class UserFirebase {
         }
     }
 
-    fun updateProfile(uri: Uri?, name: String) = Completable.create() { emitter ->
+    fun updateProfile(uri: String?, name: String) = Completable.create() { emitter ->
         val profileUpdates = userProfileChangeRequest  {
             displayName = name
-            photoUri = uri
+            photoUri = Uri.parse(uri)
         }
         user?.updateProfile(profileUpdates)?.addOnCompleteListener {
             if (!emitter.isDisposed) {
