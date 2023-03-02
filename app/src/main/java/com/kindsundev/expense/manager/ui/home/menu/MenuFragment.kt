@@ -65,10 +65,7 @@ class MenuFragment : Fragment(), MenuContract.View {
 
     private fun onCLickLogout() {
         menuFragmentManager?.let {
-            val message = "Do you want really logout?"
-            menuFragmentManager?.let {
-                LogoutDialog(message).show(it, Constant.LOGOUT_DIALOG_NAME)
-            }
+            LogoutDialog().show(it, Constant.LOGOUT_DIALOG_NAME)
         }
     }
 

@@ -57,7 +57,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="18dp"
-            android:text="@string/do_you_want_really_anything"
+            android:text="@string/do_you_want_really_logout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/shapeableImageView1"
             app:layout_constraintTop_toBottomOf="@+id/textView2" />
