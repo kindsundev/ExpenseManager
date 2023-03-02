@@ -23,7 +23,10 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="16dp"
-            android:background="@drawable/ic_back" />
+            android:background="@drawable/ic_back"
+            android:contentDescription="@string/button_back"
+            android:minWidth="30dp"
+            android:minHeight="30dp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_edt_text"
@@ -31,26 +34,31 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_toStartOf="@id/btn_change_password"
+            android:layout_toStartOf="@id/btn_premium_security"
             android:layout_toEndOf="@id/btn_back"
+            android:minHeight="30dp"
             android:text="@string/edit_profile"
             android:textAlignment="center" />
 
         <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/btn_change_password"
+            android:id="@+id/btn_premium_security"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="16dp"
-            android:background="@drawable/ic_premium" />
+            android:background="@drawable/ic_security"
+            android:contentDescription="@string/button_security"
+            android:minWidth="30dp"
+            android:minHeight="30dp" />
 
     </RelativeLayout>
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/img_user"
+        android:id="@+id/iv_user_avatar"
         android:layout_width="180dp"
         android:layout_height="180dp"
+        android:layout_marginTop="8dp"
         android:src="@drawable/img_user_default"
         app:civ_border_color="@color/white"
         app:civ_border_width="5dp"
@@ -58,88 +66,248 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.16" />
+        app:layout_constraintVertical_bias="0.15" />
 
-    <TextView
-        android:id="@+id/textView16"
+    <androidx.appcompat.widget.AppCompatImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="8dp"
-        android:text="@string/change_picture"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_camera"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.67"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.32"
+        app:layout_goneMarginTop="-20dp" />
+
+    <TextView
+        android:id="@+id/tv_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:text="@string/user_name"
         android:textColor="@color/black"
-        android:textSize="16sp"
-        android:textStyle="bold"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/img_user" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_user_avatar" />
+
+    <TextView
+        android:id="@+id/tv_user_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:text="@string/user_email"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_user_name" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginVertical="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:paddingVertical="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView16">
+        app:layout_constraintTop_toBottomOf="@+id/tv_user_email"
+        app:layout_constraintVertical_bias="0.5">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_content"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingHorizontal="32dp"
-            android:paddingVertical="8dp">
+            android:layout_height="wrap_content">
 
-            <TextView
-                style="@style/TextProfileTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/name" />
-
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/edt_name"
-                style="@style/EditTextProfile"
+            <LinearLayout
+                android:id="@+id/ll_account_status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress" />
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingHorizontal="32dp"
+                android:weightSum="2"
+                app:layout_constraintEnd_toEndOf="@id/cl_content"
+                app:layout_constraintStart_toStartOf="@id/cl_content"
+                app:layout_constraintTop_toTopOf="@id/cl_content">
 
-            <TextView
-                style="@style/TextProfileTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/email" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/gray"
+                    android:padding="8dp"
+                    android:text="@string/normal"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
 
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/edt_email"
-                style="@style/EditTextProfile"
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/primaryColor"
+                    android:padding="8dp"
+                    android:text="@string/premium"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_content_feature_child"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName" />
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="16dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="@id/cl_content"
+                app:layout_constraintStart_toStartOf="@id/cl_content"
+                app:layout_constraintTop_toBottomOf="@id/ll_account_status">
 
-            <TextView
-                style="@style/TextProfileTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/password" />
+                <RelativeLayout
+                    android:id="@+id/rl_edit_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="32dp"
+                    android:background="@drawable/bg_gray_corner_32">
 
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/edt_password"
-                style="@style/EditTextProfile"
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ic_name"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="16dp"
+                        android:background="@drawable/bg_red_corner"
+                        android:padding="5dp"
+                        app:srcCompat="@drawable/ic_badge" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_contact"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="16dp"
+                        android:layout_toStartOf="@id/ic_name_next"
+                        android:layout_toEndOf="@id/ic_name"
+                        android:text="@string/name"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ic_name_next"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/ic_settings_black" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_edit_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_gray_corner_32">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ic_email"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="16dp"
+                        android:background="@drawable/bg_sea_blue_corner"
+                        android:padding="5dp"
+                        app:srcCompat="@drawable/ic_email" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="16dp"
+                        android:layout_toStartOf="@id/ic_email_next"
+                        android:layout_toEndOf="@id/ic_email"
+                        android:text="@string/email"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ic_email_next"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/ic_settings_black" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_edit_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_gray_corner_32">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ic_password"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="16dp"
+                        android:background="@drawable/bg_gray_blue_corner"
+                        android:padding="5dp"
+                        app:srcCompat="@drawable/ic_lock" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_password"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="16dp"
+                        android:layout_toStartOf="@id/ic_password_next"
+                        android:layout_toEndOf="@id/ic_password"
+                        android:text="@string/password"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ic_password_next"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/ic_settings_black" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_update_premium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword" />
-
-            <Button
-                android:id="@+id/btn_update"
-                android:layout_width="250dp"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="48dp"
+                android:background="@color/secondaryDarkColor"
+                android:text="@string/update_premium"
+                android:textColor="@color/white"
                 android:textStyle="bold"
-                android:minHeight="48dp"
-                android:backgroundTint="@color/secondaryDarkColor"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="60dp"
-                android:text="@string/update" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ll_content_feature_child" />
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
 

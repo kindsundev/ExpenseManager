@@ -20,7 +20,7 @@
     <string name="report">Report</string>
     <string name="add">Add</string>
     <string name="user_name">User name</string>
-    <string name="user_email">Emailuser@gmail.com</string>
+    <string name="user_email">mruser@gmail.com</string>
     <string name="expenditure_plan">Expenditure Plan</string>
     <string name="save_money">Save Money</string>
     <string name="debt_book">Debt Book</string>
@@ -36,11 +36,24 @@
     <string name="yes">Yes</string>
     <string name="alert">Alert!</string>
     <string name="do_you_really_want_logout">Do you really want logout?</string>
-    <string name="do_you_want_really_anything">Do you want really…</string>
+    <string name="do_you_want_really_logout">Do you want really logout?</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="change_picture">Change Picture</string>
     <string name="update">Update</string>
     <string name="username">Username</string>
     <string name="phone_number">Phone Number</string>
+    <string name="update_premium">Update Premium</string>
+    <string name="button_back">Button Back</string>
+    <string name="button_security">Button Security</string>
+    <string name="normal">Normal</string>
+    <string name="premium">Premium</string>
+    <string name="update_name">Update Name</string>
+    <string name="update_email">Update Email</string>
+    <string name="update_password">Update Email</string>
+    <string name="please_enter_your_new_name">Please enter your new name</string>
+    <string name="please_enter_your_new_email">Please enter your new email</string>
+    <string name="please_enter_your_new_password">Please enter your new email</string>
+    <string name="email_type">email@gmail.com</string>
+    <string name="no_thanks">No, thanks</string>
 
 </resources>
