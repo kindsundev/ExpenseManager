@@ -63,7 +63,7 @@ class ProfileFragment : Fragment(), ProfileContact.View {
                 } else {
                     uri = intent.data
                     uri?.let { initBitmap(it) }
-                    binding!!.imgUser.setImageBitmap(bitmap)
+                    binding!!.ivUserAvatar.setImageBitmap(bitmap)
                 }
             }
         }
@@ -114,36 +114,42 @@ class ProfileFragment : Fragment(), ProfileContact.View {
 
     private fun displayUserInfo() {
         val userDetail = args.user
-        binding!!.edtName.hint = userDetail.name
-        binding!!.edtEmail.hint = userDetail.email
-        activity?.loadUserAvatar(userDetail.photoUrl, R.drawable.img_user_default, binding!!.imgUser)
+        binding!!.tvUserName.hint = userDetail.name
+        binding!!.tvUserEmail.hint = userDetail.email
+        activity?.loadUserAvatar(userDetail.photoUrl,
+            R.drawable.img_user_default, binding!!.ivUserAvatar)
     }
 
     private fun initListener() {
-        binding!!.btnBack.setOnClickListener { onClickBack()}
-        binding!!.btnChangePassword.setOnClickListener { activity?.onFeatureIsDevelop() }
-        binding!!.imgUser.setOnClickListener { onClickUpdateImage() }
-        binding!!.btnUpdate.setOnClickListener { onClickUpdateProfile() }
+        binding!!.btnBack.setOnClickListener { onClickBack() }
+        binding!!.ivUserAvatar.setOnClickListener { onClickUpdateAvatar() }
+        binding!!.rlEditName.setOnClickListener { onClickUpdateName() }
+        binding!!.rlEditEmail.setOnClickListener { onCLickUpdateEmail() }
+        binding!!.rlEditPassword.setOnClickListener { onClickUpdatePassword() }
+        binding!!.btnUpdatePremium.setOnClickListener { activity?.onFeatureIsDevelop() }
+        binding!!.btnPremiumSecurity.setOnClickListener { activity?.onFeatureIsDevelop() }
     }
 
     private fun onClickBack() {
         binding!!.btnBack.findNavController().popBackStack(R.id.menuFragment, false)
     }
 
-    private fun onClickUpdateImage() {
+    private fun onClickUpdateAvatar() {
         val permissions = Manifest.permission.READ_EXTERNAL_STORAGE
         requestPermissionLauncher.launch(permissions)
+        profilePresenter.updateAvatar(uri.toString())
     }
 
-    private fun onClickUpdateProfile() {
-        val name = binding!!.edtName.text.toString().trim()
-        val email = binding!!.edtEmail.text.toString().trim()
-        val password = binding!!.edtPassword.text.toString().trim()
-        if (binding!!.imgUser.isClickable) {
-            profilePresenter.updateProfile(uri.toString(), name, email, password)
-        } else {
-            profilePresenter.updateProfile(null, name, email, password)
-        }
+    private fun onClickUpdateName() {
+
+    }
+
+    private fun onCLickUpdateEmail() {
+
+    }
+
+    private fun onClickUpdatePassword() {
+
     }
 
     override fun onDestroyView() {

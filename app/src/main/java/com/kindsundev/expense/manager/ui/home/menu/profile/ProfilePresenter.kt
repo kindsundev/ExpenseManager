@@ -1,9 +1,7 @@
 package com.kindsundev.expense.manager.ui.home.menu.profile
 
 import com.kindsundev.expense.manager.common.Logger
-import com.kindsundev.expense.manager.common.Status
 import com.kindsundev.expense.manager.data.firebase.UserFirebase
-import com.kindsundev.expense.manager.utils.checkUpdateUserDataNull
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -14,31 +12,59 @@ class ProfilePresenter(
 
     private val compositeDisposable = CompositeDisposable()
     private val user = UserFirebase()
-
-    override fun updateProfile(uri: String?, name: String, email: String, password: String) {
+    
+    override fun updateAvatar(uri: String?) {
         view.onLoad()
-        checkDataFromInput(name, email, password)
-        sendRequestUpdateAvatarAndName(uri, name)
-
-
-    }
-
-    private fun checkDataFromInput(name: String, email: String, password: String) {
-        when (checkUpdateUserDataNull(name, email, password)) {
-            Status.WRONG_DATA_NULL -> view.onError("Please fill in data")
-            else -> {}
-        }
-    }
-
-    private fun sendRequestUpdateAvatarAndName(uri: String?, name: String) {
-        val disposable = user.updateAvatarAndName(uri, name)
+        val disposable = user.updateAvatar(uri)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 view.onSuccess()
             }, {
-                view.onError("Update failed")
-                Logger.error("Update profile: ${it.message}")
+                view.onError("Avatar update failed")
+                Logger.error("Avatar update failed: ${it.message}")
+            })
+        compositeDisposable.add(disposable)
+    }
+
+    override fun updateName(name: String) {
+        view.onLoad()
+        val disposable = user.updateName(name)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                view.onSuccess()
+            }, {
+                view.onError("Name update failed")
+                Logger.error("Name update failed: ${it.message}")
+            })
+        compositeDisposable.add(disposable)
+    }
+
+    override fun updateEmail(email: String) {
+        view.onLoad()
+        val disposable = user.updateEmail(email)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                view.onSuccess()
+            }, {
+                view.onError("Email update failed")
+                Logger.error("Email update failed: ${it.message}")
+            })
+        compositeDisposable.add(disposable)
+    }
+
+    override fun updatePassword(password: String) {
+        view.onLoad()
+        val disposable = user.updatePassword(password)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                view.onSuccess()
+            }, {
+                view.onError("Password update failed")
+                Logger.error("Password update failed: ${it.message}")
             })
         compositeDisposable.add(disposable)
     }
@@ -46,5 +72,4 @@ class ProfilePresenter(
     fun cleanUp() {
         compositeDisposable.dispose()
     }
-
 }

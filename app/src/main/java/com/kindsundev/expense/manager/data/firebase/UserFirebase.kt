@@ -25,40 +25,54 @@ class UserFirebase {
         }
     }
 
-    fun updateAvatarAndName(uri: String?, name: String) = Completable.create() { emitter ->
-        val profileUpdates = initProfileUpdates(uri, name)
-        if (profileUpdates == null) {
-            emitter.onError(NullPointerException())
-        } else {
-            user?.updateProfile(profileUpdates)?.addOnCompleteListener {
-                if (!emitter.isDisposed) {
-                    if (it.isSuccessful) {
-                        emitter.onComplete()
-                    } else {
-                        emitter.onError(it.exception!!)
-                    }
+    fun updateAvatar(uri: String?) = Completable.create() { emitter ->
+        val profileUpdates = userProfileChangeRequest { photoUri = Uri.parse(uri) }
+        user?.updateProfile(profileUpdates)?.addOnCompleteListener {
+            if (!emitter.isDisposed) {
+                if (it.isSuccessful) {
+                    emitter.onComplete()
+                } else {
+                    emitter.onError(it.exception!!)
                 }
             }
         }
     }
 
-    private fun initProfileUpdates(uri: String?, name: String): UserProfileChangeRequest? {
-        var profileUpdates: UserProfileChangeRequest? = null
-        if (name.isEmpty()) {
-            profileUpdates = userProfileChangeRequest {
-                photoUri = Uri.parse(uri)
-            }
-        } else if (uri == null) {
-            profileUpdates = userProfileChangeRequest {
-                displayName = name
-            }
-        } else if (name.isNotEmpty() and uri.isNotEmpty()) {
-            profileUpdates = userProfileChangeRequest {
-                displayName = name
-                photoUri = Uri.parse(uri)
+    fun updateName(name: String) = Completable.create() { emitter ->
+        val profileUpdates = userProfileChangeRequest { displayName = name }
+        user?.updateProfile(profileUpdates)?.addOnCompleteListener {
+            if (!emitter.isDisposed) {
+                if (it.isSuccessful) {
+                    emitter.onComplete()
+                } else {
+                    emitter.onError(it.exception!!)
+                }
             }
         }
-        return profileUpdates
+    }
+
+    fun updateEmail(email: String) = Completable.create() { emitter ->
+        user?.updateEmail(email)?.addOnCompleteListener {
+            if (!emitter.isDisposed) {
+                if (it.isSuccessful) {
+                    emitter.onComplete()
+                } else {
+                    emitter.onError(it.exception!!)
+                }
+            }
+        }
+    }
+
+    fun updatePassword(password: String) = Completable.create() { emitter ->
+        user?.updatePassword(password)?.addOnCompleteListener {
+            if (!emitter.isDisposed) {
+                if (it.isSuccessful) {
+                    emitter.onComplete()
+                } else {
+                    emitter.onError(it.exception!!)
+                }
+            }
+        }
     }
 
 }

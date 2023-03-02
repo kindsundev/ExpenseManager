@@ -6,7 +6,15 @@ import com.kindsundev.expense.manager.ui.base.BaseView
 interface ProfileContact {
 
     interface Presenter {
-        fun updateProfile(uri: String?, name: String, email: String, password: String)
+
+        fun updateAvatar(uri: String?)
+
+        fun updateName(name: String)
+
+        fun updateEmail(email: String)
+
+        fun updatePassword(password: String)
+
     }
 
     interface View : BaseView {

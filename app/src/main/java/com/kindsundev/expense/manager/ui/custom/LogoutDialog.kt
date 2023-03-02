@@ -14,9 +14,7 @@ import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.databinding.DialogLogoutBinding
 import com.kindsundev.expense.manager.utils.startSignInActivity
 
-class LogoutDialog(
-    private val message: String
-) : DialogFragment() {
+class LogoutDialog : DialogFragment() {
     private var _binding: DialogLogoutBinding? = null
     private val binding get() = _binding
 
@@ -42,7 +40,6 @@ class LogoutDialog(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding!!.tvMessage.text = message
         initListener()
         return binding!!.root
     }
