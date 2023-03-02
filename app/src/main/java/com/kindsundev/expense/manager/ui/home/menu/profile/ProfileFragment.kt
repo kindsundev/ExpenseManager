@@ -19,6 +19,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.kindsundev.expense.manager.R
@@ -161,5 +162,6 @@ class ProfileFragment : Fragment(), ProfileContact.View {
 
     override fun onSuccess() {
         profileFragmentManager?.let { startLoadingDialog(loadingDialog, it, false) }
+        findNavController().popBackStack()
     }
 }
