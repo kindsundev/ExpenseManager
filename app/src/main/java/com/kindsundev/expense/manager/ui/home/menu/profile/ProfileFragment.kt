@@ -26,6 +26,7 @@ import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Logger
 import com.kindsundev.expense.manager.databinding.FragmentProfileBinding
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
+import com.kindsundev.expense.manager.utils.loadUserAvatar
 import com.kindsundev.expense.manager.utils.onFeatureIsDevelop
 import com.kindsundev.expense.manager.utils.startLoadingDialog
 
@@ -115,13 +116,7 @@ class ProfileFragment : Fragment(), ProfileContact.View {
         val userDetail = args.user
         binding!!.edtName.hint = userDetail.name
         binding!!.edtEmail.hint = userDetail.email
-        binding!!.edtPhoneNumber.hint = userDetail.phoneNumber
-        Glide.with(binding!!.imgUser)
-            .load(userDetail.photoUrl)
-            .placeholder(R.drawable.img_user_default)
-            .error(R.drawable.img_user_default)
-            .centerCrop()
-            .into(binding!!.imgUser)
+        activity?.loadUserAvatar(userDetail.photoUrl, R.drawable.img_user_default, binding!!.imgUser)
     }
 
     private fun initListener() {
@@ -142,7 +137,13 @@ class ProfileFragment : Fragment(), ProfileContact.View {
 
     private fun onClickUpdateProfile() {
         val name = binding!!.edtName.text.toString().trim()
-        profilePresenter.updateProfile(uri.toString(), name)
+        val email = binding!!.edtEmail.text.toString().trim()
+        val password = binding!!.edtPassword.text.toString().trim()
+        if (binding!!.imgUser.isClickable) {
+            profilePresenter.updateProfile(uri.toString(), name, email, password)
+        } else {
+            profilePresenter.updateProfile(null, name, email, password)
+        }
     }
 
     override fun onDestroyView() {
@@ -157,7 +158,7 @@ class ProfileFragment : Fragment(), ProfileContact.View {
 
     override fun onError(message: String) {
         profileFragmentManager?.let { startLoadingDialog(loadingDialog, it, false) }
-        Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show()
+        Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onSuccess() {

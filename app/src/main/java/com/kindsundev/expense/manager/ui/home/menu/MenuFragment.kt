@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.findNavController
-import com.bumptech.glide.Glide
 import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Constant
 import com.kindsundev.expense.manager.data.firebase.AuthFirebase
@@ -16,6 +15,7 @@ import com.kindsundev.expense.manager.data.model.UserModel
 import com.kindsundev.expense.manager.databinding.FragmentMenuBinding
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
 import com.kindsundev.expense.manager.ui.custom.LogoutDialog
+import com.kindsundev.expense.manager.utils.loadUserAvatar
 import com.kindsundev.expense.manager.utils.startLoadingDialog
 
 class MenuFragment : Fragment(), MenuContract.View {
@@ -51,17 +51,10 @@ class MenuFragment : Fragment(), MenuContract.View {
             var name: String? = it.name.toString()
             val email = it.email.toString()
             val photoUrl = it.photoUrl
-            if (name.isNullOrEmpty()) {
-                name = "Edit Here"
-            }
+            if (name.isNullOrEmpty()) name = "Edit Here"
             binding!!.tvUserName.text = name
             binding!!.tvUserEmail.text = email
-            Glide.with(binding!!.imgUserAvatar)
-                .load(photoUrl)
-                .placeholder(R.drawable.img_user_default)
-                .error(R.drawable.img_user_default)
-                .centerCrop()
-                .into(binding!!.imgUserAvatar)
+            activity?.loadUserAvatar(photoUrl, R.drawable.img_user_default, binding!!.imgUserAvatar)
         }
     }
 

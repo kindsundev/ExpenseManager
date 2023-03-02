@@ -43,7 +43,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="16dp"
-            android:background="@drawable/ic_key" />
+            android:background="@drawable/ic_premium" />
 
     </RelativeLayout>
 
@@ -119,14 +119,14 @@
                 style="@style/TextProfileTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/phone_number" />
+                android:text="@string/password" />
 
             <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/edt_phone_number"
+                android:id="@+id/edt_password"
                 style="@style/EditTextProfile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPhonetic" />
+                android:inputType="textPassword" />
 
             <Button
                 android:id="@+id/btn_update"

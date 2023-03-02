@@ -18,3 +18,11 @@ fun checkEmailAndPassword(email: String, password: String): Status {
         Status.VALID_DATA
     }
 }
+
+fun checkUpdateUserDataNull(name: String, email: String, password: String): Status {
+    return if (name.isEmpty() and email.isEmpty() and password.isEmpty()) {
+        Status.WRONG_DATA_NULL
+    } else {
+        Status.VALID_DATA
+    }
+}
