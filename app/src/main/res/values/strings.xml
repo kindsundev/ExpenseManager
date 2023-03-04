@@ -55,5 +55,7 @@
     <string name="please_enter_your_new_password">Please enter your new email</string>
     <string name="email_type">email@gmail.com</string>
     <string name="no_thanks">No, thanks</string>
+    <string name="security">Security!</string>
+    <string name="please_login_before_changing_your_any">Please login before changing your...</string>
 
 </resources>

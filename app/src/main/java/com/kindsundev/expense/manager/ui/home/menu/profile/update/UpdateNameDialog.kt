@@ -69,7 +69,7 @@ class UpdateNameDialog : DialogFragment(), ProfileContact.View {
         profilePresenter.updateName(name)
     }
 
-    fun closeDialog() {
+    private fun closeDialog() {
         dialog?.dismiss()
     }
 
@@ -92,6 +92,7 @@ class UpdateNameDialog : DialogFragment(), ProfileContact.View {
     }
 
     override fun onError(message: String) {
+        startLoadingDialog(loadingDialog, parentFragmentManager, false)
         Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
     }
 }

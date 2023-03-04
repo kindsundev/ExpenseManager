@@ -23,6 +23,7 @@ class LogoutDialog : DialogFragment() {
 
         val dialog = MaterialAlertDialogBuilder(
             requireActivity(), R.style.Theme_ExpenseManager).apply {
+            setCancelable(false)
             setView(binding!!.root)
         }.create()
 
