@@ -47,3 +47,13 @@ private fun isSpecialCharacter(toCheck: String): Boolean {
     val matcher = Pattern.compile(Constant.SPECIAL_CHARACTERS).matcher(toCheck)
     return matcher.find()
 }
+
+fun checkEmail(email: String): Status {
+    return if (email.isEmpty()) {
+        Status.WRONG_EMAIL_EMPTY
+    } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        Status.WRONG_EMAIL_PATTERN
+    } else {
+        Status.VALID_DATA
+    }
+}

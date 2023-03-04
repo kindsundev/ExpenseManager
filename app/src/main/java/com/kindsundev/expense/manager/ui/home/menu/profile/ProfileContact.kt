@@ -14,6 +14,7 @@ interface ProfileContact {
 
         fun updatePassword(password: String)
 
+        fun securityRequired(oldToken: String, newToken: String): Boolean
     }
 
     interface View : BaseView {

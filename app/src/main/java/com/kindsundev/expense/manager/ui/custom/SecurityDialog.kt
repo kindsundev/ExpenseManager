@@ -11,17 +11,20 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kindsundev.expense.manager.R
-import com.kindsundev.expense.manager.databinding.DialogUpdateNameBinding
+import com.kindsundev.expense.manager.databinding.DialogSecurityBinding
+import com.kindsundev.expense.manager.utils.startSignInActivity
 
-class UpdateNameDialog : DialogFragment() {
-    private var _binding: DialogUpdateNameBinding? = null
+class SecurityDialog(val message: String) : DialogFragment() {
+    private var _binding: DialogSecurityBinding? = null
     private val binding get() = _binding
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        _binding = DialogUpdateNameBinding.inflate(layoutInflater)
+        _binding = DialogSecurityBinding.inflate(layoutInflater)
 
         val dialog = MaterialAlertDialogBuilder(
-            requireActivity(), R.style.Theme_ExpenseManager).apply {
+            requireActivity(), R.style.Theme_ExpenseManager
+        ).apply {
+            setCancelable(false)
             setView(binding!!.root)
         }.create()
 
@@ -39,16 +42,20 @@ class UpdateNameDialog : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        val notification = "Please login before changing your $message"
+        binding!!.tvMessage.text = notification
         initListener()
         return binding!!.root
     }
 
     private fun initListener() {
-        binding!!.btnBack.setOnClickListener { dialog!!.dismiss() }
-        binding!!.btnUpdate.setOnClickListener {
-            dialog!!.dismiss()
-            // ...
-        }
+        binding!!.btnNo.setOnClickListener { dialog!!.dismiss() }
+        binding!!.btnYes.setOnClickListener { onClickYes() }
+    }
+
+    private fun onClickYes() {
+        dialog!!.dismiss()
+        activity?.startSignInActivity()
     }
 
     override fun onDestroyView() {

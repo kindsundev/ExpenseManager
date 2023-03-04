@@ -2,13 +2,10 @@ package com.kindsundev.expense.manager.ui.home.menu.profile
 
 import android.Manifest
 import android.app.Activity.RESULT_OK
-import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.Color
 import android.graphics.ImageDecoder
-import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -17,19 +14,19 @@ import android.view.*
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Constant
 import com.kindsundev.expense.manager.common.Logger
-import com.kindsundev.expense.manager.databinding.DialogUpdateNameBinding
+import com.kindsundev.expense.manager.data.model.UserModel
+import com.kindsundev.expense.manager.data.shared.PrivateSharedPreferences
 import com.kindsundev.expense.manager.databinding.FragmentProfileBinding
 
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
+import com.kindsundev.expense.manager.ui.custom.SecurityDialog
 import com.kindsundev.expense.manager.ui.home.menu.profile.update.UpdateEmailDialog
 import com.kindsundev.expense.manager.ui.home.menu.profile.update.UpdateNameDialog
 import com.kindsundev.expense.manager.ui.home.menu.profile.update.UpdatePasswordDialog
@@ -41,6 +38,7 @@ class ProfileFragment : Fragment(), ProfileContact.View {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding
     private val args : ProfileFragmentArgs by navArgs()
+    private var user: UserModel? = null
 
     private lateinit var profilePresenter: ProfilePresenter
     private val loadingDialog by lazy { LoadingDialog() }
@@ -50,6 +48,7 @@ class ProfileFragment : Fragment(), ProfileContact.View {
     private var uri: Uri? = null
     private var bitmap: Bitmap? = null
 
+    private lateinit var securityDialog: SecurityDialog
     private lateinit var updateNameDialog: UpdateNameDialog
     private lateinit var updateEmailDialog: UpdateEmailDialog
     private lateinit var updatePasswordDialog: UpdatePasswordDialog
@@ -121,11 +120,13 @@ class ProfileFragment : Fragment(), ProfileContact.View {
     }
 
     private fun displayUserInfo() {
-        val user = args.user
-        binding!!.tvUserName.text = user.name
-        binding!!.tvUserEmail.text = user.email
-        activity?.loadUserAvatar(user.photoUrl,
-            R.drawable.img_user_default, binding!!.ivUserAvatar)
+        user = args.user
+        user?.let {
+            binding!!.tvUserName.text = user?.name
+            binding!!.tvUserEmail.text = user?.email
+            activity?.loadUserAvatar(user?.photoUrl,
+                R.drawable.img_user_default, binding!!.ivUserAvatar)
+        }
     }
 
     private fun initListener() {
@@ -159,8 +160,27 @@ class ProfileFragment : Fragment(), ProfileContact.View {
     }
 
     private fun onCLickUpdateEmail() {
-        updateEmailDialog = UpdateEmailDialog()
-        updateEmailDialog.show(parentFragmentManager, Constant.UPDATE_EMAIL_DIALOG_NAME)
+        if (checkLoginVersion()) {
+            initSecurityDialog("email")
+        } else {
+            updateEmailDialog = UpdateEmailDialog()
+            updateEmailDialog.show(parentFragmentManager, Constant.UPDATE_EMAIL_DIALOG_NAME)
+        }
+    }
+
+    private fun checkLoginVersion() : Boolean {
+        val oldToken = PrivateSharedPreferences(requireActivity())
+            .getUserIdTokenLogged()
+            .toString()
+        val newToken = user?.id.toString()
+        Logger.error("oldToken: $oldToken")
+        Logger.error("newToken: $newToken")
+        return profilePresenter.securityRequired(oldToken, newToken)
+    }
+
+    private fun initSecurityDialog(message: String) {
+        securityDialog = SecurityDialog(message)
+        securityDialog.show(parentFragmentManager, Constant.SECURITY_EMAIL_NAME)
     }
 
     private fun onClickUpdatePassword() {
@@ -191,8 +211,5 @@ class ProfileFragment : Fragment(), ProfileContact.View {
     override fun onSuccess(message: String) {
         startLoadingDialog(loadingDialog, parentFragmentManager, false)
         Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
-        updateEmailDialog.closeDialog()
-        updateNameDialog.closeDialog()
-        updatePasswordDialog.closeDialog()
     }
 }

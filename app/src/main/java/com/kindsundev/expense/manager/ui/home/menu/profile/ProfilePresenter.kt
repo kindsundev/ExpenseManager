@@ -3,6 +3,7 @@ package com.kindsundev.expense.manager.ui.home.menu.profile
 import com.kindsundev.expense.manager.common.Logger
 import com.kindsundev.expense.manager.common.Status
 import com.kindsundev.expense.manager.data.firebase.UserFirebase
+import com.kindsundev.expense.manager.utils.checkEmail
 import com.kindsundev.expense.manager.utils.checkName
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -14,6 +15,13 @@ class ProfilePresenter(
 
     private val compositeDisposable = CompositeDisposable()
     private val user = UserFirebase()
+
+    override fun securityRequired(oldToken: String, newToken: String): Boolean {
+        if (oldToken.compareTo(newToken) == 0) {
+            return true
+        }
+        return false
+    }
     
     override fun updateAvatar(uri: String?) {
         view.onLoad()
@@ -57,17 +65,26 @@ class ProfilePresenter(
     }
 
     override fun updateEmail(email: String) {
+        checkValidEmail(email)
         view.onLoad()
         val disposable = user.updateEmail(email)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                view.onSuccess()
+                view.onSuccess("Email update success")
             }, {
                 view.onError("Email update failed")
                 Logger.error("Email update failed: ${it.message}")
             })
         compositeDisposable.add(disposable)
+    }
+
+    private fun checkValidEmail(email: String) {
+        when (checkEmail(email)) {
+            Status.WRONG_EMAIL_EMPTY -> view.onError("Email mus not be null")
+            Status.WRONG_EMAIL_PATTERN -> view.onError("Email invalidate")
+            else -> {}
+        }
     }
 
     override fun updatePassword(password: String) {
