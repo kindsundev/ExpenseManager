@@ -2,30 +2,37 @@ package com.kindsundev.expense.manager.ui.home.menu.profile
 
 import android.Manifest
 import android.app.Activity.RESULT_OK
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.graphics.ImageDecoder
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.bumptech.glide.Glide
 import com.kindsundev.expense.manager.R
+import com.kindsundev.expense.manager.common.Constant
 import com.kindsundev.expense.manager.common.Logger
+import com.kindsundev.expense.manager.databinding.DialogUpdateNameBinding
 import com.kindsundev.expense.manager.databinding.FragmentProfileBinding
+
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
+import com.kindsundev.expense.manager.ui.home.menu.profile.update.UpdateEmailDialog
+import com.kindsundev.expense.manager.ui.home.menu.profile.update.UpdateNameDialog
+import com.kindsundev.expense.manager.ui.home.menu.profile.update.UpdatePasswordDialog
 import com.kindsundev.expense.manager.utils.loadUserAvatar
 import com.kindsundev.expense.manager.utils.onFeatureIsDevelop
 import com.kindsundev.expense.manager.utils.startLoadingDialog
@@ -36,7 +43,6 @@ class ProfileFragment : Fragment(), ProfileContact.View {
     private val args : ProfileFragmentArgs by navArgs()
 
     private lateinit var profilePresenter: ProfilePresenter
-    private var profileFragmentManager: FragmentManager? = null
     private val loadingDialog by lazy { LoadingDialog() }
 
     private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
@@ -44,12 +50,14 @@ class ProfileFragment : Fragment(), ProfileContact.View {
     private var uri: Uri? = null
     private var bitmap: Bitmap? = null
 
+    private lateinit var updateNameDialog: UpdateNameDialog
+    private lateinit var updateEmailDialog: UpdateEmailDialog
+    private lateinit var updatePasswordDialog: UpdatePasswordDialog
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        profileFragmentManager = activity?.supportFragmentManager
         registerActivityResult()
         registerReadExternalPermissions()
-
     }
 
     private fun registerActivityResult() {
@@ -113,10 +121,10 @@ class ProfileFragment : Fragment(), ProfileContact.View {
     }
 
     private fun displayUserInfo() {
-        val userDetail = args.user
-        binding!!.tvUserName.hint = userDetail.name
-        binding!!.tvUserEmail.hint = userDetail.email
-        activity?.loadUserAvatar(userDetail.photoUrl,
+        val user = args.user
+        binding!!.tvUserName.text = user.name
+        binding!!.tvUserEmail.text = user.email
+        activity?.loadUserAvatar(user.photoUrl,
             R.drawable.img_user_default, binding!!.ivUserAvatar)
     }
 
@@ -137,19 +145,27 @@ class ProfileFragment : Fragment(), ProfileContact.View {
     private fun onClickUpdateAvatar() {
         val permissions = Manifest.permission.READ_EXTERNAL_STORAGE
         requestPermissionLauncher.launch(permissions)
-        profilePresenter.updateAvatar(uri.toString())
+        if (uri != null) {
+            Logger.error(uri.toString())
+            profilePresenter.updateAvatar(uri.toString())
+        } else {
+            Logger.error(uri.toString())
+        }
     }
 
     private fun onClickUpdateName() {
-
+        updateNameDialog = UpdateNameDialog()
+        updateNameDialog.show(parentFragmentManager, Constant.UPDATE_NAME_DIALOG_NAME)
     }
 
     private fun onCLickUpdateEmail() {
-
+        updateEmailDialog = UpdateEmailDialog()
+        updateEmailDialog.show(parentFragmentManager, Constant.UPDATE_EMAIL_DIALOG_NAME)
     }
 
     private fun onClickUpdatePassword() {
-
+        updatePasswordDialog = UpdatePasswordDialog()
+        updatePasswordDialog.show(parentFragmentManager, Constant.UPDATE_PASSWORD_DIALOG_NAME)
     }
 
     override fun onDestroyView() {
@@ -159,16 +175,24 @@ class ProfileFragment : Fragment(), ProfileContact.View {
     }
 
     override fun onLoad() {
-        profileFragmentManager?.let { startLoadingDialog(loadingDialog, it, true) }
+        startLoadingDialog(loadingDialog, parentFragmentManager, true)
     }
 
     override fun onError(message: String) {
-        profileFragmentManager?.let { startLoadingDialog(loadingDialog, it, false) }
+        startLoadingDialog(loadingDialog, parentFragmentManager, false)
         Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onSuccess() {
-        profileFragmentManager?.let { startLoadingDialog(loadingDialog, it, false) }
+        startLoadingDialog(loadingDialog, parentFragmentManager, false)
         findNavController().popBackStack()
+    }
+
+    override fun onSuccess(message: String) {
+        startLoadingDialog(loadingDialog, parentFragmentManager, false)
+        Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
+        updateEmailDialog.closeDialog()
+        updateNameDialog.closeDialog()
+        updatePasswordDialog.closeDialog()
     }
 }

@@ -1,6 +1,5 @@
 package com.kindsundev.expense.manager.ui.home.menu.profile
 
-import android.net.Uri
 import com.kindsundev.expense.manager.ui.base.BaseView
 
 interface ProfileContact {
@@ -19,5 +18,6 @@ interface ProfileContact {
 
     interface View : BaseView {
 
+        fun onSuccess(message: String)
     }
 }
