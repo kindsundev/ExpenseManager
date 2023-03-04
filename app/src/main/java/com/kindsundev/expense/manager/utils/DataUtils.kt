@@ -57,3 +57,13 @@ fun checkEmail(email: String): Status {
         Status.VALID_DATA
     }
 }
+
+fun checkPassword(password: String): Status {
+    return if (password.isEmpty()) {
+        Status.WRONG_PASSWORD_EMPTY
+    } else if (password.length < 6) {
+        Status.WRONG_PASSWORD_LENGTH
+    } else {
+        Status.VALID_DATA
+    }
+}

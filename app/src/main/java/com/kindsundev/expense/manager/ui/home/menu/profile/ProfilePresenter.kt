@@ -5,6 +5,7 @@ import com.kindsundev.expense.manager.common.Status
 import com.kindsundev.expense.manager.data.firebase.UserFirebase
 import com.kindsundev.expense.manager.utils.checkEmail
 import com.kindsundev.expense.manager.utils.checkName
+import com.kindsundev.expense.manager.utils.checkPassword
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -88,17 +89,26 @@ class ProfilePresenter(
     }
 
     override fun updatePassword(password: String) {
+        checkValidPassword(password)
         view.onLoad()
         val disposable = user.updatePassword(password)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                view.onSuccess()
+                view.onSuccess("Password update success")
             }, {
                 view.onError("Password update failed")
                 Logger.error("Password update failed: ${it.message}")
             })
         compositeDisposable.add(disposable)
+    }
+
+    private fun checkValidPassword(password: String) {
+        when (checkPassword(password)) {
+            Status.WRONG_PASSWORD_EMPTY -> view.onError("Password must be not null")
+            Status.WRONG_PASSWORD_LENGTH -> view.onError("Password must be greater than or equal to 6")
+            else -> {}
+        }
     }
 
     fun cleanUp() {
