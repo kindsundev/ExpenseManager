@@ -160,12 +160,14 @@ class ProfileFragment : Fragment(), ProfileContact.View {
     }
 
     private fun onCLickUpdateEmail() {
-        if (checkLoginVersion()) {
-            initSecurityDialog("email")
-        } else {
-            updateEmailDialog = UpdateEmailDialog()
-            updateEmailDialog.show(parentFragmentManager, Constant.UPDATE_EMAIL_DIALOG_NAME)
-        }
+//        if (checkLoginVersion()) {
+//            initSecurityDialog("email")
+//        } else {
+//            updateEmailDialog = UpdateEmailDialog()
+//            updateEmailDialog.show(parentFragmentManager, Constant.UPDATE_EMAIL_DIALOG_NAME)
+//        }
+        updateEmailDialog = UpdateEmailDialog()
+        updateEmailDialog.show(parentFragmentManager, Constant.UPDATE_EMAIL_DIALOG_NAME)
     }
 
     private fun checkLoginVersion() : Boolean {
