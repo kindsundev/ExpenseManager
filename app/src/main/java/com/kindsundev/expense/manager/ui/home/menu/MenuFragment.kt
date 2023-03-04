@@ -10,11 +10,13 @@ import androidx.fragment.app.FragmentManager
 import androidx.navigation.findNavController
 import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Constant
+import com.kindsundev.expense.manager.common.Logger
 import com.kindsundev.expense.manager.data.firebase.AuthFirebase
 import com.kindsundev.expense.manager.data.model.UserModel
 import com.kindsundev.expense.manager.databinding.FragmentMenuBinding
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
 import com.kindsundev.expense.manager.ui.custom.LogoutDialog
+import com.kindsundev.expense.manager.ui.home.HomeActivity
 import com.kindsundev.expense.manager.utils.loadUserAvatar
 import com.kindsundev.expense.manager.utils.startLoadingDialog
 
@@ -22,6 +24,7 @@ class MenuFragment : Fragment(), MenuContract.View {
     private var _binding: FragmentMenuBinding? = null
     private val binding get() = _binding
     private val loadingDialog by lazy { LoadingDialog() }
+
     private lateinit var menuPresenter: MenuPresenter
     private lateinit var auth: AuthFirebase
     private var user: UserModel? = null
@@ -40,10 +43,18 @@ class MenuFragment : Fragment(), MenuContract.View {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMenuBinding.inflate(inflater, container, false)
-        user = menuPresenter.getCurrentUser()
+        getUserData()
+
+        Logger.error("MENU: ${user!!.id.toString()}")
         displayUserInfo()
         initListener()
         return binding!!.root
+    }
+
+    private fun getUserData() {
+        val parentActivity = activity as HomeActivity
+        val bundle = parentActivity.getCurrentUserLogged()
+        user = bundle.getSerializable(Constant.GET_CURRENT_USER_NAME) as UserModel?
     }
 
     private fun displayUserInfo() {

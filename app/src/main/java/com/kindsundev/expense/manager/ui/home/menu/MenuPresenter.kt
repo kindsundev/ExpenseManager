@@ -7,13 +7,5 @@ class MenuPresenter(
     private val  view: MenuContract.View
 ) : MenuContract.Presenter {
 
-    override fun getCurrentUser(): UserModel {
-        val userAuth =  UserFirebase().user
-        val id = userAuth?.uid
-        val photoUri = userAuth?.photoUrl.toString()
-        val name = userAuth?.displayName
-        val email = userAuth?.email
-        val phoneNumber = userAuth?.phoneNumber
-        return UserModel(id, photoUri, name, email, phoneNumber)
-    }
+
 }

@@ -1,12 +1,12 @@
-package com.kindsundev.expense.manager.ui.home.menu
+package com.kindsundev.expense.manager.ui.home
 
 import com.kindsundev.expense.manager.data.model.UserModel
 import com.kindsundev.expense.manager.ui.base.BaseView
 
-interface MenuContract {
+interface HomeContract {
 
     interface Presenter {
-
+        fun getCurrentUser() : UserModel
     }
 
     interface View : BaseView {
