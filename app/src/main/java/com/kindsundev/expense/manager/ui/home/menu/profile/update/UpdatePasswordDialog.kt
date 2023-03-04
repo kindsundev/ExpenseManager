@@ -1,4 +1,4 @@
-package com.kindsundev.expense.manager.ui.custom
+package com.kindsundev.expense.manager.ui.home.menu.profile.update
 
 import android.app.Dialog
 import android.graphics.Color
@@ -11,17 +11,18 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kindsundev.expense.manager.R
-import com.kindsundev.expense.manager.databinding.DialogUpdateEmailBinding
+import com.kindsundev.expense.manager.databinding.DialogUpdatePasswordBinding
 
-class UpdateEmailDialog : DialogFragment() {
-    private var _binding: DialogUpdateEmailBinding? = null
+class UpdatePasswordDialog : DialogFragment() {
+    private var _binding: DialogUpdatePasswordBinding? = null
     private val binding get() = _binding
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        _binding = DialogUpdateEmailBinding.inflate(layoutInflater)
+        _binding = DialogUpdatePasswordBinding.inflate(layoutInflater)
 
         val dialog = MaterialAlertDialogBuilder(
             requireActivity(), R.style.Theme_ExpenseManager).apply {
+            setCancelable(false)
             setView(binding!!.root)
         }.create()
 
@@ -49,6 +50,10 @@ class UpdateEmailDialog : DialogFragment() {
             dialog!!.dismiss()
             // ...
         }
+    }
+
+    fun closeDialog() {
+        dialog?.dismiss()
     }
 
     override fun onDestroyView() {
