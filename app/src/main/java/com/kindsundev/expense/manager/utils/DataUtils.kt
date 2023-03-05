@@ -41,7 +41,7 @@ private fun isAShortName(name: String) = name.length < 3
 
 private fun isALongName(name: String) = name.length > 70
 
-private fun isNumeric(toCheck: String) = toCheck.all { character -> character.isDigit() }
+private fun isNumeric(toCheck: String) = toCheck.all { char -> char.isDigit() }
 
 private fun isSpecialCharacter(toCheck: String): Boolean {
     val matcher = Pattern.compile(Constant.SPECIAL_CHARACTERS).matcher(toCheck)

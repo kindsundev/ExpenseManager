@@ -1,7 +1,6 @@
 package com.kindsundev.expense.manager.common
 
 enum class Status {
-    WRONG_DATA_NULL,
     WRONG_EMAIL_EMPTY,
     WRONG_PASSWORD_EMPTY,
     WRONG_EMAIL_PASSWORD_EMPTY,

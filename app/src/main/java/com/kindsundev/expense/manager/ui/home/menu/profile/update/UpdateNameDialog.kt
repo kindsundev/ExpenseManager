@@ -13,11 +13,14 @@ import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kindsundev.expense.manager.R
+import com.kindsundev.expense.manager.common.Status
 import com.kindsundev.expense.manager.databinding.DialogUpdateNameBinding
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
 import com.kindsundev.expense.manager.ui.home.menu.profile.ProfileContact
 import com.kindsundev.expense.manager.ui.home.menu.profile.ProfilePresenter
+import com.kindsundev.expense.manager.utils.checkName
 import com.kindsundev.expense.manager.utils.hideKeyboard
+import com.kindsundev.expense.manager.utils.showToast
 import com.kindsundev.expense.manager.utils.startLoadingDialog
 
 class UpdateNameDialog : DialogFragment(), ProfileContact.View {
@@ -66,7 +69,35 @@ class UpdateNameDialog : DialogFragment(), ProfileContact.View {
 
     private fun handlerUpdateName() {
         val name = binding!!.edtName.text.toString().trim()
-        profilePresenter.updateName(name)
+        if (checkValidName(name)) {
+            profilePresenter.updateName(name)
+        }
+    }
+
+    private fun checkValidName(name: String) : Boolean{
+        when(checkName(name)) {
+            Status.WRONG_NAME_EMPTY -> {
+                activity?.showToast("Don't name to empty")
+                return false
+            }
+            Status.WRONG_NAME_SHORT -> {
+                activity?.showToast("Don't name to short")
+                return false
+            }
+            Status.WRONG_NAME_LONG -> {
+                activity?.showToast("Don't name to long")
+                return false
+            }
+            Status.WRONG_NAME_HAS_DIGITS -> {
+                activity?.showToast("Name cannot is digits")
+                return false
+            }
+            Status.WRONG_NAME_HAS_SPECIAL_CHARACTER -> {
+                activity?.showToast("Name cannot is special character")
+                return false
+            }
+            else -> return true
+        }
     }
 
     private fun closeDialog() {
