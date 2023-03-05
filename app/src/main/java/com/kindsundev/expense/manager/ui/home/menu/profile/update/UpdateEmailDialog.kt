@@ -23,7 +23,9 @@ import com.kindsundev.expense.manager.utils.hideKeyboard
 import com.kindsundev.expense.manager.utils.showToast
 import com.kindsundev.expense.manager.utils.startLoadingDialog
 
-class UpdateEmailDialog : DialogFragment(), ProfileContact.View {
+class UpdateEmailDialog(
+    private val callback: ResultUpdateCallBack
+) : DialogFragment(), ProfileContact.View {
     private var _binding: DialogUpdateEmailBinding? = null
     private val binding get() = _binding
 
@@ -98,9 +100,17 @@ class UpdateEmailDialog : DialogFragment(), ProfileContact.View {
     }
 
     override fun onSuccess(message: String) {
+        requestUpdateUI()
         startLoadingDialog(loadingDialog, parentFragmentManager, false)
         Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
         closeDialog()
+    }
+
+    private fun requestUpdateUI() {
+        val email = profilePresenter.getUserAfterUpdate().email
+        if (email != null) {
+            callback.updateEmail(email)
+        }
     }
 
     override fun onSuccess() {}

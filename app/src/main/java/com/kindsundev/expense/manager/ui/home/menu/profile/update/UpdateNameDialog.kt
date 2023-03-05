@@ -23,7 +23,9 @@ import com.kindsundev.expense.manager.utils.hideKeyboard
 import com.kindsundev.expense.manager.utils.showToast
 import com.kindsundev.expense.manager.utils.startLoadingDialog
 
-class UpdateNameDialog : DialogFragment(), ProfileContact.View {
+class UpdateNameDialog(
+    private val callback: ResultUpdateCallBack
+) : DialogFragment(), ProfileContact.View {
     private var _binding: DialogUpdateNameBinding? = null
     private val binding get() = _binding
 
@@ -39,7 +41,8 @@ class UpdateNameDialog : DialogFragment(), ProfileContact.View {
         _binding = DialogUpdateNameBinding.inflate(layoutInflater)
 
         val dialog = MaterialAlertDialogBuilder(
-            requireActivity(), R.style.Theme_ExpenseManager).apply {
+            requireActivity(), R.style.Theme_ExpenseManager
+        ).apply {
             setCancelable(false)
             setView(binding!!.root)
         }.create()
@@ -74,8 +77,8 @@ class UpdateNameDialog : DialogFragment(), ProfileContact.View {
         }
     }
 
-    private fun checkValidName(name: String) : Boolean{
-        when(checkName(name)) {
+    private fun checkValidName(name: String): Boolean {
+        when (checkName(name)) {
             Status.WRONG_NAME_EMPTY -> {
                 activity?.showToast("Don't name to empty")
                 return false
@@ -110,9 +113,17 @@ class UpdateNameDialog : DialogFragment(), ProfileContact.View {
     }
 
     override fun onSuccess(message: String) {
+        requestUpdateUI()
         startLoadingDialog(loadingDialog, parentFragmentManager, false)
         Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
         closeDialog()
+    }
+
+    private fun requestUpdateUI() {
+        val name = profilePresenter.getUserAfterUpdate().name
+        if (name != null) {
+            callback.updateName(name)
+        }
     }
 
     override fun onSuccess() {}

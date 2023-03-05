@@ -28,15 +28,12 @@ import com.kindsundev.expense.manager.ui.custom.LoadingDialog
 import com.kindsundev.expense.manager.ui.home.menu.profile.update.UpdateEmailDialog
 import com.kindsundev.expense.manager.ui.home.menu.profile.update.UpdateNameDialog
 import com.kindsundev.expense.manager.ui.home.menu.profile.update.UpdatePasswordDialog
+import com.kindsundev.expense.manager.ui.home.menu.profile.update.ResultUpdateCallBack
 import com.kindsundev.expense.manager.utils.loadUserAvatar
 import com.kindsundev.expense.manager.utils.onFeatureIsDevelop
 import com.kindsundev.expense.manager.utils.startLoadingDialog
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
-class ProfileFragment : Fragment(), ProfileContact.View {
+class ProfileFragment : Fragment(), ProfileContact.View, ResultUpdateCallBack {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding
     private val args : ProfileFragmentArgs by navArgs()
@@ -160,26 +157,26 @@ class ProfileFragment : Fragment(), ProfileContact.View {
     }
 
     private fun onClickUpdateName() {
-        updateNameDialog = UpdateNameDialog()
+        updateNameDialog = UpdateNameDialog(this)
         updateNameDialog.show(parentFragmentManager, Constant.UPDATE_NAME_DIALOG_NAME)
     }
 
+    override fun updateName(name: String) {
+        binding!!.tvUserName.text = name
+    }
+
     private fun onCLickUpdateEmail() {
-        updateEmailDialog = UpdateEmailDialog()
+        updateEmailDialog = UpdateEmailDialog(this)
         updateEmailDialog.show(parentFragmentManager, Constant.UPDATE_EMAIL_DIALOG_NAME)
+    }
+
+    override fun updateEmail(email: String) {
+        binding!!.tvUserEmail.text = email
     }
 
     private fun onClickUpdatePassword() {
         updatePasswordDialog = UpdatePasswordDialog()
         updatePasswordDialog.show(parentFragmentManager, Constant.UPDATE_PASSWORD_DIALOG_NAME)
-    }
-
-    private fun displayUserNewData() {
-        user = profilePresenter.getUserAfterUpdate()
-        binding!!.tvUserName.text = user?.name
-        binding!!.tvUserEmail.text = user?.email
-        activity?.loadUserAvatar(user?.photoUrl,
-            R.drawable.img_user_default, binding!!.ivUserAvatar)
     }
 
     override fun onDestroyView() {
