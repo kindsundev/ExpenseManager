@@ -2,17 +2,15 @@ package com.kindsundev.expense.manager.ui.signup
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import com.kindsundev.expense.manager.databinding.ActivitySignUpBinding
-import com.kindsundev.expense.manager.ui.custom.LoadingDialog
 import com.kindsundev.expense.manager.utils.onFeatureIsDevelop
 import com.kindsundev.expense.manager.utils.startHomeActivity
-import com.kindsundev.expense.manager.utils.startLoadingDialog
 
 class SignUpActivity : AppCompatActivity(), SignUpContract.View {
     private lateinit var binding: ActivitySignUpBinding
     private lateinit var signUpPresenter : SignUpPresenter
-    private val loadingDialog by lazy { LoadingDialog() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,16 +38,19 @@ class SignUpActivity : AppCompatActivity(), SignUpContract.View {
     private fun onClickSignIn() { finish() }
 
     override fun onLoad() {
-        startLoadingDialog(loadingDialog, supportFragmentManager, true)
+        binding.tvForgetPassword.visibility = View.GONE
+        binding.progressBar.visibility = View.VISIBLE
     }
 
     override fun onError(message: String) {
-        startLoadingDialog(loadingDialog, supportFragmentManager, false)
+        binding.progressBar.visibility = View.GONE
+        binding.tvForgetPassword.visibility = View.VISIBLE
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onSuccess() {
-        startLoadingDialog(loadingDialog, supportFragmentManager, false)
+        binding.progressBar.visibility = View.GONE
+        binding.tvForgetPassword.visibility = View.VISIBLE
         Toast.makeText(this, "Register successful", Toast.LENGTH_SHORT).show()
         startHomeActivity()
     }

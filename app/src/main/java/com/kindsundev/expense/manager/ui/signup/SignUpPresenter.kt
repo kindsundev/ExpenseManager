@@ -49,7 +49,7 @@ class SignUpPresenter(
             .subscribe({
                 view.onSuccess()
             }, {
-                view.onError("Register failed")
+                view.onError("Please check email or password")
                 Logger.error("Sign Up: ${it.message}")
             })
         compositeDisposable.add(disposableSignUp)
