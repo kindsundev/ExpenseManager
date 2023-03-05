@@ -1,5 +1,6 @@
 package com.kindsundev.expense.manager.ui.home.menu.profile
 
+import com.kindsundev.expense.manager.data.model.UserModel
 import com.kindsundev.expense.manager.ui.base.BaseView
 
 interface ProfileContact {
@@ -14,7 +15,7 @@ interface ProfileContact {
 
         fun updatePassword(password: String)
 
-        fun securityRequired(oldToken: String, newToken: String): Boolean
+        fun getUserAfterUpdate(): UserModel
     }
 
     interface View : BaseView {

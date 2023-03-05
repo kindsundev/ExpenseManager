@@ -22,17 +22,19 @@ import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Constant
 import com.kindsundev.expense.manager.common.Logger
 import com.kindsundev.expense.manager.data.model.UserModel
-import com.kindsundev.expense.manager.data.shared.PrivateSharedPreferences
 import com.kindsundev.expense.manager.databinding.FragmentProfileBinding
 
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
-import com.kindsundev.expense.manager.ui.custom.SecurityDialog
 import com.kindsundev.expense.manager.ui.home.menu.profile.update.UpdateEmailDialog
 import com.kindsundev.expense.manager.ui.home.menu.profile.update.UpdateNameDialog
 import com.kindsundev.expense.manager.ui.home.menu.profile.update.UpdatePasswordDialog
 import com.kindsundev.expense.manager.utils.loadUserAvatar
 import com.kindsundev.expense.manager.utils.onFeatureIsDevelop
 import com.kindsundev.expense.manager.utils.startLoadingDialog
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class ProfileFragment : Fragment(), ProfileContact.View {
     private var _binding: FragmentProfileBinding? = null
@@ -48,7 +50,6 @@ class ProfileFragment : Fragment(), ProfileContact.View {
     private var uri: Uri? = null
     private var bitmap: Bitmap? = null
 
-    private lateinit var securityDialog: SecurityDialog
     private lateinit var updateNameDialog: UpdateNameDialog
     private lateinit var updateEmailDialog: UpdateEmailDialog
     private lateinit var updatePasswordDialog: UpdatePasswordDialog
@@ -107,20 +108,24 @@ class ProfileFragment : Fragment(), ProfileContact.View {
         activityResultLauncher.launch(Intent.createChooser(intent, "Select picture"))
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        profilePresenter = ProfilePresenter(this)
+        user = args.user
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentProfileBinding.inflate(layoutInflater)
-        profilePresenter = ProfilePresenter(this)
         displayUserInfo()
         initListener()
         return binding!!.root
     }
 
     private fun displayUserInfo() {
-        user = args.user
         user?.let {
             binding!!.tvUserName.text = user?.name
             binding!!.tvUserEmail.text = user?.email
@@ -160,34 +165,21 @@ class ProfileFragment : Fragment(), ProfileContact.View {
     }
 
     private fun onCLickUpdateEmail() {
-//        if (checkLoginVersion()) {
-//            initSecurityDialog("email")
-//        } else {
-//            updateEmailDialog = UpdateEmailDialog()
-//            updateEmailDialog.show(parentFragmentManager, Constant.UPDATE_EMAIL_DIALOG_NAME)
-//        }
         updateEmailDialog = UpdateEmailDialog()
         updateEmailDialog.show(parentFragmentManager, Constant.UPDATE_EMAIL_DIALOG_NAME)
-    }
-
-    private fun checkLoginVersion() : Boolean {
-        val oldToken = PrivateSharedPreferences(requireActivity())
-            .getUserIdTokenLogged()
-            .toString()
-        val newToken = user?.id.toString()
-        Logger.error("oldToken: $oldToken")
-        Logger.error("newToken: $newToken")
-        return profilePresenter.securityRequired(oldToken, newToken)
-    }
-
-    private fun initSecurityDialog(message: String) {
-        securityDialog = SecurityDialog(message)
-        securityDialog.show(parentFragmentManager, Constant.SECURITY_EMAIL_NAME)
     }
 
     private fun onClickUpdatePassword() {
         updatePasswordDialog = UpdatePasswordDialog()
         updatePasswordDialog.show(parentFragmentManager, Constant.UPDATE_PASSWORD_DIALOG_NAME)
+    }
+
+    private fun displayUserNewData() {
+        user = profilePresenter.getUserAfterUpdate()
+        binding!!.tvUserName.text = user?.name
+        binding!!.tvUserEmail.text = user?.email
+        activity?.loadUserAvatar(user?.photoUrl,
+            R.drawable.img_user_default, binding!!.ivUserAvatar)
     }
 
     override fun onDestroyView() {
