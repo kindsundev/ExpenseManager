@@ -1,15 +1,18 @@
 package com.kindsundev.expense.manager.ui.home.menu.profile
 
 import com.kindsundev.expense.manager.common.Logger
-import com.kindsundev.expense.manager.common.Status
 import com.kindsundev.expense.manager.data.firebase.UserFirebase
 import com.kindsundev.expense.manager.data.model.UserModel
-import com.kindsundev.expense.manager.utils.checkEmail
-import com.kindsundev.expense.manager.utils.checkName
-import com.kindsundev.expense.manager.utils.checkPassword
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+
+/*
+* Why i always ask to re-login when user request to update some sensitive fields.
+* Because using firebase service i don't have permission to get old password for authentication.
+* Or maybe the user who logged in elsewhere has changed their email or password...
+* so in the current version of the login, the update will fail.
+* */
 
 class ProfilePresenter(
     private val view: ProfileContact.View
@@ -26,7 +29,7 @@ class ProfilePresenter(
             .subscribe({
                 view.onSuccess("Avatar update success")
             }, {
-                view.onError("Avatar update failed")
+                view.onError("You need to login again before updating")
                 Logger.error("Avatar update failed: ${it.message}")
             })
         compositeDisposable.add(disposable)
@@ -40,7 +43,7 @@ class ProfilePresenter(
             .subscribe({
                 view.onSuccess("Name update success")
             }, {
-                view.onError("Name update failed")
+                view.onError("You need to login again before updating")
                 Logger.error("Name update failed: ${it.message}")
             })
         compositeDisposable.add(disposable)
