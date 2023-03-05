@@ -13,11 +13,14 @@ import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kindsundev.expense.manager.R
+import com.kindsundev.expense.manager.common.Status
 import com.kindsundev.expense.manager.databinding.DialogUpdateEmailBinding
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
 import com.kindsundev.expense.manager.ui.home.menu.profile.ProfileContact
 import com.kindsundev.expense.manager.ui.home.menu.profile.ProfilePresenter
+import com.kindsundev.expense.manager.utils.checkEmail
 import com.kindsundev.expense.manager.utils.hideKeyboard
+import com.kindsundev.expense.manager.utils.showToast
 import com.kindsundev.expense.manager.utils.startLoadingDialog
 
 class UpdateEmailDialog : DialogFragment(), ProfileContact.View {
@@ -66,7 +69,23 @@ class UpdateEmailDialog : DialogFragment(), ProfileContact.View {
 
     private fun handlerUpdateEmail() {
         val email = binding!!.edtEmail.text.toString().trim()
-        profilePresenter.updateEmail(email)
+        if (checkValidEmail(email)) {
+            profilePresenter.updateEmail(email)
+        }
+    }
+
+    private fun checkValidEmail(email: String): Boolean {
+        return when (checkEmail(email)) {
+            Status.WRONG_EMAIL_EMPTY -> {
+                activity?.showToast("Email mus not be null")
+                false
+            }
+            Status.WRONG_EMAIL_PATTERN -> {
+                activity?.showToast("Email invalidate")
+                false
+            }
+            else -> true
+        }
     }
 
     private fun closeDialog() {

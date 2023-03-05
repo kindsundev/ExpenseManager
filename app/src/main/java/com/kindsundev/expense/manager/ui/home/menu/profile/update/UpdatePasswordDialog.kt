@@ -13,14 +13,17 @@ import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kindsundev.expense.manager.R
+import com.kindsundev.expense.manager.common.Status
 import com.kindsundev.expense.manager.databinding.DialogUpdatePasswordBinding
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
 import com.kindsundev.expense.manager.ui.home.menu.profile.ProfileContact
 import com.kindsundev.expense.manager.ui.home.menu.profile.ProfilePresenter
+import com.kindsundev.expense.manager.utils.checkPassword
 import com.kindsundev.expense.manager.utils.hideKeyboard
+import com.kindsundev.expense.manager.utils.showToast
 import com.kindsundev.expense.manager.utils.startLoadingDialog
 
-class UpdatePasswordDialog : DialogFragment(), ProfileContact.View  {
+class UpdatePasswordDialog : DialogFragment(), ProfileContact.View {
     private var _binding: DialogUpdatePasswordBinding? = null
     private val binding get() = _binding
 
@@ -36,7 +39,8 @@ class UpdatePasswordDialog : DialogFragment(), ProfileContact.View  {
         _binding = DialogUpdatePasswordBinding.inflate(layoutInflater)
 
         val dialog = MaterialAlertDialogBuilder(
-            requireActivity(), R.style.Theme_ExpenseManager).apply {
+            requireActivity(), R.style.Theme_ExpenseManager
+        ).apply {
             setCancelable(false)
             setView(binding!!.root)
         }.create()
@@ -66,7 +70,23 @@ class UpdatePasswordDialog : DialogFragment(), ProfileContact.View  {
 
     private fun handlerUpdatePassword() {
         val password = binding!!.edtPassword.text.toString().trim()
-        profilePresenter.updatePassword(password)
+        if (checkValidPassword(password)) {
+            profilePresenter.updatePassword(password)
+        }
+    }
+
+    private fun checkValidPassword(password: String): Boolean {
+        return when (checkPassword(password)) {
+            Status.WRONG_PASSWORD_EMPTY -> {
+                activity?.showToast("Password must be not null")
+                false
+            }
+            Status.WRONG_PASSWORD_LENGTH -> {
+                activity?.showToast("Password must be greater than or equal to 6")
+                false
+            }
+            else -> true
+        }
     }
 
     private fun closeDialog() {

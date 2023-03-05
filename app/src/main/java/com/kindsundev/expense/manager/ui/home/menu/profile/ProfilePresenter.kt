@@ -47,7 +47,6 @@ class ProfilePresenter(
     }
 
     override fun updateEmail(email: String) {
-        checkValidEmail(email)
         view.onLoad()
         val disposable = user.updateEmail(email)
             .subscribeOn(Schedulers.io())
@@ -61,16 +60,7 @@ class ProfilePresenter(
         compositeDisposable.add(disposable)
     }
 
-    private fun checkValidEmail(email: String) {
-        when (checkEmail(email)) {
-            Status.WRONG_EMAIL_EMPTY -> view.onError("Email mus not be null")
-            Status.WRONG_EMAIL_PATTERN -> view.onError("Email invalidate")
-            else -> {}
-        }
-    }
-
     override fun updatePassword(password: String) {
-        checkValidPassword(password)
         view.onLoad()
         val disposable = user.updatePassword(password)
             .subscribeOn(Schedulers.io())
@@ -84,13 +74,6 @@ class ProfilePresenter(
         compositeDisposable.add(disposable)
     }
 
-    private fun checkValidPassword(password: String) {
-        when (checkPassword(password)) {
-            Status.WRONG_PASSWORD_EMPTY -> view.onError("Password must be not null")
-            Status.WRONG_PASSWORD_LENGTH -> view.onError("Password must be greater than or equal to 6")
-            else -> {}
-        }
-    }
 
     override fun getUserAfterUpdate(): UserModel {
         val userAuth =  UserFirebase().user
