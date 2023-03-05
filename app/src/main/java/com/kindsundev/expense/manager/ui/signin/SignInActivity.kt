@@ -7,13 +7,16 @@ import android.view.View
 import android.widget.Toast
 
 import com.kindsundev.expense.manager.databinding.ActivitySignInBinding
+import com.kindsundev.expense.manager.ui.custom.LoadingDialog
 import com.kindsundev.expense.manager.utils.startHomeActivity
 import com.kindsundev.expense.manager.ui.signup.SignUpActivity
 import com.kindsundev.expense.manager.utils.onFeatureIsDevelop
+import com.kindsundev.expense.manager.utils.startLoadingDialog
 
 class SignInActivity : AppCompatActivity(), SignInContract.View {
     private lateinit var binding: ActivitySignInBinding
     private lateinit var signInPresenter: SignInPresenter
+    private val loadingDialog by lazy { LoadingDialog() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,29 +46,22 @@ class SignInActivity : AppCompatActivity(), SignInContract.View {
     }
 
     override fun onLoad() {
-        binding.progressBar.visibility = View.VISIBLE
+        startLoadingDialog(loadingDialog, supportFragmentManager, true)
     }
 
     override fun onError(message: String) {
-        binding.progressBar.visibility = View.GONE
+        startLoadingDialog(loadingDialog, supportFragmentManager, false)
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onSuccess() {
-        binding.progressBar.visibility = View.GONE
+        startLoadingDialog(loadingDialog, supportFragmentManager, false)
         Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
         startHomeActivity()
     }
 
-    override fun onStop() {
-        super.onStop()
-        binding.progressBar.visibility = View.GONE
-        signInPresenter.cleanUp()
-    }
-
     override fun onDestroy() {
         super.onDestroy()
-        binding.progressBar.visibility = View.GONE
         signInPresenter.cleanUp()
     }
 }
