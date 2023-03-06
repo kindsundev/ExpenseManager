@@ -75,7 +75,7 @@ class ProfileFragment : Fragment(), ProfileContact.View, ResultUpdateCallBack {
     }
 
     private fun loadNewImageForUser(uri: Uri) {
-        val bitmap = initBitmap(uri)
+        val bitmap = getBitmapFromUri(uri)
         if (bitmap != null) {
             binding!!.ivUserAvatar.setImageBitmap(bitmap)
         } else {
@@ -83,7 +83,7 @@ class ProfileFragment : Fragment(), ProfileContact.View, ResultUpdateCallBack {
         }
     }
 
-    private fun initBitmap(uri: Uri): Bitmap? {
+    private fun getBitmapFromUri(uri: Uri): Bitmap? {
         return if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
             MediaStore.Images.Media.getBitmap(requireContext().contentResolver, uri)
         } else {
