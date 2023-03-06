@@ -29,7 +29,7 @@ class ProfilePresenter(
             .subscribe({
                 view.onSuccess("Avatar update success")
             }, {
-                view.onError("You need to login again before updating")
+                view.onError("Avatar updated failed")
                 Logger.error("Avatar update failed: ${it.message}")
             })
         compositeDisposable.add(disposable)

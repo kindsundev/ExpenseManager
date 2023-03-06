@@ -44,8 +44,6 @@ class ProfileFragment : Fragment(), ProfileContact.View, ResultUpdateCallBack {
 
     private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
-    private var uri: Uri? = null
-    private var bitmap: Bitmap? = null
 
     private lateinit var updateNameDialog: UpdateNameDialog
     private lateinit var updateEmailDialog: UpdateEmailDialog
@@ -66,16 +64,27 @@ class ProfileFragment : Fragment(), ProfileContact.View, ResultUpdateCallBack {
                 if (intent == null || intent.data == null) {
                     Logger.error("Loading image from gallery failed")
                 } else {
-                    uri = intent.data
-                    uri?.let { initBitmap(it) }
-                    binding!!.ivUserAvatar.setImageBitmap(bitmap)
+                    val uri = intent.data
+                    uri?.let {
+                        profilePresenter.updateAvatar(uri.toString())
+                        loadNewImageForUser(it)
+                    }
                 }
             }
         }
     }
 
-    private fun initBitmap(uri: Uri) {
-        bitmap = if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
+    private fun loadNewImageForUser(uri: Uri) {
+        val bitmap = initBitmap(uri)
+        if (bitmap != null) {
+            binding!!.ivUserAvatar.setImageBitmap(bitmap)
+        } else {
+            binding!!.ivUserAvatar.setImageResource(R.drawable.img_user_default)
+        }
+    }
+
+    private fun initBitmap(uri: Uri): Bitmap? {
+        return if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
             MediaStore.Images.Media.getBitmap(requireContext().contentResolver, uri)
         } else {
             val source = ImageDecoder.createSource(
@@ -99,9 +108,10 @@ class ProfileFragment : Fragment(), ProfileContact.View, ResultUpdateCallBack {
     }
 
     private fun openPhotoGallery() {
-        val intent = Intent()
-        intent.type = "image/*"
-        intent.action = Intent.ACTION_GET_CONTENT
+        val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "image/*"
+        }
         activityResultLauncher.launch(Intent.createChooser(intent, "Select picture"))
     }
 
@@ -148,12 +158,6 @@ class ProfileFragment : Fragment(), ProfileContact.View, ResultUpdateCallBack {
     private fun onClickUpdateAvatar() {
         val permissions = Manifest.permission.READ_EXTERNAL_STORAGE
         requestPermissionLauncher.launch(permissions)
-        if (uri != null) {
-            Logger.error(uri.toString())
-            profilePresenter.updateAvatar(uri.toString())
-        } else {
-            Logger.error(uri.toString())
-        }
     }
 
     private fun onClickUpdateName() {
