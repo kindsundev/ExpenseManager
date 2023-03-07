@@ -84,5 +84,14 @@
     <string name="drop">Drop</string>
     <string name="fees">Fees</string>
     <string name="insurance">Insurance</string>
+    <string name="salary">Salary</string>
+    <string name="bonus">Bonus</string>
+    <string name="interest_rate">Interest Rate</string>
+    <string name="pay">Pay</string>
+    <string name="dues">Dues</string>
+    <string name="repayment">Repayment</string>
+    <string name="debt_collection">Debt Collection</string>
+    <string name="borrow">Borrow</string>
+    <string name="lend">Lend</string>
 
 </resources>
