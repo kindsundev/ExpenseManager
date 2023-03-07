@@ -61,5 +61,28 @@
     <string name="expense">Expense</string>
     <string name="income">Income</string>
     <string name="debt">Debt</string>
+    <string name="needful">Needful</string>
+    <string name="bill">Bill</string>
+    <string name="eat">Eat</string>
+    <string name="move">Move</string>
+    <string name="house">House</string>
+    <string name="utility">Utility</string>
+    <string name="shopping">Shopping</string>
+    <string name="enjoy">Enjoy</string>
+    <string name="entertainment">Entertainment</string>
+    <string name="outfit">Outfit</string>
+    <string name="travel">Travel</string>
+    <string name="beautify">Beautify</string>
+    <string name="party">Party</string>
+    <string name="offering">Offering</string>
+    <string name="gift">Gift</string>
+    <string name="charity">Charity</string>
+    <string name="health">Health</string>
+    <string name="doctor">Doctor</string>
+    <string name="sport">Sport</string>
+    <string name="child">Child</string>
+    <string name="drop">Drop</string>
+    <string name="fees">Fees</string>
+    <string name="insurance">Insurance</string>
 
 </resources>
