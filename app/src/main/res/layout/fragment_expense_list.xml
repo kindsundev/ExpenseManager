@@ -58,6 +58,11 @@
                         android:textSize="16sp" />
                 </LinearLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/middle_gray"/>
+
                 <LinearLayout
                     android:id="@+id/item_eat"
                     android:layout_width="match_parent"
@@ -264,6 +269,11 @@
                         android:textSize="16sp" />
                 </LinearLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/middle_gray"/>
+
                 <LinearLayout
                     android:id="@+id/item_entertainment"
                     android:layout_width="match_parent"
@@ -442,6 +452,11 @@
                         android:textSize="16sp" />
                 </LinearLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/middle_gray"/>
+
                 <LinearLayout
                     android:id="@+id/item_gift"
                     android:layout_width="match_parent"
@@ -535,6 +550,11 @@
                         android:textColor="@color/black"
                         android:textSize="16sp" />
                 </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/middle_gray"/>
 
                 <LinearLayout
                     android:id="@+id/item_doctor"
@@ -697,6 +717,11 @@
                         android:textColor="@color/black"
                         android:textSize="16sp" />
                 </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/middle_gray"/>
 
                 <LinearLayout
                     android:id="@+id/item_fees"
