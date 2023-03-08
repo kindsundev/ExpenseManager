@@ -7,9 +7,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="8dp"
-        android:layout_marginVertical="16dp"
-        android:background="@color/gray"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -18,109 +15,90 @@
 
         <LinearLayout
             android:id="@+id/item_salary"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            style="@style/LayoutExpenseBoxItem">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_dark_circle"
-                android:contentDescription="@string/transaction"
-                android:minWidth="32dp"
-                android:minHeight="32dp"
-                android:padding="8dp"
-                android:src="@drawable/ic_event_available" />
+            <LinearLayout
+                style="@style/LayoutTitleExpenseParents">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:text="@string/salary"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    style="@style/ItemIconExpenseParents"
+                    android:background="@drawable/bg_dark_circle"
+                    android:minWidth="46dp"
+                    android:minHeight="46dp"
+                    android:src="@drawable/ic_event_available" />
+
+                <TextView
+                    style="@style/ItemTextExpenseParents"
+                    android:text="@string/salary"
+                    android:textColor="@color/secondaryDarkColor" />
+            </LinearLayout>
+
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/item_bonus"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            style="@style/LayoutExpenseBoxItem">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_dark_circle"
-                android:contentDescription="@string/transaction"
-                android:minWidth="32dp"
-                android:minHeight="32dp"
-                android:padding="8dp"
-                android:src="@drawable/ic_radar" />
+            <LinearLayout
+                style="@style/LayoutTitleExpenseParents">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:text="@string/bonus"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    style="@style/ItemIconExpenseParents"
+                    android:background="@drawable/bg_dark_circle"
+                    android:minWidth="46dp"
+                    android:minHeight="46dp"
+                    android:src="@drawable/ic_radar" />
+
+                <TextView
+                    style="@style/ItemTextExpenseParents"
+                    android:text="@string/bonus"
+                    android:textColor="@color/secondaryDarkColor" />
+            </LinearLayout>
+
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/item_interest_rate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            style="@style/LayoutExpenseBoxItem">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_dark_circle"
-                android:contentDescription="@string/transaction"
-                android:minWidth="32dp"
-                android:minHeight="32dp"
-                android:padding="8dp"
-                android:src="@drawable/ic_percent" />
+            <LinearLayout
+                style="@style/LayoutTitleExpenseParents">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:text="@string/interest_rate"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    style="@style/ItemIconExpenseParents"
+                    android:background="@drawable/bg_dark_circle"
+                    android:minWidth="46dp"
+                    android:minHeight="46dp"
+                    android:src="@drawable/ic_percent" />
+
+                <TextView
+                    style="@style/ItemTextExpenseParents"
+                    android:text="@string/interest_rate"
+                    android:textColor="@color/secondaryDarkColor" />
+            </LinearLayout>
+
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/item_other"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            style="@style/LayoutExpenseBoxItem">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_dark_circle"
-                android:contentDescription="@string/transaction"
-                android:minWidth="32dp"
-                android:minHeight="32dp"
-                android:padding="8dp"
-                android:src="@drawable/ic_price_change_orange" />
+            <LinearLayout
+                style="@style/LayoutTitleExpenseParents">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:text="@string/other"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    style="@style/ItemIconExpenseParents"
+                    android:background="@drawable/bg_dark_circle"
+                    android:minWidth="46dp"
+                    android:minHeight="46dp"
+                    android:src="@drawable/ic_price_change_orange" />
+
+                <TextView
+                    style="@style/ItemTextExpenseParents"
+                    android:text="@string/other"
+                    android:textColor="@color/secondaryDarkColor" />
+            </LinearLayout>
+
         </LinearLayout>
 
     </LinearLayout>

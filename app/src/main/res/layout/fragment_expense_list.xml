@@ -24,62 +24,33 @@
             <!--        Needfuls    -->
             <LinearLayout
                 android:id="@+id/ll_needful_parent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="8dp"
-                android:layout_marginVertical="16dp"
-                android:background="@color/gray"
-                android:orientation="vertical">
+                style="@style/LayoutExpenseBoxItem">
 
                 <LinearLayout
                     android:id="@+id/item_needful"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="8dp">
+                    style="@style/LayoutTitleExpenseParents">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/ItemIconExpenseParents"
                         android:background="@drawable/bg_green_circle"
-                        android:contentDescription="@string/transaction"
-                        android:minWidth="32dp"
-                        android:minHeight="32dp"
-                        android:padding="8dp"
+                        android:minWidth="46dp"
+                        android:minHeight="46dp"
                         android:src="@drawable/ic_default" />
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
+                        style="@style/ItemTextExpenseParents"
                         android:text="@string/needful"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
+                        android:textColor="@color/primaryColor" />
                 </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/middle_gray"/>
 
                 <LinearLayout
                     android:id="@+id/item_eat"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="48dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="8dp">
+                    style="@style/LayoutExpenseItemTop">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_green_circle"
-                        android:contentDescription="@string/transaction"
+                        style="@style/ItemIconExpenseGreenColor"
                         android:minWidth="32dp"
                         android:minHeight="32dp"
-                        android:padding="8dp"
                         android:src="@drawable/ic_eat" />
 
                     <TextView
@@ -93,21 +64,12 @@
 
                 <LinearLayout
                     android:id="@+id/item_bill"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="48dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="8dp">
+                    style="@style/LayoutExpenseItemMiddle">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_green_circle"
-                        android:contentDescription="@string/transaction"
+                        style="@style/ItemIconExpenseGreenColor"
                         android:minWidth="32dp"
                         android:minHeight="32dp"
-                        android:padding="8dp"
                         android:src="@drawable/ic_bill" />
 
                     <TextView
@@ -121,21 +83,12 @@
 
                 <LinearLayout
                     android:id="@+id/item_move"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="48dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="8dp">
+                    style="@style/LayoutExpenseItemMiddle">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_green_circle"
-                        android:contentDescription="@string/transaction"
+                        style="@style/ItemIconExpenseGreenColor"
                         android:minWidth="32dp"
                         android:minHeight="32dp"
-                        android:padding="8dp"
                         android:src="@drawable/ic_car" />
 
                     <TextView
@@ -149,21 +102,12 @@
 
                 <LinearLayout
                     android:id="@+id/item_house"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="48dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="8dp">
+                    style="@style/LayoutExpenseItemMiddle">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_green_circle"
-                        android:contentDescription="@string/transaction"
+                        style="@style/ItemIconExpenseGreenColor"
                         android:minWidth="32dp"
                         android:minHeight="32dp"
-                        android:padding="8dp"
                         android:src="@drawable/ic_house" />
 
                     <TextView
@@ -175,51 +119,15 @@
                         android:textSize="16sp" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/item_utility"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="48dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="8dp">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_green_circle"
-                        android:contentDescription="@string/transaction"
-                        android:minWidth="32dp"
-                        android:minHeight="32dp"
-                        android:padding="8dp"
-                        android:src="@drawable/ic_kitchen" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:text="@string/utility"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
-                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/item_shopping"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="48dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="8dp">
+                    style="@style/LayoutExpenseItemBottom">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_green_circle"
-                        android:contentDescription="@string/transaction"
+                        style="@style/ItemIconExpenseGreenColor"
                         android:minWidth="32dp"
                         android:minHeight="32dp"
-                        android:padding="8dp"
                         android:src="@drawable/ic_shopping" />
 
                     <TextView
@@ -235,62 +143,33 @@
             <!--        Enjoy    -->
             <LinearLayout
                 android:id="@+id/ll_enjoy_parent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="8dp"
-                android:layout_marginBottom="16dp"
-                android:background="@color/gray"
-                android:orientation="vertical">
+                style="@style/LayoutExpenseBoxItem">
 
                 <LinearLayout
                     android:id="@+id/item_enjoy"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="8dp">
+                    style="@style/LayoutTitleExpenseParents">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/ItemIconExpenseParents"
                         android:background="@drawable/bg_tea_circle"
-                        android:contentDescription="@string/transaction"
-                        android:minWidth="32dp"
-                        android:minHeight="32dp"
-                        android:padding="8dp"
+                        android:minWidth="46dp"
+                        android:minHeight="46dp"
                         android:src="@drawable/ic_drink" />
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
+                        style="@style/ItemTextExpenseParents"
                         android:text="@string/enjoy"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
+                        android:textColor="@color/tea" />
                 </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/middle_gray"/>
 
                 <LinearLayout
                     android:id="@+id/item_entertainment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="48dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="8dp">
+                    style="@style/LayoutExpenseItemTop">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_tea_circle"
-                        android:contentDescription="@string/transaction"
+                        style="@style/ItemIconExpenseTeaColor"
                         android:minWidth="32dp"
                         android:minHeight="32dp"
-                        android:padding="8dp"
                         android:src="@drawable/ic_entertainment" />
 
                     <TextView
@@ -304,21 +183,12 @@
 
                 <LinearLayout
                     android:id="@+id/item_outfit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="48dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="8dp">
+                    style="@style/LayoutExpenseItemMiddle">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_tea_circle"
-                        android:contentDescription="@string/transaction"
+                        style="@style/ItemIconExpenseTeaColor"
                         android:minWidth="32dp"
                         android:minHeight="32dp"
-                        android:padding="8dp"
                         android:src="@drawable/ic_outfit" />
 
                     <TextView
@@ -332,21 +202,12 @@
 
                 <LinearLayout
                     android:id="@+id/travel"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="48dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="8dp">
+                    style="@style/LayoutExpenseItemMiddle">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_tea_circle"
-                        android:contentDescription="@string/transaction"
+                        style="@style/ItemIconExpenseTeaColor"
                         android:minWidth="32dp"
                         android:minHeight="32dp"
-                        android:padding="8dp"
                         android:src="@drawable/ic_plane" />
 
                     <TextView
@@ -360,21 +221,12 @@
 
                 <LinearLayout
                     android:id="@+id/item_beautify"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="48dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="8dp">
+                    style="@style/LayoutExpenseItemMiddle">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_tea_circle"
-                        android:contentDescription="@string/transaction"
+                        style="@style/ItemIconExpenseTeaColor"
                         android:minWidth="32dp"
                         android:minHeight="32dp"
-                        android:padding="8dp"
                         android:src="@drawable/ic_palette" />
 
                     <TextView
@@ -388,21 +240,12 @@
 
                 <LinearLayout
                     android:id="@+id/item_party"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="48dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="8dp">
+                    style="@style/LayoutExpenseItemBottom">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_tea_circle"
-                        android:contentDescription="@string/transaction"
+                        style="@style/ItemIconExpenseTeaColor"
                         android:minWidth="32dp"
                         android:minHeight="32dp"
-                        android:padding="8dp"
                         android:src="@drawable/ic_party" />
 
                     <TextView
@@ -418,62 +261,33 @@
             <!--        Offering    -->
             <LinearLayout
                 android:id="@+id/ll_offering_parent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="8dp"
-                android:layout_marginBottom="16dp"
-                android:background="@color/gray"
-                android:orientation="vertical">
+                style="@style/LayoutExpenseBoxItem">
 
                 <LinearLayout
                     android:id="@+id/item_offering"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="8dp">
+                    style="@style/LayoutTitleExpenseParents">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/ItemIconExpenseParents"
                         android:background="@drawable/bg_purple_circle"
-                        android:contentDescription="@string/transaction"
-                        android:minWidth="32dp"
-                        android:minHeight="32dp"
-                        android:padding="8dp"
+                        android:minWidth="46dp"
+                        android:minHeight="46dp"
                         android:src="@drawable/ic_request_quote" />
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
+                        style="@style/ItemTextExpenseParents"
                         android:text="@string/offering"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
+                        android:textColor="@color/purple_200" />
                 </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/middle_gray"/>
 
                 <LinearLayout
                     android:id="@+id/item_gift"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="48dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="8dp">
+                    style="@style/LayoutExpenseItemTop">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_purple_circle"
-                        android:contentDescription="@string/transaction"
+                        style="@style/ItemIconExpensePurpleColor"
                         android:minWidth="32dp"
                         android:minHeight="32dp"
-                        android:padding="8dp"
                         android:src="@drawable/ic_gift_card" />
 
                     <TextView
@@ -487,21 +301,12 @@
 
                 <LinearLayout
                     android:id="@+id/item_charity"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="48dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="8dp">
+                    style="@style/LayoutExpenseItemBottom">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_purple_circle"
-                        android:contentDescription="@string/transaction"
+                        style="@style/ItemIconExpensePurpleColor"
                         android:minWidth="32dp"
                         android:minHeight="32dp"
-                        android:padding="8dp"
                         android:src="@drawable/ic_atm" />
 
                     <TextView
@@ -517,62 +322,33 @@
             <!--        Health    -->
             <LinearLayout
                 android:id="@+id/ll_health_parent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="8dp"
-                android:layout_marginBottom="16dp"
-                android:background="@color/gray"
-                android:orientation="vertical">
+                style="@style/LayoutExpenseBoxItem">
 
                 <LinearLayout
                     android:id="@+id/item_health"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="8dp">
+                    style="@style/LayoutTitleExpenseParents">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/ItemIconExpenseParents"
                         android:background="@drawable/bg_red_circle"
-                        android:contentDescription="@string/transaction"
-                        android:minWidth="32dp"
-                        android:minHeight="32dp"
-                        android:padding="8dp"
+                        android:minWidth="46dp"
+                        android:minHeight="46dp"
                         android:src="@drawable/ic_health_and_safety" />
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
+                        style="@style/ItemTextExpenseParents"
                         android:text="@string/health"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
+                        android:textColor="@android:color/holo_red_dark" />
                 </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/middle_gray"/>
 
                 <LinearLayout
                     android:id="@+id/item_doctor"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="48dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="8dp">
+                    style="@style/LayoutExpenseItemTop">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_red_circle"
-                        android:contentDescription="@string/transaction"
+                        style="@style/ItemIconExpenseRedColor"
                         android:minWidth="32dp"
                         android:minHeight="32dp"
-                        android:padding="8dp"
                         android:src="@drawable/ic_medication" />
 
                     <TextView
@@ -586,21 +362,12 @@
 
                 <LinearLayout
                     android:id="@+id/item_sport"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="48dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="8dp">
+                    style="@style/LayoutExpenseItemMiddle">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_red_circle"
-                        android:contentDescription="@string/transaction"
+                        style="@style/ItemIconExpenseRedColor"
                         android:minWidth="32dp"
                         android:minHeight="32dp"
-                        android:padding="8dp"
                         android:src="@drawable/ic_soccer" />
 
                     <TextView
@@ -614,21 +381,12 @@
 
                 <LinearLayout
                     android:id="@+id/item_insurance"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="48dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="8dp">
+                    style="@style/LayoutExpenseItemBottom">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_red_circle"
-                        android:contentDescription="@string/transaction"
+                        style="@style/ItemIconExpenseRedColor"
                         android:minWidth="32dp"
                         android:minHeight="32dp"
-                        android:padding="8dp"
                         android:src="@drawable/ic_yard" />
 
                     <TextView
@@ -644,102 +402,57 @@
             <!--        Child    -->
             <LinearLayout
                 android:id="@+id/ll_child_parent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="8dp"
-                android:layout_marginBottom="16dp"
-                android:background="@color/gray"
-                android:orientation="vertical">
+                style="@style/LayoutExpenseBoxItem">
 
                 <LinearLayout
                     android:id="@+id/item_child"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="8dp">
+                    style="@style/LayoutTitleExpenseParents">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/ItemIconExpenseParents"
                         android:background="@drawable/bg_orange_circle"
-                        android:contentDescription="@string/transaction"
-                        android:minWidth="32dp"
-                        android:minHeight="32dp"
-                        android:padding="8dp"
+                        android:minWidth="46dp"
+                        android:minHeight="46dp"
                         android:src="@drawable/ic_child" />
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
+                        style="@style/ItemTextExpenseParents"
                         android:text="@string/child"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
+                        android:textColor="@color/secondaryDarkColor" />
                 </LinearLayout>
-
 
             </LinearLayout>
 
             <!--        Other    -->
             <LinearLayout
                 android:id="@+id/ll_other_parent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="8dp"
-                android:layout_marginBottom="16dp"
-                android:background="@color/gray"
-                android:orientation="vertical">
+                style="@style/LayoutExpenseBoxItem">
 
                 <LinearLayout
                     android:id="@+id/item_other"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="8dp">
+                    style="@style/LayoutTitleExpenseParents">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/ItemIconExpenseParents"
                         android:background="@drawable/bg_gray_blue_circle"
-                        android:contentDescription="@string/transaction"
-                        android:minWidth="32dp"
-                        android:minHeight="32dp"
-                        android:padding="8dp"
+                        android:minWidth="46dp"
+                        android:minHeight="46dp"
                         android:src="@drawable/ic_price_change" />
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
+                        style="@style/ItemTextExpenseParents"
                         android:text="@string/other"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
+                        android:textColor="@color/gray_blue" />
                 </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/middle_gray"/>
 
                 <LinearLayout
                     android:id="@+id/item_fees"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="48dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="8dp">
+                    style="@style/LayoutExpenseItemTop">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_gray_blue_circle"
-                        android:contentDescription="@string/transaction"
+                        style="@style/ItemIconExpenseGrayBlueColor"
                         android:minWidth="32dp"
                         android:minHeight="32dp"
-                        android:padding="8dp"
                         android:src="@drawable/ic_currency_exchange" />
 
                     <TextView
@@ -753,21 +466,12 @@
 
                 <LinearLayout
                     android:id="@+id/item_drop"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="48dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="8dp">
+                    style="@style/LayoutExpenseItemBottom">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_gray_blue_circle"
-                        android:contentDescription="@string/transaction"
+                        style="@style/ItemIconExpenseGrayBlueColor"
                         android:minWidth="32dp"
                         android:minHeight="32dp"
-                        android:padding="8dp"
                         android:src="@drawable/ic_money_off" />
 
                     <TextView
