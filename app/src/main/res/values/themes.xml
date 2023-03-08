@@ -27,12 +27,16 @@
     <style name="FullScreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowFullscreen">true</item>
     </style>
-    
+
+    <!-- General   -->
+
     <style name="TitleTopFragment" parent="Theme.ExpenseManager">
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">22sp</item>
         <item name="android:textStyle">bold</item>
     </style>
+
+    <!-- Profile Layout   -->
 
     <style name="ImageCircle">
         <item name="cornerSize">50%</item>
@@ -51,13 +55,120 @@
         <item name="android:layout_marginTop">4dp</item>
         <item name="android:background">@drawable/bg_button_white_corner</item>
     </style>
-    
+
+    <!-- NoteFragment Layout -->
+
     <style name="RadioButtonAdd">
         <item name="android:textColor">@color/control_switch_color_selector</item>
         <item name="fontFamily">sans-serif-medium</item>
         <item name="android:gravity">center</item>
         <item name="android:button">@null</item>
         <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="LayoutExpenseBoxItem">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginHorizontal">8dp</item>
+        <item name="android:layout_marginVertical">8dp</item>
+        <item name="android:background">@color/gray</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="LayoutTitleExpenseParents">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@color/greyish</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:padding">8dp</item>
+    </style>
+
+    <style name="ItemIconExpenseParents">
+        <item name="android:padding">8dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+    </style>
+
+    <style name="ItemTextExpenseParents">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="LayoutExpenseItemTop">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">48dp</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:background">@drawable/bg_white_corner_16</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:padding">8dp</item>
+    </style>
+
+    <style name="LayoutExpenseItemMiddle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginVertical">5dp</item>
+        <item name="android:layout_marginStart">48dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:background">@drawable/bg_white_corner_16</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:padding">8dp</item>
+    </style>
+
+    <style name="LayoutExpenseItemBottom">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">48dp</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:layout_marginBottom">16dp</item>
+        <item name="android:background">@drawable/bg_white_corner_16</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:padding">8dp</item>
+    </style>
+
+    <style name="ItemIconExpenseGreenColor">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/bg_green_circle</item>
+        <item name="android:padding">8dp</item>
+    </style>
+
+    <style name="ItemIconExpenseTeaColor">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/bg_tea_circle</item>
+        <item name="android:padding">8dp</item>
+    </style>
+
+    <style name="ItemIconExpensePurpleColor">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/bg_purple_circle</item>
+        <item name="android:padding">8dp</item>
+    </style>
+
+    <style name="ItemIconExpenseRedColor">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/bg_red_circle</item>
+        <item name="android:padding">8dp</item>
+    </style>
+
+    <style name="ItemIconExpenseGrayBlueColor">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/bg_gray_blue_circle</item>
+        <item name="android:padding">8dp</item>
     </style>
 
 </resources>
