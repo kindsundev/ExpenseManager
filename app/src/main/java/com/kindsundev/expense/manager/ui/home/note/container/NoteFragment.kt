@@ -1,4 +1,4 @@
-package com.kindsundev.expense.manager.ui.home.note
+package com.kindsundev.expense.manager.ui.home.note.container
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.databinding.FragmentNoteBinding
-import com.kindsundev.expense.manager.ui.home.note.debt.DebtListFragment
-import com.kindsundev.expense.manager.ui.home.note.expense.ExpenseListFragment
-import com.kindsundev.expense.manager.ui.home.note.income.IncomeListFragment
+import com.kindsundev.expense.manager.ui.home.note.container.debt.DebtListFragment
+import com.kindsundev.expense.manager.ui.home.note.container.expense.ExpenseListFragment
+import com.kindsundev.expense.manager.ui.home.note.container.income.IncomeListFragment
 
 class NoteFragment : Fragment() {
     private var _binding : FragmentNoteBinding? = null

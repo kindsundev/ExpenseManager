@@ -1,4 +1,4 @@
-package com.kindsundev.expense.manager.ui.home.note.debt
+package com.kindsundev.expense.manager.ui.home.note.container.debt
 
 import android.os.Bundle
 import android.view.LayoutInflater

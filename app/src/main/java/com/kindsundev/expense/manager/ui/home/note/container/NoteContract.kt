@@ -1,4 +1,4 @@
-package com.kindsundev.expense.manager.ui.home.note
+package com.kindsundev.expense.manager.ui.home.note.container
 
 interface NoteContract {
 

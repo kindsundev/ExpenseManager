@@ -1,4 +1,4 @@
-package com.kindsundev.expense.manager.ui.home.note.income
+package com.kindsundev.expense.manager.ui.home.note.container.income
 
 import android.os.Bundle
 import android.view.LayoutInflater
