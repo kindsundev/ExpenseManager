@@ -33,8 +33,8 @@
                     <androidx.appcompat.widget.AppCompatImageView
                         style="@style/ItemIconExpenseParents"
                         android:background="@drawable/bg_green_circle"
-                        android:minWidth="46dp"
-                        android:minHeight="46dp"
+                        android:minWidth="42dp"
+                        android:minHeight="42dp"
                         android:src="@drawable/ic_default" />
 
                     <TextView
@@ -49,8 +49,8 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         style="@style/ItemIconExpenseGreenColor"
-                        android:minWidth="32dp"
-                        android:minHeight="32dp"
+                        android:minWidth="28dp"
+                        android:minHeight="28dp"
                         android:src="@drawable/ic_eat" />
 
                     <TextView
@@ -68,8 +68,8 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         style="@style/ItemIconExpenseGreenColor"
-                        android:minWidth="32dp"
-                        android:minHeight="32dp"
+                        android:minWidth="28dp"
+                        android:minHeight="28dp"
                         android:src="@drawable/ic_bill" />
 
                     <TextView
@@ -87,8 +87,8 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         style="@style/ItemIconExpenseGreenColor"
-                        android:minWidth="32dp"
-                        android:minHeight="32dp"
+                        android:minWidth="28dp"
+                        android:minHeight="28dp"
                         android:src="@drawable/ic_car" />
 
                     <TextView
@@ -106,8 +106,8 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         style="@style/ItemIconExpenseGreenColor"
-                        android:minWidth="32dp"
-                        android:minHeight="32dp"
+                        android:minWidth="28dp"
+                        android:minHeight="28dp"
                         android:src="@drawable/ic_house" />
 
                     <TextView
@@ -126,8 +126,8 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         style="@style/ItemIconExpenseGreenColor"
-                        android:minWidth="32dp"
-                        android:minHeight="32dp"
+                        android:minWidth="28dp"
+                        android:minHeight="28dp"
                         android:src="@drawable/ic_shopping" />
 
                     <TextView
@@ -152,8 +152,8 @@
                     <androidx.appcompat.widget.AppCompatImageView
                         style="@style/ItemIconExpenseParents"
                         android:background="@drawable/bg_tea_circle"
-                        android:minWidth="46dp"
-                        android:minHeight="46dp"
+                        android:minWidth="42dp"
+                        android:minHeight="42dp"
                         android:src="@drawable/ic_drink" />
 
                     <TextView
@@ -168,8 +168,8 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         style="@style/ItemIconExpenseTeaColor"
-                        android:minWidth="32dp"
-                        android:minHeight="32dp"
+                        android:minWidth="28dp"
+                        android:minHeight="28dp"
                         android:src="@drawable/ic_entertainment" />
 
                     <TextView
@@ -187,8 +187,8 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         style="@style/ItemIconExpenseTeaColor"
-                        android:minWidth="32dp"
-                        android:minHeight="32dp"
+                        android:minWidth="28dp"
+                        android:minHeight="28dp"
                         android:src="@drawable/ic_outfit" />
 
                     <TextView
@@ -206,8 +206,8 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         style="@style/ItemIconExpenseTeaColor"
-                        android:minWidth="32dp"
-                        android:minHeight="32dp"
+                        android:minWidth="28dp"
+                        android:minHeight="28dp"
                         android:src="@drawable/ic_plane" />
 
                     <TextView
@@ -225,8 +225,8 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         style="@style/ItemIconExpenseTeaColor"
-                        android:minWidth="32dp"
-                        android:minHeight="32dp"
+                        android:minWidth="28dp"
+                        android:minHeight="28dp"
                         android:src="@drawable/ic_palette" />
 
                     <TextView
@@ -244,8 +244,8 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         style="@style/ItemIconExpenseTeaColor"
-                        android:minWidth="32dp"
-                        android:minHeight="32dp"
+                        android:minWidth="28dp"
+                        android:minHeight="28dp"
                         android:src="@drawable/ic_party" />
 
                     <TextView
@@ -270,8 +270,8 @@
                     <androidx.appcompat.widget.AppCompatImageView
                         style="@style/ItemIconExpenseParents"
                         android:background="@drawable/bg_purple_circle"
-                        android:minWidth="46dp"
-                        android:minHeight="46dp"
+                        android:minWidth="42dp"
+                        android:minHeight="42dp"
                         android:src="@drawable/ic_request_quote" />
 
                     <TextView
@@ -286,8 +286,8 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         style="@style/ItemIconExpensePurpleColor"
-                        android:minWidth="32dp"
-                        android:minHeight="32dp"
+                        android:minWidth="28dp"
+                        android:minHeight="28dp"
                         android:src="@drawable/ic_gift_card" />
 
                     <TextView
@@ -305,8 +305,8 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         style="@style/ItemIconExpensePurpleColor"
-                        android:minWidth="32dp"
-                        android:minHeight="32dp"
+                        android:minWidth="28dp"
+                        android:minHeight="28dp"
                         android:src="@drawable/ic_atm" />
 
                     <TextView
@@ -331,8 +331,8 @@
                     <androidx.appcompat.widget.AppCompatImageView
                         style="@style/ItemIconExpenseParents"
                         android:background="@drawable/bg_red_circle"
-                        android:minWidth="46dp"
-                        android:minHeight="46dp"
+                        android:minWidth="42dp"
+                        android:minHeight="42dp"
                         android:src="@drawable/ic_health_and_safety" />
 
                     <TextView
@@ -347,8 +347,8 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         style="@style/ItemIconExpenseRedColor"
-                        android:minWidth="32dp"
-                        android:minHeight="32dp"
+                        android:minWidth="28dp"
+                        android:minHeight="28dp"
                         android:src="@drawable/ic_medication" />
 
                     <TextView
@@ -366,8 +366,8 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         style="@style/ItemIconExpenseRedColor"
-                        android:minWidth="32dp"
-                        android:minHeight="32dp"
+                        android:minWidth="28dp"
+                        android:minHeight="28dp"
                         android:src="@drawable/ic_soccer" />
 
                     <TextView
@@ -385,8 +385,8 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         style="@style/ItemIconExpenseRedColor"
-                        android:minWidth="32dp"
-                        android:minHeight="32dp"
+                        android:minWidth="28dp"
+                        android:minHeight="28dp"
                         android:src="@drawable/ic_yard" />
 
                     <TextView
@@ -411,8 +411,8 @@
                     <androidx.appcompat.widget.AppCompatImageView
                         style="@style/ItemIconExpenseParents"
                         android:background="@drawable/bg_orange_circle"
-                        android:minWidth="46dp"
-                        android:minHeight="46dp"
+                        android:minWidth="42dp"
+                        android:minHeight="42dp"
                         android:src="@drawable/ic_child" />
 
                     <TextView
@@ -435,8 +435,8 @@
                     <androidx.appcompat.widget.AppCompatImageView
                         style="@style/ItemIconExpenseParents"
                         android:background="@drawable/bg_gray_blue_circle"
-                        android:minWidth="46dp"
-                        android:minHeight="46dp"
+                        android:minWidth="42dp"
+                        android:minHeight="42dp"
                         android:src="@drawable/ic_price_change" />
 
                     <TextView
@@ -451,8 +451,8 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         style="@style/ItemIconExpenseGrayBlueColor"
-                        android:minWidth="32dp"
-                        android:minHeight="32dp"
+                        android:minWidth="28dp"
+                        android:minHeight="28dp"
                         android:src="@drawable/ic_currency_exchange" />
 
                     <TextView
@@ -470,8 +470,8 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         style="@style/ItemIconExpenseGrayBlueColor"
-                        android:minWidth="32dp"
-                        android:minHeight="32dp"
+                        android:minWidth="28dp"
+                        android:minHeight="28dp"
                         android:src="@drawable/ic_money_off" />
 
                     <TextView
