@@ -15,7 +15,8 @@
 
         <LinearLayout
             android:id="@+id/item_lend"
-            style="@style/LayoutExpenseBoxItem">
+            style="@style/LayoutExpenseBoxItem"
+            android:contentDescription="@string/lend">
 
             <LinearLayout style="@style/LayoutTitleExpenseParents">
 
@@ -36,7 +37,8 @@
 
         <LinearLayout
             android:id="@+id/item_repayment"
-            style="@style/LayoutExpenseBoxItem">
+            style="@style/LayoutExpenseBoxItem"
+            android:contentDescription="@string/repayment">
 
             <LinearLayout style="@style/LayoutTitleExpenseParents">
 
@@ -57,7 +59,8 @@
 
         <LinearLayout
             android:id="@+id/item_borrow"
-            style="@style/LayoutExpenseBoxItem">
+            style="@style/LayoutExpenseBoxItem"
+            android:contentDescription="@string/borrow">
 
             <LinearLayout style="@style/LayoutTitleExpenseParents">
 
@@ -78,7 +81,8 @@
 
         <LinearLayout
             android:id="@+id/item_debt_collection"
-            style="@style/LayoutExpenseBoxItem">
+            style="@style/LayoutExpenseBoxItem"
+            android:contentDescription="@string/debt_collection">
 
             <LinearLayout style="@style/LayoutTitleExpenseParents">
 

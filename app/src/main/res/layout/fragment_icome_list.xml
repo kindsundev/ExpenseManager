@@ -15,10 +15,10 @@
 
         <LinearLayout
             android:id="@+id/item_salary"
-            style="@style/LayoutExpenseBoxItem">
+            style="@style/LayoutExpenseBoxItem"
+            android:contentDescription="@string/salary">
 
-            <LinearLayout
-                style="@style/LayoutTitleExpenseParents">
+            <LinearLayout style="@style/LayoutTitleExpenseParents">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     style="@style/ItemIconExpenseParents"
@@ -37,10 +37,10 @@
 
         <LinearLayout
             android:id="@+id/item_bonus"
-            style="@style/LayoutExpenseBoxItem">
+            style="@style/LayoutExpenseBoxItem"
+            android:contentDescription="@string/bonus">
 
-            <LinearLayout
-                style="@style/LayoutTitleExpenseParents">
+            <LinearLayout style="@style/LayoutTitleExpenseParents">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     style="@style/ItemIconExpenseParents"
@@ -59,10 +59,10 @@
 
         <LinearLayout
             android:id="@+id/item_interest_rate"
-            style="@style/LayoutExpenseBoxItem">
+            style="@style/LayoutExpenseBoxItem"
+            android:contentDescription="@string/interest_rate">
 
-            <LinearLayout
-                style="@style/LayoutTitleExpenseParents">
+            <LinearLayout style="@style/LayoutTitleExpenseParents">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     style="@style/ItemIconExpenseParents"
@@ -81,10 +81,10 @@
 
         <LinearLayout
             android:id="@+id/item_other"
-            style="@style/LayoutExpenseBoxItem">
+            style="@style/LayoutExpenseBoxItem"
+            android:contentDescription="@string/other">
 
-            <LinearLayout
-                style="@style/LayoutTitleExpenseParents">
+            <LinearLayout style="@style/LayoutTitleExpenseParents">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     style="@style/ItemIconExpenseParents"

@@ -24,7 +24,8 @@
             <!--        Needfuls    -->
             <LinearLayout
                 android:id="@+id/ll_needful_parent"
-                style="@style/LayoutExpenseBoxItem">
+                style="@style/LayoutExpenseBoxItem"
+                android:contentDescription="@string/needful">
 
                 <LinearLayout
                     android:id="@+id/item_needful"
@@ -45,7 +46,8 @@
 
                 <LinearLayout
                     android:id="@+id/item_eat"
-                    style="@style/LayoutExpenseItemTop">
+                    style="@style/LayoutExpenseItemTop"
+                    android:contentDescription="@string/eat">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         style="@style/ItemIconExpenseGreenColor"
@@ -64,7 +66,8 @@
 
                 <LinearLayout
                     android:id="@+id/item_bill"
-                    style="@style/LayoutExpenseItemMiddle">
+                    style="@style/LayoutExpenseItemMiddle"
+                    android:contentDescription="@string/bill">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         style="@style/ItemIconExpenseGreenColor"
@@ -83,7 +86,8 @@
 
                 <LinearLayout
                     android:id="@+id/item_move"
-                    style="@style/LayoutExpenseItemMiddle">
+                    style="@style/LayoutExpenseItemMiddle"
+                    android:contentDescription="@string/move">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         style="@style/ItemIconExpenseGreenColor"
@@ -102,7 +106,8 @@
 
                 <LinearLayout
                     android:id="@+id/item_house"
-                    style="@style/LayoutExpenseItemMiddle">
+                    style="@style/LayoutExpenseItemMiddle"
+                    android:contentDescription="@string/house">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         style="@style/ItemIconExpenseGreenColor"
@@ -122,7 +127,8 @@
 
                 <LinearLayout
                     android:id="@+id/item_shopping"
-                    style="@style/LayoutExpenseItemBottom">
+                    style="@style/LayoutExpenseItemBottom"
+                    android:contentDescription="@string/shopping">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         style="@style/ItemIconExpenseGreenColor"
@@ -143,7 +149,8 @@
             <!--        Enjoy    -->
             <LinearLayout
                 android:id="@+id/ll_enjoy_parent"
-                style="@style/LayoutExpenseBoxItem">
+                style="@style/LayoutExpenseBoxItem"
+                android:contentDescription="@string/enjoy">
 
                 <LinearLayout
                     android:id="@+id/item_enjoy"
@@ -164,7 +171,8 @@
 
                 <LinearLayout
                     android:id="@+id/item_entertainment"
-                    style="@style/LayoutExpenseItemTop">
+                    style="@style/LayoutExpenseItemTop"
+                    android:contentDescription="@string/entertainment">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         style="@style/ItemIconExpenseTeaColor"
@@ -183,7 +191,8 @@
 
                 <LinearLayout
                     android:id="@+id/item_outfit"
-                    style="@style/LayoutExpenseItemMiddle">
+                    style="@style/LayoutExpenseItemMiddle"
+                    android:contentDescription="@string/outfit">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         style="@style/ItemIconExpenseTeaColor"
@@ -201,8 +210,9 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/travel"
-                    style="@style/LayoutExpenseItemMiddle">
+                    android:id="@+id/item_travel"
+                    style="@style/LayoutExpenseItemMiddle"
+                    android:contentDescription="@string/travel">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         style="@style/ItemIconExpenseTeaColor"
@@ -221,7 +231,8 @@
 
                 <LinearLayout
                     android:id="@+id/item_beautify"
-                    style="@style/LayoutExpenseItemMiddle">
+                    style="@style/LayoutExpenseItemMiddle"
+                    android:contentDescription="@string/beautify">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         style="@style/ItemIconExpenseTeaColor"
@@ -240,7 +251,8 @@
 
                 <LinearLayout
                     android:id="@+id/item_party"
-                    style="@style/LayoutExpenseItemBottom">
+                    style="@style/LayoutExpenseItemBottom"
+                    android:contentDescription="@string/party">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         style="@style/ItemIconExpenseTeaColor"
@@ -261,7 +273,8 @@
             <!--        Offering    -->
             <LinearLayout
                 android:id="@+id/ll_offering_parent"
-                style="@style/LayoutExpenseBoxItem">
+                style="@style/LayoutExpenseBoxItem"
+                android:contentDescription="@string/offering">
 
                 <LinearLayout
                     android:id="@+id/item_offering"
@@ -282,7 +295,8 @@
 
                 <LinearLayout
                     android:id="@+id/item_gift"
-                    style="@style/LayoutExpenseItemTop">
+                    style="@style/LayoutExpenseItemTop"
+                    android:contentDescription="@string/gift">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         style="@style/ItemIconExpensePurpleColor"
@@ -301,7 +315,8 @@
 
                 <LinearLayout
                     android:id="@+id/item_charity"
-                    style="@style/LayoutExpenseItemBottom">
+                    style="@style/LayoutExpenseItemBottom"
+                    android:contentDescription="@string/charity">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         style="@style/ItemIconExpensePurpleColor"
@@ -322,7 +337,8 @@
             <!--        Health    -->
             <LinearLayout
                 android:id="@+id/ll_health_parent"
-                style="@style/LayoutExpenseBoxItem">
+                style="@style/LayoutExpenseBoxItem"
+                android:contentDescription="@string/health">
 
                 <LinearLayout
                     android:id="@+id/item_health"
@@ -343,7 +359,8 @@
 
                 <LinearLayout
                     android:id="@+id/item_doctor"
-                    style="@style/LayoutExpenseItemTop">
+                    style="@style/LayoutExpenseItemTop"
+                    android:contentDescription="@string/doctor">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         style="@style/ItemIconExpenseRedColor"
@@ -362,7 +379,8 @@
 
                 <LinearLayout
                     android:id="@+id/item_sport"
-                    style="@style/LayoutExpenseItemMiddle">
+                    style="@style/LayoutExpenseItemMiddle"
+                    android:contentDescription="@string/sport">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         style="@style/ItemIconExpenseRedColor"
@@ -381,7 +399,8 @@
 
                 <LinearLayout
                     android:id="@+id/item_insurance"
-                    style="@style/LayoutExpenseItemBottom">
+                    style="@style/LayoutExpenseItemBottom"
+                    android:contentDescription="@string/insurance">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         style="@style/ItemIconExpenseRedColor"
@@ -406,7 +425,8 @@
 
                 <LinearLayout
                     android:id="@+id/item_child"
-                    style="@style/LayoutTitleExpenseParents">
+                    style="@style/LayoutTitleExpenseParents"
+                    android:contentDescription="@string/child">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         style="@style/ItemIconExpenseParents"
@@ -426,7 +446,8 @@
             <!--        Other    -->
             <LinearLayout
                 android:id="@+id/ll_other_parent"
-                style="@style/LayoutExpenseBoxItem">
+                style="@style/LayoutExpenseBoxItem"
+                android:contentDescription="@string/other">
 
                 <LinearLayout
                     android:id="@+id/item_other"
@@ -447,7 +468,8 @@
 
                 <LinearLayout
                     android:id="@+id/item_fees"
-                    style="@style/LayoutExpenseItemTop">
+                    style="@style/LayoutExpenseItemTop"
+                    android:contentDescription="@string/fees">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         style="@style/ItemIconExpenseGrayBlueColor"
@@ -466,7 +488,8 @@
 
                 <LinearLayout
                     android:id="@+id/item_drop"
-                    style="@style/LayoutExpenseItemBottom">
+                    style="@style/LayoutExpenseItemBottom"
+                    android:contentDescription="@string/drop">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         style="@style/ItemIconExpenseGrayBlueColor"
