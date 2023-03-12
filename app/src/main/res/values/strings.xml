@@ -93,5 +93,15 @@
     <string name="debt_collection">Debt Collection</string>
     <string name="borrow">Borrow</string>
     <string name="lend">Lend</string>
+    <string name="select_a_wallet">Select a wallet</string>
+    <string name="create_transaction">Create Transaction</string>
+    <string name="amount">Amount</string>
+    <string name="category">Category</string>
+    <string name="time">Time</string>
+    <string name="description">Description</string>
+    <string name="show_more">Show More</string>
+    <string name="event">Events</string>
+    <string name="optimization">Optimization</string>
+    <string name="save">Save</string>
 
 </resources>

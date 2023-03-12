@@ -14,7 +14,7 @@
         android:label="BudgetFragment" />
     <fragment
         android:id="@+id/noteFragment"
-        android:name="com.kindsundev.expense.manager.ui.home.note.NoteFragment"
+        android:name="com.kindsundev.expense.manager.ui.home.note.container.NoteFragment"
         android:label="NoteFragment" />
     <fragment
         android:id="@+id/reportFragment"
