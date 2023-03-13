@@ -15,7 +15,11 @@
     <fragment
         android:id="@+id/noteFragment"
         android:name="com.kindsundev.expense.manager.ui.home.note.container.NoteFragment"
-        android:label="NoteFragment" />
+        android:label="NoteFragment">
+        <action
+            android:id="@+id/action_noteFragment_to_transactionFragment"
+            app:destination="@id/transactionFragment" />
+    </fragment>
     <fragment
         android:id="@+id/reportFragment"
         android:name="com.kindsundev.expense.manager.ui.home.report.ReportFragment"
@@ -48,5 +52,12 @@
         <argument
             android:name="user"
             app:argType="com.kindsundev.expense.manager.data.model.UserModel" />
+    </fragment>
+    <fragment
+        android:id="@+id/transactionFragment"
+        android:name="com.kindsundev.expense.manager.ui.home.note.transaction.TransactionFragment"
+        android:label="TransactionFragment"
+        app:popUpTo="@id/noteFragment"
+        app:popUpToInclusive="false" >
     </fragment>
 </navigation>

@@ -23,8 +23,8 @@
                 <androidx.appcompat.widget.AppCompatImageView
                     style="@style/ItemIconExpenseParents"
                     android:background="@drawable/bg_dark_circle"
-                    android:minWidth="46dp"
-                    android:minHeight="46dp"
+                    android:minWidth="34dp"
+                    android:minHeight="34dp"
                     android:src="@drawable/ic_event_available" />
 
                 <TextView
@@ -45,8 +45,8 @@
                 <androidx.appcompat.widget.AppCompatImageView
                     style="@style/ItemIconExpenseParents"
                     android:background="@drawable/bg_dark_circle"
-                    android:minWidth="46dp"
-                    android:minHeight="46dp"
+                    android:minWidth="34dp"
+                    android:minHeight="34dp"
                     android:src="@drawable/ic_radar" />
 
                 <TextView
@@ -67,8 +67,8 @@
                 <androidx.appcompat.widget.AppCompatImageView
                     style="@style/ItemIconExpenseParents"
                     android:background="@drawable/bg_dark_circle"
-                    android:minWidth="46dp"
-                    android:minHeight="46dp"
+                    android:minWidth="34dp"
+                    android:minHeight="34dp"
                     android:src="@drawable/ic_percent" />
 
                 <TextView
@@ -89,8 +89,8 @@
                 <androidx.appcompat.widget.AppCompatImageView
                     style="@style/ItemIconExpenseParents"
                     android:background="@drawable/bg_dark_circle"
-                    android:minWidth="46dp"
-                    android:minHeight="46dp"
+                    android:minWidth="34dp"
+                    android:minHeight="34dp"
                     android:src="@drawable/ic_price_change_orange" />
 
                 <TextView

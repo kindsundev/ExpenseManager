@@ -103,5 +103,6 @@
     <string name="event">Events</string>
     <string name="optimization">Optimization</string>
     <string name="save">Save</string>
+    <string name="_100">$100</string>
 
 </resources>

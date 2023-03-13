@@ -4,8 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.kindsundev.expense.manager.R
+import com.kindsundev.expense.manager.common.Constant
 import com.kindsundev.expense.manager.databinding.FragmentIcomeListBinding
 
 class IncomeListFragment : Fragment() {
@@ -34,7 +37,8 @@ class IncomeListFragment : Fragment() {
     }
 
     private fun startCreateTransaction(content: String) {
-        Toast.makeText(activity, content, Toast.LENGTH_SHORT).show()
+        val bundle = bundleOf(Constant.CATEGORY_TRANSACTION_NAME to content)
+        findNavController().navigate(R.id.transactionFragment, bundle)
     }
 
     override fun onDestroyView() {

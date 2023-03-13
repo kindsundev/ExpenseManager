@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Constant
 import com.kindsundev.expense.manager.databinding.FragmentExpenseListBinding
-import com.kindsundev.expense.manager.ui.home.note.transaction.CreateTransactionFragment
 
 class ExpenseListFragment : Fragment() {
     private var _binding: FragmentExpenseListBinding? = null
@@ -69,8 +71,10 @@ class ExpenseListFragment : Fragment() {
     }
 
     private fun startCreateTransaction(content: String) {
-        val transactionFragment = CreateTransactionFragment.newInstance(content)
-        transactionFragment.show(parentFragmentManager, Constant.BOTTOM_SHEET_TRANSACTION_NAME)
+        val bundle = bundleOf(Constant.CATEGORY_TRANSACTION_NAME to content)
+        findNavController().navigate(R.id.transactionFragment, bundle)
+//        val transactionFragment = CreateTransactionFragment.newInstance(content)
+//        transactionFragment.show(parentFragmentManager, Constant.BOTTOM_SHEET_TRANSACTION_NAME)
     }
 
     override fun onDestroyView() {

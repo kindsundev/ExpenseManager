@@ -42,16 +42,23 @@ class NoteFragment : Fragment() {
             binding!!.btnExpense.id -> addFragment(expenseFragment)
             binding!!.btnIncome.id -> addFragment(incomeFragment)
             binding!!.btnDebt.id -> addFragment(debtFragment)
-            else -> {}
+            else -> { }
         }
     }
 
     private fun addFragment(fragment: Fragment) {
-        parentFragmentManager.beginTransaction()
-            .add(R.id.fl_list, fragment)
-            .commit()
+        if (!fragment.isAdded) {
+            parentFragmentManager.beginTransaction()
+                .add(R.id.fl_list, fragment)
+                .commit()
+        }
     }
 
+    /*
+    * Why i don't use navigation navigation but replace fragment?
+    * => Because if using navigate it will change full screen,
+    *    but what i want is to change the frame in that screen
+    * */
     private fun initListener() {
         binding!!.btnExpense.setOnClickListener { replaceFragment(expenseFragment) }
         binding!!.btnIncome.setOnClickListener { replaceFragment(incomeFragment) }
