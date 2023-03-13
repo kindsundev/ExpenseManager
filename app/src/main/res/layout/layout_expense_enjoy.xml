@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_enjoy_parent"
+    style="@style/LayoutExpenseBoxItem"
+    android:contentDescription="@string/enjoy">
+
+    <LinearLayout
+        android:id="@+id/item_enjoy"
+        style="@style/LayoutTitleExpenseParents">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            style="@style/ItemIconExpenseParents"
+            android:background="@drawable/bg_tea_circle"
+            android:minWidth="42dp"
+            android:minHeight="42dp"
+            android:src="@drawable/ic_drink" />
+
+        <TextView
+            style="@style/ItemTextExpenseParents"
+            android:text="@string/enjoy"
+            android:textColor="@color/tea" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/item_entertainment"
+        style="@style/LayoutExpenseItemTop"
+        android:contentDescription="@string/entertainment">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            style="@style/ItemIconExpenseTeaColor"
+            android:minWidth="28dp"
+            android:minHeight="28dp"
+            android:src="@drawable/ic_entertainment" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/entertainment"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/item_outfit"
+        style="@style/LayoutExpenseItemMiddle"
+        android:contentDescription="@string/outfit">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            style="@style/ItemIconExpenseTeaColor"
+            android:minWidth="28dp"
+            android:minHeight="28dp"
+            android:src="@drawable/ic_outfit" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/outfit"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/item_travel"
+        style="@style/LayoutExpenseItemMiddle"
+        android:contentDescription="@string/travel">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            style="@style/ItemIconExpenseTeaColor"
+            android:minWidth="28dp"
+            android:minHeight="28dp"
+            android:src="@drawable/ic_plane" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/travel"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/item_beautify"
+        style="@style/LayoutExpenseItemMiddle"
+        android:contentDescription="@string/beautify">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            style="@style/ItemIconExpenseTeaColor"
+            android:minWidth="28dp"
+            android:minHeight="28dp"
+            android:src="@drawable/ic_palette" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/beautify"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/item_party"
+        style="@style/LayoutExpenseItemBottom"
+        android:contentDescription="@string/party">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            style="@style/ItemIconExpenseTeaColor"
+            android:minWidth="28dp"
+            android:minHeight="28dp"
+            android:src="@drawable/ic_party" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/party"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+    </LinearLayout>
+</LinearLayout>

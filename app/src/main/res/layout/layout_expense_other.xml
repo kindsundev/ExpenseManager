@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_other_parent"
+    style="@style/LayoutExpenseBoxItem"
+    android:contentDescription="@string/other">
+
+    <LinearLayout
+        android:id="@+id/item_other"
+        style="@style/LayoutTitleExpenseParents">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            style="@style/ItemIconExpenseParents"
+            android:background="@drawable/bg_gray_blue_circle"
+            android:minWidth="42dp"
+            android:minHeight="42dp"
+            android:src="@drawable/ic_price_change" />
+
+        <TextView
+            style="@style/ItemTextExpenseParents"
+            android:text="@string/other"
+            android:textColor="@color/gray_blue" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/item_fees"
+        style="@style/LayoutExpenseItemTop"
+        android:contentDescription="@string/fees">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            style="@style/ItemIconExpenseGrayBlueColor"
+            android:minWidth="28dp"
+            android:minHeight="28dp"
+            android:src="@drawable/ic_currency_exchange" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/fees"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/item_drop"
+        style="@style/LayoutExpenseItemBottom"
+        android:contentDescription="@string/drop">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            style="@style/ItemIconExpenseGrayBlueColor"
+            android:minWidth="28dp"
+            android:minHeight="28dp"
+            android:src="@drawable/ic_money_off" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/drop"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+</LinearLayout>

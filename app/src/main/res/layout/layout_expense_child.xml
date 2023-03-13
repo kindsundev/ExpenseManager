@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_child_parent"
+    style="@style/LayoutExpenseBoxItem">
+
+    <LinearLayout
+        android:id="@+id/item_child"
+        style="@style/LayoutTitleExpenseParents"
+        android:contentDescription="@string/child">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            style="@style/ItemIconExpenseParents"
+            android:background="@drawable/bg_orange_circle"
+            android:minWidth="42dp"
+            android:minHeight="42dp"
+            android:src="@drawable/ic_child" />
+
+        <TextView
+            style="@style/ItemTextExpenseParents"
+            android:text="@string/child"
+            android:textColor="@color/secondaryDarkColor" />
+    </LinearLayout>
+
+</LinearLayout>

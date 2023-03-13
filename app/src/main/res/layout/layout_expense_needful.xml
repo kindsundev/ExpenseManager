@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_needful_parent"
+    style="@style/LayoutExpenseBoxItem"
+    android:contentDescription="@string/needful">
+
+    <LinearLayout
+        android:id="@+id/item_needful"
+        style="@style/LayoutTitleExpenseParents">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            style="@style/ItemIconExpenseParents"
+            android:background="@drawable/bg_green_circle"
+            android:minWidth="42dp"
+            android:minHeight="42dp"
+            android:src="@drawable/ic_default" />
+
+        <TextView
+            style="@style/ItemTextExpenseParents"
+            android:text="@string/needful"
+            android:textColor="@color/primaryColor" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/item_eat"
+        style="@style/LayoutExpenseItemTop"
+        android:contentDescription="@string/eat">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            style="@style/ItemIconExpenseGreenColor"
+            android:minWidth="28dp"
+            android:minHeight="28dp"
+            android:src="@drawable/ic_eat" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/eat"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/item_bill"
+        style="@style/LayoutExpenseItemMiddle"
+        android:contentDescription="@string/bill">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            style="@style/ItemIconExpenseGreenColor"
+            android:minWidth="28dp"
+            android:minHeight="28dp"
+            android:src="@drawable/ic_bill" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/bill"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/item_move"
+        style="@style/LayoutExpenseItemMiddle"
+        android:contentDescription="@string/move">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            style="@style/ItemIconExpenseGreenColor"
+            android:minWidth="28dp"
+            android:minHeight="28dp"
+            android:src="@drawable/ic_car" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/move"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/item_house"
+        style="@style/LayoutExpenseItemMiddle"
+        android:contentDescription="@string/house">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            style="@style/ItemIconExpenseGreenColor"
+            android:minWidth="28dp"
+            android:minHeight="28dp"
+            android:src="@drawable/ic_house" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/house"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/item_shopping"
+        style="@style/LayoutExpenseItemBottom"
+        android:contentDescription="@string/shopping">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            style="@style/ItemIconExpenseGreenColor"
+            android:minWidth="28dp"
+            android:minHeight="28dp"
+            android:src="@drawable/ic_shopping" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/shopping"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+    </LinearLayout>
+</LinearLayout>
