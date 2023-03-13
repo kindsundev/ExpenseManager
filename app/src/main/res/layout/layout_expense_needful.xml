@@ -11,8 +11,8 @@
         <androidx.appcompat.widget.AppCompatImageView
             style="@style/ItemIconExpenseParents"
             android:background="@drawable/bg_green_circle"
-            android:minWidth="42dp"
-            android:minHeight="42dp"
+            android:minWidth="34dp"
+            android:minHeight="34dp"
             android:src="@drawable/ic_default" />
 
         <TextView
@@ -28,8 +28,6 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             style="@style/ItemIconExpenseGreenColor"
-            android:minWidth="28dp"
-            android:minHeight="28dp"
             android:src="@drawable/ic_eat" />
 
         <TextView
@@ -48,8 +46,6 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             style="@style/ItemIconExpenseGreenColor"
-            android:minWidth="28dp"
-            android:minHeight="28dp"
             android:src="@drawable/ic_bill" />
 
         <TextView
@@ -68,8 +64,6 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             style="@style/ItemIconExpenseGreenColor"
-            android:minWidth="28dp"
-            android:minHeight="28dp"
             android:src="@drawable/ic_car" />
 
         <TextView
@@ -88,8 +82,6 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             style="@style/ItemIconExpenseGreenColor"
-            android:minWidth="28dp"
-            android:minHeight="28dp"
             android:src="@drawable/ic_house" />
 
         <TextView
@@ -109,8 +101,6 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             style="@style/ItemIconExpenseGreenColor"
-            android:minWidth="28dp"
-            android:minHeight="28dp"
             android:src="@drawable/ic_shopping" />
 
         <TextView

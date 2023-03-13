@@ -11,8 +11,8 @@
         <androidx.appcompat.widget.AppCompatImageView
             style="@style/ItemIconExpenseParents"
             android:background="@drawable/bg_gray_blue_circle"
-            android:minWidth="42dp"
-            android:minHeight="42dp"
+            android:minWidth="34dp"
+            android:minHeight="34dp"
             android:src="@drawable/ic_price_change" />
 
         <TextView
@@ -28,8 +28,6 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             style="@style/ItemIconExpenseGrayBlueColor"
-            android:minWidth="28dp"
-            android:minHeight="28dp"
             android:src="@drawable/ic_currency_exchange" />
 
         <TextView
@@ -48,8 +46,6 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             style="@style/ItemIconExpenseGrayBlueColor"
-            android:minWidth="28dp"
-            android:minHeight="28dp"
             android:src="@drawable/ic_money_off" />
 
         <TextView

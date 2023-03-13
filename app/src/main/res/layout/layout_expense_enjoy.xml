@@ -11,8 +11,8 @@
         <androidx.appcompat.widget.AppCompatImageView
             style="@style/ItemIconExpenseParents"
             android:background="@drawable/bg_tea_circle"
-            android:minWidth="42dp"
-            android:minHeight="42dp"
+            android:minWidth="34dp"
+            android:minHeight="34dp"
             android:src="@drawable/ic_drink" />
 
         <TextView
@@ -28,8 +28,6 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             style="@style/ItemIconExpenseTeaColor"
-            android:minWidth="28dp"
-            android:minHeight="28dp"
             android:src="@drawable/ic_entertainment" />
 
         <TextView
@@ -48,8 +46,6 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             style="@style/ItemIconExpenseTeaColor"
-            android:minWidth="28dp"
-            android:minHeight="28dp"
             android:src="@drawable/ic_outfit" />
 
         <TextView
@@ -68,8 +64,6 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             style="@style/ItemIconExpenseTeaColor"
-            android:minWidth="28dp"
-            android:minHeight="28dp"
             android:src="@drawable/ic_plane" />
 
         <TextView
@@ -88,8 +82,6 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             style="@style/ItemIconExpenseTeaColor"
-            android:minWidth="28dp"
-            android:minHeight="28dp"
             android:src="@drawable/ic_palette" />
 
         <TextView
@@ -108,8 +100,6 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             style="@style/ItemIconExpenseTeaColor"
-            android:minWidth="28dp"
-            android:minHeight="28dp"
             android:src="@drawable/ic_party" />
 
         <TextView

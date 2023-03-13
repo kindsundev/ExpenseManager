@@ -11,8 +11,8 @@
         <androidx.appcompat.widget.AppCompatImageView
             style="@style/ItemIconExpenseParents"
             android:background="@drawable/bg_purple_circle"
-            android:minWidth="42dp"
-            android:minHeight="42dp"
+            android:minWidth="34dp"
+            android:minHeight="34dp"
             android:src="@drawable/ic_request_quote" />
 
         <TextView
@@ -28,8 +28,6 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             style="@style/ItemIconExpensePurpleColor"
-            android:minWidth="28dp"
-            android:minHeight="28dp"
             android:src="@drawable/ic_gift_card" />
 
         <TextView
@@ -48,8 +46,6 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             style="@style/ItemIconExpensePurpleColor"
-            android:minWidth="28dp"
-            android:minHeight="28dp"
             android:src="@drawable/ic_atm" />
 
         <TextView
