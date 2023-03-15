@@ -284,6 +284,7 @@
                         android:src="@drawable/ic_tag" />
 
                     <LinearLayout
+                        android:id="@+id/item_event"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginStart="8dp"
@@ -366,6 +367,7 @@
                         android:src="@drawable/ic_keyboard_arrow_down_gray" />
 
                     <TextView
+                        android:id="@+id/tv_show_more"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="@string/show_more"
