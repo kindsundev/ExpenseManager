@@ -3,6 +3,8 @@ package com.kindsundev.expense.manager.utils
 import android.util.Patterns
 import com.kindsundev.expense.manager.common.Constant
 import com.kindsundev.expense.manager.common.Status
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.regex.Pattern
 
 fun checkEmailAndPassword(email: String, password: String): Status {
@@ -31,7 +33,7 @@ fun checkName(name: String): Status {
     } else if (isNumeric(name)) {
         Status.WRONG_NAME_HAS_DIGITS
     } else if (isSpecialCharacter(name)) {
-        Status.WRONG_NAME_HAS_SPECIAL_CHARACTER
+        Status.WRONG_HAS_SPECIAL_CHARACTER
     } else {
         Status.VALID_DATA
     }
@@ -66,4 +68,20 @@ fun checkPassword(password: String): Status {
     } else {
         Status.VALID_DATA
     }
+}
+
+fun checkBalance(balance: String): Status  {
+    return if (balance.isEmpty()){
+        Status.WRONG_BALANCE_EMPTY
+    } else if(balance == ".") {
+        Status.WRONG_HAS_SPECIAL_CHARACTER
+    } else {
+        Status.VALID_DATA
+    }
+}
+
+fun getCurrentTime(): String {
+    return LocalDateTime.now()
+        .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
+        .toString().trim()
 }

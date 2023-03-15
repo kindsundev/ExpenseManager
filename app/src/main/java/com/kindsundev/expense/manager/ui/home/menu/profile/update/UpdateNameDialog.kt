@@ -95,7 +95,7 @@ class UpdateNameDialog(
                 activity?.showToast("Name cannot is digits")
                 return false
             }
-            Status.WRONG_NAME_HAS_SPECIAL_CHARACTER -> {
+            Status.WRONG_HAS_SPECIAL_CHARACTER -> {
                 activity?.showToast("Name cannot is special character")
                 return false
             }

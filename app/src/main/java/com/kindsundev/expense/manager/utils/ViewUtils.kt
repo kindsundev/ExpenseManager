@@ -64,3 +64,8 @@ private fun Context.hideKeyboard(view: View) {
 fun Context.showToast(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }
+
+fun Context.requestPremium() {
+    val message = "You must update to premium to be using featured!!"
+    showToast(message)
+}
