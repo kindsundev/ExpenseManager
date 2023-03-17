@@ -13,9 +13,8 @@ import com.kindsundev.expense.manager.ui.home.note.transaction.bottomsheet.creat
 
 class WalletBottomSheet(
     private val wallets: ArrayList<WalletModel>,
-    private val actionListener: WalletListener,
-    private val resultListener: ResultWalletCallback
-) : BottomSheetDialogFragment() {
+    private val actionListener: WalletContract.Listener,
+) : BottomSheetDialogFragment(), ResultWalletCallback{
     private var _binding: BottomSheetWalletBinding? = null
     private val binding get() = _binding
 
@@ -45,14 +44,8 @@ class WalletBottomSheet(
     }
 
     private fun onClickAddWallet() {
-        createWalletDialog = CreateWalletDialog(resultListener)
+        createWalletDialog = CreateWalletDialog(this)
         createWalletDialog.show(parentFragmentManager, createWalletDialog.tag)
-    }
-
-    internal fun addNewWallet(wallet: WalletModel) {
-        wallets.add(wallet)
-        walletAdapter.notifyItemInserted(wallets.size + 1)
-        binding!!.rvWallets.adapter = walletAdapter
     }
 
     fun hideBottomSheet() {
@@ -62,5 +55,9 @@ class WalletBottomSheet(
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onCreateWalletResult(success: Boolean) {
+        // update list
     }
 }

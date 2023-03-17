@@ -13,24 +13,27 @@ import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Status
-import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.DialogCreateWalletBinding
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
-import com.kindsundev.expense.manager.ui.home.note.transaction.TransactionContract
+import com.kindsundev.expense.manager.ui.home.note.transaction.bottomsheet.WalletContract
+import com.kindsundev.expense.manager.ui.home.note.transaction.bottomsheet.WalletPresenter
 import com.kindsundev.expense.manager.utils.*
 
-class CreateWalletDialog (
+class CreateWalletDialog(
     private val callback: ResultWalletCallback
-) : DialogFragment(), TransactionContract.View {
+) : DialogFragment(), WalletContract.View {
     private var _binding: DialogCreateWalletBinding? = null
     private val binding get() = _binding
+
     private val loadingDialog by lazy { LoadingDialog() }
+    private lateinit var walletPresenter: WalletPresenter
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         _binding = DialogCreateWalletBinding.inflate(layoutInflater)
 
         val dialog = MaterialAlertDialogBuilder(
-            requireActivity(), R.style.Theme_ExpenseManager).apply {
+            requireActivity(), R.style.Theme_ExpenseManager
+        ).apply {
             setCancelable(false)
             setView(binding!!.root)
         }.create()
@@ -49,26 +52,19 @@ class CreateWalletDialog (
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        walletPresenter = WalletPresenter(this)
         initListener()
         return binding!!.root
     }
 
     private fun initListener() {
         binding!!.btnCancel.setOnClickListener { dialog!!.dismiss() }
-        binding!!.btnCreate.setOnClickListener { handlerCreateWallet() }
+        binding!!.btnCreate.setOnClickListener { onClickCreateWallet() }
     }
 
-    private fun handlerCreateWallet() {
+    private fun onClickCreateWallet() {
         val name = binding!!.edtName.text.toString().trim()
         val balance = binding!!.edtBalance.text.toString().trim()
-        if (checkValidData(name, balance)){
-            val wallet = getWalletInfo(name, balance)
-            callback.onCreateWalletResult(wallet)
-            this.dismiss()
-        }
-    }
-
-    private fun getWalletInfo(name: String, balance: String): WalletModel {
         val currency = when (binding!!.radioGroupCurrency.checkedRadioButtonId) {
             binding!!.radioBtnUsd.id -> {
                 binding!!.radioBtnUsd.text.toString().trim()
@@ -77,11 +73,11 @@ class CreateWalletDialog (
                 binding!!.radioBtnVnd.text.toString().trim()
             }
         }
-
         val currentTime = getCurrentTime().hashCode()
         val id = (name.hashCode() + currency.hashCode() + balance.hashCode()) + currentTime
-
-        return WalletModel(id, name, currency, balance.toDouble())
+        if (checkValidData(name, balance)) {
+            walletPresenter.handlerCreateWallet(id, name, currency, balance)
+        }
     }
 
     private fun checkValidData(name: String, balance: String): Boolean {
@@ -115,7 +111,7 @@ class CreateWalletDialog (
     }
 
     private fun checkValidBalance(balance: String): Boolean {
-        return when(checkBalance(balance)) {
+        return when (checkBalance(balance)) {
             Status.WRONG_BALANCE_EMPTY -> {
                 activity?.showToast("Don't balance not null")
                 return false
@@ -138,5 +134,18 @@ class CreateWalletDialog (
         Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
     }
 
+    override fun onSuccess(message: String) {
+        callback.onCreateWalletResult(true)
+        Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
+        startLoadingDialog(loadingDialog, parentFragmentManager, false)
+        this.dismiss()
+    }
+
     override fun onSuccess() {}
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+        walletPresenter.cleanUp()
+    }
 }

@@ -13,7 +13,7 @@ import com.kindsundev.expense.manager.databinding.LayoutWalletItemBinding
 
 internal class WalletAdapter(
     private val wallets: ArrayList<WalletModel>,
-    private val listener: WalletListener
+    private val listener: WalletContract.Listener
 ) : RecyclerView.Adapter<WalletAdapter.WalletViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WalletViewHolder {

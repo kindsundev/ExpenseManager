@@ -3,7 +3,6 @@ package com.kindsundev.expense.manager.data.firebase
 import android.net.Uri
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.ktx.Firebase
@@ -75,4 +74,5 @@ class UserFirebase {
         }
     }
 
+    fun getUserUID(): String = user?.uid ?: "null"
 }

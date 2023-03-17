@@ -13,5 +13,7 @@ class Constant {
         const val WALLET_BOTTOM_SHEET_NAME = "WALLET_BOTTOM_SHEET"
         const val CATEGORY_TRANSACTION_NAME = "CATEGORY_TRANSACTION_ITEM"
 
+        const val MY_REFERENCE_NAME = "users"
+        const val MY_REFERENCE_CHILD_WALLETS = "wallets"
     }
 }

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.kindsundev.expense.manager.common.Constant
@@ -12,14 +11,13 @@ import com.kindsundev.expense.manager.common.Logger
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.FragmentTransactionBinding
 import com.kindsundev.expense.manager.ui.home.note.transaction.bottomsheet.WalletBottomSheet
-import com.kindsundev.expense.manager.ui.home.note.transaction.bottomsheet.WalletListener
-import com.kindsundev.expense.manager.ui.home.note.transaction.bottomsheet.create.ResultWalletCallback
+import com.kindsundev.expense.manager.ui.home.note.transaction.bottomsheet.WalletContract
 import com.kindsundev.expense.manager.utils.getCurrentTime
 import com.kindsundev.expense.manager.utils.requestPremium
 import com.kindsundev.expense.manager.utils.showToast
 
 class TransactionFragment : Fragment(),
-    WalletListener, ResultWalletCallback, TransactionContract.View {
+    WalletContract.Listener, TransactionContract.View {
 
     private var _binding: FragmentTransactionBinding? = null
     private val binding get() = _binding
@@ -53,7 +51,7 @@ class TransactionFragment : Fragment(),
     private fun initWalletBottomSheet() {
         // After config realtime database, get data then bind here
         wallets = getTempData()
-        walletBottomSheet = WalletBottomSheet(wallets, this, this)
+        walletBottomSheet = WalletBottomSheet(wallets, this)
         walletBottomSheet.show(parentFragmentManager, Constant.WALLET_BOTTOM_SHEET_NAME)
     }
 
@@ -70,10 +68,6 @@ class TransactionFragment : Fragment(),
     override fun onClickWalletItem(wallet: WalletModel) {
         binding!!.tvTransactionName.text = wallet.name
         walletBottomSheet.hideBottomSheet()
-    }
-
-    override fun onCreateWalletResult(wallet: WalletModel) {
-        walletBottomSheet.addNewWallet(wallet)
     }
 
     private fun initListener() {
