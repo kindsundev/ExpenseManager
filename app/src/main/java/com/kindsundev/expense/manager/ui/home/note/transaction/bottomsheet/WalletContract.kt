@@ -7,6 +7,8 @@ interface WalletContract {
 
     interface Presenter {
         fun handlerCreateWallet(id: Int, name: String, currency: String, balance: String)
+
+        fun handlerGetWallets()
     }
 
     interface View : BaseView {
@@ -16,5 +18,4 @@ interface WalletContract {
     interface Listener {
         fun onClickWalletItem(wallet: WalletModel)
     }
-
 }

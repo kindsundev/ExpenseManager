@@ -24,7 +24,6 @@ class TransactionFragment : Fragment(),
     private var categoryName: String? = null
 
     private lateinit var walletBottomSheet: WalletBottomSheet
-    private lateinit var wallets: ArrayList<WalletModel>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,20 +48,8 @@ class TransactionFragment : Fragment(),
     }
 
     private fun initWalletBottomSheet() {
-        // After config realtime database, get data then bind here
-        wallets = getTempData()
-        walletBottomSheet = WalletBottomSheet(wallets, this)
+        walletBottomSheet = WalletBottomSheet(this)
         walletBottomSheet.show(parentFragmentManager, Constant.WALLET_BOTTOM_SHEET_NAME)
-    }
-
-    private fun getTempData(): ArrayList<WalletModel> {
-        val list = ArrayList<WalletModel>()
-        for (i in 0 until 5) {
-            val wallet = WalletModel(i, "Wallet $i", "USD", 2500.0)
-            list.add(wallet)
-        }
-        Logger.error(list.size.toString())
-        return list
     }
 
     override fun onClickWalletItem(wallet: WalletModel) {
