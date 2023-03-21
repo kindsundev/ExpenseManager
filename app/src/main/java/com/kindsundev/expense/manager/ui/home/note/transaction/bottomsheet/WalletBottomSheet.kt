@@ -9,14 +9,14 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.BottomSheetWalletBinding
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
-import com.kindsundev.expense.manager.ui.home.note.transaction.bottomsheet.create.CreateWalletDialog
-import com.kindsundev.expense.manager.ui.home.note.transaction.bottomsheet.create.ResultWalletCallback
+import com.kindsundev.expense.manager.ui.home.note.transaction.bottomsheet.dialog.CreateWalletDialog
+import com.kindsundev.expense.manager.ui.home.note.transaction.bottomsheet.dialog.ResultWalletCallback
 import com.kindsundev.expense.manager.utils.showToast
 import com.kindsundev.expense.manager.utils.startLoadingDialog
 
 class WalletBottomSheet(
     private val actionListener: WalletContract.Listener,
-) : BottomSheetDialogFragment(), ResultWalletCallback, WalletContract.View {
+) : BottomSheetDialogFragment(), WalletContract.View, ResultWalletCallback.Create {
     private var _binding: BottomSheetWalletBinding? = null
     private val binding get() = _binding
     private val loadingDialog by lazy { LoadingDialog() }
@@ -53,17 +53,19 @@ class WalletBottomSheet(
         createWalletDialog.show(parentFragmentManager, createWalletDialog.tag)
     }
 
-    fun hideBottomSheet() {
-        this.dismiss()
-    }
+    fun hideBottomSheet() { this.dismiss() }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
-    override fun onCreateWalletResult(success: Boolean) {
-        // update list
+    override fun resultCreateWallet(status: Boolean) {
+        if (status) {
+            walletPresenter.handlerGetWallets()
+            wallets.clear()
+            initDataToRecyclerView()
+        }
     }
 
     override fun onSuccess(message: String) {

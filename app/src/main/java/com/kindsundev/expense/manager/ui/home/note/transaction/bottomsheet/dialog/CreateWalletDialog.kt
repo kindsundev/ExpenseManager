@@ -1,4 +1,4 @@
-package com.kindsundev.expense.manager.ui.home.note.transaction.bottomsheet.create
+package com.kindsundev.expense.manager.ui.home.note.transaction.bottomsheet.dialog
 
 import android.app.Dialog
 import android.graphics.Color
@@ -20,7 +20,7 @@ import com.kindsundev.expense.manager.ui.home.note.transaction.bottomsheet.Walle
 import com.kindsundev.expense.manager.utils.*
 
 class CreateWalletDialog(
-    private val callback: ResultWalletCallback
+    private val callback: ResultWalletCallback.Create
 ) : DialogFragment(), WalletContract.View {
     private var _binding: DialogCreateWalletBinding? = null
     private val binding get() = _binding
@@ -135,7 +135,7 @@ class CreateWalletDialog(
     }
 
     override fun onSuccess(message: String) {
-        callback.onCreateWalletResult(true)
+        callback.resultCreateWallet(true)
         Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
         startLoadingDialog(loadingDialog, parentFragmentManager, false)
         this.dismiss()
