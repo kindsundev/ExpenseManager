@@ -37,7 +37,10 @@ class IncomeListFragment : Fragment() {
     }
 
     private fun startCreateTransaction(content: String) {
-        val bundle = bundleOf(Constant.CATEGORY_TRANSACTION_NAME to content)
+        val nameAndType = ArrayList<String>()
+        nameAndType.add(content)
+        nameAndType.add("Income")
+        val bundle = bundleOf(Constant.CATEGORY_TRANSACTION_NAME to nameAndType)
         findNavController().navigate(R.id.transactionFragment, bundle)
     }
 

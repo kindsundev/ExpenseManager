@@ -71,10 +71,11 @@ class ExpenseListFragment : Fragment() {
     }
 
     private fun startCreateTransaction(content: String) {
-        val bundle = bundleOf(Constant.CATEGORY_TRANSACTION_NAME to content)
+        val nameAndType = ArrayList<String>()
+        nameAndType.add(content)
+        nameAndType.add("Expense")
+        val bundle = bundleOf(Constant.CATEGORY_TRANSACTION_NAME to nameAndType)
         findNavController().navigate(R.id.transactionFragment, bundle)
-//        val transactionFragment = CreateTransactionFragment.newInstance(content)
-//        transactionFragment.show(parentFragmentManager, Constant.BOTTOM_SHEET_TRANSACTION_NAME)
     }
 
     override fun onDestroyView() {
