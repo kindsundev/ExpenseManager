@@ -16,9 +16,8 @@ class WalletPresenter(
 
     private var mWallets: ArrayList<WalletModel> = ArrayList()
 
-    override fun handlerCreateWallet(id: Int, name: String, currency: String, balance: String) {
+    override fun handlerCreateWallet(wallet: WalletModel) {
         view.onLoad()
-        val wallet = WalletModel(id, name, currency, balance.toDouble())
         val disposable = walletFirebase.insertWallet(wallet)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -26,7 +25,7 @@ class WalletPresenter(
                 view.onSuccess("Create success")
             }, {
                 view.onError("Please check data from input")
-                Logger.error("Sign In: ${it.message!!}")
+                Logger.error("Create wallet: ${it.message!!}")
             })
         compositeDisposable.add(disposable)
     }

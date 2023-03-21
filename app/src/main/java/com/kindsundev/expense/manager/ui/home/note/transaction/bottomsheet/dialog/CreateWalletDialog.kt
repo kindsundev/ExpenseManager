@@ -13,6 +13,8 @@ import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Status
+import com.kindsundev.expense.manager.data.model.TransactionModel
+import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.DialogCreateWalletBinding
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
 import com.kindsundev.expense.manager.ui.home.note.transaction.bottomsheet.WalletContract
@@ -63,6 +65,13 @@ class CreateWalletDialog(
     }
 
     private fun onClickCreateWallet() {
+        val wallet = initWalletData()
+        if (checkValidData(wallet.name!!, wallet.balance!!.toString())) {
+            walletPresenter.handlerCreateWallet(wallet)
+        }
+    }
+
+    private fun initWalletData(): WalletModel {
         val name = binding!!.edtName.text.toString().trim()
         val balance = binding!!.edtBalance.text.toString().trim()
         val currency = when (binding!!.radioGroupCurrency.checkedRadioButtonId) {
@@ -73,11 +82,10 @@ class CreateWalletDialog(
                 binding!!.radioBtnVnd.text.toString().trim()
             }
         }
-        val currentTime = getCurrentTime().hashCode()
-        val id = (name.hashCode() + currency.hashCode() + balance.hashCode()) + currentTime
-        if (checkValidData(name, balance)) {
-            walletPresenter.handlerCreateWallet(id, name, currency, balance)
-        }
+        val id = hashCodeForID(name, currency, balance, getCurrentTime())
+//        val tempTransaction = TransactionModel(0, "null", "null", 0.0, "null", "null")
+//        return WalletModel(id, name, currency, balance.toDouble(), tempTransaction)
+        return WalletModel(id, name, currency, balance.toDouble())
     }
 
     private fun checkValidData(name: String, balance: String): Boolean {

@@ -6,7 +6,7 @@ import com.kindsundev.expense.manager.ui.base.BaseView
 interface WalletContract {
 
     interface Presenter {
-        fun handlerCreateWallet(id: Int, name: String, currency: String, balance: String)
+        fun handlerCreateWallet(wallet: WalletModel)
 
         fun handlerGetWallets()
     }

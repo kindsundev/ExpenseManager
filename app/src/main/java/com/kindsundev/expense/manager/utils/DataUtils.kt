@@ -85,3 +85,11 @@ fun getCurrentTime(): String {
         .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
         .toString().trim()
 }
+
+fun hashCodeForID(vararg data: String): Int {
+    var result = 0
+    for (item in data) {
+        result += item.hashCode()
+    }
+    return result
+}

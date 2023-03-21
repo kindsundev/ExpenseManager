@@ -7,10 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.LayoutWalletItemBinding
 
-/*
-* After setup realtime database, change List<String> to List<Object>
-*/
-
 internal class WalletAdapter(
     private val wallets: ArrayList<WalletModel>,
     private val listener: WalletContract.Listener
