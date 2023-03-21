@@ -15,5 +15,6 @@ class Constant {
 
         const val MY_REFERENCE_NAME = "users"
         const val MY_REFERENCE_CHILD_WALLETS = "wallets"
+        const val MY_REFERENCE_CHILD_TRANSACTION = "transactions"
     }
 }

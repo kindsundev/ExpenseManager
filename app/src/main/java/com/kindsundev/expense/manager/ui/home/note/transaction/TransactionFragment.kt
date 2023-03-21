@@ -7,27 +7,35 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.kindsundev.expense.manager.common.Constant
-import com.kindsundev.expense.manager.common.Logger
+import com.kindsundev.expense.manager.data.model.TransactionModel
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.FragmentTransactionBinding
+import com.kindsundev.expense.manager.ui.custom.LoadingDialog
 import com.kindsundev.expense.manager.ui.home.note.transaction.bottomsheet.WalletBottomSheet
 import com.kindsundev.expense.manager.ui.home.note.transaction.bottomsheet.WalletContract
-import com.kindsundev.expense.manager.utils.getCurrentTime
-import com.kindsundev.expense.manager.utils.requestPremium
-import com.kindsundev.expense.manager.utils.showToast
+import com.kindsundev.expense.manager.utils.*
 
 class TransactionFragment : Fragment(),
     WalletContract.Listener, TransactionContract.View {
-
     private var _binding: FragmentTransactionBinding? = null
     private val binding get() = _binding
-    private var categoryName: String? = null
 
     private lateinit var walletBottomSheet: WalletBottomSheet
+    private lateinit var wallet: WalletModel
+    private var transactionType: String? = null
+    private var categoryName: String? = null
+
+    private lateinit var transactionPresenter: TransactionPresenter
+    private val loadingDialog by lazy { LoadingDialog() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        categoryName = arguments?.getString(Constant.CATEGORY_TRANSACTION_NAME).toString()
+        val packageReceived = arguments?.getStringArrayList(Constant.CATEGORY_TRANSACTION_NAME)
+        packageReceived?.let {
+            categoryName = packageReceived[0]
+            transactionType = packageReceived[1]
+        }
+        transactionPresenter = TransactionPresenter(this)
     }
 
     override fun onCreateView(
@@ -53,6 +61,7 @@ class TransactionFragment : Fragment(),
     }
 
     override fun onClickWalletItem(wallet: WalletModel) {
+        this.wallet = wallet
         binding!!.tvTransactionName.text = wallet.name
         walletBottomSheet.hideBottomSheet()
     }
@@ -63,27 +72,50 @@ class TransactionFragment : Fragment(),
         binding!!.itemEvent.setOnClickListener { activity?.requestPremium() }
         binding!!.switchOptimization.setOnClickListener { activity?.requestPremium() }
         binding!!.tvShowMore.setOnClickListener { activity?.requestPremium() }
+        binding!!.btnSave.setOnClickListener { onClickSave() }
+    }
 
-        binding!!.btnSave.setOnClickListener {
-            activity?.showToast("Create transaction success")
-            findNavController().popBackStack()
+    private fun onClickSave() {
+        if (binding!!.edtAmount.text.isEmpty()) {
+            activity?.showToast("Please enter your amount")
+        } else {
+            val transaction = initTransactionData()
+            transactionPresenter.createTransaction(wallet.id!!, transaction)
         }
+    }
+
+    private fun initTransactionData(): TransactionModel {
+        val amount = binding!!.edtAmount.text.toString().trim()
+        val date = binding!!.tvTime.text.toString().trim()
+        val note = binding!!.edtDescription.text.toString().trim()
+        val id = hashCodeForID(transactionType!!, categoryName!!, date, note)
+        return TransactionModel(
+            id, transactionType!!, categoryName!!, amount.toDouble(), date, note
+        )
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        transactionPresenter.cleanUp()
     }
 
     override fun onLoad() {
-        TODO("Not yet implemented")
+        startLoadingDialog(loadingDialog, parentFragmentManager, true)
     }
 
     override fun onError(message: String) {
-        TODO("Not yet implemented")
+        startLoadingDialog(loadingDialog, parentFragmentManager, false)
+        activity?.showToast(message)
+    }
+
+    override fun onSuccess(message: String) {
+        activity?.showToast(message)
+        startLoadingDialog(loadingDialog, parentFragmentManager, false)
+        findNavController().popBackStack()
     }
 
     override fun onSuccess() {
-        TODO("Not yet implemented")
+
     }
 }
