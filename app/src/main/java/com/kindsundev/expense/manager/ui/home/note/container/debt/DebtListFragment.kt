@@ -40,7 +40,7 @@ class DebtListFragment : Fragment() {
     private fun startCreateTransaction(content: String) {
         val nameAndType = ArrayList<String>()
         nameAndType.add(content)
-        nameAndType.add("Debt")
+        nameAndType.add(Constant.TRANSACTION_TYPE_DEBT)
         val bundle = bundleOf(Constant.CATEGORY_TRANSACTION_NAME to nameAndType)
         findNavController().navigate(R.id.transactionFragment, bundle)
     }

@@ -12,9 +12,14 @@ class Constant {
 
         const val WALLET_BOTTOM_SHEET_NAME = "WALLET_BOTTOM_SHEET"
         const val CATEGORY_TRANSACTION_NAME = "CATEGORY_TRANSACTION_ITEM"
+        const val TRANSACTION_TYPE_EXPENSE = "Expense"
+        const val TRANSACTION_TYPE_INCOME = "Income"
+        const val TRANSACTION_TYPE_DEBT = "Debt"
 
         const val MY_REFERENCE_NAME = "users"
         const val MY_REFERENCE_CHILD_WALLETS = "wallets"
         const val MY_REFERENCE_CHILD_TRANSACTION = "transactions"
+
+        const val REF_FIELD_BALANCE = "balance"
     }
 }
