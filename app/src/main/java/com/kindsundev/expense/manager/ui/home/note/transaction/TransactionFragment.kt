@@ -74,6 +74,7 @@ class TransactionFragment : Fragment(),
         binding!!.switchOptimization.setOnClickListener { activity?.requestPremium() }
         binding!!.tvShowMore.setOnClickListener { activity?.requestPremium() }
         binding!!.btnSave.setOnClickListener { onClickSave() }
+        binding!!.btnArrowDown.setOnClickListener { onClickArrowDown() }
     }
 
     private fun onClickSave() {
@@ -84,6 +85,10 @@ class TransactionFragment : Fragment(),
             transactionPresenter.createTransaction(wallet.id!!, transaction)
 
         }
+    }
+
+    private fun  onClickArrowDown() {
+        findNavController().popBackStack()
     }
 
     private fun initTransactionData(): TransactionModel {
@@ -127,4 +132,6 @@ class TransactionFragment : Fragment(),
         startLoadingDialog(loadingDialog, parentFragmentManager, false)
         handlerUpdateBalance(transaction.amount)
     }
+
+
 }

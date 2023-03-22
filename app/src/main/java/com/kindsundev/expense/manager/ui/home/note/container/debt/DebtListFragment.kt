@@ -49,4 +49,5 @@ class DebtListFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
 }
