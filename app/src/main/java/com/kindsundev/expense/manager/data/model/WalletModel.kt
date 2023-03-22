@@ -10,6 +10,7 @@ data class WalletModel (
     val id: Int? = 0,
     val name: String? = "",
     val currency: String? = "",
+    val origin: Double? = 0.0,
     val balance: Double? = 0.0,
     val transaction: TransactionModel? = null
 )
