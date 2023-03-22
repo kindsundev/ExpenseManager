@@ -1,5 +1,6 @@
 package com.kindsundev.expense.manager.data.firebase
 
+import com.google.firebase.database.DatabaseReference
 import com.kindsundev.expense.manager.common.Constant
 import com.kindsundev.expense.manager.data.base.BaseFirebase
 import com.kindsundev.expense.manager.data.model.TransactionModel
@@ -25,5 +26,17 @@ class TransactionFirebase : BaseFirebase() {
                 }
         }
 
-    // fun update wallet of wallet..
+    fun updateBalance(walletID: Int, income: Double) = Completable.create { emitter ->
+        initPointerGeneric().child(walletID.toString())
+            .child(Constant.REF_FIELD_BALANCE).setValue(income).addOnCompleteListener {
+                if (!emitter.isDisposed) {
+                    if (it.isSuccessful) {
+                        emitter.onComplete()
+                    } else {
+                        emitter.onError(it.exception!!)
+                    }
+                }
+            }
+    }
+
 }

@@ -21,12 +21,13 @@ class TransactionFragment : Fragment(),
     private val binding get() = _binding
 
     private lateinit var walletBottomSheet: WalletBottomSheet
-    private lateinit var wallet: WalletModel
-    private var transactionType: String? = null
-    private var categoryName: String? = null
-
     private lateinit var transactionPresenter: TransactionPresenter
     private val loadingDialog by lazy { LoadingDialog() }
+
+    private lateinit var wallet: WalletModel
+    private lateinit var transaction: TransactionModel
+    private var transactionType: String? = null
+    private var categoryName: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,8 +80,9 @@ class TransactionFragment : Fragment(),
         if (binding!!.edtAmount.text.isEmpty()) {
             activity?.showToast("Please enter your amount")
         } else {
-            val transaction = initTransactionData()
+            transaction = initTransactionData()
             transactionPresenter.createTransaction(wallet.id!!, transaction)
+
         }
     }
 
@@ -91,6 +93,13 @@ class TransactionFragment : Fragment(),
         val id = hashCodeForID(transactionType!!, categoryName!!, date, note)
         return TransactionModel(
             id, transactionType!!, categoryName!!, amount.toDouble(), date, note
+        )
+    }
+
+    private fun handlerUpdateBalance(amount: Double?) {
+        transactionPresenter.handlerUpdateBalance(
+            wallet.id!!, transactionType!!, wallet.balance!!.toDouble(),
+            amount!!
         )
     }
 
@@ -111,11 +120,11 @@ class TransactionFragment : Fragment(),
 
     override fun onSuccess(message: String) {
         activity?.showToast(message)
-        startLoadingDialog(loadingDialog, parentFragmentManager, false)
         findNavController().popBackStack()
     }
 
     override fun onSuccess() {
-
+        startLoadingDialog(loadingDialog, parentFragmentManager, false)
+        handlerUpdateBalance(transaction.amount)
     }
 }

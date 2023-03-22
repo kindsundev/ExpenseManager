@@ -7,6 +7,9 @@ interface TransactionContract {
 
     interface Presenter {
         fun createTransaction(walletID: Int, transaction: TransactionModel)
+
+        fun handlerUpdateBalance(walletID: Int, transactionType: String, balance: Double, amount: Double)
+
     }
 
     interface View : BaseView {

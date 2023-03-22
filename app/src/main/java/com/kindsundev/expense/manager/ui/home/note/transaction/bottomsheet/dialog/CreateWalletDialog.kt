@@ -83,9 +83,7 @@ class CreateWalletDialog(
             }
         }
         val id = hashCodeForID(name, currency, balance, getCurrentTime())
-//        val tempTransaction = TransactionModel(0, "null", "null", 0.0, "null", "null")
-//        return WalletModel(id, name, currency, balance.toDouble(), tempTransaction)
-        return WalletModel(id, name, currency, balance.toDouble())
+        return WalletModel(id, name, currency, origin = balance.toDouble(), balance.toDouble())
     }
 
     private fun checkValidData(name: String, balance: String): Boolean {
