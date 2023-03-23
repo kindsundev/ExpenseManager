@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.kindsundev.expense.manager.data.model.WalletModel
-import com.kindsundev.expense.manager.databinding.LayoutWalletItemBinding
+import com.kindsundev.expense.manager.databinding.LayoutTransactionWalletItemBinding
 import com.kindsundev.expense.manager.utils.amountFormatDisplay
 
 internal class WalletAdapter(
@@ -15,7 +15,7 @@ internal class WalletAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WalletViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val view = LayoutWalletItemBinding.inflate(layoutInflater)
+        val view = LayoutTransactionWalletItemBinding.inflate(layoutInflater)
         return WalletViewHolder(view)
     }
 
@@ -32,6 +32,6 @@ internal class WalletAdapter(
 
     override fun getItemCount(): Int = wallets.size
 
-    inner class WalletViewHolder(val binding: LayoutWalletItemBinding) :
+    inner class WalletViewHolder(val binding: LayoutTransactionWalletItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 }
