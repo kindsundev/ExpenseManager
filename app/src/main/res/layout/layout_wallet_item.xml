@@ -12,7 +12,6 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:background="@drawable/bg_yellow_circle"
-        android:padding="5dp"
         android:src="@drawable/ic_account_balance" />
 
     <LinearLayout
@@ -23,7 +22,7 @@
         android:layout_centerVertical="true"
         android:layout_toEndOf="@id/img_btn_wallet"
         android:orientation="vertical"
-        android:paddingHorizontal="16dp"
+        android:paddingHorizontal="24dp"
         android:weightSum="2">
 
         <TextView

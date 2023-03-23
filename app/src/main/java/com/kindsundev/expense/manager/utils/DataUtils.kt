@@ -1,5 +1,6 @@
 package com.kindsundev.expense.manager.utils
 
+import android.icu.text.DecimalFormat
 import android.util.Patterns
 import com.kindsundev.expense.manager.common.Constant
 import com.kindsundev.expense.manager.common.Status
@@ -92,4 +93,8 @@ fun hashCodeForID(vararg data: String): Int {
         result += item.hashCode()
     }
     return result
+}
+
+fun amountFormatDisplay(amount: String): String {
+    return DecimalFormat("###,###,###").format(amount.toDouble())
 }
