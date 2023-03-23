@@ -103,7 +103,8 @@
     <string name="event">Events</string>
     <string name="optimization">Optimization</string>
     <string name="save">Save</string>
-    <string name="_100">$100</string>
+    <string name="_100">$ 100.000</string>
+    <string name="_100_00">100.000.000</string>
     <string name="balance">Balance</string>
     <string name="create_wallet">Create Wallet</string>
     <string name="currency">Currency</string>
@@ -111,5 +112,13 @@
     <string name="cancel">Cancel</string>
     <string name="usd">USD</string>
     <string name="vnd">VND</string>
+    <string name="upgrade">Upgrade</string>
+    <string name="dollar">$</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="_500_000">$ 500.000</string>
+    <string name="_21">21</string>
+    <string name="march_2023">March, 2023</string>
+    <string name="_100_500_000">$ 100.500.000</string>
+    <string name="note">Note</string>
 
 </resources>
