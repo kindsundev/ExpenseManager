@@ -14,6 +14,7 @@
     <string name="to_sign_up">Don\'t Have Account? Signup</string>
     <string name="to_sign_in">Do you already have an account? Signin</string>
     <string name="wallet">Wallet</string>
+    <string name="bag">Bag</string>
     <string name="budget">Budget</string>
     <string name="add_note">Add Note</string>
     <string name="other">Other</string>

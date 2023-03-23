@@ -98,7 +98,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:background="@drawable/bg_green_circle"
-                android:padding="5dp"
+                android:padding="10dp"
                 android:src="@drawable/ic_account_balance" />
 
             <TextView
@@ -107,7 +107,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_marginHorizontal="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="12dp"
                 android:layout_toStartOf="@id/btn_visibility"
                 android:layout_toEndOf="@id/img_wallet"
                 android:lines="1"
@@ -120,7 +120,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="12dp"
                 android:background="@android:color/transparent"
                 android:src="@drawable/ic_visibility_off" />
 
@@ -164,8 +164,8 @@
         android:id="@+id/rcv_transactions_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="16dp"
         android:layout_marginHorizontal="8dp"
-        android:layout_marginVertical="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

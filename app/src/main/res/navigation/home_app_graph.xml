@@ -2,12 +2,12 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/home_app_graph"
-    app:startDestination="@id/walletFragment">
+    app:startDestination="@id/bagFragment">
 
     <fragment
-        android:id="@+id/walletFragment"
-        android:name="com.kindsundev.expense.manager.ui.home.wallet.WalletFragment"
-        android:label="WalletFragment" />
+        android:id="@+id/bagFragment"
+        android:name="com.kindsundev.expense.manager.ui.home.wallet.BagFragment"
+        android:label="BagFragment" />
     <fragment
         android:id="@+id/budgetFragment"
         android:name="com.kindsundev.expense.manager.ui.home.budget.BudgetFragment"
