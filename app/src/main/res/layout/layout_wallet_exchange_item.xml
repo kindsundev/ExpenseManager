@@ -2,12 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/bg_white_corner_5"
+    android:layout_marginBottom="16dp"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp">
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="8dp"
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/tv_day_number"
@@ -17,8 +20,10 @@
             android:layout_alignParentTop="true"
             android:layout_centerVertical="true"
             android:text="@string/_21"
+            android:layout_marginStart="8dp"
             android:textColor="@color/black"
-            android:textSize="32sp" />
+            android:textSize="38sp"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:id="@+id/item_over_view"
@@ -27,9 +32,10 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="4dp"
             android:layout_toEndOf="@id/tv_day_number"
-            android:orientation="vertical"
-            android:paddingHorizontal="8dp">
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -47,7 +53,7 @@
                     android:text="@string/tuesday"
                     android:textAlignment="viewStart"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/tv_new_amount"
@@ -91,7 +97,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcv_transaction_detail"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp" />
+        android:paddingHorizontal="8dp"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

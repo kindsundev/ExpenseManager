@@ -23,7 +23,7 @@
             android:layout_height="match_parent"
             app:defaultNavHost="true"
             app:navGraph="@navigation/home_app_graph"
-            tools:layout="@layout/fragment_wallet" />
+            tools:layout="@layout/fragment_bag" />
 
     </FrameLayout>
 
