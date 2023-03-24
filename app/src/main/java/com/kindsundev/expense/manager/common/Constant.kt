@@ -16,8 +16,8 @@ class Constant {
         const val TRANSACTION_TYPE_INCOME = "Income"
         const val TRANSACTION_TYPE_DEBT = "Debt"
 
-        const val MY_SHARED_PREFERENCES_NAME = "SAVE_CURRENT_FRAGMENT"
-        const val MY_BUTTON_STATUS = "CURRENT_BUTTON_CHECKED"
+        const val NOTE_FRAGMENT_BUTTON_LIST_STATUS = "CURRENT_LIST_INIT"
+        const val BAG_FRAGMENT_BUTTON_VISIBLE_ID = "CURRENT_STATE_VISIBLE"
 
         const val MY_REFERENCE_NAME = "users"
         const val MY_REFERENCE_CHILD_WALLETS = "wallets"

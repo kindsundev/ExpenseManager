@@ -1,14 +1,13 @@
 package com.kindsundev.expense.manager.ui.home.note.container
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Constant
+import com.kindsundev.expense.manager.data.shared.PreferenceHelper
 import com.kindsundev.expense.manager.databinding.FragmentNoteBinding
 import com.kindsundev.expense.manager.ui.home.note.container.debt.DebtListFragment
 import com.kindsundev.expense.manager.ui.home.note.container.expense.ExpenseListFragment
@@ -23,11 +22,7 @@ class NoteFragment : Fragment() {
     private lateinit var incomeFragment: IncomeListFragment
     private lateinit var debtFragment: DebtListFragment
 
-    private val sharedPref by lazy {
-        activity?.getSharedPreferences(Constant.MY_SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
-    }
     private var beforeCheckedId by Delegates.notNull<Int>()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,17 +37,19 @@ class NoteFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentNoteBinding.inflate(inflater, container, false)
-        getCurrentChecked()
+        getCurrentButtonChecked()
         initDefaultList()
         initListener()
         return binding!!.root
     }
 
-    private fun getCurrentChecked() {
-        if (sharedPref == null) {
+    private fun getCurrentButtonChecked() {
+        beforeCheckedId = PreferenceHelper.getInteger(
+            requireContext(), Constant.NOTE_FRAGMENT_BUTTON_LIST_STATUS, 0
+        )
+        if (beforeCheckedId == 0) {
             binding!!.btnExpense.isChecked = true
         } else {
-            beforeCheckedId = sharedPref!!.getInt(Constant.MY_BUTTON_STATUS, 0)
             when (beforeCheckedId) {
                 binding!!.btnExpense.id -> {
                     binding!!.btnExpense.isChecked = true
@@ -106,9 +103,10 @@ class NoteFragment : Fragment() {
     }
 
     private fun saveRadioButtonState() {
-        sharedPref?.edit {
-            this.putInt(Constant.MY_BUTTON_STATUS, binding!!.toggle.checkedRadioButtonId)
-        }
+        val currentValue = binding!!.toggle.checkedRadioButtonId
+        PreferenceHelper.setInteger(
+            requireContext(), Constant.NOTE_FRAGMENT_BUTTON_LIST_STATUS, currentValue
+        )
     }
 
     override fun onDestroyView() {
