@@ -106,6 +106,7 @@
     <string name="save">Save</string>
     <string name="_100">$ 100.000</string>
     <string name="_100_00">100.000.000</string>
+    <string name="_0">0</string>
     <string name="balance">Balance</string>
     <string name="create_wallet">Create Wallet</string>
     <string name="currency">Currency</string>
@@ -121,5 +122,10 @@
     <string name="march_2023">March, 2023</string>
     <string name="_100_500_000">$ 100.500.000</string>
     <string name="note">Note</string>
+    <string name="prepare_wallet">Prepare Wallet</string>
+    <string name="you_already_have_a_wallet">You already have a wallet?</string>
+    <string name="privacy_and_security_policy">Privacy and security policy</string>
+    <string name="select_wallet">Select Wallet</string>
+    <string name="required_create_wallet">You don\'t have a wallet. \nPlease create it!</string>
 
 </resources>
