@@ -8,7 +8,7 @@ import android.view.WindowManager
 import android.widget.Toast
 import com.kindsundev.expense.manager.databinding.ActivitySplashingBinding
 import com.kindsundev.expense.manager.utils.isNetWorkAvailable
-import com.kindsundev.expense.manager.utils.startHomeActivity
+import com.kindsundev.expense.manager.utils.startPrepareWalletActivity
 import com.kindsundev.expense.manager.utils.startSignInActivity
 import kotlinx.coroutines.*
 
@@ -54,7 +54,7 @@ class SplashingActivity : AppCompatActivity(), SplashingContact.View {
     override fun isLoggedIn() {
         activityScope.launch {
             delay(1000)
-            startHomeActivity()
+            startPrepareWalletActivity()
         }
     }
 

@@ -7,9 +7,9 @@ import android.view.View
 import android.widget.Toast
 
 import com.kindsundev.expense.manager.databinding.ActivitySignInBinding
-import com.kindsundev.expense.manager.utils.startHomeActivity
 import com.kindsundev.expense.manager.ui.signup.SignUpActivity
 import com.kindsundev.expense.manager.utils.onFeatureIsDevelop
+import com.kindsundev.expense.manager.utils.startPrepareWalletActivity
 
 class SignInActivity : AppCompatActivity(), SignInContract.View {
     private lateinit var binding: ActivitySignInBinding
@@ -57,7 +57,7 @@ class SignInActivity : AppCompatActivity(), SignInContract.View {
         binding.progressBar.visibility = View.GONE
         binding.tvForgetPassword.visibility = View.VISIBLE
         Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
-        startHomeActivity()
+        startPrepareWalletActivity()
     }
 
     override fun onDestroy() {

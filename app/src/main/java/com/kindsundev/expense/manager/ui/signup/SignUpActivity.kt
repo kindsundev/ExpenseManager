@@ -6,7 +6,7 @@ import android.view.View
 import android.widget.Toast
 import com.kindsundev.expense.manager.databinding.ActivitySignUpBinding
 import com.kindsundev.expense.manager.utils.onFeatureIsDevelop
-import com.kindsundev.expense.manager.utils.startHomeActivity
+import com.kindsundev.expense.manager.utils.startPrepareWalletActivity
 
 class SignUpActivity : AppCompatActivity(), SignUpContract.View {
     private lateinit var binding: ActivitySignUpBinding
@@ -52,7 +52,7 @@ class SignUpActivity : AppCompatActivity(), SignUpContract.View {
         binding.progressBar.visibility = View.GONE
         binding.tvForgetPassword.visibility = View.VISIBLE
         Toast.makeText(this, "Register successful", Toast.LENGTH_SHORT).show()
-        startHomeActivity()
+        startPrepareWalletActivity()
     }
 
     override fun onDestroy() {

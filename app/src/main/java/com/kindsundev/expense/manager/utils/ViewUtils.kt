@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.kindsundev.expense.manager.common.Constant
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
 import com.kindsundev.expense.manager.ui.home.HomeActivity
+import com.kindsundev.expense.manager.ui.prepare.PrepareWalletActivity
 import com.kindsundev.expense.manager.ui.signin.SignInActivity
 
 fun Context.startSignInActivity() =
@@ -23,6 +24,12 @@ fun Context.startSignInActivity() =
 
 fun Context.startHomeActivity() =
     Intent(this, HomeActivity::class.java).also {
+        it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(it)
+    }
+
+fun Context.startPrepareWalletActivity() =
+    Intent(this, PrepareWalletActivity::class.java).also {
         it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(it)
     }
