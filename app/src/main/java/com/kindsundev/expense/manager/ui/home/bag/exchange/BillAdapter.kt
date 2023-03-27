@@ -1,10 +1,10 @@
-package com.kindsundev.expense.manager.ui.home.wallet.exchange
+package com.kindsundev.expense.manager.ui.home.bag.exchange
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.kindsundev.expense.manager.databinding.LayoutWalletBillItemBinding
-import com.kindsundev.expense.manager.ui.home.wallet.BagContract
+import com.kindsundev.expense.manager.ui.home.bag.BagContract
 
 class BillAdapter(
     private val transactions: ArrayList<String>,

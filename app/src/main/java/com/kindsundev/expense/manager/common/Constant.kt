@@ -17,12 +17,16 @@ class Constant {
         const val TRANSACTION_TYPE_DEBT = "Debt"
 
         const val NOTE_FRAGMENT_BUTTON_LIST_STATUS = "CURRENT_LIST_INIT"
-        const val BAG_FRAGMENT_BUTTON_VISIBLE_ID = "CURRENT_STATE_VISIBLE"
 
         const val MY_REFERENCE_NAME = "users"
         const val MY_REFERENCE_CHILD_WALLETS = "wallets"
         const val MY_REFERENCE_CHILD_TRANSACTION = "transactions"
 
         const val REF_FIELD_BALANCE = "balance"
+        const val FAKE_DATA_NULL = "[404] -> this transaction is null"
+
+        const val KEY_WALLET = "wallets"
+        const val KEY_TRANSACTION = "transactions"
+        const val KEY_CURRENT_WALLET = "CURRENT_WALLET_CLICKED"
     }
 }

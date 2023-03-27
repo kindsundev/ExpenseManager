@@ -97,6 +97,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
+                android:layout_marginStart="2dp"
                 android:background="@drawable/bg_green_circle"
                 android:padding="10dp"
                 android:src="@drawable/ic_account_balance" />
@@ -106,13 +107,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_marginHorizontal="8dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_toStartOf="@id/btn_visibility"
                 android:layout_toEndOf="@id/img_wallet"
+                android:fontFamily="sans-serif-medium"
                 android:lines="1"
                 android:text="@string/name"
-                android:textSize="16sp" />
+                android:textSize="22sp" />
 
             <ImageButton
                 android:id="@+id/btn_visibility"
@@ -120,42 +122,37 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="11dp"
+                android:layout_marginEnd="2dp"
                 android:background="@android:color/transparent"
                 android:src="@drawable/ic_visibility_off" />
 
-            <LinearLayout
-                android:id="@+id/item_balance"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/tv_currency"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/img_wallet"
+                android:layout_below="@id/img_wallet"
                 android:layout_alignParentStart="true"
+                android:layout_marginStart="2dp"
+                android:text="@string/dollar"
+                android:textAlignment="center"
+                android:textColor="@color/primaryColor"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_balance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/img_wallet"
                 android:layout_alignParentEnd="true"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:layout_marginStart="16dp"
+                android:layout_toEndOf="@id/img_wallet"
+                android:lines="1"
+                android:text="@string/balance"
+                android:textColor="@color/primaryColor"
+                android:textSize="22sp" />
 
-                <TextView
-                    android:id="@+id/btn_currency"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:paddingHorizontal="10dp"
-                    android:text="@string/dollar"
-                    android:textColor="@color/primaryColor"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tv_balance"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="8dp"
-                    android:gravity="center_vertical"
-                    android:text="@string/_100_00"
-                    android:textColor="@color/primaryColor"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
         </RelativeLayout>
 
     </LinearLayout>
@@ -164,8 +161,8 @@
         android:id="@+id/rcv_transactions_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
         android:layout_marginHorizontal="8dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
