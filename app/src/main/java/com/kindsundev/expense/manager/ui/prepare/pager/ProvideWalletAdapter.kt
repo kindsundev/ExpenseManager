@@ -1,4 +1,4 @@
-package com.kindsundev.expense.manager.ui.home.note.transaction.bottomsheet
+package com.kindsundev.expense.manager.ui.prepare.pager
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -6,21 +6,25 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.LayoutWalletItemBinding
+import com.kindsundev.expense.manager.ui.prepare.PrepareWalletContract
 import com.kindsundev.expense.manager.utils.amountFormatDisplay
 
-internal class WalletAdapter(
+class ProvideWalletAdapter(
     private val wallets: ArrayList<WalletModel>,
-    private val listener: WalletContract.Listener
-) : RecyclerView.Adapter<WalletAdapter.WalletViewHolder>() {
+    private val listener: PrepareWalletContract.Listener
+) : RecyclerView.Adapter<ProvideWalletAdapter.ProvideWalletViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WalletViewHolder {
+    inner class ProvideWalletViewHolder(val binding: LayoutWalletItemBinding):
+            RecyclerView.ViewHolder(binding.root)
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProvideWalletViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val view = LayoutWalletItemBinding.inflate(layoutInflater)
-        return WalletViewHolder(view)
+        return ProvideWalletViewHolder(view)
     }
 
     @SuppressLint("SetTextI18n")
-    override fun onBindViewHolder(holder: WalletViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ProvideWalletViewHolder, position: Int) {
         val wallet = wallets[position]
         holder.binding.tvName.text = wallet.name
         holder.binding.tvBalance.text =
@@ -31,7 +35,4 @@ internal class WalletAdapter(
     }
 
     override fun getItemCount(): Int = wallets.size
-
-    inner class WalletViewHolder(val binding: LayoutWalletItemBinding) :
-        RecyclerView.ViewHolder(binding.root)
 }

@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/bagFragment"
-        android:name="com.kindsundev.expense.manager.ui.home.wallet.BagFragment"
+        android:name="com.kindsundev.expense.manager.ui.home.bag.BagFragment"
         android:label="BagFragment" />
     <fragment
         android:id="@+id/budgetFragment"
