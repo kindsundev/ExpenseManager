@@ -83,7 +83,7 @@ fun checkBalance(balance: String): Status  {
 
 fun getCurrentTime(): String {
     return LocalDateTime.now()
-        .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
+        .format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
         .toString().trim()
 }
 
