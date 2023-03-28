@@ -134,7 +134,7 @@
                 android:layout_below="@id/img_wallet"
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="2dp"
-                android:text="@string/dollar"
+                android:text="@string/usd"
                 android:textAlignment="center"
                 android:textColor="@color/primaryColor"
                 android:textSize="22sp"
