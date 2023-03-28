@@ -36,6 +36,8 @@ open class BaseFirebase {
                         }
                     }
                     subscriber.onComplete()
+                } else {
+                    subscriber.onComplete()
                 }
             }
 
