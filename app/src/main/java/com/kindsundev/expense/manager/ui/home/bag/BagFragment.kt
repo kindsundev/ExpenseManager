@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kindsundev.expense.manager.R
-import com.kindsundev.expense.manager.common.Logger
 import com.kindsundev.expense.manager.data.model.TransactionModel
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.FragmentBagBinding
@@ -70,7 +69,7 @@ class BagFragment : Fragment(), BagContract.Listener, BagContract.View {
 
     private fun initRecyclerViewTransactions() {
         val mList = initTempList()
-        val mAdapter = ExchangeAdapter(mList, this)
+        val mAdapter = ExchangeAdapter(mTransactions, this)
         binding!!.rcvTransactionsContainer.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = mAdapter
@@ -112,8 +111,8 @@ class BagFragment : Fragment(), BagContract.Listener, BagContract.View {
         stateBalanceVisibility = false
     }
 
-    override fun onClickTransaction(transaction: String) {
-        activity?.showToast(transaction)
+    override fun onClickTransaction(transaction: TransactionModel) {
+        activity?.showToast(transaction.type.toString())
     }
 
     override fun onSuccess(key: String) {

@@ -13,7 +13,6 @@ import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Status
-import com.kindsundev.expense.manager.data.model.TransactionModel
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.DialogCreateWalletBinding
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
@@ -82,7 +81,7 @@ class CreateWalletDialog(
                 binding!!.radioBtnVnd.text.toString().trim()
             }
         }
-        val id = hashCodeForID(name, currency, balance, getCurrentTime())
+        val id = hashCodeForID(name, currency, balance, getCurrentDate())
         return WalletModel(id, name, currency, origin = balance.toDouble(), balance.toDouble())
     }
 

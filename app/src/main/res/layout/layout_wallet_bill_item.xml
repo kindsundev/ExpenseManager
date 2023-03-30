@@ -24,7 +24,7 @@
         android:layout_toStartOf="@id/tv_amount"
         android:layout_toEndOf="@id/ic_category"
         android:orientation="vertical"
-        android:paddingHorizontal="8dp">
+        android:paddingHorizontal="12dp">
 
         <TextView
             android:id="@+id/tv_category_name"

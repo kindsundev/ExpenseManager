@@ -12,9 +12,9 @@ class Constant {
 
         const val WALLET_BOTTOM_SHEET_NAME = "WALLET_BOTTOM_SHEET"
         const val CATEGORY_TRANSACTION_NAME = "CATEGORY_TRANSACTION_ITEM"
-        const val TRANSACTION_TYPE_EXPENSE = "Expense"
-        const val TRANSACTION_TYPE_INCOME = "Income"
-        const val TRANSACTION_TYPE_DEBT = "Debt"
+        const val TRANSACTION_TYPE_EXPENSE = "expense"
+        const val TRANSACTION_TYPE_INCOME = "income"
+        const val TRANSACTION_TYPE_DEBT = "debt"
 
         const val NOTE_FRAGMENT_BUTTON_LIST_STATUS = "CURRENT_LIST_INIT"
 

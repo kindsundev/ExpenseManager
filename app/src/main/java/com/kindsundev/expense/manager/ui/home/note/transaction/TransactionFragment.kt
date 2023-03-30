@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.kindsundev.expense.manager.common.Constant
+import com.kindsundev.expense.manager.common.Logger
 import com.kindsundev.expense.manager.data.model.TransactionModel
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.FragmentTransactionBinding
@@ -53,7 +54,7 @@ class TransactionFragment : Fragment(),
 
     private fun initView() {
         binding!!.tvCategoryName.text = categoryName
-        binding!!.tvTime.text = getCurrentTime()
+        binding!!.tvTime.text = getCurrentDate()
     }
 
     private fun initWalletBottomSheet() {
@@ -83,7 +84,6 @@ class TransactionFragment : Fragment(),
         } else {
             transaction = initTransactionData()
             transactionPresenter.createTransaction(wallet.id!!, transaction)
-
         }
     }
 
@@ -132,6 +132,4 @@ class TransactionFragment : Fragment(),
         startLoadingDialog(loadingDialog, parentFragmentManager, false)
         handlerUpdateBalance(transaction.amount)
     }
-
-
 }

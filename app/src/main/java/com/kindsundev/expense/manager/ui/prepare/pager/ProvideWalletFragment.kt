@@ -97,7 +97,6 @@ class ProvideWalletFragment : Fragment(),
         wallets = prepareWalletPresenter.getWallets()
         walletAdapter = ProvideWalletAdapter(wallets, this)
         binding!!.rcvWallets.adapter = walletAdapter
-        Logger.error(wallets.isEmpty().toString())
         if (wallets.isEmpty()) {
             binding!!.rcvWallets.visibility = View.GONE
             binding!!.tvMessageNull.visibility = View.VISIBLE

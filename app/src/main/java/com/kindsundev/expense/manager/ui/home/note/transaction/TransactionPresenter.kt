@@ -13,10 +13,8 @@ class TransactionPresenter(
 ) : TransactionContract.Presenter {
     private val transactionFirebase by lazy { TransactionFirebase() }
     private val compositeDisposable = CompositeDisposable()
-    private var transactionType: String? = null
 
     override fun createTransaction(walletID: Int, transaction: TransactionModel) {
-        transactionType = transaction.type
         view.onLoad()
         val disposable = transactionFirebase.insertTransaction(walletID, transaction)
             .subscribeOn(Schedulers.io())

@@ -1,5 +1,6 @@
 package com.kindsundev.expense.manager.ui.home.bag
 
+import com.kindsundev.expense.manager.data.model.TransactionModel
 import com.kindsundev.expense.manager.ui.base.BaseView
 
 interface BagContract {
@@ -15,6 +16,6 @@ interface BagContract {
 
 
     interface Listener {
-        fun onClickTransaction(transaction: String)
+        fun onClickTransaction(transaction: TransactionModel)
     }
 }

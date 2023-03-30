@@ -4,11 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.kindsundev.expense.manager.data.model.TransactionModel
 import com.kindsundev.expense.manager.databinding.LayoutWalletExchangeItemBinding
 import com.kindsundev.expense.manager.ui.home.bag.BagContract
 
 class ExchangeAdapter(
-    private val transactions: ArrayList<String>,
+    private val transactions: ArrayList<TransactionModel>,
     private val listener: BagContract.Listener
 ) : RecyclerView.Adapter<ExchangeAdapter.ExchangeViewHolder>() {
 
