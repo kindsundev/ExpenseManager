@@ -83,8 +83,13 @@ fun checkBalance(balance: String): Status  {
 
 fun getCurrentDate(): String {
     return LocalDateTime.now()
-        .format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+        .format(DateTimeFormatter.ofPattern("dd EEEE MMMM yyyy"))
         .toString().trim()
+}
+
+fun getCurrentTime(): String {
+    return LocalDateTime.now()
+        .format(DateTimeFormatter.ofPattern("HH:mm, dd-MM-yyyy"))
 }
 
 fun hashCodeForID(vararg data: String): Int {
