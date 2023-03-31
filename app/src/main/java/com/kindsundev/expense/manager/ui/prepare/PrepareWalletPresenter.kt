@@ -2,7 +2,7 @@ package com.kindsundev.expense.manager.ui.prepare
 
 import com.kindsundev.expense.manager.data.base.BaseFirebase
 import com.kindsundev.expense.manager.data.firebase.TransactionFirebase
-import com.kindsundev.expense.manager.data.model.TransactionModel
+import com.kindsundev.expense.manager.data.model.BillModel
 import com.kindsundev.expense.manager.data.model.WalletModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -14,7 +14,7 @@ class PrepareWalletPresenter(
 ) : PrepareWalletContract.Presenter {
     private val compositeDisposable = CompositeDisposable()
     private var mWallets = ArrayList<WalletModel>()
-    private var mTransactions = ArrayList<TransactionModel>()
+    private var mBill = ArrayList<BillModel>()
 
     override fun handlerGetWallets() {
         view.onLoad()
@@ -34,19 +34,21 @@ class PrepareWalletPresenter(
 
     override fun handlerGetTransactions(walletId: Int) {
         view.onLoad()
-        mTransactions.clear()
+        mBill.clear()
         val disposable = TransactionFirebase().getTransactions(walletId.toString())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
                 onError = { view.onError(it.message.toString()) },
                 onComplete = { view.onSuccess(true) },
-                onNext = { mTransactions.add(it) }
+                onNext = {
+                    mBill.add(it)
+                }
             )
         compositeDisposable.add(disposable)
     }
 
-    override fun getTransactions(): ArrayList<TransactionModel> = mTransactions
+    override fun getBills(): ArrayList<BillModel>  = mBill
 
     fun cleanUp() {
         compositeDisposable.clear()

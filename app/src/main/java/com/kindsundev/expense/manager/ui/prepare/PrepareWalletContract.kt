@@ -1,6 +1,6 @@
 package com.kindsundev.expense.manager.ui.prepare
 
-import com.kindsundev.expense.manager.data.model.TransactionModel
+import com.kindsundev.expense.manager.data.model.BillModel
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.ui.base.BaseView
 
@@ -14,7 +14,7 @@ interface  PrepareWalletContract {
 
         fun handlerGetTransactions(walletId: Int)
 
-        fun getTransactions(): ArrayList<TransactionModel>
+        fun getBills(): ArrayList<BillModel>
 
     }
 
