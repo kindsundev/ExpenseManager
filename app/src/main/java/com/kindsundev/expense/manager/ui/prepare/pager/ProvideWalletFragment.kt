@@ -82,7 +82,7 @@ class ProvideWalletFragment : Fragment(),
                 Bundle().apply {
                     putInt(Constant.KEY_CURRENT_WALLET, currentClickedWalletId)
                     putParcelableArrayList(Constant.KEY_WALLET, wallets)
-                    putSerializable(Constant.KEY_BILL, bill)
+                    putParcelableArrayList(Constant.KEY_BILL, bill)
                 })
         })
     }
