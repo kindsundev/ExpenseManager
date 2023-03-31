@@ -8,6 +8,7 @@ import com.kindsundev.expense.manager.utils.getCurrentDate
 import com.kindsundev.expense.manager.data.model.BillModel
 import io.reactivex.Completable
 import io.reactivex.Observable
+import io.reactivex.ObservableEmitter
 
 class TransactionFirebase : BaseFirebase() {
 
@@ -50,23 +51,7 @@ class TransactionFirebase : BaseFirebase() {
                 .child(Constant.MY_REFERENCE_CHILD_TRANSACTION)
                 .addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
-                        if ((!subscriber.isDisposed) && (snapshot.hasChildren())) {
-                            for (data in snapshot.children) {
-                                val date  = data.key
-                                val mapTransactions = data.value as HashMap<String, TransactionModel>
-                                val transaction = BillModel(date, mapTransactions)
-                                subscriber.onNext(transaction)
-                            }
-                            subscriber.onComplete()
-                        } else {
-                            /*      subscriber.onError(NullPointerException())
-                            * if throw exception -> always return onError() and show message
-                            * i want to transfer data so i will fake data and check it
-                            * */
-                            val transaction = BillModel("Null", HashMap())
-                            subscriber.onNext(transaction)
-                            subscriber.onComplete()
-                        }
+                        handlerResultWhenGetTransactionOnSuccess(subscriber, snapshot)
                     }
 
                     override fun onCancelled(error: DatabaseError) {
@@ -74,4 +59,29 @@ class TransactionFirebase : BaseFirebase() {
                     }
                 })
         }
+
+    private fun handlerResultWhenGetTransactionOnSuccess(
+        subscriber: ObservableEmitter<BillModel>,
+        snapshot: DataSnapshot
+    ) {
+        if ((!subscriber.isDisposed) && (snapshot.hasChildren())) {
+            for (data in snapshot.children) {
+                val transactions = ArrayList<TransactionModel>()
+                val date  = data.key
+                for (child in data.children) {
+                    val dataChild = child.getValue(TransactionModel::class.java)
+                    dataChild?.let { transactions.add(it) }
+                }
+                val bill = BillModel(date, transactions)
+                subscriber.onNext(bill)
+            }
+            subscriber.onComplete()
+        } else {
+            //  subscriber.onError(NullPointerException())
+            val transaction = BillModel("Null", ArrayList())
+            subscriber.onNext(transaction)
+            subscriber.onComplete()
+        }
+    }
+
 }
