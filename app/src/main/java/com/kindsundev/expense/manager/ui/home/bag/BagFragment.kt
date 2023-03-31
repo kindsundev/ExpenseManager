@@ -13,7 +13,7 @@ import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.FragmentBagBinding
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
 import com.kindsundev.expense.manager.ui.home.HomeActivity
-import com.kindsundev.expense.manager.ui.home.bag.exchange.ExchangeAdapter
+import com.kindsundev.expense.manager.ui.home.bag.exchange.BillParentAdapter
 import com.kindsundev.expense.manager.utils.amountFormatDisplay
 import com.kindsundev.expense.manager.utils.onFeatureIsDevelop
 import com.kindsundev.expense.manager.utils.showToast
@@ -27,7 +27,7 @@ class BagFragment : Fragment(), BagContract.Listener, BagContract.View {
     private lateinit var bagPresenter: BagPresenter
     private var currentWalletId by Delegates.notNull<Int>()
     private lateinit var mWallets: ArrayList<WalletModel>
-    private lateinit var mTransactions: ArrayList<BillModel>
+    private lateinit var mBills: ArrayList<BillModel>
 
     private var stateBalanceVisibility: Boolean = true
     private val loadingDialog by lazy { LoadingDialog() }
@@ -53,7 +53,7 @@ class BagFragment : Fragment(), BagContract.Listener, BagContract.View {
     private fun getDataFromHomeActivity() {
         currentWalletId = (activity as HomeActivity).getCurrentWalletId()
         mWallets = (activity as HomeActivity).getWallets()
-        mTransactions = (activity as HomeActivity).getTransactionsOfWallet()
+        mBills = (activity as HomeActivity).getBills()
     }
 
     private fun initWalletInfo() {
@@ -69,7 +69,7 @@ class BagFragment : Fragment(), BagContract.Listener, BagContract.View {
     }
 
     private fun initRecyclerViewTransactions() {
-        val mAdapter = ExchangeAdapter(mTransactions, this)
+        val mAdapter = BillParentAdapter(mBills, this)
         binding!!.rcvTransactionsContainer.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = mAdapter

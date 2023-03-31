@@ -1,10 +1,10 @@
 package com.kindsundev.expense.manager.data.model
 
-import java.io.Serializable
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
-/* Why i don't implement Parcelable, because HashMap<*,*> property implements Serializable */
-
+@Parcelize
 data class BillModel(
     val date: String? = "",
-    var mapTransactions: HashMap<String, TransactionModel>? = HashMap(1)
-) : Serializable
+    var transactions: ArrayList<TransactionModel>? = ArrayList()
+) : Parcelable

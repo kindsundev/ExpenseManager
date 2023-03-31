@@ -1,25 +1,22 @@
 package com.kindsundev.expense.manager.ui.home.bag.exchange
 
 import android.annotation.SuppressLint
-import android.content.res.Resources
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Constant
-import com.kindsundev.expense.manager.common.Logger
 import com.kindsundev.expense.manager.data.model.TransactionModel
 import com.kindsundev.expense.manager.databinding.LayoutWalletBillItemBinding
 import com.kindsundev.expense.manager.ui.home.bag.BagContract
 import com.kindsundev.expense.manager.utils.amountFormatDisplay
 
-class BillAdapter(
+class BillChildAdapter(
     private val transactions: ArrayList<TransactionModel>,
     private val listener: BagContract.Listener
-): RecyclerView.Adapter<BillAdapter.BillViewHolder>() {
+): RecyclerView.Adapter<BillChildAdapter.BillViewHolder>() {
 
     inner class BillViewHolder(val binding: LayoutWalletBillItemBinding):
             RecyclerView.ViewHolder(binding.root)

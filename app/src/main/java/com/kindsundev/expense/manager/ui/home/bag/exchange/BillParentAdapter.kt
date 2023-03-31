@@ -6,13 +6,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kindsundev.expense.manager.data.model.BillModel
+import com.kindsundev.expense.manager.data.model.TransactionModel
 import com.kindsundev.expense.manager.databinding.LayoutWalletExchangeItemBinding
 import com.kindsundev.expense.manager.ui.home.bag.BagContract
 
-class ExchangeAdapter(
+class BillParentAdapter(
     private val bills: ArrayList<BillModel>,
     private val listener: BagContract.Listener
-) : RecyclerView.Adapter<ExchangeAdapter.ExchangeViewHolder>() {
+) : RecyclerView.Adapter<BillParentAdapter.ExchangeViewHolder>() {
 
     private val viewPool = RecyclerView.RecycledViewPool()
 
@@ -28,23 +29,19 @@ class ExchangeAdapter(
     override fun onBindViewHolder(holder: ExchangeViewHolder, position: Int) {
         val bill = bills[position]
         initDateOfTransaction(holder.binding, bill.date.toString())
-
-        for (key in bill.mapTransactions!!.keys) {
-                /*
-                * init child adapter (list transaction)
-                * new issue: get list transactions is error
-                * java.lang.ClassCastException
-                * */
-//            val value: TransactionModel? = data.hashMap!![key] as TransactionModel
-        }
-
-//        holder.binding.rcvTransactionDetail.apply {
-//            layoutManager = LinearLayoutManager(context)
-//            adapter = BillAdapter(above, listener)
-//            setRecycledViewPool(viewPool)
-//        }
+        initBillChildAdapter(holder.binding, bill.transactions)
     }
 
+    private fun initBillChildAdapter(
+        binding: LayoutWalletExchangeItemBinding,
+        transactions: ArrayList<TransactionModel>?
+    ) {
+        binding.rcvTransactionDetail.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = BillChildAdapter(transactions!!, listener)
+            setRecycledViewPool(viewPool)
+        }
+    }
 
     @SuppressLint("SetTextI18n")
     private fun initDateOfTransaction(binding: LayoutWalletExchangeItemBinding, date: String?) {
