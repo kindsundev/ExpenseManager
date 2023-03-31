@@ -54,7 +54,7 @@ class TransactionFragment : Fragment(),
 
     private fun initView() {
         binding!!.tvCategoryName.text = categoryName
-        binding!!.tvTime.text = getCurrentDate()
+        binding!!.tvTime.text = getCurrentTime()
     }
 
     private fun initWalletBottomSheet() {

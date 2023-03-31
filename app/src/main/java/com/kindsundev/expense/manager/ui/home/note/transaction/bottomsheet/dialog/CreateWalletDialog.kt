@@ -81,7 +81,7 @@ class CreateWalletDialog(
                 binding!!.radioBtnVnd.text.toString().trim()
             }
         }
-        val id = hashCodeForID(name, currency, balance, getCurrentDate())
+        val id = hashCodeForID(name, currency, balance, getCurrentTime())
         return WalletModel(id, name, currency, origin = balance.toDouble(), balance.toDouble())
     }
 
