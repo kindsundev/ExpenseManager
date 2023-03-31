@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kindsundev.expense.manager.R
+import com.kindsundev.expense.manager.data.model.BillModel
 import com.kindsundev.expense.manager.data.model.TransactionModel
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.FragmentBagBinding
@@ -26,7 +27,7 @@ class BagFragment : Fragment(), BagContract.Listener, BagContract.View {
     private lateinit var bagPresenter: BagPresenter
     private var currentWalletId by Delegates.notNull<Int>()
     private lateinit var mWallets: ArrayList<WalletModel>
-    private lateinit var mTransactions: ArrayList<TransactionModel>
+    private lateinit var mTransactions: ArrayList<BillModel>
 
     private var stateBalanceVisibility: Boolean = true
     private val loadingDialog by lazy { LoadingDialog() }
@@ -68,20 +69,11 @@ class BagFragment : Fragment(), BagContract.Listener, BagContract.View {
     }
 
     private fun initRecyclerViewTransactions() {
-        val mList = initTempList()
         val mAdapter = ExchangeAdapter(mTransactions, this)
         binding!!.rcvTransactionsContainer.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = mAdapter
         }
-    }
-
-    private fun initTempList(): ArrayList<String> {
-        val mList = ArrayList<String>()
-        for (i in 0 until 5) {
-            mList.add("Transaction $i")
-        }
-        return mList
     }
 
     private fun initListener() {
