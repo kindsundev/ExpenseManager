@@ -26,7 +26,7 @@ class Constant {
         const val FAKE_DATA_NULL = "[404] -> this transaction is null"
 
         const val KEY_WALLET = "wallets"
-        const val KEY_TRANSACTION = "transactions"
+        const val KEY_BILL = "bills"
         const val KEY_CURRENT_WALLET = "CURRENT_WALLET_CLICKED"
     }
 }

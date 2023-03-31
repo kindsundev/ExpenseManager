@@ -8,8 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kindsundev.expense.manager.common.Constant
-import com.kindsundev.expense.manager.common.Logger
-import com.kindsundev.expense.manager.data.model.TransactionModel
+import com.kindsundev.expense.manager.data.model.BillModel
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.FragmentProvideWalletBinding
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
@@ -29,14 +28,14 @@ class ProvideWalletFragment : Fragment(),
     private lateinit var prepareWalletPresenter: PrepareWalletPresenter
     private lateinit var walletAdapter: ProvideWalletAdapter
     private lateinit var wallets : ArrayList<WalletModel>
-    private lateinit var transactions : ArrayList<TransactionModel>
+    private lateinit var bill : ArrayList<BillModel>
     private var currentClickedWalletId : Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         prepareWalletPresenter = PrepareWalletPresenter(this)
         wallets = ArrayList()
-        transactions = ArrayList()
+        bill = ArrayList()
     }
 
     override fun onCreateView(
@@ -72,7 +71,7 @@ class ProvideWalletFragment : Fragment(),
     override fun onSuccess(status: Boolean) {
         if (status) {
             startLoadingDialog(loadingDialog, parentFragmentManager, false)
-            transactions = prepareWalletPresenter.getTransactions()
+            bill = prepareWalletPresenter.getBills()
             startHomeActivity()
         }
     }
@@ -83,7 +82,7 @@ class ProvideWalletFragment : Fragment(),
                 Bundle().apply {
                     putInt(Constant.KEY_CURRENT_WALLET, currentClickedWalletId)
                     putParcelableArrayList(Constant.KEY_WALLET, wallets)
-                    putParcelableArrayList(Constant.KEY_TRANSACTION, transactions)
+                    putSerializable(Constant.KEY_BILL, bill)
                 })
         })
     }

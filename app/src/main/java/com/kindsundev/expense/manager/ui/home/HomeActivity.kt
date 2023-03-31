@@ -1,23 +1,23 @@
 package com.kindsundev.expense.manager.ui.home
 
 import android.os.Build
+import android.os.Build.VERSION.SDK_INT
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
-import androidx.annotation.RequiresApi
+import android.os.Parcelable
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Constant
-import com.kindsundev.expense.manager.data.model.TransactionModel
+import com.kindsundev.expense.manager.data.model.BillModel
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.ActivityHomeBinding
-import kotlin.properties.Delegates
+import java.io.Serializable
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
     private var wallets = ArrayList<WalletModel>()
-    private var transactions = ArrayList<TransactionModel>()
+    private var transactions = ArrayList<BillModel>()
     private var currentWalletId = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,19 +41,20 @@ class HomeActivity : AppCompatActivity() {
     private fun getDataFromPrepareWallet() {
         val bundle = intent.extras
         bundle?.let {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                wallets = it.getParcelableArrayList(Constant.KEY_WALLET, WalletModel::class.java)
-                            as ArrayList<WalletModel>
-                transactions = it.getParcelableArrayList(Constant.KEY_TRANSACTION, TransactionModel::class.java)
-                            as ArrayList<TransactionModel>
-            } else {
-                wallets = it.getParcelableArrayList<WalletModel>(Constant.KEY_WALLET)
-                        as ArrayList<WalletModel>
-                transactions = it.getParcelableArrayList<TransactionModel>(Constant.KEY_TRANSACTION)
-                        as ArrayList<TransactionModel>
-            }
+            wallets = it.parcelableArrayList(Constant.KEY_WALLET)!!
+            transactions = it.serializable(Constant.KEY_BILL)!!
             currentWalletId = it.getInt(Constant.KEY_CURRENT_WALLET)
         }
+    }
+
+    private inline fun <reified T : Parcelable> Bundle.parcelableArrayList(key: String): ArrayList<T>? = when {
+        SDK_INT >= Build.VERSION_CODES.TIRAMISU -> getParcelableArrayList(key, T::class.java)
+        else -> @Suppress("DEPRECATION") getParcelableArrayList(key)
+    }
+
+    private inline fun <reified T : Serializable> Bundle.serializable(key: String): T? = when {
+        SDK_INT >= Build.VERSION_CODES.TIRAMISU -> getSerializable(key, T::class.java)
+        else -> @Suppress("DEPRECATION") getSerializable(key) as? T
     }
 
     fun getCurrentWalletId() = currentWalletId
