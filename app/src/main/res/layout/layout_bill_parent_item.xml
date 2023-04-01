@@ -2,15 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_white_corner_5"
     android:layout_marginBottom="16dp"
+    android:background="@drawable/bg_white_corner_5"
     android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/rl_bill_container"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:paddingHorizontal="8dp"
-        android:paddingVertical="8dp"
-        android:layout_height="wrap_content">
+        android:paddingVertical="8dp">
 
         <TextView
             android:id="@+id/tv_day_number"
@@ -19,8 +20,8 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_centerVertical="true"
-            android:text="@string/_21"
             android:layout_marginStart="8dp"
+            android:text="@string/_21"
             android:textColor="@color/black"
             android:textSize="38sp"
             android:textStyle="bold" />
@@ -32,10 +33,10 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:paddingHorizontal="8dp"
-            android:paddingVertical="4dp"
             android:layout_toEndOf="@id/tv_day_number"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="4dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -90,14 +91,36 @@
                     android:textSize="14sp" />
             </LinearLayout>
 
-
         </LinearLayout>
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcv_transaction_detail"
         android:layout_width="match_parent"
-        android:paddingHorizontal="8dp"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="8dp" />
+
+    <LinearLayout
+        android:id="@+id/ll_show_has_no_transaction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="32dp"
+        android:background="@drawable/bg_white_corner_16"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/notification_no_transaction"
+            android:textAlignment="center"
+            android:textColor="@color/secondaryDarkColor"
+            android:textSize="20sp" />
+
+    </LinearLayout>
 
 </LinearLayout>
