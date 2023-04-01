@@ -17,6 +17,7 @@ class Constant {
         const val TRANSACTION_TYPE_DEBT = "debt"
 
         const val NOTE_FRAGMENT_BUTTON_LIST_STATUS = "CURRENT_LIST_INIT"
+        const val BAG_FRAGMENT_BALANCE_VISIBILITY = "STATE_VISIBILITY"
 
         const val MY_REFERENCE_NAME = "users"
         const val MY_REFERENCE_CHILD_WALLETS = "wallets"

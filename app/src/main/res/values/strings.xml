@@ -127,5 +127,7 @@
     <string name="privacy_and_security_policy">Privacy and security policy</string>
     <string name="select_wallet">Select Wallet</string>
     <string name="required_create_wallet">You don\'t have a wallet. \nPlease create it!</string>
+    <string name="notification_no_transaction">This wallet has no transactions</string>
+    <string name="create_new">Create New</string>
 
 </resources>
