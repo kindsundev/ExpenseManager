@@ -52,9 +52,9 @@ class BillChildAdapter(
 
     private fun initTextColor(binding: LayoutWalletBillItemBinding, type: String) {
         if (isExpenseType(type)) {
-            binding.tvAmount.setTextColor(Color.parseColor("#ffcc0000"))
+            binding.tvAmount.setTextColor(Color.parseColor(Constant.RED_COLOR_CODE))
         } else {
-            binding.tvAmount.setTextColor(Color.parseColor("#338a3e"))
+            binding.tvAmount.setTextColor(Color.parseColor(Constant.GREEN_COLOR_CODE))
         }
     }
 

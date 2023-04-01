@@ -19,6 +19,13 @@ class Constant {
         const val NOTE_FRAGMENT_BUTTON_LIST_STATUS = "CURRENT_LIST_INIT"
         const val BAG_FRAGMENT_BALANCE_VISIBILITY = "STATE_VISIBILITY"
 
+        const val TRANSACTION_STATE_INCOME = "INCOME > EXPENSE"
+        const val TRANSACTION_STATE_EXPENSE = "INCOME < EXPENSE"
+        const val TRANSACTION_STATE_BALANCE = "INCOME == EXPENSE"
+        const val GREEN_COLOR_CODE = "#338a3e"
+        const val GRAY_COLOR_CODE = "#A8A8A8"
+        const val RED_COLOR_CODE = "#ffcc0000"
+
         const val MY_REFERENCE_NAME = "users"
         const val MY_REFERENCE_CHILD_WALLETS = "wallets"
         const val MY_REFERENCE_CHILD_TRANSACTION = "transactions"
@@ -29,5 +36,6 @@ class Constant {
         const val KEY_WALLET = "wallets"
         const val KEY_BILL = "bills"
         const val KEY_CURRENT_WALLET = "CURRENT_WALLET_CLICKED"
+
     }
 }

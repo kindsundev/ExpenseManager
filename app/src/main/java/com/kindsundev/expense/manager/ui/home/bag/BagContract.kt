@@ -7,11 +7,13 @@ interface BagContract {
 
     interface Presenter {
 
-
     }
 
-    interface View : BaseView {
-        fun onSuccess(key: String)
+    interface ViewParent : BaseView {}
+
+
+    interface ViewChild {
+        fun onResultColor(type: String)
     }
 
 

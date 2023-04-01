@@ -22,7 +22,7 @@ import com.kindsundev.expense.manager.utils.showToast
 import com.kindsundev.expense.manager.utils.startLoadingDialog
 import kotlin.properties.Delegates
 
-class BagFragment : Fragment(), BagContract.Listener, BagContract.View {
+class BagFragment : Fragment(), BagContract.Listener, BagContract.ViewParent {
     private var _binding: FragmentBagBinding? = null
     private val binding get() = _binding
 
@@ -83,7 +83,7 @@ class BagFragment : Fragment(), BagContract.Listener, BagContract.View {
     }
 
     private fun initRecyclerViewTransactions() {
-        val mAdapter = BillParentAdapter(mCurrentWallet, mBills, this)
+        val mAdapter = BillParentAdapter(mBills, this)
         binding!!.rcvTransactionsContainer.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = mAdapter
@@ -131,10 +131,6 @@ class BagFragment : Fragment(), BagContract.Listener, BagContract.View {
 
     override fun onClickTransaction(transaction: TransactionModel) {
         activity?.showToast(transaction.type.toString())
-    }
-
-    override fun onSuccess(key: String) {
-        startLoadingDialog(loadingDialog, parentFragmentManager, false)
     }
 
     override fun onSuccess() {}
