@@ -129,5 +129,6 @@
     <string name="required_create_wallet">You don\'t have a wallet. \nPlease create it!</string>
     <string name="notification_no_transaction">This wallet has no transactions</string>
     <string name="create_new">Create New</string>
+    <string name="total_balance">Total Balance</string>
 
 </resources>
