@@ -10,7 +10,7 @@ import kotlin.properties.Delegates
 
 class DateTimePicker(
     private val context: Context,
-    private val listener: CallbackDateTime
+    private val listener: ResultDateTimeCallback
 ) : DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
     private var currentDay by Delegates.notNull<Int>()
     private var currentMonth by Delegates.notNull<Int>()

@@ -1,5 +1,5 @@
 package com.kindsundev.expense.manager.ui.custom
 
-interface CallbackDateTime {
+interface ResultDateTimeCallback {
     fun resultNewDateTime(newDateTime : String)
 }
