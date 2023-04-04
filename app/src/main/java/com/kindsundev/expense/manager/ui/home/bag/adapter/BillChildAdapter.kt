@@ -94,6 +94,19 @@ class BillChildAdapter(
 
     private fun initCategoryIconBackground(binding: LayoutWalletBillItemBinding, categoryName: String) {
         when(categoryName) {
+            "Entertainment" -> binding.icCategory.setBackgroundResource(R.drawable.bg_tea_circle)
+            "Outfit" -> binding.icCategory.setBackgroundResource(R.drawable.bg_tea_circle)
+            "Travel" -> binding.icCategory.setBackgroundResource(R.drawable.bg_tea_circle)
+            "Beautify" -> binding.icCategory.setBackgroundResource(R.drawable.bg_tea_circle)
+            "Party" -> binding.icCategory.setBackgroundResource(R.drawable.bg_tea_circle)
+            "Gift" -> binding.icCategory.setBackgroundResource(R.drawable.bg_purple_circle)
+            "Charity" -> binding.icCategory.setBackgroundResource(R.drawable.bg_purple_circle)
+            "Doctor" -> binding.icCategory.setBackgroundResource(R.drawable.bg_red_circle)
+            "Sport" -> binding.icCategory.setBackgroundResource(R.drawable.bg_red_circle)
+            "Insurance" -> binding.icCategory.setBackgroundResource(R.drawable.bg_red_circle)
+            "Child" -> binding.icCategory.setBackgroundResource(R.drawable.bg_orange_circle)
+            "Fees" -> binding.icCategory.setBackgroundResource(R.drawable.bg_gray_blue_circle)
+            "Drop" -> binding.icCategory.setBackgroundResource(R.drawable.bg_gray_blue_circle)
             "Salary" -> binding.icCategory.setBackgroundResource(R.drawable.bg_dark_circle)
             "Bonus" -> binding.icCategory.setBackgroundResource(R.drawable.bg_dark_circle)
             "Interest Rate" -> binding.icCategory.setBackgroundResource(R.drawable.bg_dark_circle)

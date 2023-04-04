@@ -58,17 +58,17 @@ class TransactionFragment : Fragment(),
 
     private fun initWalletBottomSheet() {
         walletBottomSheet = WalletBottomSheet(this)
-        walletBottomSheet.show(parentFragmentManager, Constant.WALLET_BOTTOM_SHEET_NAME)
+        walletBottomSheet.show(parentFragmentManager, Constant.WALLET_BOTTOM_SHEET_WALLET_NAME)
     }
 
     override fun onClickWalletItem(wallet: WalletModel) {
         this.wallet = wallet
-        binding!!.tvTransactionName.text = wallet.name
+        binding!!.tvWalletName.text = wallet.name
         walletBottomSheet.hideBottomSheet()
     }
 
     private fun initListener() {
-        binding!!.tvTransactionName.setOnClickListener { initWalletBottomSheet() }
+        binding!!.tvWalletName.setOnClickListener { initWalletBottomSheet() }
         binding!!.itemCategory.setOnClickListener { findNavController().popBackStack() }
         binding!!.itemEvent.setOnClickListener { activity?.requestPremium() }
         binding!!.switchOptimization.setOnClickListener { activity?.requestPremium() }
