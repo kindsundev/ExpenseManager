@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kindsundev.expense.manager.common.Constant
-import com.kindsundev.expense.manager.data.model.BillModel
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.FragmentProvideWalletBinding
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
@@ -28,14 +27,11 @@ class ProvideWalletFragment : Fragment(),
     private lateinit var prepareWalletPresenter: PrepareWalletPresenter
     private lateinit var walletAdapter: ProvideWalletAdapter
     private lateinit var wallets : ArrayList<WalletModel>
-    private lateinit var bill : ArrayList<BillModel>
-    private var currentClickedWalletId : Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         prepareWalletPresenter = PrepareWalletPresenter(this)
         wallets = ArrayList()
-        bill = ArrayList()
     }
 
     override fun onCreateView(
@@ -68,25 +64,6 @@ class ProvideWalletFragment : Fragment(),
         activity?.showToast(message)
     }
 
-    override fun onSuccess(status: Boolean) {
-        if (status) {
-            startLoadingDialog(loadingDialog, parentFragmentManager, false)
-            bill = prepareWalletPresenter.getBills()
-            startHomeActivity()
-        }
-    }
-
-    private fun startHomeActivity() {
-        startActivity(Intent(requireActivity(), HomeActivity::class.java).apply {
-            putExtras(
-                Bundle().apply {
-                    putInt(Constant.KEY_CURRENT_WALLET, currentClickedWalletId)
-                    putParcelableArrayList(Constant.KEY_WALLET, wallets)
-                    putParcelableArrayList(Constant.KEY_BILL, bill)
-                })
-        })
-    }
-
     override fun onSuccess() {
         initDataToRecyclerView()
         startLoadingDialog(loadingDialog, parentFragmentManager, false)
@@ -106,8 +83,18 @@ class ProvideWalletFragment : Fragment(),
     }
 
     override fun onClickWalletItem(walletModel: WalletModel) {
-        prepareWalletPresenter.handlerGetTransactions(walletModel.id!!)
-        currentClickedWalletId = walletModel.id
+        startHomeActivity(walletModel.id.toString())
+    }
+
+    private fun startHomeActivity(id: String) {
+        startActivity(
+            Intent(requireActivity(), HomeActivity::class.java).apply {
+                putExtras(
+                    Bundle().apply {
+                        putString(Constant.KEY_CURRENT_WALLET_ID, id)
+                    }
+                )
+            })
     }
 
     override fun resultCreateWallet(status: Boolean) {

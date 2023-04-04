@@ -12,17 +12,9 @@ interface  PrepareWalletContract {
 
         fun getWallets() : ArrayList<WalletModel>
 
-        fun handlerGetTransactions(walletId: Int)
-
-        fun getBills(): ArrayList<BillModel>
-
     }
 
-    interface View: BaseView {
-
-        fun onSuccess(status: Boolean)
-
-    }
+    interface View: BaseView {}
 
     interface Listener {
 
