@@ -272,7 +272,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginVertical="32dp"
-            android:layout_marginTop="32dp"
             android:background="@drawable/bg_green_corner_24"
             android:orientation="horizontal"
             android:paddingHorizontal="16dp"
