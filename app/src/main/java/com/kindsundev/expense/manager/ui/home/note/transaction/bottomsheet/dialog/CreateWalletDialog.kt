@@ -64,9 +64,22 @@ class CreateWalletDialog(
     }
 
     private fun onClickCreateWallet() {
-        val wallet = initWalletData()
-        if (checkValidData(wallet.name!!, wallet.balance!!.toString())) {
-            walletPresenter.handlerCreateWallet(wallet)
+        if (checkNotNullData()) {
+            if (checkValidData(binding!!.edtName.text.toString(), binding!!.edtBalance.text.toString())) {
+                val wallet = initWalletData()
+                walletPresenter.handlerCreateWallet(wallet)
+            }
+        }
+    }
+
+    private fun checkNotNullData(): Boolean {
+        val name = binding!!.edtName.text.toString()
+        val balance = binding!!.edtBalance.text.toString()
+        return if (name.isEmpty() && balance.isEmpty()) {
+            Toast.makeText(activity, "Please enter full data", Toast.LENGTH_SHORT).show()
+            false
+        } else {
+            true
         }
     }
 
