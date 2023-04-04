@@ -10,7 +10,7 @@ import com.kindsundev.expense.manager.common.Constant
 import com.kindsundev.expense.manager.data.model.TransactionModel
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.FragmentTransactionBinding
-import com.kindsundev.expense.manager.ui.custom.CallbackDateTime
+import com.kindsundev.expense.manager.ui.custom.ResultDateTimeCallback
 import com.kindsundev.expense.manager.ui.custom.DateTimePicker
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
 import com.kindsundev.expense.manager.ui.home.note.transaction.bottomsheet.WalletBottomSheet
@@ -99,15 +99,8 @@ class TransactionFragment : Fragment(),
         )
     }
 
-    private fun handlerUpdateBalance(amount: Double?) {
-        transactionPresenter.handlerUpdateBalance(
-            wallet.id!!, transactionType!!, wallet.balance!!.toDouble(),
-            amount!!
-        )
-    }
-
     private fun onClickSetDateTime() {
-        DateTimePicker(requireContext(), object : CallbackDateTime {
+        DateTimePicker(requireContext(), object : ResultDateTimeCallback {
             override fun resultNewDateTime(newDateTime: String) {
                 binding!!.tvTime.text = newDateTime
             }
@@ -136,6 +129,9 @@ class TransactionFragment : Fragment(),
 
     override fun onSuccess() {
         startLoadingDialog(loadingDialog, parentFragmentManager, false)
-        handlerUpdateBalance(transaction.amount)
+        transactionPresenter.handlerUpdateBalance(
+            wallet.id!!, transactionType!!, wallet.balance!!.toDouble(),
+            transaction.amount!!
+        )
     }
 }

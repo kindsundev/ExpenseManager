@@ -12,7 +12,11 @@ import io.reactivex.ObservableEmitter
 
 class TransactionFirebase : BaseFirebase() {
 
-    fun insertTransaction(walletId: Int, transaction: TransactionModel) =
+    /*
+    * If you point at a transaction that doesn't have an id, it will create it,
+    * otherwise it will update
+    * */
+    fun upsertTransaction(walletId: Int, transaction: TransactionModel) =
         Completable.create { emitter ->
             initPointerGeneric()
                 .child(walletId.toString())
