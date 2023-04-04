@@ -21,10 +21,11 @@ interface BagContract {
         fun updateTransaction(walletID: Int, transaction: TransactionModel)
 
         fun handlerUpdateBalance(
-            walletID: Int,
+            walletId: Int,
             transactionType: String,
-            balance: Double,
-            amount: Double
+            currentBalance: Double,
+            beforeMoney:Double,
+            afterMoney: Double
         )
     }
 

@@ -77,8 +77,7 @@ class BagFragment : Fragment(), BagContract.Listener, BagContract.ViewParent {
         val bottomSheet = TransactionBottomSheet(object : ResultTransactionCallback {
             override fun transactionUpdated(result: Boolean) {
                 if (result) {  // refresh data
-                    mWallets = bagPresenter.getWallets()
-                    getTransactionsOfCurrentWallet()
+                    bagPresenter.handlerGetWallets()
                 }
             }
         }, mCurrentWallet, transaction)
@@ -101,6 +100,7 @@ class BagFragment : Fragment(), BagContract.Listener, BagContract.ViewParent {
         for (index in 0 until mWallets.size) {
             if (mWallets[index].id == id.toInt()) {
                 wallet = mWallets[index]
+                break
             }
         }
         return wallet

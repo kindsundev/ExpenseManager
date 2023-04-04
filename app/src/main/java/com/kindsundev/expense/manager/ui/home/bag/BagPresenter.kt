@@ -2,9 +2,7 @@ package com.kindsundev.expense.manager.ui.home.bag
 
 import com.kindsundev.expense.manager.common.Constant
 import com.kindsundev.expense.manager.common.Logger
-import com.kindsundev.expense.manager.data.base.BaseFirebase
 import com.kindsundev.expense.manager.data.firebase.TransactionFirebase
-import com.kindsundev.expense.manager.data.firebase.WalletFirebase
 import com.kindsundev.expense.manager.data.model.BillModel
 import com.kindsundev.expense.manager.data.model.TransactionModel
 import com.kindsundev.expense.manager.data.model.WalletModel
@@ -83,23 +81,84 @@ class BagPresenter(
         compositeDisposable.add(disposable)
     }
 
+
+    /*
+    * I will check each type of transaction
+    * And compare previous amount vs current amount
+    * Then calculate and compensate for a reasonable wallet
+    * */
     override fun handlerUpdateBalance(
-        walletID: Int,
+        walletId: Int,
         transactionType: String,
-        balance: Double,
-        amount: Double
+        currentBalance: Double,
+        beforeMoney:Double,
+        afterMoney: Double
     ) {
         if (transactionType == Constant.TRANSACTION_TYPE_EXPENSE) {
-            val currentBalance = balance - amount
-            updateBalance(walletID, currentBalance)
+            compareAndCalculateNewExpense(walletId, currentBalance, beforeMoney, afterMoney)
         } else if (transactionType == Constant.TRANSACTION_TYPE_INCOME) {
-            val currentBalance = balance + amount
-            updateBalance(walletID, currentBalance)
+            compareAndCalculateNewIncome(walletId, currentBalance, beforeMoney, afterMoney)
         }
     }
 
-    private fun updateBalance(walletID: Int, income: Double) {
-        val disposable = transactionFirebase.updateBalance(walletID, income)
+
+    /*
+    *   EXPENSE EXAMPLE DEMO:    [walletCurrentBalance] = 100, [previousMoney] = 20
+    * ---------------------------------------------------------------------------
+    * case 1: [previousMoney] > [currentMoney]      // (currentMoney = 10)
+    * case 2: [previousMoney] < [currentMoney]      // (currentMoney = 40)
+    *
+    * We have [previousBalance] = 20 => [originalBalance] = 120 (*)
+    *    - C1: if update 20 to 10 -> plus 10 => [walletBalance] = 110
+    *    - C2: if update 20 to 40 -> minus 20 => [walletBalance] = 80
+    * */
+    private fun compareAndCalculateNewExpense(
+        walletId: Int,
+        currentBalance: Double,
+        beforeMoney: Double,
+        afterMoney: Double
+    ){
+        if (beforeMoney > afterMoney) {
+            val surplus = beforeMoney - afterMoney
+            val income = currentBalance + surplus
+            updateBalance(walletId, income)
+        } else {
+            val surplus = afterMoney - beforeMoney
+            val expense = currentBalance - surplus
+            updateBalance(walletId, expense)
+        }
+    }
+
+
+    /*
+    *   INCOME EXAMPLE DEMO:    [walletCurrentBalance] = 120, [previousMoney] = 20
+    * ---------------------------------------------------------------------------
+    * case 1: [previousMoney] > [currentMoney]      // (currentMoney = 10)
+    * case 2: [previousMoney] < [currentMoney]      // (currentMoney = 40)
+    *
+    * We have [previousBalance] = 20 => [originalBalance] = 100 (*)
+    *    - C1: if update 20 to 10 -> minus 10 => [walletBalance] = 90
+    *    - C2: if update 20 to 40 -> plus 20 => [walletBalance] = 120
+    * */
+    private fun compareAndCalculateNewIncome(
+        walletId: Int,
+        currentBalance: Double,
+        beforeMoney: Double,
+        afterMoney: Double
+    ) {
+        if (beforeMoney > afterMoney) {
+            val surplus = beforeMoney - afterMoney
+            val expense = currentBalance - surplus
+            updateBalance(walletId, expense)
+        } else {
+            val surplus = afterMoney - beforeMoney
+            val income = currentBalance + surplus
+            updateBalance(walletId, income)
+        }
+    }
+
+    private fun updateBalance(walletID: Int, newValue: Double) {
+        val disposable = transactionFirebase.updateBalance(walletID, newValue)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({

@@ -76,8 +76,14 @@ class TransactionBottomSheet(
         if (binding!!.edtAmount.text.isEmpty()) {
             activity?.showToast("Please enter amount value!")
         } else {
-            mNewTransaction = getNewTransaction()
-            bagPresenter.updateTransaction(wallet.id!!, mNewTransaction)
+            val oldValue = transaction.amount
+            val newValue = binding!!.edtAmount.text.toString().toDouble()
+            if (oldValue == newValue) {
+                activity?.showToast("Please do not enter the old money")
+            } else {
+                mNewTransaction = getNewTransaction()
+                bagPresenter.updateTransaction(wallet.id!!, mNewTransaction)
+            }
         }
     }
 
@@ -111,10 +117,11 @@ class TransactionBottomSheet(
     override fun onSuccess() {
         startLoadingDialog(loadingDialog, parentFragmentManager, false)
         bagPresenter.handlerUpdateBalance(
-            wallet.id!!,
-            mNewTransaction.type.toString(),
-            wallet.balance!!.toDouble(),
-            mNewTransaction.amount!!.toDouble()
+            walletId = wallet.id!!,
+            transactionType = transaction.type.toString(),
+            currentBalance = wallet.balance!!.toDouble(),
+            beforeMoney = transaction.amount!!.toDouble(),
+            afterMoney = mNewTransaction.amount!!.toDouble()
         )
     }
 
