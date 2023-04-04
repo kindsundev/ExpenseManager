@@ -16,23 +16,19 @@ import com.kindsundev.expense.manager.databinding.FragmentBagBinding
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
 import com.kindsundev.expense.manager.ui.home.HomeActivity
 import com.kindsundev.expense.manager.ui.home.bag.exchange.BillParentAdapter
-import com.kindsundev.expense.manager.utils.amountFormatDisplay
-import com.kindsundev.expense.manager.utils.onFeatureIsDevelop
-import com.kindsundev.expense.manager.utils.showToast
-import com.kindsundev.expense.manager.utils.startLoadingDialog
+import com.kindsundev.expense.manager.utils.*
 import kotlin.properties.Delegates
 
 class BagFragment : Fragment(), BagContract.Listener, BagContract.ViewParent {
     private var _binding: FragmentBagBinding? = null
     private val binding get() = _binding
+    private var stateBalanceVisibility by Delegates.notNull<Boolean>()
+    private val loadingDialog by lazy { LoadingDialog() }
 
     private lateinit var bagPresenter: BagPresenter
     private lateinit var mWallets: ArrayList<WalletModel>
     private lateinit var mBills: ArrayList<BillModel>
-    private lateinit var mCurrentWallet: WalletModel
-
-    private var stateBalanceVisibility by Delegates.notNull<Boolean>()
-    private val loadingDialog by lazy { LoadingDialog() }
+    private lateinit var mCurrentWalletId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,49 +41,9 @@ class BagFragment : Fragment(), BagContract.Listener, BagContract.ViewParent {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentBagBinding.inflate(inflater, container, false)
-        getDataFromHomeActivity()
-        getStateBalanceVisibility()
-        initWalletInfo()
-        initRecyclerViewTransactions()
+        bagPresenter.handlerGetWallets()
         initListener()
         return binding!!.root
-    }
-    private fun getStateBalanceVisibility() {
-        stateBalanceVisibility = PreferenceHelper.getBoolean(
-            requireContext(), Constant.BAG_FRAGMENT_BALANCE_VISIBILITY, true)
-        checkDisplayBalance(stateBalanceVisibility)
-    }
-
-    private fun getDataFromHomeActivity() {
-        mWallets = (activity as HomeActivity).getWallets()
-        mBills = (activity as HomeActivity).getBills()
-        mCurrentWallet = getCurrentWallet()
-    }
-
-    private fun getCurrentWallet(): WalletModel {
-        val currentWalletId = (activity as HomeActivity).getCurrentWalletId()
-        var walletModel: WalletModel? = null
-        for (index in 0 until mWallets.size) {
-            if (mWallets[index].id == currentWalletId) {
-                walletModel = mWallets[index]
-                break
-            }
-        }
-        return walletModel!!
-    }
-
-    private fun initWalletInfo() {
-        binding!!.tvName.text = mCurrentWallet.name.toString()
-        binding!!.tvCurrency.text = mCurrentWallet.currency.toString()
-        binding!!.tvBalance.text = amountFormatDisplay(mCurrentWallet.balance.toString())
-    }
-
-    private fun initRecyclerViewTransactions() {
-        val mAdapter = BillParentAdapter(mBills, this)
-        binding!!.rcvTransactionsContainer.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = mAdapter
-        }
     }
 
     private fun initListener() {
@@ -99,6 +55,63 @@ class BagFragment : Fragment(), BagContract.Listener, BagContract.ViewParent {
 
     private fun onClickVisibilityBalance() {
         stateBalanceVisibility = !stateBalanceVisibility
+        checkDisplayBalance(stateBalanceVisibility)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        PreferenceHelper.setBoolean(
+            requireContext(), Constant.BAG_FRAGMENT_BALANCE_VISIBILITY, stateBalanceVisibility
+        )
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+        bagPresenter.cleanUp()
+    }
+
+    override fun onClickTransaction(transaction: TransactionModel) {
+        activity?.showToast(transaction.type.toString())
+    }
+
+    override fun onSuccess() {
+        mWallets = bagPresenter.getWallets()
+        getTransactionsOfCurrentWallet()
+    }
+
+    private fun getTransactionsOfCurrentWallet() {
+        mCurrentWalletId = (context as HomeActivity).getCurrentWalletId()
+        bagPresenter.handlerGetTransactions(mCurrentWalletId)
+    }
+
+    override fun onSuccess(status: Boolean) {
+        mBills = bagPresenter.getBills()
+        initDataToUi()
+        startLoadingDialog(loadingDialog, parentFragmentManager, false)
+    }
+
+    private fun initDataToUi() {
+        initCurrentWalletInfo()
+        initRecyclerViewTransactions()
+    }
+
+    private fun initCurrentWalletInfo() {
+        getStateBalanceVisibility()
+        for (index in 0 until mWallets.size) {
+            if (mCurrentWalletId.toInt() == mWallets[index].id) {
+                binding!!.tvName.text = mWallets[index].name.toString()
+                binding!!.tvCurrency.text = mWallets[index].currency.toString()
+                binding!!.tvBalance.text = amountFormatDisplay(mWallets[index].balance.toString())
+                break
+            }
+        }
+    }
+
+    private fun getStateBalanceVisibility() {
+        stateBalanceVisibility = PreferenceHelper.getBoolean(
+            requireContext(), Constant.BAG_FRAGMENT_BALANCE_VISIBILITY, true
+        )
         checkDisplayBalance(stateBalanceVisibility)
     }
 
@@ -114,26 +127,14 @@ class BagFragment : Fragment(), BagContract.Listener, BagContract.ViewParent {
         }
     }
 
-    override fun onStop() {
-        super.onStop()
-        saveStateBalanceVisibility()
+    private fun initRecyclerViewTransactions() {
+        val mAdapter = BillParentAdapter(mBills, this)
+        binding!!.rcvTransactionsContainer.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = mAdapter
+        }
+        initCurrentWalletInfo()
     }
-
-    private fun saveStateBalanceVisibility() {
-        PreferenceHelper.setBoolean(
-            requireContext(), Constant.BAG_FRAGMENT_BALANCE_VISIBILITY, stateBalanceVisibility)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    override fun onClickTransaction(transaction: TransactionModel) {
-        activity?.showToast(transaction.type.toString())
-    }
-
-    override fun onSuccess() {}
 
     override fun onLoad() {
         startLoadingDialog(loadingDialog, parentFragmentManager, true)

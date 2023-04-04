@@ -83,5 +83,4 @@ class TransactionFirebase : BaseFirebase() {
             subscriber.onComplete()
         }
     }
-
 }
