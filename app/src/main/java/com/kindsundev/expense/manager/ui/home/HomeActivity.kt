@@ -19,7 +19,6 @@ class HomeActivity : AppCompatActivity() {
         setContentView(binding.root)
         setupBottomNav()
         getDataFromPrepareWallet()
-        Toast.makeText(this, currentWalletId, Toast.LENGTH_SHORT).show()
     }
 
     private fun setupBottomNav() {

@@ -8,6 +8,8 @@ interface  PrepareWalletContract {
 
     interface Presenter {
 
+        fun handlerCreateWallet(wallet: WalletModel)
+
         fun handlerGetWallets()
 
         fun getWallets() : ArrayList<WalletModel>
