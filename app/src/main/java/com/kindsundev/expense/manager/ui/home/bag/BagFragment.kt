@@ -15,7 +15,7 @@ import com.kindsundev.expense.manager.data.shared.PreferenceHelper
 import com.kindsundev.expense.manager.databinding.FragmentBagBinding
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
 import com.kindsundev.expense.manager.ui.home.HomeActivity
-import com.kindsundev.expense.manager.ui.home.bag.exchange.BillParentAdapter
+import com.kindsundev.expense.manager.ui.home.bag.adapter.BillParentAdapter
 import com.kindsundev.expense.manager.utils.*
 import kotlin.properties.Delegates
 
