@@ -3,6 +3,7 @@ package com.kindsundev.expense.manager.utils
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.text.Editable
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
@@ -76,3 +77,5 @@ fun Context.requestPremium() {
     val message = "You must update to premium to be using featured!!"
     showToast(message)
 }
+
+fun String.toEditable(): Editable =  Editable.Factory.getInstance().newEditable(this)

@@ -58,6 +58,7 @@ class WalletBottomSheet(
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        walletPresenter.cleanUp()
     }
 
     override fun resultCreateWallet(status: Boolean) {

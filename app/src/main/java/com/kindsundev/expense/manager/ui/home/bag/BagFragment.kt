@@ -16,6 +16,7 @@ import com.kindsundev.expense.manager.databinding.FragmentBagBinding
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
 import com.kindsundev.expense.manager.ui.home.HomeActivity
 import com.kindsundev.expense.manager.ui.home.bag.adapter.BillParentAdapter
+import com.kindsundev.expense.manager.ui.home.bag.bottomsheet.TransactionBottomSheet
 import com.kindsundev.expense.manager.utils.*
 import kotlin.properties.Delegates
 
@@ -28,7 +29,7 @@ class BagFragment : Fragment(), BagContract.Listener, BagContract.ViewParent {
     private lateinit var bagPresenter: BagPresenter
     private lateinit var mWallets: ArrayList<WalletModel>
     private lateinit var mBills: ArrayList<BillModel>
-    private lateinit var mCurrentWalletId: String
+    private lateinit var mCurrentWallet: WalletModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,7 +73,8 @@ class BagFragment : Fragment(), BagContract.Listener, BagContract.ViewParent {
     }
 
     override fun onClickTransaction(transaction: TransactionModel) {
-        activity?.showToast(transaction.type.toString())
+        val bottomSheet = TransactionBottomSheet(mCurrentWallet, transaction)
+        bottomSheet.show(parentFragmentManager, Constant.WALLET_BOTTOM_SHEET_TRANSACTION_NAME)
     }
 
     override fun onSuccess() {
@@ -81,8 +83,19 @@ class BagFragment : Fragment(), BagContract.Listener, BagContract.ViewParent {
     }
 
     private fun getTransactionsOfCurrentWallet() {
-        mCurrentWalletId = (context as HomeActivity).getCurrentWalletId()
+        val mCurrentWalletId = (context as HomeActivity).getCurrentWalletId()
+        mCurrentWallet = getCurrentWallet(mCurrentWalletId)
         bagPresenter.handlerGetTransactions(mCurrentWalletId)
+    }
+
+    private fun getCurrentWallet(id: String): WalletModel {
+        var wallet = WalletModel()
+        for (index in 0 until mWallets.size) {
+            if (mWallets[index].id == id.toInt()) {
+                wallet = mWallets[index]
+            }
+        }
+        return wallet
     }
 
     override fun onSuccess(status: Boolean) {
@@ -98,14 +111,9 @@ class BagFragment : Fragment(), BagContract.Listener, BagContract.ViewParent {
 
     private fun initCurrentWalletInfo() {
         getStateBalanceVisibility()
-        for (index in 0 until mWallets.size) {
-            if (mCurrentWalletId.toInt() == mWallets[index].id) {
-                binding!!.tvName.text = mWallets[index].name.toString()
-                binding!!.tvCurrency.text = mWallets[index].currency.toString()
-                binding!!.tvBalance.text = amountFormatDisplay(mWallets[index].balance.toString())
-                break
-            }
-        }
+        binding!!.tvName.text = mCurrentWallet.name.toString()
+        binding!!.tvCurrency.text = mCurrentWallet.currency.toString()
+        binding!!.tvBalance.text = amountFormatDisplay(mCurrentWallet.balance.toString())
     }
 
     private fun getStateBalanceVisibility() {
