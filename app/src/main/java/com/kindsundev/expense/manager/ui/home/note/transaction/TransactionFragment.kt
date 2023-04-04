@@ -10,6 +10,8 @@ import com.kindsundev.expense.manager.common.Constant
 import com.kindsundev.expense.manager.data.model.TransactionModel
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.FragmentTransactionBinding
+import com.kindsundev.expense.manager.ui.custom.CallbackDateTime
+import com.kindsundev.expense.manager.ui.custom.DateTimePicker
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
 import com.kindsundev.expense.manager.ui.home.note.transaction.bottomsheet.WalletBottomSheet
 import com.kindsundev.expense.manager.ui.home.note.transaction.bottomsheet.WalletContract
@@ -74,7 +76,8 @@ class TransactionFragment : Fragment(),
         binding!!.switchOptimization.setOnClickListener { activity?.requestPremium() }
         binding!!.tvShowMore.setOnClickListener { activity?.requestPremium() }
         binding!!.btnSave.setOnClickListener { onClickSave() }
-        binding!!.btnArrowDown.setOnClickListener { onClickArrowDown() }
+        binding!!.btnArrowDown.setOnClickListener { findNavController().popBackStack() }
+        binding!!.itemTime.setOnClickListener { onClickSetDateTime() }
     }
 
     private fun onClickSave() {
@@ -84,10 +87,6 @@ class TransactionFragment : Fragment(),
             transaction = initTransactionData()
             transactionPresenter.createTransaction(wallet.id!!, transaction)
         }
-    }
-
-    private fun  onClickArrowDown() {
-        findNavController().popBackStack()
     }
 
     private fun initTransactionData(): TransactionModel {
@@ -105,6 +104,14 @@ class TransactionFragment : Fragment(),
             wallet.id!!, transactionType!!, wallet.balance!!.toDouble(),
             amount!!
         )
+    }
+
+    private fun onClickSetDateTime() {
+        DateTimePicker(requireContext(), object : CallbackDateTime {
+            override fun resultNewDateTime(newDateTime: String) {
+                binding!!.tvTime.text = newDateTime
+            }
+        }).onShowDateTimePickerDialog()
     }
 
     override fun onDestroyView() {

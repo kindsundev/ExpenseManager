@@ -1,7 +1,6 @@
 package com.kindsundev.expense.manager.ui.home.bag.bottomsheet
 
 import android.os.Bundle
-import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +8,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.kindsundev.expense.manager.data.model.TransactionModel
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.BottomSheetTransactionDetailBinding
+import com.kindsundev.expense.manager.ui.custom.CallbackDateTime
+import com.kindsundev.expense.manager.ui.custom.DateTimePicker
 import com.kindsundev.expense.manager.utils.amountFormatDisplay
 import com.kindsundev.expense.manager.utils.toEditable
 
@@ -43,9 +44,25 @@ class TransactionBottomSheet(
     }
 
     private fun initListener() {
-        binding!!.btnArrowDown.setOnClickListener {  }
+        binding!!.btnArrowDown.setOnClickListener { hideBottomSheet() }
         binding!!.btnSave.setOnClickListener {  }
         binding!!.btnRemove.setOnClickListener {  }
+        binding!!.itemCategory.setOnClickListener { onClickSetCategoryName() }
+        binding!!.itemTime.setOnClickListener { onClickSetDateTime() }
+    }
+
+    private fun hideBottomSheet() : Unit = this.dismiss()
+
+    private fun onClickSetCategoryName() {
+
+    }
+
+    private fun onClickSetDateTime() {
+        DateTimePicker(requireContext(), object : CallbackDateTime {
+            override fun resultNewDateTime(newDateTime: String) {
+                binding!!.tvTime.text = newDateTime
+            }
+        }).onShowDateTimePickerDialog()
     }
 
     override fun onDestroyView() {
