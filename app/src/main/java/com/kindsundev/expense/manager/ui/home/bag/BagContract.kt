@@ -17,10 +17,21 @@ interface BagContract {
         fun getBills(): ArrayList<BillModel>
 
         fun handlerCalculateBalanceOfDay(bills: BillModel): Double
+
+        fun updateTransaction(walletID: Int, transaction: TransactionModel)
+
+        fun handlerUpdateBalance(
+            walletID: Int,
+            transactionType: String,
+            balance: Double,
+            amount: Double
+        )
     }
 
     interface ViewParent : BaseView {
         fun onSuccess(status: Boolean)
+
+        fun onSuccess(message: String)
     }
 
 
