@@ -8,7 +8,7 @@ import android.widget.TimePicker
 import java.time.LocalDateTime
 import kotlin.properties.Delegates
 
-class DateTimePicker(
+class DateTimePickerDialog(
     private val context: Context,
     private val listener: ResultDateTimeCallback
 ) : DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {

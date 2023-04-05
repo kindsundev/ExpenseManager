@@ -11,7 +11,7 @@ import com.kindsundev.expense.manager.data.model.TransactionModel
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.FragmentTransactionBinding
 import com.kindsundev.expense.manager.ui.custom.ResultDateTimeCallback
-import com.kindsundev.expense.manager.ui.custom.DateTimePicker
+import com.kindsundev.expense.manager.ui.custom.DateTimePickerDialog
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
 import com.kindsundev.expense.manager.ui.home.note.transaction.bottomsheet.WalletBottomSheet
 import com.kindsundev.expense.manager.ui.home.note.transaction.bottomsheet.WalletContract
@@ -100,7 +100,7 @@ class TransactionFragment : Fragment(),
     }
 
     private fun onClickSetDateTime() {
-        DateTimePicker(requireContext(), object : ResultDateTimeCallback {
+        DateTimePickerDialog(requireContext(), object : ResultDateTimeCallback {
             override fun resultNewDateTime(newDateTime: String) {
                 binding!!.tvTime.text = newDateTime
             }

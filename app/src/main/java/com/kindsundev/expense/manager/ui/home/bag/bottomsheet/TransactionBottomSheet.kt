@@ -9,7 +9,7 @@ import com.kindsundev.expense.manager.data.model.TransactionModel
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.BottomSheetTransactionDetailBinding
 import com.kindsundev.expense.manager.ui.custom.ResultDateTimeCallback
-import com.kindsundev.expense.manager.ui.custom.DateTimePicker
+import com.kindsundev.expense.manager.ui.custom.DateTimePickerDialog
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
 import com.kindsundev.expense.manager.ui.home.bag.BagContract
 import com.kindsundev.expense.manager.ui.home.bag.BagPresenter
@@ -65,7 +65,7 @@ class TransactionBottomSheet(
     private fun hideBottomSheet() : Unit = this.dismiss()
 
     private fun onClickSetDateTime() {
-        DateTimePicker(requireContext(), object : ResultDateTimeCallback {
+        DateTimePickerDialog(requireContext(), object : ResultDateTimeCallback {
             override fun resultNewDateTime(newDateTime: String) {
                 binding!!.tvTime.text = newDateTime
             }
