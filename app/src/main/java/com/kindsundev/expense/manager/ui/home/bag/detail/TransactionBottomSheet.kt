@@ -1,10 +1,15 @@
 package com.kindsundev.expense.manager.ui.home.bag.detail
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.data.model.TransactionModel
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.BottomSheetTransactionDetailBinding
@@ -59,7 +64,7 @@ class TransactionBottomSheet(
         binding!!.btnArrowDown.setOnClickListener { hideBottomSheet() }
         binding!!.itemTime.setOnClickListener { onClickSetDateTime() }
         binding!!.btnSave.setOnClickListener { onClickUpdateTransaction() }
-        binding!!.btnRemove.setOnClickListener {  }
+        binding!!.btnRemove.setOnClickListener { onClickRemoveTransaction() }
     }
 
     private fun hideBottomSheet() : Unit = this.dismiss()
@@ -98,7 +103,22 @@ class TransactionBottomSheet(
     }
 
     private fun onClickRemoveTransaction() {
-
+        val alertDialog = MaterialAlertDialogBuilder(requireContext(), R.style.DeleteWarningAlertDialog)
+            .setTitle(R.string.remove_transaction)
+            .setMessage(R.string.message_for_remove_transaction)
+            .setCancelable(false)
+            .setPositiveButton("Got it") { _, _ ->
+                activity?.showToast("Done")
+            }
+            .setNegativeButton("Later") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+        alertDialog.window?.apply {
+            setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            setGravity(Gravity.CENTER)
+        }
+        alertDialog.show()
     }
 
     override fun onDestroyView() {
