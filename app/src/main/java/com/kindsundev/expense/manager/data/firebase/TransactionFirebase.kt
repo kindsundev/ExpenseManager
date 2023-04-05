@@ -87,4 +87,37 @@ class TransactionFirebase : BaseFirebase() {
             subscriber.onComplete()
         }
     }
+
+    fun getTransactionsInDay(walletID: String, date: String) : Observable<BillModel> =
+        Observable.create { subscriber ->
+        initPointerGeneric()
+            .child(walletID)
+            .child(Constant.MY_REFERENCE_CHILD_TRANSACTION)
+            .child(date)
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if ((!subscriber.isDisposed) && (snapshot.hasChildren())) {
+                        val transactions = ArrayList<TransactionModel>()
+                        for (data in snapshot.children) {
+                            val transaction = data.getValue(TransactionModel::class.java)
+                            transaction?.let {
+                                transactions.add(it)
+                            }
+                        }
+                        val bill = BillModel(date, transactions)
+                        subscriber.onNext(bill)
+                        subscriber.onComplete()
+                    } else {
+                        val transaction = BillModel("Null", ArrayList())
+                        subscriber.onNext(transaction)
+                        subscriber.onComplete()
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    subscriber.onError(error.toException())
+                }
+            })
+    }
+
 }
