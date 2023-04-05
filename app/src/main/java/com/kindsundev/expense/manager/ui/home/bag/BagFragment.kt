@@ -13,7 +13,9 @@ import com.kindsundev.expense.manager.data.model.TransactionModel
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.data.shared.PreferenceHelper
 import com.kindsundev.expense.manager.databinding.FragmentBagBinding
+import com.kindsundev.expense.manager.ui.custom.DateSelectionDialog
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
+import com.kindsundev.expense.manager.ui.custom.ResultDateTimeCallback
 import com.kindsundev.expense.manager.ui.home.HomeActivity
 import com.kindsundev.expense.manager.ui.home.bag.adapter.BillParentAdapter
 import com.kindsundev.expense.manager.ui.home.bag.bottomsheet.ResultTransactionCallback
@@ -51,13 +53,21 @@ class BagFragment : Fragment(), BagContract.Listener, BagContract.ViewParent {
     private fun initListener() {
         binding!!.btnUpgradePremium.setOnClickListener { activity?.onFeatureIsDevelop() }
         binding!!.btnVisibility.setOnClickListener { onClickVisibilityBalance() }
-        binding!!.btnSearch.setOnClickListener { }
+        binding!!.btnSearch.setOnClickListener { onClickSearchBalance() }
         binding!!.btnNotifications.setOnClickListener { }
     }
 
     private fun onClickVisibilityBalance() {
         stateBalanceVisibility = !stateBalanceVisibility
         checkDisplayBalance(stateBalanceVisibility)
+    }
+
+    private fun onClickSearchBalance() {
+        DateSelectionDialog(requireContext(), object : ResultDateTimeCallback {
+            override fun resultNewDateTime(newDateTime: String) {
+                activity?.showToast(newDateTime)
+            }
+        }).onShowDatePickerDialog()
     }
 
     override fun onStop() {

@@ -26,18 +26,18 @@ class DateTimePickerDialog(
 
     private var newDateTime: String = "Null"
 
-    private fun getCurrentDateTimeCalender() {
-        val rightNow = LocalDateTime.now()
-        currentDay = rightNow.dayOfMonth
-        currentMonth = rightNow.monthValue
-        currentYear = rightNow.year
-        currentHour = rightNow.hour
-        currentMinute = rightNow.minute
-    }
-
     fun onShowDateTimePickerDialog() {
         getCurrentDateTimeCalender()
         DatePickerDialog(context, this, currentYear, currentMonth, currentDay).show()
+    }
+
+    private fun getCurrentDateTimeCalender() {
+        val rightNow = LocalDateTime.now()
+        currentDay = rightNow.dayOfMonth
+        currentMonth = rightNow.monthValue  - 1
+        currentYear = rightNow.year
+        currentHour = rightNow.hour
+        currentMinute = rightNow.minute
     }
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
