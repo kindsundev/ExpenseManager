@@ -1,4 +1,4 @@
-package com.kindsundev.expense.manager.ui.home.bag.bottomsheet
+package com.kindsundev.expense.manager.ui.home.bag.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater

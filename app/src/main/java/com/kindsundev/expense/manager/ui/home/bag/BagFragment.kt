@@ -18,8 +18,8 @@ import com.kindsundev.expense.manager.ui.custom.LoadingDialog
 import com.kindsundev.expense.manager.ui.custom.ResultDateTimeCallback
 import com.kindsundev.expense.manager.ui.home.HomeActivity
 import com.kindsundev.expense.manager.ui.home.bag.adapter.BillParentAdapter
-import com.kindsundev.expense.manager.ui.home.bag.bottomsheet.ResultTransactionCallback
-import com.kindsundev.expense.manager.ui.home.bag.bottomsheet.TransactionBottomSheet
+import com.kindsundev.expense.manager.ui.home.bag.detail.ResultTransactionCallback
+import com.kindsundev.expense.manager.ui.home.bag.detail.TransactionBottomSheet
 import com.kindsundev.expense.manager.utils.*
 import kotlin.properties.Delegates
 
