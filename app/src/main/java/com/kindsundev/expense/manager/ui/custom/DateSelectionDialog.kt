@@ -30,7 +30,6 @@ class DateSelectionDialog(
 
     private fun getCurrentDateTimeCalender() {
         val rightNow = LocalDateTime.now()
-        Logger.error(rightNow.toString())
         currentDay = rightNow.dayOfMonth
         currentMonth = rightNow.monthValue  - 1
         currentYear = rightNow.year

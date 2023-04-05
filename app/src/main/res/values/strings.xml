@@ -131,5 +131,7 @@
     <string name="create_new">Create New</string>
     <string name="total_balance">Total Balance</string>
     <string name="edit_transaction">Edit Transaction</string>
+    <string name="search">Search</string>
+    <string name="picker_date_here">Picker Date Here</string>
 
 </resources>

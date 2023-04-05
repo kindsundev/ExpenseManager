@@ -7,11 +7,39 @@
     <fragment
         android:id="@+id/bagFragment"
         android:name="com.kindsundev.expense.manager.ui.home.bag.BagFragment"
-        android:label="BagFragment" />
+        android:label="BagFragment" >
+        <action
+            android:id="@+id/action_bagFragment_to_transactionSearchFragment"
+            app:destination="@id/transactionSearchFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/transactionSearchFragment"
+        android:name="com.kindsundev.expense.manager.ui.home.bag.search.TransactionSearchFragment"
+        android:label="TransactionSearchFragment">
+        <action
+            android:id="@+id/action_transactionSearchFragment_to_bagFragment"
+            app:destination="@id/bagFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/bagFragment"
+            app:popUpToInclusive="false"/>
+        <argument
+            android:name="wallet"
+            app:argType="com.kindsundev.expense.manager.data.model.WalletModel" />
+    </fragment>
+
     <fragment
         android:id="@+id/budgetFragment"
         android:name="com.kindsundev.expense.manager.ui.home.budget.BudgetFragment"
         android:label="BudgetFragment" />
+
     <fragment
         android:id="@+id/noteFragment"
         android:name="com.kindsundev.expense.manager.ui.home.note.container.NoteFragment"
@@ -20,10 +48,12 @@
             android:id="@+id/action_noteFragment_to_transactionFragment"
             app:destination="@id/transactionFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/reportFragment"
         android:name="com.kindsundev.expense.manager.ui.home.report.ReportFragment"
         android:label="ReportFragment" />
+
     <fragment
         android:id="@+id/menuFragment"
         android:name="com.kindsundev.expense.manager.ui.home.menu.MenuFragment"
@@ -36,6 +66,7 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
+
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.kindsundev.expense.manager.ui.home.menu.profile.ProfileFragment"
@@ -53,6 +84,7 @@
             android:name="user"
             app:argType="com.kindsundev.expense.manager.data.model.UserModel" />
     </fragment>
+
     <fragment
         android:id="@+id/transactionFragment"
         android:name="com.kindsundev.expense.manager.ui.home.note.transaction.TransactionFragment"
@@ -60,4 +92,5 @@
         app:popUpTo="@id/noteFragment"
         app:popUpToInclusive="false" >
     </fragment>
+
 </navigation>

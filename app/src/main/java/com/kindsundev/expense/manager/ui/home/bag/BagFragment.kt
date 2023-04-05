@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Constant
@@ -63,11 +64,8 @@ class BagFragment : Fragment(), BagContract.Listener, BagContract.ViewParent {
     }
 
     private fun onClickSearchBalance() {
-        DateSelectionDialog(requireContext(), object : ResultDateTimeCallback {
-            override fun resultNewDateTime(newDateTime: String) {
-                activity?.showToast(newDateTime)
-            }
-        }).onShowDatePickerDialog()
+        val action = BagFragmentDirections.actionBagFragmentToTransactionSearchFragment(mCurrentWallet)
+        findNavController().navigate(action)
     }
 
     override fun onStop() {
