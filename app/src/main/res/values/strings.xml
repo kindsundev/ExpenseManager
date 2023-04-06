@@ -133,8 +133,8 @@
     <string name="edit_transaction">Edit Transaction</string>
     <string name="search">Search</string>
     <string name="picker_date_here">Picker Date Here</string>
-    <string name="remove_transaction">Remove Transaction</string>
-    <string name="message_for_remove_transaction">
+    <string name="delete_transaction">Delete Transaction</string>
+    <string name="message_for_delete_transaction">
         It will restore the balance before making the transaction
     </string>
 
