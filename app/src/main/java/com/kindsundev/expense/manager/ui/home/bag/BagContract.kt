@@ -1,7 +1,6 @@
 package com.kindsundev.expense.manager.ui.home.bag
 
 import com.kindsundev.expense.manager.data.model.BillModel
-import com.kindsundev.expense.manager.data.model.TransactionModel
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.ui.base.BaseView
 
@@ -16,41 +15,9 @@ interface BagContract {
 
         fun getBills(): ArrayList<BillModel>
 
-        fun handlerCalculateBalanceOfDay(bills: BillModel): Double
-
-        fun updateTransaction(walletID: Int, transaction: TransactionModel)
-
-        fun handlerUpdateBalance(
-            walletId: Int,
-            transactionType: String,
-            currentBalance: Double,
-            beforeMoney:Double,
-            afterMoney: Double
-        )
-
-        fun handlerDeleteTransaction(walletID: Int, date: String, transactionId: Int)
-
-        fun checkAndRestoreBalance(
-            walletId: Int,
-            transactionType: String,
-            currentBalance: Double,
-            beforeMoney: Double
-        )
     }
 
-    interface ViewParent : BaseView {
+    interface View : BaseView {
         fun onSuccess(status: Boolean)
-
-        fun onSuccess(message: String)
-    }
-
-
-    interface ViewChild {
-        fun onResultColor(type: String)
-    }
-
-
-    interface Listener {
-        fun onClickTransaction(date: String, transaction: TransactionModel)
     }
 }

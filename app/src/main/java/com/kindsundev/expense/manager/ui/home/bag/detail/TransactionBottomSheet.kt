@@ -14,26 +14,24 @@ import com.kindsundev.expense.manager.databinding.BottomSheetTransactionDetailBi
 import com.kindsundev.expense.manager.ui.custom.ResultDateTimeCallback
 import com.kindsundev.expense.manager.ui.custom.DateTimePickerDialog
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
-import com.kindsundev.expense.manager.ui.home.bag.BagContract
-import com.kindsundev.expense.manager.ui.home.bag.BagPresenter
 import com.kindsundev.expense.manager.utils.*
 
 class TransactionBottomSheet(
-    private val callback: ResultTransactionCallback,
+    private val callback: TransactionDetailContract.Result,
     private val wallet: WalletModel,
     private val date: String,
     private val transaction: TransactionModel
-) : BottomSheetDialogFragment(), BagContract.ViewParent {
+) : BottomSheetDialogFragment(), TransactionDetailContract.View {
     private var _binding: BottomSheetTransactionDetailBinding? = null
     private val binding get() = _binding
 
-    private lateinit var bagPresenter: BagPresenter
+    private lateinit var detailPresenter: TransactionDetailPresenter
     private val loadingDialog by lazy { LoadingDialog() }
     private lateinit var mNewTransaction: TransactionModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        bagPresenter = BagPresenter(bagView = this, adapterView = null)
+        detailPresenter = TransactionDetailPresenter(this)
     }
 
     override fun onCreateView(
@@ -86,7 +84,7 @@ class TransactionBottomSheet(
                 activity?.showToast("Please do not enter the old money")
             } else {
                 mNewTransaction = getNewTransaction()
-                bagPresenter.updateTransaction(wallet.id!!, mNewTransaction)
+                detailPresenter.updateTransaction(wallet.id!!, mNewTransaction)
             }
         }
     }
@@ -107,7 +105,7 @@ class TransactionBottomSheet(
             .setMessage(R.string.message_for_delete_transaction)
             .setCancelable(false)
             .setPositiveButton("OK") { _, _ ->
-                bagPresenter.handlerDeleteTransaction(wallet.id!!, date, transaction.id!!)
+                detailPresenter.handlerDeleteTransaction(wallet.id!!, date, transaction.id!!)
             }
             .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
             .create()
@@ -125,7 +123,7 @@ class TransactionBottomSheet(
 
     override fun onSuccess(status: Boolean) {
         if (status) {
-            bagPresenter.checkAndRestoreBalance(
+            detailPresenter.checkAndRestoreBalance(
                 wallet.id!!, transaction.type!!, wallet.balance!!, transaction.amount!!)
         }
     }
@@ -133,13 +131,13 @@ class TransactionBottomSheet(
     override fun onSuccess(message: String) {
         activity?.showToast(message)
         hideBottomSheet()
-        callback.resultSuccess(true)
+        callback.notificationSuccess(true)
         startLoadingDialog(loadingDialog, parentFragmentManager, false)
     }
 
     override fun onSuccess() {
         startLoadingDialog(loadingDialog, parentFragmentManager, false)
-        bagPresenter.handlerUpdateBalance(
+        detailPresenter.handlerUpdateBalance(
             walletId = wallet.id!!,
             transactionType = transaction.type.toString(),
             currentBalance = wallet.balance!!.toDouble(),

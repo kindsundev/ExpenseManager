@@ -16,13 +16,15 @@ import com.kindsundev.expense.manager.data.shared.PreferenceHelper
 import com.kindsundev.expense.manager.databinding.FragmentBagBinding
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
 import com.kindsundev.expense.manager.ui.home.HomeActivity
+import com.kindsundev.expense.manager.ui.home.bag.adapter.BillAdapterContract
 import com.kindsundev.expense.manager.ui.home.bag.adapter.BillParentAdapter
-import com.kindsundev.expense.manager.ui.home.bag.detail.ResultTransactionCallback
 import com.kindsundev.expense.manager.ui.home.bag.detail.TransactionBottomSheet
+import com.kindsundev.expense.manager.ui.home.bag.detail.TransactionDetailContract
 import com.kindsundev.expense.manager.utils.*
 import kotlin.properties.Delegates
 
-class BagFragment : Fragment(), BagContract.Listener, BagContract.ViewParent {
+class BagFragment : Fragment(), BillAdapterContract.Listener,
+    BagContract.View {
     private var _binding: FragmentBagBinding? = null
     private val binding get() = _binding
     private var stateBalanceVisibility by Delegates.notNull<Boolean>()
@@ -80,8 +82,8 @@ class BagFragment : Fragment(), BagContract.Listener, BagContract.ViewParent {
     }
 
     override fun onClickTransaction(date: String, transaction: TransactionModel) {
-        val bottomSheet = TransactionBottomSheet(object : ResultTransactionCallback {
-            override fun resultSuccess(result: Boolean) {
+        val bottomSheet = TransactionBottomSheet(object : TransactionDetailContract.Result {
+            override fun notificationSuccess(result: Boolean) {
                 if (result) {  // refresh data
                     bagPresenter.handlerGetWallets()
                 }
@@ -117,8 +119,6 @@ class BagFragment : Fragment(), BagContract.Listener, BagContract.ViewParent {
         initDataToUi()
         startLoadingDialog(loadingDialog, parentFragmentManager, false)
     }
-
-    override fun onSuccess(message: String) {}
 
     private fun initDataToUi() {
         initCurrentWalletInfo()

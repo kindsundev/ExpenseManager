@@ -10,13 +10,12 @@ import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Constant
 import com.kindsundev.expense.manager.data.model.TransactionModel
 import com.kindsundev.expense.manager.databinding.LayoutWalletBillItemBinding
-import com.kindsundev.expense.manager.ui.home.bag.BagContract
 import com.kindsundev.expense.manager.utils.amountFormatDisplay
 
 class BillChildAdapter(
     private val date: String,
     private val transactions: ArrayList<TransactionModel>,
-    private val listener: BagContract.Listener
+    private val listener: BillAdapterContract.Listener
 ): RecyclerView.Adapter<BillChildAdapter.BillViewHolder>() {
 
     inner class BillViewHolder(val binding: LayoutWalletBillItemBinding):

@@ -11,17 +11,15 @@ import com.kindsundev.expense.manager.common.Constant
 import com.kindsundev.expense.manager.data.model.BillModel
 import com.kindsundev.expense.manager.data.model.TransactionModel
 import com.kindsundev.expense.manager.databinding.LayoutBillParentItemBinding
-import com.kindsundev.expense.manager.ui.home.bag.BagContract
-import com.kindsundev.expense.manager.ui.home.bag.BagPresenter
 import com.kindsundev.expense.manager.utils.amountFormatDisplay
 
 class BillParentAdapter(
     private val bills: ArrayList<BillModel>,
-    private val listener: BagContract.Listener
-) : RecyclerView.Adapter<BillParentAdapter.ExchangeViewHolder>(), BagContract.ViewChild {
+    private val listener: BillAdapterContract.Listener
+) : RecyclerView.Adapter<BillParentAdapter.ExchangeViewHolder>(), BillAdapterContract.View {
 
-//    private val viewPool = RecyclerView.RecycledViewPool()
-    private val bagPresenter = BagPresenter(bagView = null, adapterView = this)
+    private val viewPool = RecyclerView.RecycledViewPool()
+    private val adapterPresenter = BillAdapterPresenter(this)
     private lateinit var view: LayoutBillParentItemBinding
     private lateinit var mColor: String
 
@@ -70,7 +68,7 @@ class BillParentAdapter(
     }
 
     private fun initCurrentBalanceOfWallet(bill: BillModel) {
-        val result = bagPresenter.handlerCalculateBalanceOfDay(bill)
+        val result = adapterPresenter.handlerCalculateBalanceOfDay(bill)
         view.tvNewAmount.text = amountFormatDisplay(result.toString())
         when (mColor) {
             Constant.TRANSACTION_STATE_BALANCE -> {
@@ -89,7 +87,7 @@ class BillParentAdapter(
         view.rcvTransactionDetail.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = BillChildAdapter(date!!,transactions!!, listener)
-//            setRecycledViewPool(viewPool)
+            setRecycledViewPool(viewPool)
         }
     }
 
