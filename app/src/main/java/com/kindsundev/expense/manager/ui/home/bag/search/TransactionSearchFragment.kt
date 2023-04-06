@@ -17,8 +17,10 @@ import com.kindsundev.expense.manager.databinding.FragmentSearchTransactionBindi
 import com.kindsundev.expense.manager.ui.custom.DateSelectionDialog
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
 import com.kindsundev.expense.manager.ui.custom.ResultDateTimeCallback
+import com.kindsundev.expense.manager.ui.home.HomeActivity
 import com.kindsundev.expense.manager.ui.home.bag.adapter.BillAdapterContract
 import com.kindsundev.expense.manager.ui.home.bag.adapter.BillParentAdapter
+import com.kindsundev.expense.manager.utils.displaySwitchBottomNavigation
 import com.kindsundev.expense.manager.utils.showToast
 import com.kindsundev.expense.manager.utils.startLoadingDialog
 
@@ -44,6 +46,7 @@ class TransactionSearchFragment: Fragment(), TransactionSearchContract.View {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSearchTransactionBinding.inflate(layoutInflater)
+        displaySwitchBottomNavigation(requireActivity() as HomeActivity, false)
         initListener()
         return binding!!.root
     }
@@ -68,6 +71,7 @@ class TransactionSearchFragment: Fragment(), TransactionSearchContract.View {
 
     override fun onDestroy() {
         super.onDestroy()
+        displaySwitchBottomNavigation(requireActivity() as HomeActivity, true)
         _binding = null
         searchPresenter.cleanUp()
     }

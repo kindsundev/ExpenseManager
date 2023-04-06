@@ -13,6 +13,7 @@ import com.kindsundev.expense.manager.databinding.FragmentTransactionBinding
 import com.kindsundev.expense.manager.ui.custom.ResultDateTimeCallback
 import com.kindsundev.expense.manager.ui.custom.DateTimePickerDialog
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
+import com.kindsundev.expense.manager.ui.home.HomeActivity
 import com.kindsundev.expense.manager.ui.home.note.transaction.bottomsheet.WalletBottomSheet
 import com.kindsundev.expense.manager.ui.home.note.transaction.bottomsheet.WalletContract
 import com.kindsundev.expense.manager.utils.*
@@ -47,6 +48,7 @@ class TransactionFragment : Fragment(),
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentTransactionBinding.inflate(layoutInflater)
+        displaySwitchBottomNavigation(requireActivity() as HomeActivity, false)
         initView()
         initWalletBottomSheet()
         initListener()
@@ -109,6 +111,7 @@ class TransactionFragment : Fragment(),
 
     override fun onDestroyView() {
         super.onDestroyView()
+        displaySwitchBottomNavigation(requireActivity() as HomeActivity, true)
         _binding = null
         transactionPresenter.cleanUp()
     }

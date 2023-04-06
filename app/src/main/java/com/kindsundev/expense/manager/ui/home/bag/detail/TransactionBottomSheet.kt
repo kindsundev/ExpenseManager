@@ -119,6 +119,7 @@ class TransactionBottomSheet(
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        detailPresenter.cleanUp()
     }
 
     override fun onSuccess(status: Boolean) {

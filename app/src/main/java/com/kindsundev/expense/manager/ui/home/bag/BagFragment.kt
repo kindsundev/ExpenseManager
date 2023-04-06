@@ -53,9 +53,14 @@ class BagFragment : Fragment(), BillAdapterContract.Listener,
 
     private fun initListener() {
         binding!!.btnUpgradePremium.setOnClickListener { activity?.onFeatureIsDevelop() }
+        binding!!.rlWallet.setOnClickListener { onClickSelectWallet() }
         binding!!.btnVisibility.setOnClickListener { onClickVisibilityBalance() }
         binding!!.btnSearch.setOnClickListener { onClickSearchBalance() }
         binding!!.btnNotifications.setOnClickListener { }
+    }
+
+    private fun onClickSelectWallet() {
+
     }
 
     private fun onClickVisibilityBalance() {
