@@ -49,6 +49,14 @@ class ProvideWalletFragment : Fragment(),
         prepareWalletPresenter.handlerGetWallets()
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (wallets.isNotEmpty()) {
+            wallets.clear()
+            prepareWalletPresenter.handlerGetWallets()
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
