@@ -54,6 +54,7 @@ class CreateWalletDialog(
         savedInstanceState: Bundle?
     ): View {
         walletPresenter = WalletPresenter(this)
+        formatInputCurrencyBalance(binding!!.edtBalance)
         initListener()
         return binding!!.root
     }
@@ -85,7 +86,7 @@ class CreateWalletDialog(
 
     private fun initWalletData(): WalletModel {
         val name = binding!!.edtName.text.toString().trim()
-        val balance = binding!!.edtBalance.text.toString().trim()
+        val balance = binding!!.edtBalance.text.toString().trim().replace(",", "")
         val currency = when (binding!!.radioGroupCurrency.checkedRadioButtonId) {
             binding!!.radioBtnUsd.id -> {
                 binding!!.radioBtnUsd.text.toString().trim()

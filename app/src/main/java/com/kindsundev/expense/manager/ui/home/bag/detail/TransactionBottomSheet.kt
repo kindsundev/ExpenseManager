@@ -40,13 +40,14 @@ class TransactionBottomSheet(
         savedInstanceState: Bundle?
     ): View {
         _binding = BottomSheetTransactionDetailBinding.inflate(layoutInflater)
+        formatInputCurrencyBalance(binding!!.edtAmount)
         initTransactionData()
         initListener()
         return binding!!.root
     }
 
     private fun initTransactionData() {
-        val amount = amountFormatDisplay(transaction.amount.toString()).trim()
+        val amount = formatDisplayCurrencyBalance(transaction.amount.toString()).trim()
         binding!!.edtAmount.text = amount.toEditable()
         binding!!.tvWalletName.text = wallet.name
         binding!!.tvCategoryName.text = transaction.category
@@ -79,7 +80,7 @@ class TransactionBottomSheet(
             activity?.showToast("Please enter amount value!")
         } else {
             val oldValue = transaction.amount
-            val newValue = binding!!.edtAmount.text.toString().toDouble()
+            val newValue = binding!!.edtAmount.text.toString().replace(",","").toDouble()
             if (oldValue == newValue) {
                 activity?.showToast("Please do not enter the old money")
             } else {
@@ -92,7 +93,7 @@ class TransactionBottomSheet(
     private fun getNewTransaction(): TransactionModel {
         val id = transaction.id
         val type = transaction.type
-        val amount = binding!!.edtAmount.text.toString().trim()
+        val amount = binding!!.edtAmount.text.toString().trim().replace(",","")
         val categoryName = binding!!.tvCategoryName.text.toString().trim()
         val dateTime = binding!!.tvTime.text.toString().trim()
         val note = binding!!.edtDescription.text.toString().trim()

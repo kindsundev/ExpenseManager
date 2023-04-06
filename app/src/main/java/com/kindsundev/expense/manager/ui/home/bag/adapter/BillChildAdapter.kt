@@ -10,7 +10,7 @@ import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Constant
 import com.kindsundev.expense.manager.data.model.TransactionModel
 import com.kindsundev.expense.manager.databinding.LayoutWalletBillItemBinding
-import com.kindsundev.expense.manager.utils.amountFormatDisplay
+import com.kindsundev.expense.manager.utils.formatDisplayCurrencyBalance
 
 class BillChildAdapter(
     private val date: String,
@@ -44,7 +44,7 @@ class BillChildAdapter(
             binding.tvNote.visibility = View.VISIBLE
             binding.tvNote.text = bill.note.toString()
         }
-        binding.tvAmount.text = amountFormatDisplay(bill.amount.toString())
+        binding.tvAmount.text = formatDisplayCurrencyBalance(bill.amount.toString())
         initTextColor(binding, bill.type.toString())
         initCategoryIcon(binding, bill.category.toString())
         initCategoryIconBackground(binding, bill.category.toString())

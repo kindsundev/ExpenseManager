@@ -49,6 +49,7 @@ class TransactionFragment : Fragment(),
     ): View {
         _binding = FragmentTransactionBinding.inflate(layoutInflater)
         displaySwitchBottomNavigation(requireActivity() as HomeActivity, false)
+        formatInputCurrencyBalance(binding!!.edtAmount)
         initView()
         initWalletBottomSheet()
         initListener()
@@ -92,7 +93,7 @@ class TransactionFragment : Fragment(),
     }
 
     private fun initTransactionData(): TransactionModel {
-        val amount = binding!!.edtAmount.text.toString().trim()
+        val amount = binding!!.edtAmount.text.toString().trim().replace(",","")
         val date = binding!!.tvTime.text.toString().trim()
         val note = binding!!.edtDescription.text.toString().trim()
         val id = hashCodeForID(transactionType!!, categoryName!!, date, note)

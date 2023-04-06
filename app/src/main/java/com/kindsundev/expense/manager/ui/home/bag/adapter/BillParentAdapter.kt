@@ -11,7 +11,7 @@ import com.kindsundev.expense.manager.common.Constant
 import com.kindsundev.expense.manager.data.model.BillModel
 import com.kindsundev.expense.manager.data.model.TransactionModel
 import com.kindsundev.expense.manager.databinding.LayoutBillParentItemBinding
-import com.kindsundev.expense.manager.utils.amountFormatDisplay
+import com.kindsundev.expense.manager.utils.formatDisplayCurrencyBalance
 
 class BillParentAdapter(
     private val bills: ArrayList<BillModel>,
@@ -69,7 +69,7 @@ class BillParentAdapter(
 
     private fun initCurrentBalanceOfWallet(bill: BillModel) {
         val result = adapterPresenter.handlerCalculateBalanceOfDay(bill)
-        view.tvNewAmount.text = amountFormatDisplay(result.toString())
+        view.tvNewAmount.text = formatDisplayCurrencyBalance(result.toString())
         when (mColor) {
             Constant.TRANSACTION_STATE_BALANCE -> {
                 view.tvNewAmount.setTextColor(Color.parseColor(Constant.GRAY_COLOR_CODE))

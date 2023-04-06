@@ -134,7 +134,7 @@ class BagFragment : Fragment(), BillAdapterContract.Listener,
         getStateBalanceVisibility()
         binding!!.tvName.text = mCurrentWallet.name.toString()
         binding!!.tvCurrency.text = mCurrentWallet.currency.toString()
-        binding!!.tvBalance.text = amountFormatDisplay(mCurrentWallet.balance.toString())
+        binding!!.tvBalance.text = formatDisplayCurrencyBalance(mCurrentWallet.balance.toString())
     }
 
     private fun getStateBalanceVisibility() {

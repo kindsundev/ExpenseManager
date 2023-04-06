@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.LayoutWalletItemBinding
-import com.kindsundev.expense.manager.utils.amountFormatDisplay
+import com.kindsundev.expense.manager.utils.formatDisplayCurrencyBalance
 
 internal class WalletAdapter(
     private val wallets: ArrayList<WalletModel>,
@@ -24,7 +24,7 @@ internal class WalletAdapter(
         val wallet = wallets[position]
         holder.binding.tvName.text = wallet.name
         holder.binding.tvBalance.text =
-            "${amountFormatDisplay(wallet.balance.toString())} ${wallet.currency}"
+            "${formatDisplayCurrencyBalance(wallet.balance.toString())} ${wallet.currency}"
         holder.binding.root.setOnClickListener {
             listener.onClickWalletItem(wallet)
         }

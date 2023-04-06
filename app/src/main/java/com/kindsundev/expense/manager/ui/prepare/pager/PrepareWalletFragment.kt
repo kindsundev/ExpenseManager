@@ -1,7 +1,6 @@
 package com.kindsundev.expense.manager.ui.prepare.pager
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -32,6 +31,7 @@ class PrepareWalletFragment : Fragment(), PrepareWalletContract.View {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentPrepareWalletBinding.inflate(inflater, container, false)
+        formatInputCurrencyBalance(binding!!.edtBalance)
         binding!!.btnOk.setOnClickListener { onClickButtonOk() }
         return binding!!.root
     }
@@ -72,7 +72,7 @@ class PrepareWalletFragment : Fragment(), PrepareWalletContract.View {
 
     private fun initWalletData(): WalletModel {
         val name = binding!!.edtName.text.toString().trim()
-        val balance = binding!!.edtBalance.text.toString().trim()
+        val balance = binding!!.edtBalance.text.toString().trim().replace(",", "")
         val currency = when (binding!!.radioGroupCurrency.checkedRadioButtonId) {
             binding!!.radioBtnUsd.id -> {
                 binding!!.radioBtnUsd.text.toString().trim()
