@@ -5,8 +5,6 @@ import android.os.Bundle
 import com.google.android.material.tabs.TabLayoutMediator
 import com.kindsundev.expense.manager.databinding.ActivityPrepareWalletBinding
 import com.kindsundev.expense.manager.ui.prepare.pager.WalletViewPager
-import com.kindsundev.expense.manager.utils.onFeatureIsDevelop
-import com.kindsundev.expense.manager.utils.startHomeActivity
 
 class PrepareWalletActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPrepareWalletBinding
