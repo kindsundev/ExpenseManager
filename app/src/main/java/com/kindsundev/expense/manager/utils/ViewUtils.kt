@@ -3,9 +3,12 @@ package com.kindsundev.expense.manager.utils
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.icu.text.DecimalFormat
 import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -79,4 +82,32 @@ fun displaySwitchBottomNavigation(activity: HomeActivity, state: Boolean) {
     } else {
         navBar.visibility = View.GONE
     }
+}
+
+fun formatDisplayCurrencyBalance(amount: String): String {
+    return DecimalFormat("###,###,###").format(amount.toDouble())
+}
+
+/*
+* UI: android:inputType="numberDecimal"
+* GetValue: replace(",", "")
+* */
+fun formatInputCurrencyBalance(editText : EditText) {
+    val decimalFormat = DecimalFormat("###,###,###")
+    editText.addTextChangedListener(object : TextWatcher{
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            val userInput = s.toString().replace(",","")
+            if (userInput.isNotEmpty()) {
+                val value = userInput.toDouble()
+                editText.removeTextChangedListener(this)
+                editText.setText(decimalFormat.format(value))
+                editText.setSelection(decimalFormat.format(value).length)
+                editText.addTextChangedListener(this)
+            }
+        }
+
+        override fun afterTextChanged(s: Editable?) {}
+    })
 }
