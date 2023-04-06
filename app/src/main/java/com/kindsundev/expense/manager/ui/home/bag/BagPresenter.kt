@@ -162,12 +162,42 @@ class BagPresenter(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                bagView?.onSuccess("Create transaction success")
+                bagView?.onSuccess("Update transaction success")
             }, {
                 bagView?.onError(it.message!!)
                 Logger.error("Update balance: ${it.message!!}")
             })
         compositeDisposable.add(disposable)
+    }
+
+    override fun handlerDeleteTransaction(walletID: Int, date: String, transactionId: Int) {
+        bagView?.onLoad()
+        val disposable = transactionFirebase
+            .deleteTransaction(walletID.toString(), date, transactionId.toString())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                bagView?.onSuccess(true)
+            }, {
+                bagView?.onError(it.message!!)
+                Logger.error("Delete transaction: ${it.message!!}")
+            })
+        compositeDisposable.add(disposable)
+    }
+
+    override fun checkAndRestoreBalance(
+        walletId: Int,
+        transactionType: String,
+        currentBalance: Double,
+        beforeMoney: Double
+    ) {
+        if (transactionType == Constant.TRANSACTION_TYPE_EXPENSE) {
+            val income = currentBalance + beforeMoney
+            updateBalance(walletId, income)
+        } else if (transactionType == Constant.TRANSACTION_TYPE_INCOME) {
+            val expense = currentBalance - beforeMoney
+            updateBalance(walletId, expense)
+        }
     }
 
     fun cleanUp() {

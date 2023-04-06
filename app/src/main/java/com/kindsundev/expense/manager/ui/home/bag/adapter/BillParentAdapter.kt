@@ -20,7 +20,7 @@ class BillParentAdapter(
     private val listener: BagContract.Listener
 ) : RecyclerView.Adapter<BillParentAdapter.ExchangeViewHolder>(), BagContract.ViewChild {
 
-    private val viewPool = RecyclerView.RecycledViewPool()
+//    private val viewPool = RecyclerView.RecycledViewPool()
     private val bagPresenter = BagPresenter(bagView = null, adapterView = this)
     private lateinit var view: LayoutBillParentItemBinding
     private lateinit var mColor: String
@@ -40,7 +40,7 @@ class BillParentAdapter(
             switchLayout(true)
             initDateOfTransaction(bill.date.toString())
             initCurrentBalanceOfWallet(bill)
-            initBillChildAdapter(bill.transactions)
+            initBillChildAdapter(bill.date, bill.transactions)
         } else {
             switchLayout(false)
         }
@@ -85,11 +85,11 @@ class BillParentAdapter(
         }
     }
 
-    private fun initBillChildAdapter(transactions: ArrayList<TransactionModel>?) {
+    private fun initBillChildAdapter(date: String?, transactions: ArrayList<TransactionModel>?) {
         view.rcvTransactionDetail.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = BillChildAdapter(transactions!!, listener)
-            setRecycledViewPool(viewPool)
+            adapter = BillChildAdapter(date!!,transactions!!, listener)
+//            setRecycledViewPool(viewPool)
         }
     }
 

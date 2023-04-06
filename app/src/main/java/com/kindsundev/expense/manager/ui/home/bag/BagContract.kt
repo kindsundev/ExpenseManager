@@ -27,6 +27,15 @@ interface BagContract {
             beforeMoney:Double,
             afterMoney: Double
         )
+
+        fun handlerDeleteTransaction(walletID: Int, date: String, transactionId: Int)
+
+        fun checkAndRestoreBalance(
+            walletId: Int,
+            transactionType: String,
+            currentBalance: Double,
+            beforeMoney: Double
+        )
     }
 
     interface ViewParent : BaseView {
@@ -42,6 +51,6 @@ interface BagContract {
 
 
     interface Listener {
-        fun onClickTransaction(transaction: TransactionModel)
+        fun onClickTransaction(date: String, transaction: TransactionModel)
     }
 }

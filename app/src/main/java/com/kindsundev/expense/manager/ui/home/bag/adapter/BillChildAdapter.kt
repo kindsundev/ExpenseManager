@@ -14,6 +14,7 @@ import com.kindsundev.expense.manager.ui.home.bag.BagContract
 import com.kindsundev.expense.manager.utils.amountFormatDisplay
 
 class BillChildAdapter(
+    private val date: String,
     private val transactions: ArrayList<TransactionModel>,
     private val listener: BagContract.Listener
 ): RecyclerView.Adapter<BillChildAdapter.BillViewHolder>() {
@@ -31,7 +32,7 @@ class BillChildAdapter(
         val bill = transactions[position]
         initBillInfo(holder.binding, bill)
         holder.binding.root.setOnClickListener {
-            listener.onClickTransaction(bill)
+            listener.onClickTransaction(date, bill)
         }
     }
 

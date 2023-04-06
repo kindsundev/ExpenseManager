@@ -14,9 +14,7 @@ import com.kindsundev.expense.manager.data.model.TransactionModel
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.data.shared.PreferenceHelper
 import com.kindsundev.expense.manager.databinding.FragmentBagBinding
-import com.kindsundev.expense.manager.ui.custom.DateSelectionDialog
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
-import com.kindsundev.expense.manager.ui.custom.ResultDateTimeCallback
 import com.kindsundev.expense.manager.ui.home.HomeActivity
 import com.kindsundev.expense.manager.ui.home.bag.adapter.BillParentAdapter
 import com.kindsundev.expense.manager.ui.home.bag.detail.ResultTransactionCallback
@@ -81,14 +79,14 @@ class BagFragment : Fragment(), BagContract.Listener, BagContract.ViewParent {
         bagPresenter.cleanUp()
     }
 
-    override fun onClickTransaction(transaction: TransactionModel) {
+    override fun onClickTransaction(date: String, transaction: TransactionModel) {
         val bottomSheet = TransactionBottomSheet(object : ResultTransactionCallback {
-            override fun transactionUpdated(result: Boolean) {
+            override fun resultSuccess(result: Boolean) {
                 if (result) {  // refresh data
                     bagPresenter.handlerGetWallets()
                 }
             }
-        }, mCurrentWallet, transaction)
+        }, mCurrentWallet, date, transaction)
         bottomSheet.show(parentFragmentManager, Constant.WALLET_BOTTOM_SHEET_TRANSACTION_NAME)
     }
 

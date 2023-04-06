@@ -1,11 +1,9 @@
 package com.kindsundev.expense.manager.ui.home.bag.search
 
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -94,7 +92,7 @@ class TransactionSearchFragment: Fragment(), TransactionSearchContract.View {
         binding!!.rcvTransaction.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = BillParentAdapter(mBill, object: BagContract.Listener {
-                override fun onClickTransaction(transaction: TransactionModel) {
+                override fun onClickTransaction(date: String, transaction: TransactionModel) {
                     val message = "This transaction is ${transaction.type}"
                     Snackbar.make(binding!!.myCoordinatorLayout, message, Snackbar.LENGTH_SHORT).show()
                 }

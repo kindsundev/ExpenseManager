@@ -1,7 +1,5 @@
 package com.kindsundev.expense.manager.ui.home.bag.detail
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -23,6 +21,7 @@ import com.kindsundev.expense.manager.utils.*
 class TransactionBottomSheet(
     private val callback: ResultTransactionCallback,
     private val wallet: WalletModel,
+    private val date: String,
     private val transaction: TransactionModel
 ) : BottomSheetDialogFragment(), BagContract.ViewParent {
     private var _binding: BottomSheetTransactionDetailBinding? = null
@@ -104,15 +103,13 @@ class TransactionBottomSheet(
 
     private fun onClickRemoveTransaction() {
         val alertDialog = MaterialAlertDialogBuilder(requireContext(), R.style.DeleteWarningAlertDialog)
-            .setTitle(R.string.remove_transaction)
-            .setMessage(R.string.message_for_remove_transaction)
+            .setTitle(R.string.delete_transaction)
+            .setMessage(R.string.message_for_delete_transaction)
             .setCancelable(false)
-            .setPositiveButton("Got it") { _, _ ->
-                activity?.showToast("Done")
+            .setPositiveButton("OK") { _, _ ->
+                bagPresenter.handlerDeleteTransaction(wallet.id!!, date, transaction.id!!)
             }
-            .setNegativeButton("Later") { dialog, _ ->
-                dialog.dismiss()
-            }
+            .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
             .create()
         alertDialog.window?.apply {
             setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
@@ -126,12 +123,18 @@ class TransactionBottomSheet(
         _binding = null
     }
 
-    override fun onSuccess(status: Boolean) {}
+    override fun onSuccess(status: Boolean) {
+        if (status) {
+            bagPresenter.checkAndRestoreBalance(
+                wallet.id!!, transaction.type!!, wallet.balance!!, transaction.amount!!)
+        }
+    }
 
     override fun onSuccess(message: String) {
         activity?.showToast(message)
         hideBottomSheet()
-        callback.transactionUpdated(true)
+        callback.resultSuccess(true)
+        startLoadingDialog(loadingDialog, parentFragmentManager, false)
     }
 
     override fun onSuccess() {

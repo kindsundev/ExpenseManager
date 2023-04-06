@@ -120,4 +120,22 @@ class TransactionFirebase : BaseFirebase() {
             })
     }
 
+    fun deleteTransaction(walletID: String, dateKey: String, transactionId: String) =
+        Completable.create { emitter ->
+            initPointerGeneric()
+                .child(walletID)
+                .child(Constant.MY_REFERENCE_CHILD_TRANSACTION)
+                .child(dateKey)
+                .child(transactionId)
+                .removeValue()
+                .addOnCompleteListener {
+                    if (!emitter.isDisposed) {
+                        if (it.isSuccessful) {
+                            emitter.onComplete()
+                        } else {
+                            emitter.onError(it.exception!!)
+                        }
+                    }
+                }
+        }
 }
