@@ -11,6 +11,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.bumptech.glide.Glide
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Constant
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
 import com.kindsundev.expense.manager.ui.home.HomeActivity
@@ -19,12 +21,6 @@ import com.kindsundev.expense.manager.ui.signin.SignInActivity
 
 fun Context.startSignInActivity() =
     Intent(this, SignInActivity::class.java).also {
-        it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivity(it)
-    }
-
-fun Context.startHomeActivity() =
-    Intent(this, HomeActivity::class.java).also {
         it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(it)
     }
@@ -60,10 +56,6 @@ fun Fragment.hideKeyboard() {
     view?.let { activity?.hideKeyboard(it) }
 }
 
-fun Activity.hideKeyboard() {
-    hideKeyboard(currentFocus ?: View(this))
-}
-
 private fun Context.hideKeyboard(view: View) {
     val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
     inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
@@ -79,3 +71,12 @@ fun Context.requestPremium() {
 }
 
 fun String.toEditable(): Editable =  Editable.Factory.getInstance().newEditable(this)
+
+fun displaySwitchBottomNavigation(activity: HomeActivity, state: Boolean) {
+    val navBar: BottomNavigationView =  activity.findViewById(R.id.bottomNavigationView)
+    if (state) {
+        navBar.visibility = View.VISIBLE
+    } else {
+        navBar.visibility = View.GONE
+    }
+}
