@@ -41,21 +41,12 @@
                 android:id="@+id/ll_user_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="6dp"
+                android:layout_marginHorizontal="8dp"
                 android:layout_marginVertical="16dp"
                 android:background="@color/white"
                 android:orientation="vertical"
-                android:paddingVertical="16dp"
+                android:paddingVertical="32dp"
                 app:layout_constraintTop_toBottomOf="@id/llTitleTop">
-
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/btn_logout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:backgroundTint="@android:color/transparent"
-                    android:src="@drawable/ic_logout"
-                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/img_user_avatar"
@@ -95,52 +86,44 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_list_features"
+                android:id="@+id/ll_list_about"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="6dp"
+                android:layout_marginHorizontal="8dp"
                 android:layout_marginVertical="16dp"
                 android:background="@color/white"
                 android:orientation="vertical"
                 android:paddingHorizontal="16dp">
 
                 <RelativeLayout
-                    android:id="@+id/rl_expenditure_plan"
+                    android:id="@+id/rl_settings"
                     android:layout_width="match_parent"
                     android:layout_height="65dp">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ic_expenditure_plan"
+                        android:id="@+id/ic_settings"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:background="@drawable/bg_green_corner"
+                        android:background="@drawable/bg_gray_blue_corner"
                         android:padding="8dp"
-                        app:srcCompat="@drawable/ic_expenditure_plan" />
+                        app:srcCompat="@drawable/ic_settings" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_expenditure_plan"
+                        android:id="@+id/tv_settings"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="16dp"
-                        android:layout_toStartOf="@id/tv_expenditure_money"
-                        android:layout_toEndOf="@id/ic_expenditure_plan"
-                        android:text="@string/expenditure_plan"
+                        android:layout_toStartOf="@id/ic_settings_next"
+                        android:layout_toEndOf="@id/ic_settings"
+                        android:text="@string/settings"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_expenditure_money"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toStartOf="@id/ic_expenditure_plan_next"
-                        android:text="@string/money" />
-
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ic_expenditure_plan_next"
+                        android:id="@+id/ic_settings_next"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
@@ -151,7 +134,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_alignStart="@id/tv_expenditure_plan"
+                        android:layout_alignStart="@id/tv_settings"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentBottom="true"
                         android:background="@color/middle_gray" />
@@ -159,148 +142,34 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/rl_save_money"
+                    android:id="@+id/rl_tutorial"
                     android:layout_width="match_parent"
                     android:layout_height="65dp">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ic_save_money"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:background="@drawable/bg_yellow_corner"
-                        android:padding="8dp"
-                        app:srcCompat="@drawable/ic_save_money" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_save_money"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="16dp"
-                        android:layout_toStartOf="@id/tv_save_money_total"
-                        android:layout_toEndOf="@id/ic_save_money"
-                        android:text="@string/save_money"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_save_money_total"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toStartOf="@id/ic_save_money_next"
-                        android:text="@string/money" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ic_save_money_next"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="8dp"
-                        android:src="@drawable/ic_next" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_alignStart="@id/tv_save_money"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
-                        android:background="@color/middle_gray" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/rl_debt_book"
-                    android:layout_width="match_parent"
-                    android:layout_height="65dp">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ic_debt_book"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:background="@drawable/bg_violet_corner"
-                        android:padding="8dp"
-                        app:srcCompat="@drawable/ic_debt_book" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_debt_book"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="16dp"
-                        android:layout_toStartOf="@id/tv_debt_book_money"
-                        android:layout_toEndOf="@id/ic_debt_book"
-                        android:text="@string/debt_book"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_debt_book_money"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toStartOf="@id/ic_debt_book_next"
-                        android:text="@string/money" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ic_debt_book_next"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="8dp"
-                        android:src="@drawable/ic_next" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_alignStart="@id/tv_debt_book"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
-                        android:background="@color/middle_gray" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/rl_wallet"
-                    android:layout_width="match_parent"
-                    android:layout_height="65dp">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ic_wallet"
+                        android:id="@+id/ic_tutorial"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
                         android:background="@drawable/bg_sea_blue_corner"
                         android:padding="8dp"
-                        app:srcCompat="@drawable/ic_account_balance" />
+                        app:srcCompat="@drawable/ic_video" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_wallet"
+                        android:id="@+id/tv_tutorial"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="16dp"
-                        android:layout_toStartOf="@id/tv_wallet_money"
-                        android:layout_toEndOf="@id/ic_wallet"
-                        android:text="@string/wallet"
+                        android:layout_toStartOf="@id/ic_tutorial_next"
+                        android:layout_toEndOf="@id/ic_tutorial"
+                        android:text="@string/tutorial"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_wallet_money"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toStartOf="@id/ic_wallet_next"
-                        android:text="@string/money" />
-
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ic_wallet_next"
+                        android:id="@+id/ic_tutorial_next"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
@@ -308,61 +177,15 @@
                         android:layout_marginEnd="8dp"
                         android:src="@drawable/ic_next" />
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_alignStart="@id/tv_tutorial"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/middle_gray" />
+
                 </RelativeLayout>
-
-            </LinearLayout>
-
-            <RelativeLayout
-                android:id="@+id/rl_settings"
-                android:layout_width="match_parent"
-                android:layout_height="65dp"
-                android:layout_marginHorizontal="6dp"
-                android:layout_marginVertical="8dp"
-                android:background="@color/white"
-                android:paddingHorizontal="16dp">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ic_settings"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/bg_gray_blue_corner"
-                    android:padding="8dp"
-                    app:srcCompat="@drawable/ic_settings" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_settings"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="16dp"
-                    android:layout_toStartOf="@id/ic_settings_next"
-                    android:layout_toEndOf="@id/ic_settings"
-                    android:text="@string/settings"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ic_settings_next"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="8dp"
-                    android:src="@drawable/ic_next" />
-
-            </RelativeLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_list_about"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="6dp"
-                android:layout_marginVertical="16dp"
-                android:background="@color/white"
-                android:orientation="vertical"
-                android:paddingHorizontal="16dp">
 
                 <RelativeLayout
                     android:id="@+id/rl_feedback"
@@ -404,6 +227,52 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_alignStart="@id/tv_feedback"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/middle_gray" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_contact"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ic_contact"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/bg_green_corner"
+                        android:padding="8dp"
+                        app:srcCompat="@drawable/ic_email" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_contact"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="16dp"
+                        android:layout_toStartOf="@id/ic_contact_next"
+                        android:layout_toEndOf="@id/ic_contact"
+                        android:text="@string/contact"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ic_contact_next"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="8dp"
+                        android:src="@drawable/ic_next" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_alignStart="@id/tv_contact"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentBottom="true"
                         android:background="@color/middle_gray" />
@@ -453,38 +322,37 @@
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentBottom="true"
                         android:background="@color/middle_gray" />
-
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/rl_contact"
+                    android:id="@+id/rl_about"
                     android:layout_width="match_parent"
                     android:layout_height="65dp">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ic_contact"
+                        android:id="@+id/ic_about"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:background="@drawable/bg_green_corner"
+                        android:background="@drawable/bg_violet_corner"
                         android:padding="8dp"
-                        app:srcCompat="@drawable/ic_email" />
+                        app:srcCompat="@drawable/ic_info" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_contact"
+                        android:id="@+id/tv_about"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="16dp"
-                        android:layout_toStartOf="@id/ic_contact_next"
-                        android:layout_toEndOf="@id/ic_contact"
-                        android:text="@string/contact"
+                        android:layout_toStartOf="@id/ic_about_next"
+                        android:layout_toEndOf="@id/ic_about"
+                        android:text="@string/about"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ic_contact_next"
+                        android:id="@+id/ic_about_next"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
@@ -495,6 +363,48 @@
                 </RelativeLayout>
 
             </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_logout"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginVertical="16dp"
+                android:background="@color/white"
+                android:paddingHorizontal="16dp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ic_logout"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bg_yellow_corner"
+                    android:padding="8dp"
+                    app:srcCompat="@drawable/ic_logout" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_logout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_toStartOf="@id/ic_logout_next"
+                    android:layout_toEndOf="@id/ic_logout"
+                    android:text="@string/logout"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ic_logout_next"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/ic_next" />
+
+            </RelativeLayout>
 
         </LinearLayout>
 

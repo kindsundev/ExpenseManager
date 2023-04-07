@@ -60,7 +60,7 @@ class MenuFragment : Fragment(), MenuContract.View {
     }
 
     private fun initListener() {
-        binding!!.btnLogout.setOnClickListener { onCLickLogout() }
+        binding!!.rlLogout.setOnClickListener { onCLickLogout() }
         binding!!.imgUserAvatar.setOnClickListener { onStartUserInfo() }
     }
 
