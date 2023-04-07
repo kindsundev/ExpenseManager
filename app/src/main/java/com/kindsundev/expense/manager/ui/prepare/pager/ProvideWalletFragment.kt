@@ -104,7 +104,7 @@ class ProvideWalletFragment : Fragment(),
             })
     }
 
-    override fun resultCreateWallet(status: Boolean) {
+    override fun onResultCreateWallet(status: Boolean) {
         if (status) {
             prepareWalletPresenter.handlerGetWallets()
             wallets.clear()

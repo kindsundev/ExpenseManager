@@ -17,11 +17,9 @@ interface  PrepareWalletContract {
 
     interface Listener {
         fun onClickWalletItem(walletModel: WalletModel)
-
-        fun resultCreateWallet(status: Boolean)
     }
 
     interface Result {
-        fun resultCreateWallet (status: Boolean)
+        fun onResultCreateWallet (status: Boolean)
     }
 }
