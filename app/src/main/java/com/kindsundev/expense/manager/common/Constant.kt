@@ -36,5 +36,9 @@ class Constant {
 
         const val KEY_CURRENT_WALLET_ID = "CURRENT_WALLET_ID"
         const val VALUE_DATA_IS_NULL= "NULL"
+
+        const val ACTION_CREATE_WALLET = "CREATE_WALLET_REQUIRED"
+        const val ACTION_UPDATE_WALLET = "UPDATE_WALLET_REQUIRED"
+        const val ACTION_DELETE_WALLET = "DELETE_WALLET_REQUIRED"
     }
 }

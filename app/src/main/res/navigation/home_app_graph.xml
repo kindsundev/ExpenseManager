@@ -7,14 +7,14 @@
     <fragment
         android:id="@+id/bagFragment"
         android:name="com.kindsundev.expense.manager.ui.home.bag.BagFragment"
-        android:label="BagFragment" >
+        android:label="BagFragment">
         <action
             android:id="@+id/action_bagFragment_to_transactionSearchFragment"
             app:destination="@id/transactionSearchFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -29,7 +29,7 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
             app:popUpTo="@id/bagFragment"
-            app:popUpToInclusive="false"/>
+            app:popUpToInclusive="false" />
         <argument
             android:name="wallet"
             app:argType="com.kindsundev.expense.manager.data.model.WalletModel" />
@@ -38,7 +38,33 @@
     <fragment
         android:id="@+id/budgetFragment"
         android:name="com.kindsundev.expense.manager.ui.home.budget.BudgetFragment"
-        android:label="BudgetFragment" />
+        android:label="BudgetFragment">
+        <action
+            android:id="@+id/action_budgetFragment_to_budgetWalletFragment"
+            app:destination="@id/budgetWalletFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/budgetWalletFragment"
+        android:name="com.kindsundev.expense.manager.ui.home.budget.wallet.BudgetWalletFragment"
+        android:label="BudgetWalletFragment">
+        <action
+            android:id="@+id/action_budgetWalletFragment_to_budgetFragment"
+            app:destination="@id/budgetFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/budgetFragment"
+            app:popUpToInclusive="false" />
+        <argument
+            android:name="keyAction"
+            app:argType="string"/>
+    </fragment>
 
     <fragment
         android:id="@+id/noteFragment"
@@ -90,7 +116,6 @@
         android:name="com.kindsundev.expense.manager.ui.home.note.transaction.TransactionFragment"
         android:label="TransactionFragment"
         app:popUpTo="@id/noteFragment"
-        app:popUpToInclusive="false" >
-    </fragment>
+        app:popUpToInclusive="false" />
 
 </navigation>

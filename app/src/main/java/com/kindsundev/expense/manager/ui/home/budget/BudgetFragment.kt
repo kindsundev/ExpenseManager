@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.kindsundev.expense.manager.common.Constant
 import com.kindsundev.expense.manager.databinding.FragmentBudgetBinding
 
 class BudgetFragment : Fragment() {
@@ -17,9 +19,36 @@ class BudgetFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentBudgetBinding.inflate(inflater, container, false)
-
+        initWalletListener()
+        initDebtListener()
+        initSavingsListener()
+        initPlannedListener()
         return binding!!.root
     }
+
+    private fun initWalletListener() {
+        binding!!.wallet.tvCreateWallet.setOnClickListener {
+            startBudgetWalletFragment(Constant.ACTION_CREATE_WALLET)
+        }
+        binding!!.wallet.tvUpdateWallet.setOnClickListener {
+            startBudgetWalletFragment(Constant.ACTION_UPDATE_WALLET)
+        }
+        binding!!.wallet.tvDeleteWallet.setOnClickListener {
+            startBudgetWalletFragment(Constant.ACTION_DELETE_WALLET)
+        }
+    }
+
+    private fun startBudgetWalletFragment(action : String) {
+        findNavController().navigate(
+            BudgetFragmentDirections.actionBudgetFragmentToBudgetWalletFragment(action)
+        )
+    }
+
+    private fun initDebtListener() {}
+
+    private fun initSavingsListener() {}
+
+    private fun initPlannedListener() {}
 
     override fun onDestroyView() {
         super.onDestroyView()
