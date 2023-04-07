@@ -137,5 +137,18 @@
     <string name="message_for_delete_transaction">
         It will restore the balance before making the transaction
     </string>
+    <string name="update_wallet">Update Wallet</string>
+    <string name="delete_wallet">Delete Wallet</string>
+    <string name="create_person">Create Person</string>
+    <string name="update_person">Update Person</string>
+    <string name="delete_person">Delete Person</string>
+    <string name="planned">Planned</string>
+    <string name="savings">Savings</string>
+    <string name="create_plan">Create Plan</string>
+    <string name="update_plan">Update Plan</string>
+    <string name="delete_plan">Delete Plan</string>
+    <string name="create_savings">Create Savings</string>
+    <string name="update_savings">Update Savings</string>
+    <string name="delete_savings">Delete Savings</string>
 
 </resources>
