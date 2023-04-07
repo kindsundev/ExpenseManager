@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/gray">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/bg_white_corner_16"
+        android:padding="10dp">
+
+        <ImageButton
+            android:id="@+id/img_btn_wallet"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="4dp"
+            android:background="@drawable/bg_yellow_circle"
+            android:src="@drawable/ic_account_balance" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@id/btn_update"
+            android:layout_toEndOf="@id/img_btn_wallet"
+            android:orientation="vertical"
+            android:paddingHorizontal="24dp"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/name"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_balance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/_100"
+                android:textColor="@color/black" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/btn_update"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginHorizontal="8dp"
+            android:layout_toStartOf="@+id/btn_delete"
+            android:minWidth="30dp"
+            android:minHeight="30dp"
+            android:src="@drawable/ic_pen" />
+
+        <ImageView
+            android:id="@+id/btn_delete"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_delete" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>
