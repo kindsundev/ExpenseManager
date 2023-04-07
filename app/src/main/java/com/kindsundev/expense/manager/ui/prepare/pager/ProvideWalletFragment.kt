@@ -12,14 +12,13 @@ import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.FragmentProvideWalletBinding
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
 import com.kindsundev.expense.manager.ui.home.HomeActivity
-import com.kindsundev.expense.manager.ui.home.note.transaction.bottomsheet.dialog.ResultWalletCallback
 import com.kindsundev.expense.manager.ui.prepare.PrepareWalletContract
 import com.kindsundev.expense.manager.ui.prepare.PrepareWalletPresenter
 import com.kindsundev.expense.manager.utils.showToast
 import com.kindsundev.expense.manager.utils.startLoadingDialog
 
 class ProvideWalletFragment : Fragment(),
-    PrepareWalletContract.View, ResultWalletCallback.Create, PrepareWalletContract.Listener {
+    PrepareWalletContract.View, PrepareWalletContract.Listener, PrepareWalletContract.Result {
     private var _binding: FragmentProvideWalletBinding? = null
     private val binding get() = _binding
     private val loadingDialog by lazy { LoadingDialog() }
