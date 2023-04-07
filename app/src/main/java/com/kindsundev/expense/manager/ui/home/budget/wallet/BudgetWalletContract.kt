@@ -17,6 +17,5 @@ interface BudgetWalletContract {
 
         fun onClickEditWallet(wallet: WalletModel)
 
-        fun onClickDeleteWallet(walletId: String)
     }
 }

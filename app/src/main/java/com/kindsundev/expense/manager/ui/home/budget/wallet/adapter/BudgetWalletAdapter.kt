@@ -29,13 +29,11 @@ class BudgetWalletAdapter(
         holder.binding.tvName.text = wallet.name
         holder.binding.tvBalance.text =
             "${formatDisplayCurrencyBalance(wallet.balance.toString())} ${wallet.currency}"
-        initListener(holder.binding, wallet)
+        holder.binding.btnUpdate.setOnClickListener {
+            listener.onClickEditWallet(wallet)
+        }
     }
 
-    private fun initListener(binding: LayoutBudgetWalletItemBinding, wallet: WalletModel) {
-        binding.btnUpdate.setOnClickListener { listener.onClickEditWallet(wallet) }
-        binding.btnDelete.setOnClickListener { listener.onClickDeleteWallet(wallet.id.toString()) }
-    }
 
     override fun getItemCount(): Int = wallets.size
 }

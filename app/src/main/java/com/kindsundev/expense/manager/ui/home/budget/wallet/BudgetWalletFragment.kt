@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.kindsundev.expense.manager.common.Constant
@@ -119,7 +118,4 @@ class BudgetWalletFragment : Fragment(), BudgetWalletContract.View, BudgetWallet
         activity?.showToast("onClickEditWallet")
     }
 
-    override fun onClickDeleteWallet(walletId: String) {
-        activity?.showToast("onClickDeleteWallet")
-    }
 }
