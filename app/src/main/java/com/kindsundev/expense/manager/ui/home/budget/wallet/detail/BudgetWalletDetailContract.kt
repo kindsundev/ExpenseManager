@@ -7,12 +7,16 @@ interface BudgetWalletDetailContract {
 
     interface Presenter {
         fun updateWallet(wallet: WalletModel)
+
+        fun deleteWallet(wallet: WalletModel)
     }
 
-    interface View : BaseView
+    interface View : BaseView {
+        fun onSuccess(message: String)
+    }
 
     interface Result {
-        fun onResultUpdateWallet(status: Boolean)
+        fun onSuccessAndRequiredRefreshData(status: Boolean)
     }
 
 }

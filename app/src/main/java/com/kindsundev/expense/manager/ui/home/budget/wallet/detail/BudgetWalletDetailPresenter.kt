@@ -19,10 +19,24 @@ class BudgetWalletDetailPresenter(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                view.onSuccess()
+                view.onSuccess("Update Wallet Success")
             }, {
                 view.onError("Something error, please try again later!")
-                Logger.error("Update: ${it.message!!}")
+                Logger.error("Update Wallet: ${it.message!!}")
+            })
+        compositeDisposable.add(disposable)
+    }
+
+    override fun deleteWallet(wallet: WalletModel) {
+        view.onLoad()
+        val disposable = walletFirebase.deleteWallet(wallet)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                view.onSuccess("Delete Wallet Success")
+            }, {
+                view.onError("Something error, please try again later!")
+                Logger.error("Delete Wallet: ${it.message!!}")
             })
         compositeDisposable.add(disposable)
     }

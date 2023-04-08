@@ -56,7 +56,7 @@ class BudgetWalletBottomSheet(
     private fun initListener() {
         binding!!.btnArrowDown.setOnClickListener { this.dismiss() }
         binding!!.btnSave.setOnClickListener { onCLickSaveUpdateWallet() }
-        binding!!.btnRemove.setOnClickListener {  }
+        binding!!.btnRemove.setOnClickListener { onClickDeleteWallet() }
     }
 
     private fun onCLickSaveUpdateWallet() {
@@ -68,6 +68,10 @@ class BudgetWalletBottomSheet(
             mCurrentWallet = getCurrentWallet()
             mWalletDetailPresenter.updateWallet(mCurrentWallet)
         }
+    }
+    
+    private fun onClickDeleteWallet() {
+        mWalletDetailPresenter.deleteWallet(wallet)
     }
 
     private fun getCurrentWallet(): WalletModel {
@@ -95,9 +99,12 @@ class BudgetWalletBottomSheet(
         activity?.showToast(message)
     }
 
-    override fun onSuccess() {
-        startLoadingDialog(loadingDialog, parentFragmentManager, false)
+    override fun onSuccess() {}
+
+    override fun onSuccess(message: String) {
+        activity?.showToast(message)
         this.dismiss()
-        callback.onResultUpdateWallet(true)
+        callback.onSuccessAndRequiredRefreshData(true)
+        startLoadingDialog(loadingDialog, parentFragmentManager, false)
     }
 }

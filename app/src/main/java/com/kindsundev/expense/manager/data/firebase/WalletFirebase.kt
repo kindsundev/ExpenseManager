@@ -18,4 +18,17 @@ class WalletFirebase : BaseFirebase() {
                 }
             }
     }
+
+    fun deleteWallet(wallet: WalletModel) = Completable.create { emitter ->
+        initPointerGeneric().child(wallet.id.toString()).removeValue()
+            .addOnCompleteListener {
+                if (!emitter.isDisposed) {
+                    if (it.isSuccessful) {
+                        emitter.onComplete()
+                    } else {
+                        emitter.onError(it.exception!!)
+                    }
+                }
+            }
+    }
 }

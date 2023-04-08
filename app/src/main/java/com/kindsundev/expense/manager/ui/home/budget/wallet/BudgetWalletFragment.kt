@@ -82,7 +82,10 @@ class BudgetWalletFragment : Fragment(),
         activity?.showToast(message)
     }
 
-    override fun onSuccess(message: String) {}
+    override fun onSuccess(message: String) {
+        startLoadingDialog(loadingDialog, parentFragmentManager, false)
+        activity?.showToast(message)
+    }
 
     override fun onSuccess() {
         initRecyclerViewWallets()
@@ -127,7 +130,7 @@ class BudgetWalletFragment : Fragment(),
 
     override fun onClickEditWallet(wallet: WalletModel) {
         mWalletDetailBottomSheet = BudgetWalletBottomSheet(wallet, object : BudgetWalletDetailContract.Result {
-            override fun onResultUpdateWallet(status: Boolean) {
+            override fun onSuccessAndRequiredRefreshData(status: Boolean) {
                 if (status) { refreshData() }
             }
         })
@@ -137,6 +140,5 @@ class BudgetWalletFragment : Fragment(),
     private fun refreshData() {
         walletPresenter.handlerGetWallets()
         mWallets.clear()
-        initRecyclerViewWallets()
     }
 }
