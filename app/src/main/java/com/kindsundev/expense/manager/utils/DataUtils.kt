@@ -86,7 +86,7 @@ fun getCurrentDate(): String {
         .toString().trim()
 }
 
-fun getCurrentTime(): String {
+fun getCurrentDateTime(): String {
     return LocalDateTime.now()
         .format(DateTimeFormatter.ofPattern("HH:mm, dd-MM-yyyy"))
 }
