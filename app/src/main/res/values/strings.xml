@@ -152,5 +152,7 @@
     <string name="delete_savings">Delete Savings</string>
     <string name="tutorial">Tutorials</string>
     <string name="about">About</string>
+    <string name="edit_wallet">Edit Wallet</string>
+    <string name="transaction_count">Transactions</string>
 
 </resources>
