@@ -11,4 +11,15 @@ data class WalletModel(
     val origin: Double? = 0.0,
     val balance: Double? = 0.0,
     val transactions: HashMap<String, HashMap<String, TransactionModel>>? = null,
-) : Parcelable
+) : Parcelable {
+
+    fun getTransactionCount(): Int {
+        var count = 0
+        if (transactions != null) {
+            for (entry in transactions.values) {
+                count += entry.size
+            }
+        }
+        return count
+    }
+}

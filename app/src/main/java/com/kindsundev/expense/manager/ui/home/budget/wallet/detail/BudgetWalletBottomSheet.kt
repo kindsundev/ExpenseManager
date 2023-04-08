@@ -47,12 +47,8 @@ class BudgetWalletBottomSheet(
         } else {
             binding!!.radioBtnVnd.isChecked = true
         }
-        val transactionAmount: Int? = wallet.transactions?.size
-        if (transactionAmount != null) {
-            binding!!.tvTransactionCount.text = "Transactions count: $transactionAmount"
-        } else {
-            binding!!.tvTransactionCount.text = "Transactions count: 0"
-        }
+        val transactionAmount: Int = wallet.getTransactionCount()
+        binding!!.tvTransactionCount.text = "Transactions count: $transactionAmount"
         binding!!.edtName.text = wallet.name!!.toEditable()
         binding!!.edtBalance.text = formatDisplayCurrencyBalance(wallet.balance.toString()).toEditable()
     }
