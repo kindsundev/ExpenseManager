@@ -17,7 +17,7 @@ class PrepareWalletPresenter(
 
     override fun handlerCreateWallet(wallet: WalletModel) {
         view.onLoad()
-        val disposable = WalletFirebase().insertWallet(wallet)
+        val disposable = WalletFirebase().upsertWallet(wallet)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({

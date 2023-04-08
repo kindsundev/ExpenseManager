@@ -81,7 +81,7 @@ class PrepareWalletFragment : Fragment(), PrepareWalletContract.View {
                 binding!!.radioBtnVnd.text.toString().trim()
             }
         }
-        val id = hashCodeForID(name, currency, balance, getCurrentTime())
+        val id = hashCodeForID(name, currency, balance, getCurrentDateTime())
         return WalletModel(id, name, currency, origin = balance.toDouble(), balance.toDouble())
     }
 
