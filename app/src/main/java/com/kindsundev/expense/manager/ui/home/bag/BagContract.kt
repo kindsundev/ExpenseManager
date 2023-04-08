@@ -20,4 +20,8 @@ interface BagContract {
     interface View : BaseView {
         fun onSuccess(status: Boolean)
     }
+
+    interface Listener {
+        fun onClickWalletItem(wallet: WalletModel)
+    }
 }

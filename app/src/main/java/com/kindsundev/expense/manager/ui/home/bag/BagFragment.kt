@@ -20,16 +20,18 @@ import com.kindsundev.expense.manager.ui.home.bag.adapter.BillAdapterContract
 import com.kindsundev.expense.manager.ui.home.bag.adapter.BillParentAdapter
 import com.kindsundev.expense.manager.ui.home.bag.detail.TransactionBottomSheet
 import com.kindsundev.expense.manager.ui.home.bag.detail.TransactionDetailContract
+import com.kindsundev.expense.manager.ui.home.bag.wallet.BagWalletBottomSheet
 import com.kindsundev.expense.manager.utils.*
 import kotlin.properties.Delegates
 
-class BagFragment : Fragment(), BillAdapterContract.Listener,
-    BagContract.View {
+class BagFragment : Fragment(), BillAdapterContract.Listener, BagContract.View {
     private var _binding: FragmentBagBinding? = null
     private val binding get() = _binding
-    private var stateBalanceVisibility by Delegates.notNull<Boolean>()
     private val loadingDialog by lazy { LoadingDialog() }
+    private var stateBalanceVisibility by Delegates.notNull<Boolean>()
+    private lateinit var mCurrentWalletId: String
 
+    private lateinit var bagWalletBottomSheet: BagWalletBottomSheet
     private lateinit var bagPresenter: BagPresenter
     private lateinit var mWallets: ArrayList<WalletModel>
     private lateinit var mBills: ArrayList<BillModel>
@@ -46,95 +48,22 @@ class BagFragment : Fragment(), BillAdapterContract.Listener,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentBagBinding.inflate(inflater, container, false)
+        getCurrentWalletId()
         bagPresenter.handlerGetWallets()
+        getStateBalanceVisibility()
         initListener()
         return binding!!.root
     }
 
-    private fun initListener() {
-        binding!!.btnUpgradePremium.setOnClickListener { activity?.onFeatureIsDevelop() }
-        binding!!.rlWallet.setOnClickListener { onClickSelectWallet() }
-        binding!!.btnVisibility.setOnClickListener { onClickVisibilityBalance() }
-        binding!!.btnSearch.setOnClickListener { onClickSearchBalance() }
-        binding!!.btnNotifications.setOnClickListener { }
-    }
-
-    private fun onClickSelectWallet() {
-
-    }
-
-    private fun onClickVisibilityBalance() {
-        stateBalanceVisibility = !stateBalanceVisibility
-        checkDisplayBalance(stateBalanceVisibility)
-    }
-
-    private fun onClickSearchBalance() {
-        val action = BagFragmentDirections.actionBagFragmentToTransactionSearchFragment(mCurrentWallet)
-        findNavController().navigate(action)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        PreferenceHelper.setBoolean(
-            requireContext(), Constant.BAG_FRAGMENT_BALANCE_VISIBILITY, stateBalanceVisibility
-        )
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-        bagPresenter.cleanUp()
-    }
-
-    override fun onClickTransaction(date: String, transaction: TransactionModel) {
-        val bottomSheet = TransactionBottomSheet(object : TransactionDetailContract.Result {
-            override fun notificationSuccess(result: Boolean) {
-                if (result) {  // refresh data
-                    bagPresenter.handlerGetWallets()
-                }
-            }
-        }, mCurrentWallet, date, transaction)
-        bottomSheet.show(parentFragmentManager, Constant.WALLET_BOTTOM_SHEET_TRANSACTION_NAME)
-    }
-
-    override fun onSuccess() {
-        mWallets = bagPresenter.getWallets()
-        getTransactionsOfCurrentWallet()
-    }
-
-    private fun getTransactionsOfCurrentWallet() {
-        val mCurrentWalletId = (context as HomeActivity).getCurrentWalletId()
-        mCurrentWallet = getCurrentWallet(mCurrentWalletId)
-        bagPresenter.handlerGetTransactions(mCurrentWalletId)
-    }
-
-    private fun getCurrentWallet(id: String): WalletModel {
-        var wallet = WalletModel()
-        for (index in 0 until mWallets.size) {
-            if (mWallets[index].id == id.toInt()) {
-                wallet = mWallets[index]
-                break
-            }
+    private fun getCurrentWalletId() {
+        mCurrentWalletId = (context as HomeActivity).getCurrentWalletId()
+        if (mCurrentWalletId == Constant.VALUE_DATA_IS_NULL) {
+            mCurrentWalletId = PreferenceHelper.getString(
+                requireContext(),
+                Constant.BAG_FRAGMENT_BEFORE_WALLET_ID,
+                Constant.VALUE_DATA_IS_NULL
+            ).toString()
         }
-        return wallet
-    }
-
-    override fun onSuccess(status: Boolean) {
-        mBills = bagPresenter.getBills()
-        initDataToUi()
-        startLoadingDialog(loadingDialog, parentFragmentManager, false)
-    }
-
-    private fun initDataToUi() {
-        initCurrentWalletInfo()
-        initRecyclerViewTransactions()
-    }
-
-    private fun initCurrentWalletInfo() {
-        getStateBalanceVisibility()
-        binding!!.tvName.text = mCurrentWallet.name.toString()
-        binding!!.tvCurrency.text = mCurrentWallet.currency.toString()
-        binding!!.tvBalance.text = formatDisplayCurrencyBalance(mCurrentWallet.balance.toString())
     }
 
     private fun getStateBalanceVisibility() {
@@ -156,7 +85,80 @@ class BagFragment : Fragment(), BillAdapterContract.Listener,
         }
     }
 
+    private fun initListener() {
+        binding!!.btnUpgradePremium.setOnClickListener { activity?.onFeatureIsDevelop() }
+        binding!!.btnVisibility.setOnClickListener { onClickVisibilityBalance() }
+        binding!!.rlWallet.setOnClickListener { onClickSelectWallet() }
+        binding!!.btnSearch.setOnClickListener { onClickSearchBalance() }
+        binding!!.btnNotifications.setOnClickListener { }
+    }
+
+    private fun onClickVisibilityBalance() {
+        stateBalanceVisibility = !stateBalanceVisibility
+        checkDisplayBalance(stateBalanceVisibility)
+    }
+
+    private fun onClickSelectWallet() {
+        bagWalletBottomSheet = BagWalletBottomSheet(mWallets, object : BagContract.Listener {
+            override fun onClickWalletItem(wallet: WalletModel) {
+                mCurrentWalletId = wallet.id.toString()
+                getTransactionsOfCurrentWallet()
+            }
+        })
+        bagWalletBottomSheet.show(parentFragmentManager, bagWalletBottomSheet.tag)
+    }
+
+    private fun onClickSearchBalance() {
+        val action = BagFragmentDirections.actionBagFragmentToTransactionSearchFragment(mCurrentWallet)
+        findNavController().navigate(action)
+    }
+
+    override fun onClickTransaction(date: String, transaction: TransactionModel) {
+        val bottomSheet = TransactionBottomSheet(object : TransactionDetailContract.Result {
+            override fun notificationSuccess(result: Boolean) {
+                if (result) { bagPresenter.handlerGetWallets() }
+            }
+        }, mCurrentWallet, date, transaction)
+        bottomSheet.show(parentFragmentManager, Constant.WALLET_BOTTOM_SHEET_TRANSACTION_NAME)
+    }
+
+    override fun onSuccess() {
+        mWallets = bagPresenter.getWallets()
+        getTransactionsOfCurrentWallet()
+    }
+
+    private fun getTransactionsOfCurrentWallet() {
+        mCurrentWallet = getCurrentWallet(mCurrentWalletId)
+        bagPresenter.handlerGetTransactions(mCurrentWalletId)
+    }
+
+    private fun getCurrentWallet(id: String): WalletModel {
+        var wallet = WalletModel()
+        for (index in 0 until mWallets.size) {
+            if (mWallets[index].id == id.toInt()) {
+                wallet = mWallets[index]
+                break
+            }
+        }
+        return wallet
+    }
+
+    override fun onSuccess(status: Boolean) {
+        if (status) {
+            initCurrentWalletInfo()
+            initRecyclerViewTransactions()
+        }
+        startLoadingDialog(loadingDialog, parentFragmentManager, false)
+    }
+
+    private fun initCurrentWalletInfo() {
+        binding!!.tvName.text = mCurrentWallet.name.toString()
+        binding!!.tvCurrency.text = mCurrentWallet.currency.toString()
+        binding!!.tvBalance.text = formatDisplayCurrencyBalance(mCurrentWallet.balance.toString())
+    }
+
     private fun initRecyclerViewTransactions() {
+        mBills = bagPresenter.getBills()
         val mAdapter = BillParentAdapter(mBills, this)
         binding!!.rcvTransactionsContainer.apply {
             layoutManager = LinearLayoutManager(context)
@@ -172,5 +174,22 @@ class BagFragment : Fragment(), BillAdapterContract.Listener,
     override fun onError(message: String) {
         startLoadingDialog(loadingDialog, parentFragmentManager, false)
         activity?.showToast(message)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        PreferenceHelper.setBoolean(
+            requireContext(), Constant.BAG_FRAGMENT_BALANCE_VISIBILITY, stateBalanceVisibility
+        )
+        PreferenceHelper.setString(
+            requireContext(), Constant.BAG_FRAGMENT_BEFORE_WALLET_ID, mCurrentWalletId
+        )
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+        (context as HomeActivity).setCurrentWalletIdDefaultValue()
+        bagPresenter.cleanUp()
     }
 }
