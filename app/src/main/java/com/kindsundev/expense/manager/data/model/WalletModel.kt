@@ -10,5 +10,6 @@ data class WalletModel(
     val currency: String? = "",
     val origin: Double? = 0.0,
     val balance: Double? = 0.0,
-    val transaction: TransactionModel? = null
+    val transactions: HashMap<String, HashMap<String, TransactionModel>>? = null,
+    val updateNotes: HashMap<String, String>? = null
 ) : Parcelable
