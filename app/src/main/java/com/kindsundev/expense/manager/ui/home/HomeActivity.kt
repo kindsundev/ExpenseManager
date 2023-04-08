@@ -11,7 +11,7 @@ import com.kindsundev.expense.manager.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
-    private var currentWalletId: String = "NULL"
+    private var currentWalletId: String = Constant.VALUE_DATA_IS_NULL
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,4 +37,6 @@ class HomeActivity : AppCompatActivity() {
     }
 
     fun getCurrentWalletId() = currentWalletId
+
+    fun setCurrentWalletIdDefaultValue() { currentWalletId = Constant.VALUE_DATA_IS_NULL }
 }
