@@ -2,10 +2,13 @@ package com.kindsundev.expense.manager.ui.home.budget.wallet.detail
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.BottomSheetBudgetWalletDetailBinding
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
@@ -71,7 +74,20 @@ class BudgetWalletBottomSheet(
     }
     
     private fun onClickDeleteWallet() {
-        mWalletDetailPresenter.deleteWallet(wallet)
+        val alertDialog = MaterialAlertDialogBuilder(requireContext(), R.style.DeleteWarningAlertDialog)
+            .setTitle(R.string.delete_wallet)
+            .setMessage(R.string.message_for_delete_wallet)
+            .setCancelable(false)
+            .setPositiveButton("OK") { _, _ ->
+                mWalletDetailPresenter.deleteWallet(wallet)
+            }
+            .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
+            .create()
+        alertDialog.window?.apply {
+            setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            setGravity(Gravity.CENTER)
+        }
+        alertDialog.show()
     }
 
     private fun getCurrentWallet(): WalletModel {
