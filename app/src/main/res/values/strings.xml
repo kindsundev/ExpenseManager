@@ -137,6 +137,9 @@
     <string name="message_for_delete_transaction">
         It will restore the balance before making the transaction
     </string>
+    <string name="message_for_delete_wallet">
+        Are you sure you will delete this wallet?
+    </string>
     <string name="update_wallet">Update Wallet</string>
     <string name="delete_wallet">Delete Wallet</string>
     <string name="create_person">Create Person</string>
