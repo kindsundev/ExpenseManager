@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.kindsundev.expense.manager.data.model.WalletModel
-import com.kindsundev.expense.manager.databinding.BottomSheetWalletBinding
+import com.kindsundev.expense.manager.databinding.BottomSheetTransactionWalletBinding
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
 import com.kindsundev.expense.manager.utils.showToast
 import com.kindsundev.expense.manager.utils.startLoadingDialog
@@ -15,7 +15,7 @@ import com.kindsundev.expense.manager.utils.startLoadingDialog
 class TransactionWalletBottomSheet(
     private val actionListener: TransactionWalletContract.Listener,
 ) : BottomSheetDialogFragment(), TransactionWalletContract.View{
-    private var _binding: BottomSheetWalletBinding? = null
+    private var _binding: BottomSheetTransactionWalletBinding? = null
     private val binding get() = _binding
     private val loadingDialog by lazy { LoadingDialog() }
 
@@ -28,7 +28,7 @@ class TransactionWalletBottomSheet(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = BottomSheetWalletBinding.inflate(layoutInflater)
+        _binding = BottomSheetTransactionWalletBinding.inflate(layoutInflater)
         transactionWalletPresenter = TransactionWalletPresenter(this)
         initRecyclerView()
         initListener()
