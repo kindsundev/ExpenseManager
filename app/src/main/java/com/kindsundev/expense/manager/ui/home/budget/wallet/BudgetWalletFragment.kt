@@ -134,7 +134,7 @@ class BudgetWalletFragment : Fragment(),
                 if (status) { refreshData() }
             }
         })
-        mWalletDetailBottomSheet.show(parentFragmentManager, Constant.WALLET_BOTTOM_SHEET_DETAIL_WALLET_NAME)
+        mWalletDetailBottomSheet.show(parentFragmentManager, Constant.BUDGET_WALLET_BOTTOM_SHEET_DETAIL_WALLET_NAME)
     }
 
     private fun refreshData() {

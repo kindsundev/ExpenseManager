@@ -63,7 +63,7 @@ class TransactionFragment : Fragment(),
 
     private fun initWalletBottomSheet() {
         transactionWalletBottomSheet = TransactionWalletBottomSheet(this)
-        transactionWalletBottomSheet.show(parentFragmentManager, Constant.WALLET_BOTTOM_SHEET_WALLET_NAME)
+        transactionWalletBottomSheet.show(parentFragmentManager, Constant.TRANSACTION_WALLET_BOTTOM_SHEET_WALLET_NAME)
     }
 
     override fun onClickWalletItem(wallet: WalletModel) {

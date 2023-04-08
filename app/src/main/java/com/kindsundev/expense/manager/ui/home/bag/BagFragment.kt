@@ -105,7 +105,7 @@ class BagFragment : Fragment(), BillAdapterContract.Listener, BagContract.View {
                 getTransactionsOfCurrentWallet()
             }
         })
-        bagWalletBottomSheet.show(parentFragmentManager, bagWalletBottomSheet.tag)
+        bagWalletBottomSheet.show(parentFragmentManager, Constant.BUDGET_WALLET_BOTTOM_SHEET_WALLET_NAME)
     }
 
     private fun onClickSearchBalance() {
@@ -119,7 +119,7 @@ class BagFragment : Fragment(), BillAdapterContract.Listener, BagContract.View {
                 if (result) { bagPresenter.handlerGetWallets() }
             }
         }, mCurrentWallet, date, transaction)
-        bottomSheet.show(parentFragmentManager, Constant.WALLET_BOTTOM_SHEET_TRANSACTION_NAME)
+        bottomSheet.show(parentFragmentManager, Constant.TRANSACTION_WALLET_BOTTOM_SHEET_TRANSACTION_NAME)
     }
 
     override fun onSuccess() {

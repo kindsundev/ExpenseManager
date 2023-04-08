@@ -8,8 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import com.kindsundev.expense.manager.R
+import com.kindsundev.expense.manager.common.Constant
 import com.kindsundev.expense.manager.data.model.BillModel
 import com.kindsundev.expense.manager.data.model.TransactionModel
 import com.kindsundev.expense.manager.data.model.WalletModel
@@ -20,6 +20,8 @@ import com.kindsundev.expense.manager.ui.custom.ResultDateTimeCallback
 import com.kindsundev.expense.manager.ui.home.HomeActivity
 import com.kindsundev.expense.manager.ui.home.bag.adapter.BillAdapterContract
 import com.kindsundev.expense.manager.ui.home.bag.adapter.BillParentAdapter
+import com.kindsundev.expense.manager.ui.home.bag.detail.TransactionBottomSheet
+import com.kindsundev.expense.manager.ui.home.bag.detail.TransactionDetailContract
 import com.kindsundev.expense.manager.utils.displaySwitchBottomNavigation
 import com.kindsundev.expense.manager.utils.showToast
 import com.kindsundev.expense.manager.utils.startLoadingDialog
@@ -31,6 +33,8 @@ class TransactionSearchFragment: Fragment(), TransactionSearchContract.View {
 
     private val args: TransactionSearchFragmentArgs by navArgs()
     private lateinit var searchPresenter: TransactionSearchPresenter
+    private lateinit var transactionBottomSheet: TransactionBottomSheet
+    private lateinit var mCurrentTimePicker: String
     private lateinit var mBill : ArrayList<BillModel>
     private lateinit var mWallet: WalletModel
 
@@ -59,6 +63,7 @@ class TransactionSearchFragment: Fragment(), TransactionSearchContract.View {
     private fun onClickSetDate() {
         DateSelectionDialog(requireContext(), object : ResultDateTimeCallback {
             override fun resultNewDateTime(newDateTime: String) {
+                mCurrentTimePicker = newDateTime
                 binding!!.tvDate.text = newDateTime
                 searchPresenter.searchTransactionInDay(mWallet.id!!.toString(), newDateTime)
             }
@@ -97,8 +102,7 @@ class TransactionSearchFragment: Fragment(), TransactionSearchContract.View {
             layoutManager = LinearLayoutManager(context)
             adapter = BillParentAdapter(mBill, object: BillAdapterContract.Listener {
                 override fun onClickTransaction(date: String, transaction: TransactionModel) {
-                    val message = "This transaction is ${transaction.type}"
-                    Snackbar.make(binding!!.myCoordinatorLayout, message, Snackbar.LENGTH_SHORT).show()
+                    showTransactionDetail(date, transaction)
                 }
             })
         }
@@ -107,5 +111,18 @@ class TransactionSearchFragment: Fragment(), TransactionSearchContract.View {
     private fun switchLayout() {
         binding!!.ivSearch.visibility = View.GONE
         binding!!.rcvTransaction.visibility = View.VISIBLE
+    }
+
+    private fun showTransactionDetail(date: String, transaction: TransactionModel?) {
+        transactionBottomSheet = TransactionBottomSheet(object : TransactionDetailContract.Result {
+            override fun notificationSuccess(result: Boolean) {
+                if (result) { refreshData() }
+            }
+        },mWallet, date, transaction!!)
+        transactionBottomSheet.show(parentFragmentManager, Constant.BUDGET_SEARCH_WALLET_BOTTOM_SHEET_WALLET_NAME)
+    }
+
+    private fun refreshData() {
+        searchPresenter.searchTransactionInDay(mWallet.id!!.toString(), mCurrentTimePicker)
     }
 }
