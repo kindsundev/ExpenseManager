@@ -33,7 +33,7 @@ class BudgetWalletPresenter(
 
     override fun handlerCreateWallet(wallet: WalletModel) {
         view.onLoad()
-        val disposable = walletFirebase.insertWallet(wallet)
+        val disposable = walletFirebase.upsertWallet(wallet)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({

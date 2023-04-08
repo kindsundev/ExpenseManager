@@ -11,4 +11,8 @@ interface BudgetWalletDetailContract {
 
     interface View : BaseView
 
+    interface Result {
+        fun onResultUpdateWallet(status: Boolean)
+    }
+
 }

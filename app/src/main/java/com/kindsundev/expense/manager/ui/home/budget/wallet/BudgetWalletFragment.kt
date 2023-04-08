@@ -16,12 +16,13 @@ import com.kindsundev.expense.manager.ui.custom.LoadingDialog
 import com.kindsundev.expense.manager.ui.home.HomeActivity
 import com.kindsundev.expense.manager.ui.home.budget.wallet.adapter.BudgetWalletAdapter
 import com.kindsundev.expense.manager.ui.home.budget.wallet.detail.BudgetWalletBottomSheet
+import com.kindsundev.expense.manager.ui.home.budget.wallet.detail.BudgetWalletDetailContract
 import com.kindsundev.expense.manager.utils.displaySwitchBottomNavigation
 import com.kindsundev.expense.manager.utils.showToast
 import com.kindsundev.expense.manager.utils.startLoadingDialog
 
 class BudgetWalletFragment : Fragment(),
-    BudgetWalletContract.View, BudgetWalletContract.Listener, BudgetWalletContract.Result {
+    BudgetWalletContract.View, BudgetWalletContract.Listener{
     private var _binding: FragmentBudgetWalletBinding? = null
     private val binding get() = _binding
     private val loadingDialog by lazy { LoadingDialog() }
@@ -58,7 +59,11 @@ class BudgetWalletFragment : Fragment(),
     }
 
     private fun onClickCreateWallet() {
-        createWalletDialog = CreateWalletDialog(this)
+        createWalletDialog = CreateWalletDialog(object : BudgetWalletContract.Result {
+            override fun onResultCreateWallet(status: Boolean) {
+                if (status) { refreshData() }
+            }
+        })
         createWalletDialog.show(parentFragmentManager, createWalletDialog.tag)
     }
 
@@ -121,16 +126,17 @@ class BudgetWalletFragment : Fragment(),
     }
 
     override fun onClickEditWallet(wallet: WalletModel) {
-        mWalletDetailBottomSheet = BudgetWalletBottomSheet(wallet)
+        mWalletDetailBottomSheet = BudgetWalletBottomSheet(wallet, object : BudgetWalletDetailContract.Result {
+            override fun onResultUpdateWallet(status: Boolean) {
+                if (status) { refreshData() }
+            }
+        })
         mWalletDetailBottomSheet.show(parentFragmentManager, Constant.WALLET_BOTTOM_SHEET_DETAIL_WALLET_NAME)
     }
 
-    override fun onResultCreateWallet(status: Boolean) {
-        if (status) {
-            walletPresenter.handlerGetWallets()
-            mWallets.clear()
-            initRecyclerViewWallets()
-        }
+    private fun refreshData() {
+        walletPresenter.handlerGetWallets()
+        mWallets.clear()
+        initRecyclerViewWallets()
     }
-
 }
