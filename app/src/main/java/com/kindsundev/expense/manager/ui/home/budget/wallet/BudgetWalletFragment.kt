@@ -15,6 +15,7 @@ import com.kindsundev.expense.manager.databinding.FragmentBudgetWalletBinding
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
 import com.kindsundev.expense.manager.ui.home.HomeActivity
 import com.kindsundev.expense.manager.ui.home.budget.wallet.adapter.BudgetWalletAdapter
+import com.kindsundev.expense.manager.ui.home.budget.wallet.detail.BudgetWalletBottomSheet
 import com.kindsundev.expense.manager.utils.displaySwitchBottomNavigation
 import com.kindsundev.expense.manager.utils.showToast
 import com.kindsundev.expense.manager.utils.startLoadingDialog
@@ -30,6 +31,7 @@ class BudgetWalletFragment : Fragment(),
     private lateinit var mWallets: ArrayList<WalletModel>
     private lateinit var mWalletAdapter : BudgetWalletAdapter
     private lateinit var createWalletDialog: CreateWalletDialog
+    private lateinit var mWalletDetailBottomSheet: BudgetWalletBottomSheet
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -119,7 +121,8 @@ class BudgetWalletFragment : Fragment(),
     }
 
     override fun onClickEditWallet(wallet: WalletModel) {
-        activity?.showToast("onClickEditWallet")
+        mWalletDetailBottomSheet = BudgetWalletBottomSheet(wallet)
+        mWalletDetailBottomSheet.show(parentFragmentManager, Constant.WALLET_BOTTOM_SHEET_DETAIL_WALLET_NAME)
     }
 
     override fun onResultCreateWallet(status: Boolean) {
