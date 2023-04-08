@@ -8,10 +8,10 @@ import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.LayoutWalletItemBinding
 import com.kindsundev.expense.manager.utils.formatDisplayCurrencyBalance
 
-internal class WalletAdapter(
+internal class TransactionWalletAdapter(
     private val wallets: ArrayList<WalletModel>,
-    private val listener: WalletContract.Listener
-) : RecyclerView.Adapter<WalletAdapter.WalletViewHolder>() {
+    private val listener: TransactionWalletContract.Listener
+) : RecyclerView.Adapter<TransactionWalletAdapter.WalletViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WalletViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)

@@ -8,9 +8,9 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 
-class WalletPresenter(
-    private val view: WalletContract.View
-) : WalletContract.Presenter {
+class TransactionWalletPresenter(
+    private val view: TransactionWalletContract.View
+) : TransactionWalletContract.Presenter {
     private val walletFirebase by lazy { WalletFirebase() }
     private val compositeDisposable = CompositeDisposable()
 

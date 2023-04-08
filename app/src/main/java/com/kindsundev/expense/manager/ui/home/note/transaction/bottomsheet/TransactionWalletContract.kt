@@ -3,7 +3,7 @@ package com.kindsundev.expense.manager.ui.home.note.transaction.bottomsheet
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.ui.base.BaseView
 
-interface WalletContract {
+interface TransactionWalletContract {
 
     interface Presenter {
         fun handlerCreateWallet(wallet: WalletModel)

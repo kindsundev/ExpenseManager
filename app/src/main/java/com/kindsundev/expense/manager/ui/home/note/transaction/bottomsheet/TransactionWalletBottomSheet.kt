@@ -9,22 +9,19 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.BottomSheetWalletBinding
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
-import com.kindsundev.expense.manager.ui.home.note.transaction.bottomsheet.dialog.CreateWalletDialog
-import com.kindsundev.expense.manager.ui.home.note.transaction.bottomsheet.dialog.ResultWalletCallback
 import com.kindsundev.expense.manager.utils.showToast
 import com.kindsundev.expense.manager.utils.startLoadingDialog
 
-class WalletBottomSheet(
-    private val actionListener: WalletContract.Listener,
-) : BottomSheetDialogFragment(), WalletContract.View, ResultWalletCallback.Create {
+class TransactionWalletBottomSheet(
+    private val actionListener: TransactionWalletContract.Listener,
+) : BottomSheetDialogFragment(), TransactionWalletContract.View{
     private var _binding: BottomSheetWalletBinding? = null
     private val binding get() = _binding
     private val loadingDialog by lazy { LoadingDialog() }
 
     private var wallets = ArrayList<WalletModel>()
-    private lateinit var walletAdapter: WalletAdapter
-    private lateinit var createWalletDialog: CreateWalletDialog
-    private lateinit var walletPresenter: WalletPresenter
+    private lateinit var transactionWalletAdapter: TransactionWalletAdapter
+    private lateinit var transactionWalletPresenter: TransactionWalletPresenter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,7 +29,7 @@ class WalletBottomSheet(
         savedInstanceState: Bundle?
     ): View {
         _binding = BottomSheetWalletBinding.inflate(layoutInflater)
-        walletPresenter = WalletPresenter(this)
+        transactionWalletPresenter = TransactionWalletPresenter(this)
         initRecyclerView()
         initListener()
         return binding!!.root
@@ -40,17 +37,11 @@ class WalletBottomSheet(
 
     private fun initRecyclerView() {
         binding!!.rvWallets.layoutManager = LinearLayoutManager(context)
-        walletPresenter.handlerGetWallets()
+        transactionWalletPresenter.handlerGetWallets()
     }
 
     private fun initListener() {
         binding!!.btnArrowDown.setOnClickListener { hideBottomSheet() }
-        binding!!.btnAddWallet.setOnClickListener { onClickAddWallet() }
-    }
-
-    private fun onClickAddWallet() {
-        createWalletDialog = CreateWalletDialog(this)
-        createWalletDialog.show(parentFragmentManager, createWalletDialog.tag)
     }
 
     fun hideBottomSheet() { this.dismiss() }
@@ -58,15 +49,7 @@ class WalletBottomSheet(
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        walletPresenter.cleanUp()
-    }
-
-    override fun resultCreateWallet(status: Boolean) {
-        if (status) {
-            walletPresenter.handlerGetWallets()
-            wallets.clear()
-            initDataToRecyclerView()
-        }
+        transactionWalletPresenter.cleanUp()
     }
 
     override fun onSuccess(message: String) {
@@ -79,9 +62,9 @@ class WalletBottomSheet(
     }
 
     private fun initDataToRecyclerView() {
-        wallets = walletPresenter.getWallets()
-        walletAdapter = WalletAdapter(wallets, actionListener)
-        binding!!.rvWallets.adapter = walletAdapter
+        wallets = transactionWalletPresenter.getWallets()
+        transactionWalletAdapter = TransactionWalletAdapter(wallets, actionListener)
+        binding!!.rvWallets.adapter = transactionWalletAdapter
     }
 
     override fun onLoad() {

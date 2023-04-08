@@ -14,16 +14,16 @@ import com.kindsundev.expense.manager.ui.custom.ResultDateTimeCallback
 import com.kindsundev.expense.manager.ui.custom.DateTimePickerDialog
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
 import com.kindsundev.expense.manager.ui.home.HomeActivity
-import com.kindsundev.expense.manager.ui.home.note.transaction.bottomsheet.WalletBottomSheet
-import com.kindsundev.expense.manager.ui.home.note.transaction.bottomsheet.WalletContract
+import com.kindsundev.expense.manager.ui.home.note.transaction.bottomsheet.TransactionWalletBottomSheet
+import com.kindsundev.expense.manager.ui.home.note.transaction.bottomsheet.TransactionWalletContract
 import com.kindsundev.expense.manager.utils.*
 
 class TransactionFragment : Fragment(),
-    WalletContract.Listener, TransactionContract.View {
+    TransactionWalletContract.Listener, TransactionContract.View {
     private var _binding: FragmentTransactionBinding? = null
     private val binding get() = _binding
 
-    private lateinit var walletBottomSheet: WalletBottomSheet
+    private lateinit var transactionWalletBottomSheet: TransactionWalletBottomSheet
     private lateinit var transactionPresenter: TransactionPresenter
     private val loadingDialog by lazy { LoadingDialog() }
 
@@ -62,14 +62,14 @@ class TransactionFragment : Fragment(),
     }
 
     private fun initWalletBottomSheet() {
-        walletBottomSheet = WalletBottomSheet(this)
-        walletBottomSheet.show(parentFragmentManager, Constant.WALLET_BOTTOM_SHEET_WALLET_NAME)
+        transactionWalletBottomSheet = TransactionWalletBottomSheet(this)
+        transactionWalletBottomSheet.show(parentFragmentManager, Constant.WALLET_BOTTOM_SHEET_WALLET_NAME)
     }
 
     override fun onClickWalletItem(wallet: WalletModel) {
         this.wallet = wallet
         binding!!.tvWalletName.text = wallet.name
-        walletBottomSheet.hideBottomSheet()
+        transactionWalletBottomSheet.hideBottomSheet()
     }
 
     private fun initListener() {
