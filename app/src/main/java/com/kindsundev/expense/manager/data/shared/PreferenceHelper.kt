@@ -33,7 +33,7 @@ object PreferenceHelper {
     fun getFloat(appContext: Context, key: String?, defaultValue: Float?) =
         getPreferences(appContext).getFloat(key, defaultValue!!)
 
-    fun setString(appContext: Context, key: String?, defaultValue: String?) =
+    fun getString(appContext: Context, key: String?, defaultValue: String?) =
         getPreferences(appContext).getString(key, defaultValue!!)
 
     fun getBoolean(appContext: Context, key: String?, defaultValue: Boolean?) =
