@@ -19,21 +19,23 @@ import com.kindsundev.expense.manager.utils.displaySwitchBottomNavigation
 import com.kindsundev.expense.manager.utils.showToast
 import com.kindsundev.expense.manager.utils.startLoadingDialog
 
-class BudgetWalletFragment : Fragment(), BudgetWalletContract.View, BudgetWalletContract.Listener {
+class BudgetWalletFragment : Fragment(),
+    BudgetWalletContract.View, BudgetWalletContract.Listener, BudgetWalletContract.Result {
     private var _binding: FragmentBudgetWalletBinding? = null
     private val binding get() = _binding
     private val loadingDialog by lazy { LoadingDialog() }
     private val args: BudgetWalletFragmentArgs by navArgs()
 
-    private lateinit var budgetWalletPresenter: BudgetWalletPresenter
-    private lateinit var mWallet: ArrayList<WalletModel>
+    private lateinit var walletPresenter: BudgetWalletPresenter
+    private lateinit var mWallets: ArrayList<WalletModel>
     private lateinit var mWalletAdapter : BudgetWalletAdapter
+    private lateinit var createWalletDialog: CreateWalletDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         displaySwitchBottomNavigation(requireActivity() as HomeActivity, false)
-        budgetWalletPresenter = BudgetWalletPresenter(this)
-        mWallet = ArrayList()
+        walletPresenter = BudgetWalletPresenter(this)
+        mWallets = ArrayList()
     }
 
     override fun onCreateView(
@@ -42,8 +44,9 @@ class BudgetWalletFragment : Fragment(), BudgetWalletContract.View, BudgetWallet
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentBudgetWalletBinding.inflate(layoutInflater)
-        budgetWalletPresenter.handlerGetWallets()
+        walletPresenter.handlerGetWallets()
         initListener()
+        checkAndActionAsRequired()
         return binding!!.root
     }
 
@@ -53,7 +56,8 @@ class BudgetWalletFragment : Fragment(), BudgetWalletContract.View, BudgetWallet
     }
 
     private fun onClickCreateWallet() {
-        activity?.showToast("onClickCreateWallet")
+        createWalletDialog = CreateWalletDialog(this)
+        createWalletDialog.show(parentFragmentManager, createWalletDialog.tag)
     }
 
     override fun onDestroyView() {
@@ -71,15 +75,16 @@ class BudgetWalletFragment : Fragment(), BudgetWalletContract.View, BudgetWallet
         activity?.showToast(message)
     }
 
+    override fun onSuccess(message: String) {}
+
     override fun onSuccess() {
         initRecyclerViewWallets()
-        checkAndActionAsRequired()
         startLoadingDialog(loadingDialog, parentFragmentManager, false)
     }
 
     private fun initRecyclerViewWallets() {
-        mWallet = budgetWalletPresenter.getWallets()
-        mWalletAdapter = BudgetWalletAdapter(mWallet, this)
+        mWallets = walletPresenter.getWallets()
+        mWalletAdapter = BudgetWalletAdapter(mWallets, this)
         binding!!.rcvWallets.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = mWalletAdapter
@@ -89,7 +94,7 @@ class BudgetWalletFragment : Fragment(), BudgetWalletContract.View, BudgetWallet
     private fun checkAndActionAsRequired() {
         when (args.keyAction) {
             Constant.ACTION_CREATE_WALLET -> {
-                // call dialog
+                onClickCreateWallet()
             }
             Constant.ACTION_UPDATE_WALLET -> {
                 val message = "Please select the wallet you want to update!"
@@ -113,9 +118,16 @@ class BudgetWalletFragment : Fragment(), BudgetWalletContract.View, BudgetWallet
         snackBar.show()
     }
 
-
     override fun onClickEditWallet(wallet: WalletModel) {
         activity?.showToast("onClickEditWallet")
+    }
+
+    override fun onResultCreateWallet(status: Boolean) {
+        if (status) {
+            walletPresenter.handlerGetWallets()
+            mWallets.clear()
+            initRecyclerViewWallets()
+        }
     }
 
 }

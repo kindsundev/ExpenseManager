@@ -34,6 +34,5 @@ class BudgetWalletAdapter(
         }
     }
 
-
     override fun getItemCount(): Int = wallets.size
 }

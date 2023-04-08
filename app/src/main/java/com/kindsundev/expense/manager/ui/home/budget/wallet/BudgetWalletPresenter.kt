@@ -1,5 +1,6 @@
 package com.kindsundev.expense.manager.ui.home.budget.wallet
 
+import com.kindsundev.expense.manager.common.Logger
 import com.kindsundev.expense.manager.data.firebase.WalletFirebase
 import com.kindsundev.expense.manager.data.model.WalletModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -29,6 +30,20 @@ class BudgetWalletPresenter(
     }
 
     override fun getWallets(): ArrayList<WalletModel> = mWallets
+
+    override fun handlerCreateWallet(wallet: WalletModel) {
+        view.onLoad()
+        val disposable = walletFirebase.insertWallet(wallet)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                view.onSuccess("Create wallet success")
+            }, {
+                view.onError("Please check data from input")
+                Logger.error("Create wallet: ${it.message!!}")
+            })
+        compositeDisposable.add(disposable)
+    }
 
     fun cleanUp() {
         compositeDisposable.clear()

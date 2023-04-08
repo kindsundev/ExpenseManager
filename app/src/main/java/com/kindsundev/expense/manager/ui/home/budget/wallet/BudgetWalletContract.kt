@@ -9,13 +9,19 @@ interface BudgetWalletContract {
         fun handlerGetWallets()
 
         fun getWallets() : ArrayList<WalletModel>
+
+        fun handlerCreateWallet(wallet: WalletModel)
     }
 
-    interface View : BaseView
+    interface View : BaseView {
+        fun onSuccess(message: String)
+    }
 
     interface Listener {
-
         fun onClickEditWallet(wallet: WalletModel)
+    }
 
+    interface Result {
+        fun onResultCreateWallet(status: Boolean)
     }
 }

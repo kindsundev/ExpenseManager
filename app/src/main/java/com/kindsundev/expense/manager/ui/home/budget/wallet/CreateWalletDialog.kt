@@ -1,4 +1,4 @@
-package com.kindsundev.expense.manager.ui.home.note.transaction.bottomsheet.dialog
+package com.kindsundev.expense.manager.ui.home.budget.wallet
 
 import android.app.Dialog
 import android.graphics.Color
@@ -16,18 +16,16 @@ import com.kindsundev.expense.manager.common.Status
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.DialogCreateWalletBinding
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
-import com.kindsundev.expense.manager.ui.home.note.transaction.bottomsheet.WalletContract
-import com.kindsundev.expense.manager.ui.home.note.transaction.bottomsheet.WalletPresenter
 import com.kindsundev.expense.manager.utils.*
 
 class CreateWalletDialog(
-    private val callback: ResultWalletCallback.Create
-) : DialogFragment(), WalletContract.View {
+    private val callback: BudgetWalletContract.Result
+): DialogFragment(), BudgetWalletContract.View {
     private var _binding: DialogCreateWalletBinding? = null
     private val binding get() = _binding
 
     private val loadingDialog by lazy { LoadingDialog() }
-    private lateinit var walletPresenter: WalletPresenter
+    private lateinit var walletPresenter: BudgetWalletPresenter
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         _binding = DialogCreateWalletBinding.inflate(layoutInflater)
@@ -53,7 +51,7 @@ class CreateWalletDialog(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        walletPresenter = WalletPresenter(this)
+        walletPresenter = BudgetWalletPresenter(this)
         formatInputCurrencyBalance(binding!!.edtBalance)
         initListener()
         return binding!!.root
@@ -154,7 +152,7 @@ class CreateWalletDialog(
     }
 
     override fun onSuccess(message: String) {
-        callback.resultCreateWallet(true)
+        callback.onResultCreateWallet(true)
         Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
         startLoadingDialog(loadingDialog, parentFragmentManager, false)
         this.dismiss()
@@ -167,4 +165,5 @@ class CreateWalletDialog(
         _binding = null
         walletPresenter.cleanUp()
     }
+
 }
