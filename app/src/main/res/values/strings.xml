@@ -157,5 +157,7 @@
     <string name="about">About</string>
     <string name="edit_wallet">Edit Wallet</string>
     <string name="transaction_count">Transactions</string>
+    <string name="balance_history">Balance History</string>
+    <string name="income_vs_expense">Income vs Expense</string>
 
 </resources>
