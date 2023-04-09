@@ -1,6 +1,10 @@
 package com.kindsundev.expense.manager.utils
 
 import android.util.Patterns
+import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieEntry
 import com.kindsundev.expense.manager.common.Constant
 import com.kindsundev.expense.manager.common.Status
 import java.time.LocalDateTime
@@ -97,4 +101,62 @@ fun hashCodeForID(vararg data: String): Int {
         result += item.hashCode()
     }
     return result
+}
+
+
+// ---------------------------- TEMP DATE FOR UI ----------------------------
+
+// Income vs Expense Chart
+fun incomeBarData(): ArrayList<BarEntry> {
+    val data = ArrayList<BarEntry>()
+    data.add(BarEntry(0F, 3F))
+    data.add(BarEntry(3F, 6F))
+    data.add(BarEntry(6F, 2F))
+    data.add(BarEntry(9F, 4F))
+    return data
+}
+
+fun expenseBarData() : ArrayList<BarEntry> {
+    val data = ArrayList<BarEntry>()
+    data.add(BarEntry(1F, 2F))
+    data.add(BarEntry(4F, 5F))
+    data.add(BarEntry(7F, 3F))
+    data.add(BarEntry(10F, 7F))
+    return data
+}
+
+// Income Chart
+fun incomePieData(): ArrayList<PieEntry> {
+    val data = ArrayList<PieEntry>()
+    data.add(PieEntry(30F, "NeedFul"))
+    data.add(PieEntry(15F, "Enjoy"))
+    data.add(PieEntry(10F, "Offering"))
+    data.add(PieEntry(10F, "Health"))
+    data.add(PieEntry(30F, "Child"))
+    data.add(PieEntry(5F, "Other"))
+    return data
+}
+
+// Expense Chart
+fun expensePieData(): ArrayList<PieEntry> {
+    val data = ArrayList<PieEntry>()
+    data.add(PieEntry(70F, "Salary"))
+    data.add(PieEntry(5F, "Bons"))
+    data.add(PieEntry(20F, "Interest Rate"))
+    data.add(PieEntry(5F, "Other"))
+    return data
+}
+
+// Balance History Chart
+fun balanceHistoryData(): ArrayList<Entry> {
+    val data = ArrayList<Entry>()
+    data.add(Entry(0F, 100F))
+    data.add(Entry(1F, 80F))
+    data.add(Entry(2F, 60F))
+    data.add(Entry(3F, 90F))
+    data.add(Entry(4F, 30F))
+    data.add(Entry(5F, 50F))
+    data.add(Entry(6F, 10F))
+    data.add(Entry(7F, 150F))
+    return data
 }
