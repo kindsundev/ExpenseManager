@@ -1,4 +1,4 @@
-package com.kindsundev.expense.manager.ui.home.note.transaction.bottomsheet
+package com.kindsundev.expense.manager.ui.home.note.transaction.wallet
 
 import android.os.Bundle
 import android.view.LayoutInflater

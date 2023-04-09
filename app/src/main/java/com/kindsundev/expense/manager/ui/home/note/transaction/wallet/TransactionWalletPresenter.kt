@@ -1,4 +1,4 @@
-package com.kindsundev.expense.manager.ui.home.note.transaction.bottomsheet
+package com.kindsundev.expense.manager.ui.home.note.transaction.wallet
 
 import com.kindsundev.expense.manager.common.Logger
 import com.kindsundev.expense.manager.data.firebase.WalletFirebase

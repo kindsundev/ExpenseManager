@@ -14,8 +14,8 @@ import com.kindsundev.expense.manager.ui.custom.ResultDateTimeCallback
 import com.kindsundev.expense.manager.ui.custom.DateTimePickerDialog
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
 import com.kindsundev.expense.manager.ui.home.HomeActivity
-import com.kindsundev.expense.manager.ui.home.note.transaction.bottomsheet.TransactionWalletBottomSheet
-import com.kindsundev.expense.manager.ui.home.note.transaction.bottomsheet.TransactionWalletContract
+import com.kindsundev.expense.manager.ui.home.note.transaction.wallet.TransactionWalletBottomSheet
+import com.kindsundev.expense.manager.ui.home.note.transaction.wallet.TransactionWalletContract
 import com.kindsundev.expense.manager.utils.*
 
 class TransactionFragment : Fragment(),

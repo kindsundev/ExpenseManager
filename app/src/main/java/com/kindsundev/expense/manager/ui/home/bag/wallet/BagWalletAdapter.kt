@@ -8,7 +8,7 @@ import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.LayoutWalletBillItemBinding
 import com.kindsundev.expense.manager.databinding.LayoutWalletItemBinding
 import com.kindsundev.expense.manager.ui.home.bag.BagContract
-import com.kindsundev.expense.manager.ui.home.note.transaction.bottomsheet.TransactionWalletAdapter
+import com.kindsundev.expense.manager.ui.home.note.transaction.wallet.TransactionWalletAdapter
 import com.kindsundev.expense.manager.utils.formatDisplayCurrencyBalance
 
 class BagWalletAdapter(
