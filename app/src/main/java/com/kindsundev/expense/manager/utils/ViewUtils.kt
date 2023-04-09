@@ -3,6 +3,7 @@ package com.kindsundev.expense.manager.utils
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.icu.text.DecimalFormat
 import android.text.Editable
 import android.text.TextWatcher
@@ -111,3 +112,12 @@ fun formatInputCurrencyBalance(editText : EditText) {
         override fun afterTextChanged(s: Editable?) {}
     })
 }
+
+fun formatColorList() = listOf(
+    Color.parseColor(Constant.GREEN_COLOR_CODE),
+    Color.parseColor(Constant.TEA_COLOR_CODE),
+    Color.parseColor(Constant.PURPLE_COLOR_CODE),
+    Color.parseColor(Constant.RED_COLOR_CODE),
+    Color.parseColor(Constant.YELLOW_COLOR_CODE),
+    Color.parseColor(Constant.GRAY_COLOR_CODE)
+)

@@ -29,6 +29,9 @@ class Constant {
         const val TRANSACTION_STATE_EXPENSE = "INCOME < EXPENSE"
         const val TRANSACTION_STATE_BALANCE = "INCOME == EXPENSE"
         const val GREEN_COLOR_CODE = "#338a3e"
+        const val TEA_COLOR_CODE = "#60BDBD"
+        const val PURPLE_COLOR_CODE = "#FFBB86FC"
+        const val YELLOW_COLOR_CODE = "#c88719"
         const val GRAY_COLOR_CODE = "#A8A8A8"
         const val RED_COLOR_CODE = "#ffcc0000"
 
