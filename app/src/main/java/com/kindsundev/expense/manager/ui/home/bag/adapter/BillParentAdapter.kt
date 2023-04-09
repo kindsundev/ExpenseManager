@@ -36,9 +36,7 @@ class BillParentAdapter(
         val bill = bills[position]
         if (bill.transactions?.isEmpty() != true) {
             switchLayout(true)
-            initDateOfTransaction(bill.date.toString())
-            initCurrentBalanceOfWallet(bill)
-            initBillChildAdapter(bill.date, bill.transactions)
+            initDataToUi(holder, bill)
         } else {
             switchLayout(false)
         }
@@ -56,6 +54,13 @@ class BillParentAdapter(
         }
     }
 
+    private fun initDataToUi(holder: ExchangeViewHolder, bill: BillModel) {
+        holder.setIsRecyclable(false)
+        initDateOfTransaction(bill.date.toString())
+        initCurrentBalanceOfDay(bill)
+        initBillChildAdapter(bill.date, bill.transactions)
+    }
+
     @SuppressLint("SetTextI18n")
     private fun initDateOfTransaction(date: String?) {
         val dateListChars = date?.split(" ")
@@ -67,7 +72,7 @@ class BillParentAdapter(
         }
     }
 
-    private fun initCurrentBalanceOfWallet(bill: BillModel) {
+    private fun initCurrentBalanceOfDay(bill: BillModel) {
         val result = adapterPresenter.handlerCalculateBalanceOfDay(bill)
         view.tvNewAmount.text = formatDisplayCurrencyBalance(result.toString())
         when (mColor) {
@@ -84,16 +89,22 @@ class BillParentAdapter(
     }
 
     private fun initBillChildAdapter(date: String?, transactions: ArrayList<TransactionModel>?) {
+        val layoutChildManager = LinearLayoutManager(
+            view.rcvTransactionDetail.context,
+            LinearLayoutManager.VERTICAL,
+            false
+        )
+        layoutChildManager.initialPrefetchItemCount = transactions!!.size
+
         view.rcvTransactionDetail.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = BillChildAdapter(date!!,transactions!!, listener)
+            layoutManager = layoutChildManager
+            adapter = BillChildAdapter(date!!,transactions, listener)
             setRecycledViewPool(viewPool)
+            setItemViewCacheSize(10)
         }
     }
 
     override fun getItemCount() = bills.size
 
-    override fun onResultColor(type: String) {
-        mColor = type
-    }
+    override fun onResultColor(type: String) { mColor = type }
 }
