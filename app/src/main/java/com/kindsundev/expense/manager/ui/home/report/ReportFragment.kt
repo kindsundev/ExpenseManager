@@ -12,17 +12,26 @@ import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.kindsundev.expense.manager.common.Constant
+import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.FragmentReportBinding
+import com.kindsundev.expense.manager.ui.custom.LoadingDialog
+import com.kindsundev.expense.manager.ui.home.report.wallet.ReportWalletBottomSheet
+import com.kindsundev.expense.manager.ui.home.report.wallet.ReportWalletContract
 import com.kindsundev.expense.manager.utils.*
 
 class ReportFragment : Fragment() {
     private var _binding : FragmentReportBinding? = null
     private val binding get() = _binding
+    private val loadingDialog by lazy { LoadingDialog() }
 
-    private lateinit var incomeAndExpenseBarChart: BarChart
-    private lateinit var balanceHistoryLineChart: LineChart
-    private lateinit var expensePieChart: PieChart
-    private lateinit var incomePieChart: PieChart
+    private lateinit var mIncomeAndExpenseBarChart: BarChart
+    private lateinit var mBalanceHistoryLineChart: LineChart
+    private lateinit var mExpensePieChart: PieChart
+    private lateinit var mIncomePieChart: PieChart
+
+    private lateinit var mWalletBottomSheet: ReportWalletBottomSheet
+    private lateinit var mWallet : WalletModel
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,14 +44,15 @@ class ReportFragment : Fragment() {
         initIncomePieChart()
         initExpensePieChart()
         initBalanceHistoryChart()
+        initListener()
         return binding!!.root
     }
 
     private fun mappingViews() {
-        incomeAndExpenseBarChart = binding!!.barChart.incomeAndExpense
-        balanceHistoryLineChart = binding!!.lineChart.balance
-        expensePieChart = binding!!.ePieChart.expense
-        incomePieChart = binding!!.iPieChart.income
+        mIncomeAndExpenseBarChart = binding!!.barChart.incomeAndExpense
+        mBalanceHistoryLineChart = binding!!.lineChart.balance
+        mExpensePieChart = binding!!.ePieChart.expense
+        mIncomePieChart = binding!!.iPieChart.income
     }
 
     private fun initIncomeAndBalanceBarChart() {
@@ -55,8 +65,8 @@ class ReportFragment : Fragment() {
         barData.addDataSet(barDataIncome)
         barData.addDataSet(barDataExpense)
 
-        incomeAndExpenseBarChart.data = barData
-        incomeAndExpenseBarChart.invalidate()
+        mIncomeAndExpenseBarChart.data = barData
+        mIncomeAndExpenseBarChart.invalidate()
     }
 
     private fun customizeValueInBarChart(data : BarDataSet, label: String) {
@@ -76,9 +86,9 @@ class ReportFragment : Fragment() {
         pieDataSet.colors = formatColorList()
 
         val pieData = PieData(pieDataSet)
-        incomePieChart.data = pieData
-        incomePieChart.setEntryLabelTextSize(10f)
-        incomePieChart.invalidate()
+        mIncomePieChart.data = pieData
+        mIncomePieChart.setEntryLabelTextSize(10f)
+        mIncomePieChart.invalidate()
     }
 
     private fun initExpensePieChart() {
@@ -88,9 +98,9 @@ class ReportFragment : Fragment() {
         pieDataSet.colors = formatColorList()
 
         val pieData = PieData(pieDataSet)
-        expensePieChart.data = pieData
-        expensePieChart.setEntryLabelTextSize(10f)
-        expensePieChart.invalidate()
+        mExpensePieChart.data = pieData
+        mExpensePieChart.setEntryLabelTextSize(10f)
+        mExpensePieChart.invalidate()
     }
 
     private fun initBalanceHistoryChart() {
@@ -102,8 +112,23 @@ class ReportFragment : Fragment() {
         dataSets.add(lineData)
         val data = LineData(dataSets)
 
-        balanceHistoryLineChart.data = data
-        balanceHistoryLineChart.invalidate()
+        mBalanceHistoryLineChart.data = data
+        mBalanceHistoryLineChart.invalidate()
+    }
+
+    private fun initListener() {
+        binding!!.selectWallet.itemWallet.setOnClickListener { onClickSelectWallet() }
+    }
+
+    private fun onClickSelectWallet() {
+        mWalletBottomSheet = ReportWalletBottomSheet(object: ReportWalletContract.Listener {
+            override fun onClickWalletItem(wallet: WalletModel) {
+                mWallet = wallet
+                binding!!.selectWallet.tvWalletName.text = mWallet.name
+                mWalletBottomSheet.dismiss()
+            }
+        })
+        mWalletBottomSheet.show(parentFragmentManager, Constant.REPORT_WALLET_BOTTOM_SHEET_WALLET_NAME)
     }
 
     override fun onDestroyView() {
