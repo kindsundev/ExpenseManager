@@ -49,7 +49,7 @@ class SignUpPresenter(
             .subscribe({
                 view.onSuccess()
             }, {
-                view.onError("Please check email or password")
+                view.onError("The email address is already in use by another account")
                 Logger.error("Sign Up: ${it.message}")
             })
         compositeDisposable.add(disposableSignUp)

@@ -1,7 +1,6 @@
 package com.kindsundev.expense.manager.ui.prepare
 
 import com.kindsundev.expense.manager.common.Logger
-import com.kindsundev.expense.manager.data.base.BaseFirebase
 import com.kindsundev.expense.manager.data.firebase.WalletFirebase
 import com.kindsundev.expense.manager.data.model.WalletModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -14,10 +13,11 @@ class PrepareWalletPresenter(
 ) : PrepareWalletContract.Presenter {
     private val compositeDisposable = CompositeDisposable()
     private var mWallets = ArrayList<WalletModel>()
+    private var walletFirebase = WalletFirebase()
 
     override fun handlerCreateWallet(wallet: WalletModel) {
         view.onLoad()
-        val disposable = WalletFirebase().upsertWallet(wallet)
+        val disposable = walletFirebase.upsertWallet(wallet)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
@@ -32,7 +32,7 @@ class PrepareWalletPresenter(
     override fun handlerGetWallets() {
         view.onLoad()
         mWallets.clear()
-        val disposable = BaseFirebase().getWallets()
+        val disposable = walletFirebase.getWallets()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(

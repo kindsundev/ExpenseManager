@@ -72,7 +72,17 @@ class BudgetWalletBottomSheet(
             mWalletDetailPresenter.updateWallet(mCurrentWallet)
         }
     }
-    
+
+    private fun getCurrentWallet(): WalletModel {
+        val id = wallet.id
+        val name = binding!!.edtName.text.toString().trim()
+        val currency = if (binding!!.radioBtnUsd.isChecked) { "USD" } else { "VND" }
+        val origin = wallet.origin
+        val balance = binding!!.edtBalance.text.toString().trim().replace(",","")
+        val transactions = wallet.transactions
+        return WalletModel(id, name, currency, origin, balance.toDouble(), transactions)
+    }
+
     private fun onClickDeleteWallet() {
         val alertDialog = MaterialAlertDialogBuilder(requireContext(), R.style.DeleteWarningAlertDialog)
             .setTitle(R.string.delete_wallet)
@@ -88,16 +98,6 @@ class BudgetWalletBottomSheet(
             setGravity(Gravity.CENTER)
         }
         alertDialog.show()
-    }
-
-    private fun getCurrentWallet(): WalletModel {
-        val id = wallet.id
-        val name = binding!!.edtName.text.toString().trim()
-        val currency = if (binding!!.radioBtnUsd.isChecked) { "USD" } else { "VND" }
-        val origin = wallet.origin
-        val balance = binding!!.edtBalance.text.toString().trim().replace(",","")
-        val transactions = wallet.transactions
-        return WalletModel(id, name, currency, origin, balance.toDouble(), transactions)
     }
 
     override fun onDestroyView() {
