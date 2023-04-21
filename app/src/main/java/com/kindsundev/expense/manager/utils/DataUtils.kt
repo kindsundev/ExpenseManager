@@ -3,7 +3,6 @@ package com.kindsundev.expense.manager.utils
 import android.util.Patterns
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieEntry
 import com.kindsundev.expense.manager.common.Constant
 import com.kindsundev.expense.manager.common.Status
@@ -150,13 +149,12 @@ fun expensePieData(): ArrayList<PieEntry> {
 // Balance History Chart
 fun balanceHistoryData(): ArrayList<Entry> {
     val data = ArrayList<Entry>()
-    data.add(Entry(0F, 100F))
-    data.add(Entry(1F, 80F))
-    data.add(Entry(2F, 60F))
-    data.add(Entry(3F, 90F))
-    data.add(Entry(4F, 30F))
-    data.add(Entry(5F, 50F))
-    data.add(Entry(6F, 10F))
-    data.add(Entry(7F, 150F))
+    data.add(Entry(0F, 0F))
+    data.add(Entry(1F, 100F))
+    data.add(Entry(2F, 80F))
+    data.add(Entry(3F, 60F))
+    data.add(Entry(4F, 120F))
+    data.add(Entry(5F, 30F))
+    data.add(Entry(6F, 50F))
     return data
 }

@@ -9,7 +9,11 @@ import androidx.fragment.app.Fragment
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.charts.PieChart
+import com.github.mikephil.charting.components.AxisBase
+import com.github.mikephil.charting.components.Description
+import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.kindsundev.expense.manager.common.Constant
 import com.kindsundev.expense.manager.data.model.WalletModel
@@ -18,6 +22,7 @@ import com.kindsundev.expense.manager.ui.custom.LoadingDialog
 import com.kindsundev.expense.manager.ui.home.report.wallet.ReportWalletBottomSheet
 import com.kindsundev.expense.manager.ui.home.report.wallet.ReportWalletContract
 import com.kindsundev.expense.manager.utils.*
+
 
 class ReportFragment : Fragment() {
     private var _binding : FragmentReportBinding? = null
@@ -107,13 +112,38 @@ class ReportFragment : Fragment() {
         val lineData = LineDataSet(balanceHistoryData(), "Balance")
         lineData.lineWidth = 2.5f
         lineData.valueTextSize = 10f
+        lineData.circleRadius = 6f
+        lineData.circleHoleRadius = 3f
 
         val dataSets = ArrayList<ILineDataSet>()
         dataSets.add(lineData)
-        val data = LineData(dataSets)
+        val mData = LineData(dataSets)
 
-        mBalanceHistoryLineChart.data = data
-        mBalanceHistoryLineChart.invalidate()
+        configLabelForBalanceHistoryChart()
+
+        val mDescription = Description()
+        mDescription.text = ""
+        mBalanceHistoryLineChart.apply {
+            setExtraOffsets(0f,0f,0f,10f)
+            axisRight.isEnabled = false
+            legend.xOffset = -10f
+            description = mDescription
+            data = mData
+            invalidate()
+        }
+    }
+
+    private fun configLabelForBalanceHistoryChart() {
+        val labels = listOf("Day 1", "Day 2", "Day 3", "Day 4", "Day 5", "Day 6", "Day 7")
+        mBalanceHistoryLineChart.xAxis.apply {
+            position = XAxis.XAxisPosition.BOTTOM
+            granularity = 0.5f
+            valueFormatter = object : ValueFormatter() {
+                override fun getAxisLabel(value: Float, axis: AxisBase): String {
+                    return labels[value.toInt()]
+                }
+            }
+        }
     }
 
     private fun initListener() {
