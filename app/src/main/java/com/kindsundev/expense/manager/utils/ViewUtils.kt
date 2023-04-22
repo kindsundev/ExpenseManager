@@ -143,3 +143,8 @@ fun incomeColorList(data: ArrayList<PieEntry>): ArrayList<Int> {
     }
     return colors
 }
+
+fun incomeAndExpenseColorList() = listOf(
+    Color.parseColor(Constant.GREEN_COLOR_CODE),
+    Color.parseColor(Constant.RED_COLOR_CODE)
+)
