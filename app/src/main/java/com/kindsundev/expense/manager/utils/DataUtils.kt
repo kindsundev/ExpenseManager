@@ -102,21 +102,10 @@ fun hashCodeForID(vararg data: String): Int {
     return result
 }
 
-fun incomeBarData(): ArrayList<BarEntry> {
+fun incomeAndExpenseDataDefault() : ArrayList<BarEntry> {
     val data = ArrayList<BarEntry>()
-    data.add(BarEntry(0F, 3F))
-    data.add(BarEntry(3F, 6F))
-    data.add(BarEntry(6F, 2F))
-    data.add(BarEntry(9F, 4F))
-    return data
-}
-
-fun expenseBarData() : ArrayList<BarEntry> {
-    val data = ArrayList<BarEntry>()
-    data.add(BarEntry(1F, 2F))
-    data.add(BarEntry(4F, 5F))
-    data.add(BarEntry(7F, 3F))
-    data.add(BarEntry(10F, 7F))
+    data.add(BarEntry(0F, 100F))
+    data.add(BarEntry(1F, 50F))
     return data
 }
 
