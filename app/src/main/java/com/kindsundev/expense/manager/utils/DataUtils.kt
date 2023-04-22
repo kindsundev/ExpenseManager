@@ -147,7 +147,7 @@ fun expensePieData(): ArrayList<PieEntry> {
 }
 
 // Balance History Chart
-fun balanceHistoryData(): ArrayList<Entry> {
+fun balanceHistoryDataDefault(): ArrayList<Entry> {
     val data = ArrayList<Entry>()
     data.add(Entry(0F, 0F))
     data.add(Entry(1F, 100F))
