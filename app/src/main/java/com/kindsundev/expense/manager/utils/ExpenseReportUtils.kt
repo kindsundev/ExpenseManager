@@ -1,6 +1,7 @@
 package com.kindsundev.expense.manager.utils
 
 import com.github.mikephil.charting.data.PieEntry
+import com.kindsundev.expense.manager.common.Constant
 import com.kindsundev.expense.manager.common.Logger
 import com.kindsundev.expense.manager.data.model.BillModel
 import com.kindsundev.expense.manager.data.model.TransactionModel
@@ -33,7 +34,7 @@ class ExpenseReportUtils {
         val transactions = ArrayList<TransactionModel>()
         bills.forEach { billModel ->
             billModel.transactions?.forEach { transaction ->
-                if (transaction.type == "expense") {
+                if (transaction.type == Constant.TRANSACTION_TYPE_EXPENSE) {
                     transactions.add(transaction)
                 }
             }

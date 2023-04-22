@@ -1,6 +1,7 @@
 package com.kindsundev.expense.manager.utils
 
 import com.github.mikephil.charting.data.PieEntry
+import com.kindsundev.expense.manager.common.Constant
 import com.kindsundev.expense.manager.data.model.BillModel
 import com.kindsundev.expense.manager.data.model.TransactionModel
 
@@ -12,7 +13,7 @@ class IncomeReportUtils {
 
     fun getPercentage(bills : ArrayList<BillModel>): ArrayList<PieEntry> {
         clearCurrentData()
-        val transactions = getTypeOfExpense(bills)
+        val transactions = getTypeOfIncome(bills)
         groupClassification(transactions)
         return initPieData(transactions)
     }
@@ -24,11 +25,11 @@ class IncomeReportUtils {
         other.clear()
     }
 
-    private fun getTypeOfExpense(bills : ArrayList<BillModel>): ArrayList<TransactionModel> {
+    private fun getTypeOfIncome(bills : ArrayList<BillModel>): ArrayList<TransactionModel> {
         val transactions = ArrayList<TransactionModel>()
         bills.forEach { billModel ->
             billModel.transactions?.forEach { transaction ->
-                if (transaction.type == "income") {
+                if (transaction.type == Constant.TRANSACTION_TYPE_INCOME) {
                     transactions.add(transaction)
                 }
             }
