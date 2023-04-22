@@ -10,7 +10,7 @@ data class BillModel(
     var transactions: ArrayList<TransactionModel>? = ArrayList()
 ) : Parcelable {
 
-    fun calculateBalance(): Double {
+    fun calculateBalanceForDay(): Double {
         var sumExpense = 0.0
         var sumIncome = 0.0
         transactions?.forEach { model ->
@@ -21,5 +21,25 @@ data class BillModel(
             }
         }
         return sumIncome - sumExpense
+    }
+
+    fun calculateTotalExpenseForDay(): Double {
+        var sumExpense = 0.0
+        transactions?.forEach { model ->
+            if (model.type == Constant.TRANSACTION_TYPE_EXPENSE) {
+                sumExpense += model.amount!!
+            }
+        }
+        return sumExpense
+    }
+
+    fun calculateTotalIncomeForDay(): Double {
+        var sumIncome = 0.0
+        transactions?.forEach { model ->
+            if (model.type == Constant.TRANSACTION_TYPE_INCOME) {
+                sumIncome += model.amount!!
+            }
+        }
+        return sumIncome
     }
 }

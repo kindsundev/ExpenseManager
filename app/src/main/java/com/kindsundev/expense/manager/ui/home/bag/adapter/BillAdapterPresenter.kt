@@ -8,7 +8,7 @@ class BillAdapterPresenter(
 ): BillAdapterContract.Presenter {
 
     override fun handlerCalculateBalanceOfDay(bills: BillModel): Double {
-        val result = bills.calculateBalance()
+        val result = bills.calculateBalanceForDay()
         return if (result == 0.0) {
             view.onResultColor(Constant.TRANSACTION_STATE_BALANCE)
             result
