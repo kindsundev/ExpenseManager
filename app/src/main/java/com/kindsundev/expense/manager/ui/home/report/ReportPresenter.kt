@@ -1,5 +1,6 @@
 package com.kindsundev.expense.manager.ui.home.report
 
+import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.PieEntry
 import com.kindsundev.expense.manager.common.Constant
@@ -7,6 +8,7 @@ import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.utils.BalanceReportUtils
 import com.kindsundev.expense.manager.utils.ExpenseReportUtils
 import com.kindsundev.expense.manager.utils.IncomeReportUtils
+import com.kindsundev.expense.manager.utils.TotalReportUtils
 import kotlin.collections.ArrayList
 
 class ReportPresenter(
@@ -15,6 +17,7 @@ class ReportPresenter(
     private val balanceReport = BalanceReportUtils()
     private val expenseReport = ExpenseReportUtils()
     private val incomeReport = IncomeReportUtils()
+    private val totalReport = TotalReportUtils()
 
     fun getBalanceHistorySevenDays(wallet: WalletModel): ArrayList<Entry> {
         val mBalanceInLastSevenDays = ArrayList<Entry>()
@@ -46,6 +49,16 @@ class ReportPresenter(
             }
         }
         return result
+    }
+
+    fun getTotalAmountOfIncomeAndExpense(wallet: WalletModel): ArrayList<BarEntry> {
+        val data = ArrayList<BarEntry>()
+        val bills = wallet.getBills()
+        val totalIncome = totalReport.calculateTotalIncome(bills)
+        val totalExpense = totalReport.calculateTotalExpense(bills)
+        data.add(BarEntry(0F, totalIncome.toFloat()))
+        data.add(BarEntry(1F, totalExpense.toFloat()))
+        return data
     }
 
 }

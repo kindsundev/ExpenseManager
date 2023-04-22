@@ -1,6 +1,5 @@
 package com.kindsundev.expense.manager.ui.home.report
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,11 +8,11 @@ import androidx.fragment.app.Fragment
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.charts.PieChart
-import com.github.mikephil.charting.data.*
 import com.kindsundev.expense.manager.common.Constant
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.FragmentReportBinding
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
+import com.kindsundev.expense.manager.ui.home.report.chart.MyBarChart
 import com.kindsundev.expense.manager.ui.home.report.chart.MyLineChart
 import com.kindsundev.expense.manager.ui.home.report.chart.MyPieChart
 import com.kindsundev.expense.manager.ui.home.report.wallet.ReportWalletBottomSheet
@@ -30,13 +29,14 @@ class ReportFragment : Fragment(), ReportContract.View {
     private lateinit var mWallet : WalletModel
 
     private lateinit var mIncomeAndExpenseBarChart: BarChart
-    private lateinit var mBalanceHistoryLineChart: LineChart
-    private lateinit var mExpensePieChart: PieChart
     private lateinit var mIncomePieChart: PieChart
+    private lateinit var mExpensePieChart: PieChart
+    private lateinit var mBalanceHistoryLineChart: LineChart
 
-    private lateinit var balanceHistoryChart: MyLineChart
-    private lateinit var expenseChart: MyPieChart
+    private lateinit var totalChart: MyBarChart
     private lateinit var incomeChart: MyPieChart
+    private lateinit var expenseChart: MyPieChart
+    private lateinit var balanceHistoryChart: MyLineChart
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +50,7 @@ class ReportFragment : Fragment(), ReportContract.View {
     ): View {
         _binding = FragmentReportBinding.inflate(inflater, container, false)
         mappingViews()
-        initIncomeAndBalanceBarChart()
+        initIncomeAndExpenseBarChart()
         initIncomePieChart()
         initExpensePieChart()
         initBalanceHistoryChart()
@@ -65,28 +65,9 @@ class ReportFragment : Fragment(), ReportContract.View {
         mIncomePieChart = binding!!.iPieChart.income
     }
 
-    private fun initIncomeAndBalanceBarChart() {
-        val barDataIncome = BarDataSet(incomeBarData(), "Income")
-        customizeValueInBarChart(barDataIncome, "Income")
-        val barDataExpense = BarDataSet(expenseBarData(), "Expense")
-        customizeValueInBarChart(barDataExpense, "Expense")
-
-        val barData = BarData()
-        barData.addDataSet(barDataIncome)
-        barData.addDataSet(barDataExpense)
-
-        mIncomeAndExpenseBarChart.data = barData
-        mIncomeAndExpenseBarChart.invalidate()
-    }
-
-    private fun customizeValueInBarChart(data : BarDataSet, label: String) {
-        data.formLineWidth = 2.5f
-        data.valueTextSize = 10f
-        if (label == "Income") {
-            data.color = Color.parseColor(Constant.GREEN_COLOR_CODE)
-        } else if (label == "Expense") {
-            data.color = Color.parseColor(Constant.RED_COLOR_CODE)
-        }
+    private fun initIncomeAndExpenseBarChart() {
+        totalChart = MyBarChart(mIncomeAndExpenseBarChart, incomeAndExpenseDataDefault())
+        totalChart.showBarChart()
     }
 
     private fun initIncomePieChart() {
@@ -114,6 +95,7 @@ class ReportFragment : Fragment(), ReportContract.View {
                 mWallet = wallet
                 binding!!.selectWallet.tvWalletName.text = mWallet.name
                 mWalletBottomSheet.dismiss()
+                updateIncomeAndExpenseChart()
                 updateIncomeChart()
                 updateExpenseChart()
                 updateBalanceHistoryChart()
@@ -122,7 +104,13 @@ class ReportFragment : Fragment(), ReportContract.View {
         mWalletBottomSheet.show(parentFragmentManager, Constant.REPORT_WALLET_BOTTOM_SHEET_WALLET_NAME)
     }
 
-    private fun  updateIncomeChart() {
+    private fun updateIncomeAndExpenseChart() {
+        val newData = reportPresenter.getTotalAmountOfIncomeAndExpense(mWallet)
+        totalChart = MyBarChart(mIncomeAndExpenseBarChart, newData)
+        totalChart.showBarChart()
+    }
+
+    private fun updateIncomeChart() {
         val newData = reportPresenter.getPercentageInCategory(mWallet, Constant.TRANSACTION_TYPE_INCOME)
         incomeChart = MyPieChart(mIncomePieChart, newData, Constant.TRANSACTION_TYPE_INCOME)
         incomeChart.showPieChart()

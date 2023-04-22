@@ -34,7 +34,7 @@ class BalanceReportUtils {
         val listOfLastSevenDays = getListOfLastSevenDays(bills)
         if (listOfLastSevenDays.isNotEmpty()) {
             listOfLastSevenDays.forEach { bill ->
-                val result = bill.calculateBalance()
+                val result = bill.calculateBalanceForDay()
                 amountInLastSevenDays.add(result)
 //                Logger.error(result.toString())
             }
