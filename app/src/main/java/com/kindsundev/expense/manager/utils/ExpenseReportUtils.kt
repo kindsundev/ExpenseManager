@@ -32,11 +32,9 @@ class ExpenseReportUtils {
     private fun getTypeOfExpense(bills : ArrayList<BillModel>): ArrayList<TransactionModel> {
         val transactions = ArrayList<TransactionModel>()
         bills.forEach { billModel ->
-            Logger.warn(billModel.date.toString())
             billModel.transactions?.forEach { transaction ->
                 if (transaction.type == "expense") {
                     transactions.add(transaction)
-                    Logger.info(transaction.toString())
                 }
             }
         }
@@ -73,12 +71,6 @@ class ExpenseReportUtils {
                 else -> {}
             }
         }
-        Logger.error("needFul  = ${needFul.size}")
-        Logger.error("enjoy    = ${enjoy.size}")
-        Logger.error("offering = ${offering.size}")
-        Logger.error("health   = ${health.size}")
-        Logger.error("child    = ${child.size}")
-        Logger.error("other    = ${other.size}")
     }
 
     private fun initPieData(transactions: ArrayList<TransactionModel>): ArrayList<PieEntry> {
