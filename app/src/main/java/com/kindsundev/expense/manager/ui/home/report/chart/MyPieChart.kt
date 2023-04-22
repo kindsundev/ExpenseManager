@@ -25,9 +25,9 @@ class MyPieChart(
             valueLineWidth = 2.5f
             valueTextSize = 10f
             valueTextColor = Color.WHITE
-            if (name == Constant.TRANSACTION_STATE_EXPENSE) {
+            if (name == Constant.TRANSACTION_TYPE_EXPENSE) {
                 colors = expenseColorList(data)
-            } else if (name == Constant.TRANSACTION_STATE_INCOME) {
+            } else if (name == Constant.TRANSACTION_TYPE_INCOME) {
                 colors = incomeColorList(data)
             }
         }

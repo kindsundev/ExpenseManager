@@ -2,9 +2,11 @@ package com.kindsundev.expense.manager.ui.home.report
 
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.PieEntry
+import com.kindsundev.expense.manager.common.Constant
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.utils.BalanceReportUtils
 import com.kindsundev.expense.manager.utils.ExpenseReportUtils
+import com.kindsundev.expense.manager.utils.IncomeReportUtils
 import kotlin.collections.ArrayList
 
 class ReportPresenter(
@@ -12,6 +14,7 @@ class ReportPresenter(
 ): ReportContract.Presenter {
     private val balanceReport = BalanceReportUtils()
     private val expenseReport = ExpenseReportUtils()
+    private val incomeReport = IncomeReportUtils()
 
     fun getBalanceHistorySevenDays(wallet: WalletModel): ArrayList<Entry> {
         val mBalanceInLastSevenDays = ArrayList<Entry>()
@@ -28,8 +31,13 @@ class ReportPresenter(
     }
 
     // ConcurrentModificationException when loop by for
-    fun getPercentageInCategory(wallet: WalletModel): ArrayList<PieEntry> {
-        val result =  expenseReport.getPercentage(wallet.getBills())
+    fun getPercentageInCategory(wallet: WalletModel, name: String): ArrayList<PieEntry> {
+        var result =  ArrayList<PieEntry>()
+        if (name == Constant.TRANSACTION_TYPE_EXPENSE) {
+            result =  expenseReport.getPercentage(wallet.getBills())
+        } else if (name == Constant.TRANSACTION_TYPE_INCOME) {
+            result =  incomeReport.getPercentage(wallet.getBills())
+        }
         val iterator = result.iterator()
         while (iterator.hasNext()) {
             val entry = iterator.next()
@@ -39,6 +47,5 @@ class ReportPresenter(
         }
         return result
     }
-
 
 }
