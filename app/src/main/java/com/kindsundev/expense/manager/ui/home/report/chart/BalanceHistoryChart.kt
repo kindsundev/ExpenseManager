@@ -7,6 +7,7 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.formatter.LargeValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 
@@ -14,13 +15,17 @@ class BalanceHistoryChart(
     private val lineChart: LineChart,
     private val balanceData: ArrayList<Entry>
 ) {
+    private val largeValueFormatter = LargeValueFormatter()
 
     private fun initLineDataSet(): LineDataSet {
         val dataSet= LineDataSet(balanceData, "Balance")
-        dataSet.lineWidth = 2.5f
-        dataSet.valueTextSize = 10f
-        dataSet.circleRadius = 6f
-        dataSet.circleHoleRadius = 3f
+        dataSet.apply {
+            lineWidth = 2.5f
+            valueTextSize = 10f
+            circleRadius = 6f
+            circleHoleRadius = 3f
+            valueFormatter = largeValueFormatter
+        }
         return dataSet
     }
 
@@ -55,10 +60,12 @@ class BalanceHistoryChart(
 
         lineChart.apply {
             setExtraOffsets(0f,0f,0f,10f)
+            axisLeft.valueFormatter = largeValueFormatter
             axisRight.isEnabled = false
             legend.xOffset = -10f
             description = mDescription
         }
+
     }
 
     fun showLineChart() {
