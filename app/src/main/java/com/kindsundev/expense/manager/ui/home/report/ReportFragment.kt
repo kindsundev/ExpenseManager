@@ -90,12 +90,12 @@ class ReportFragment : Fragment(), ReportContract.View {
     }
 
     private fun initIncomePieChart() {
-        incomeChart = MyPieChart(mIncomePieChart, incomePieDataDefault())
+        incomeChart = MyPieChart(mIncomePieChart, incomePieDataDefault(), Constant.TRANSACTION_STATE_INCOME)
         incomeChart.showPieChart()
     }
 
     private fun initExpensePieChart() {
-        expenseChart = MyPieChart(mExpensePieChart, expensePieDataDefault())
+        expenseChart = MyPieChart(mExpensePieChart, expensePieDataDefault(), Constant.TRANSACTION_STATE_EXPENSE)
         expenseChart.showPieChart()
     }
 
@@ -114,11 +114,17 @@ class ReportFragment : Fragment(), ReportContract.View {
                 mWallet = wallet
                 binding!!.selectWallet.tvWalletName.text = mWallet.name
                 mWalletBottomSheet.dismiss()
-
+                updateExpenseChart()
                 updateBalanceHistoryChart()
             }
         })
         mWalletBottomSheet.show(parentFragmentManager, Constant.REPORT_WALLET_BOTTOM_SHEET_WALLET_NAME)
+    }
+
+    private fun updateExpenseChart() {
+        val newData = reportPresenter.getPercentageInCategory(mWallet)
+        expenseChart = MyPieChart(mExpensePieChart, newData, Constant.TRANSACTION_STATE_EXPENSE)
+        expenseChart.showPieChart()
     }
 
     private fun updateBalanceHistoryChart() {

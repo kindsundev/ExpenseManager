@@ -7,13 +7,16 @@ import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
-import com.kindsundev.expense.manager.utils.formatColorList
+import com.kindsundev.expense.manager.common.Constant
+import com.kindsundev.expense.manager.utils.expenseColorList
+import com.kindsundev.expense.manager.utils.incomeColorList
 import java.text.DecimalFormat
 import kotlin.collections.ArrayList
 
 class MyPieChart(
     private val pieChart: PieChart,
-    private val data: ArrayList<PieEntry>
+    private val data: ArrayList<PieEntry>,
+    private val name: String
 ) {
 
     private fun initPieDataSet(): PieDataSet {
@@ -22,7 +25,11 @@ class MyPieChart(
             valueLineWidth = 2.5f
             valueTextSize = 10f
             valueTextColor = Color.WHITE
-            colors = formatColorList()
+            if (name == Constant.TRANSACTION_STATE_EXPENSE) {
+                colors = expenseColorList(data)
+            } else if (name == Constant.TRANSACTION_STATE_INCOME) {
+                colors = incomeColorList(data)
+            }
         }
         return dataSet
     }
