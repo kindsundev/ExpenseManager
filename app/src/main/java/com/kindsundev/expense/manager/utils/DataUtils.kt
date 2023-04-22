@@ -124,8 +124,7 @@ fun expenseBarData() : ArrayList<BarEntry> {
     return data
 }
 
-// Income Chart
-fun incomePieData(): ArrayList<PieEntry> {
+fun expensePieDataDefault(): ArrayList<PieEntry> {
     val data = ArrayList<PieEntry>()
     data.add(PieEntry(30F, "NeedFul"))
     data.add(PieEntry(15F, "Enjoy"))
@@ -136,8 +135,7 @@ fun incomePieData(): ArrayList<PieEntry> {
     return data
 }
 
-// Expense Chart
-fun expensePieData(): ArrayList<PieEntry> {
+fun incomePieDataDefault(): ArrayList<PieEntry> {
     val data = ArrayList<PieEntry>()
     data.add(PieEntry(70F, "Salary"))
     data.add(PieEntry(5F, "Bons"))
@@ -146,7 +144,6 @@ fun expensePieData(): ArrayList<PieEntry> {
     return data
 }
 
-// Balance History Chart
 fun balanceHistoryDataDefault(): ArrayList<Entry> {
     val data = ArrayList<Entry>()
     data.add(Entry(0F, 0F))

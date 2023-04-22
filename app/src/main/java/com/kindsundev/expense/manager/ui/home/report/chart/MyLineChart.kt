@@ -11,14 +11,14 @@ import com.github.mikephil.charting.formatter.LargeValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 
-class BalanceHistoryChart(
+class MyLineChart(
     private val lineChart: LineChart,
-    private val balanceData: ArrayList<Entry>
+    private val data: ArrayList<Entry>
 ) {
     private val largeValueFormatter = LargeValueFormatter()
 
     private fun initLineDataSet(): LineDataSet {
-        val dataSet= LineDataSet(balanceData, "Balance")
+        val dataSet = LineDataSet(data, "Balance")
         dataSet.apply {
             lineWidth = 2.5f
             valueTextSize = 10f
@@ -30,9 +30,9 @@ class BalanceHistoryChart(
     }
 
     private fun initLineData(): LineData {
-        val dataSet = ArrayList<ILineDataSet>()
-        dataSet.add(initLineDataSet())
-        return LineData(dataSet)
+        val lineData = ArrayList<ILineDataSet>()
+        lineData.add(initLineDataSet())
+        return LineData(lineData)
     }
 
     private fun configLabelAtXAxis() {
