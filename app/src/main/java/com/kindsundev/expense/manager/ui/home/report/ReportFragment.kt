@@ -9,34 +9,38 @@ import androidx.fragment.app.Fragment
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.charts.PieChart
-import com.github.mikephil.charting.components.AxisBase
-import com.github.mikephil.charting.components.Description
-import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
-import com.github.mikephil.charting.formatter.ValueFormatter
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.kindsundev.expense.manager.common.Constant
+import com.kindsundev.expense.manager.common.Logger
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.FragmentReportBinding
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
+import com.kindsundev.expense.manager.ui.home.report.chart.BalanceHistoryChart
 import com.kindsundev.expense.manager.ui.home.report.wallet.ReportWalletBottomSheet
 import com.kindsundev.expense.manager.ui.home.report.wallet.ReportWalletContract
 import com.kindsundev.expense.manager.utils.*
+import kotlin.collections.ArrayList
 
-
-class ReportFragment : Fragment() {
+class ReportFragment : Fragment(), ReportContract.View {
     private var _binding : FragmentReportBinding? = null
     private val binding get() = _binding
     private val loadingDialog by lazy { LoadingDialog() }
+
+    private lateinit var reportPresenter: ReportPresenter
+    private lateinit var mWalletBottomSheet: ReportWalletBottomSheet
+    private lateinit var mWallet : WalletModel
 
     private lateinit var mIncomeAndExpenseBarChart: BarChart
     private lateinit var mBalanceHistoryLineChart: LineChart
     private lateinit var mExpensePieChart: PieChart
     private lateinit var mIncomePieChart: PieChart
 
-    private lateinit var mWalletBottomSheet: ReportWalletBottomSheet
-    private lateinit var mWallet : WalletModel
+    private lateinit var balanceHistoryChart: BalanceHistoryChart
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        reportPresenter = ReportPresenter(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -109,41 +113,8 @@ class ReportFragment : Fragment() {
     }
 
     private fun initBalanceHistoryChart() {
-        val lineData = LineDataSet(balanceHistoryData(), "Balance")
-        lineData.lineWidth = 2.5f
-        lineData.valueTextSize = 10f
-        lineData.circleRadius = 6f
-        lineData.circleHoleRadius = 3f
-
-        val dataSets = ArrayList<ILineDataSet>()
-        dataSets.add(lineData)
-        val mData = LineData(dataSets)
-
-        configLabelForBalanceHistoryChart()
-
-        val mDescription = Description()
-        mDescription.text = ""
-        mBalanceHistoryLineChart.apply {
-            setExtraOffsets(0f,0f,0f,10f)
-            axisRight.isEnabled = false
-            legend.xOffset = -10f
-            description = mDescription
-            data = mData
-            invalidate()
-        }
-    }
-
-    private fun configLabelForBalanceHistoryChart() {
-        val labels = listOf("Day 1", "Day 2", "Day 3", "Day 4", "Day 5", "Day 6", "Day 7")
-        mBalanceHistoryLineChart.xAxis.apply {
-            position = XAxis.XAxisPosition.BOTTOM
-            granularity = 0.5f
-            valueFormatter = object : ValueFormatter() {
-                override fun getAxisLabel(value: Float, axis: AxisBase): String {
-                    return labels[value.toInt()]
-                }
-            }
-        }
+        balanceHistoryChart = BalanceHistoryChart(mBalanceHistoryLineChart, balanceHistoryDataDefault())
+        balanceHistoryChart.showLineChart()
     }
 
     private fun initListener() {
@@ -156,13 +127,33 @@ class ReportFragment : Fragment() {
                 mWallet = wallet
                 binding!!.selectWallet.tvWalletName.text = mWallet.name
                 mWalletBottomSheet.dismiss()
+
+                updateBalanceHistoryChart()
             }
         })
         mWalletBottomSheet.show(parentFragmentManager, Constant.REPORT_WALLET_BOTTOM_SHEET_WALLET_NAME)
     }
 
+    private fun updateBalanceHistoryChart() {
+        val newData = reportPresenter.getBalanceHistorySevenDays(mWallet)
+        balanceHistoryChart = BalanceHistoryChart(mBalanceHistoryLineChart, newData)
+        balanceHistoryChart.showLineChart()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onLoad() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onError(message: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onSuccess() {
+        TODO("Not yet implemented")
     }
 }
