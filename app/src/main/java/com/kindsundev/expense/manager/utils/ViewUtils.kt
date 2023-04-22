@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.bumptech.glide.Glide
+import com.github.mikephil.charting.data.PieEntry
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Constant
@@ -113,11 +114,32 @@ fun formatInputCurrencyBalance(editText : EditText) {
     })
 }
 
-fun formatColorList() = listOf(
-    Color.parseColor(Constant.GREEN_COLOR_CODE),
-    Color.parseColor(Constant.TEA_COLOR_CODE),
-    Color.parseColor(Constant.PURPLE_COLOR_CODE),
-    Color.parseColor(Constant.RED_COLOR_CODE),
-    Color.parseColor(Constant.YELLOW_COLOR_CODE),
-    Color.parseColor(Constant.GRAY_COLOR_CODE)
-)
+fun expenseColorList(data: ArrayList<PieEntry>): ArrayList<Int> {
+    val colors = ArrayList<Int>()
+    for (entry in data) {
+        when(entry.label) {
+            "NeedFul" -> colors.add(Color.parseColor(Constant.GREEN_COLOR_CODE))
+            "Enjoy" -> colors.add(Color.parseColor(Constant.TEA_COLOR_CODE))
+            "Offering" -> colors.add(Color.parseColor(Constant.PURPLE_COLOR_CODE))
+            "Health" -> colors.add(Color.parseColor(Constant.RED_COLOR_CODE))
+            "Child" -> colors.add(Color.parseColor(Constant.YELLOW_COLOR_CODE))
+            "Other" -> colors.add(Color.parseColor(Constant.GRAY_COLOR_CODE))
+            else -> {}
+        }
+    }
+    return colors
+}
+
+fun incomeColorList(data: ArrayList<PieEntry>): ArrayList<Int> {
+    val colors = ArrayList<Int>()
+    for (entry in data) {
+        when(entry.label) {
+            "Salary" -> colors.add(Color.parseColor(Constant.GREEN_COLOR_CODE))
+            "Bons" -> colors.add(Color.parseColor(Constant.RED_COLOR_CODE))
+            "Interest Rate" -> colors.add(Color.parseColor(Constant.YELLOW_COLOR_CODE))
+            "Other" -> colors.add(Color.parseColor(Constant.GRAY_COLOR_CODE))
+            else -> {}
+        }
+    }
+    return colors
+}
