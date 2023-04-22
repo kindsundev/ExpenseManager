@@ -1,0 +1,63 @@
+package com.kindsundev.expense.manager.ui.home.report.chart
+
+import android.graphics.Color
+import com.github.mikephil.charting.charts.PieChart
+import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.formatter.ValueFormatter
+import com.kindsundev.expense.manager.utils.formatColorList
+import java.text.DecimalFormat
+import kotlin.collections.ArrayList
+
+class MyPieChart(
+    private val pieChart: PieChart,
+    private val data: ArrayList<PieEntry>
+) {
+
+    private fun initPieDataSet(): PieDataSet {
+        val dataSet = PieDataSet(data, "")
+        dataSet.apply {
+            valueLineWidth = 2.5f
+            valueTextSize = 10f
+            valueTextColor = Color.WHITE
+            colors = formatColorList()
+        }
+        return dataSet
+    }
+
+    private fun initPieData(): PieData {
+        val pieData = PieData(initPieDataSet())
+        pieData.apply {
+            val percentFormat = DecimalFormat("###,###,##0.00'%'")
+            setValueFormatter(object: ValueFormatter() {
+                override fun getFormattedValue(value: Float): String {
+                    return percentFormat.format(value)
+                }
+            })
+        }
+        return pieData
+    }
+
+    private fun configDescriptionLegendDisplay() {
+        pieChart.legend.apply {
+            isWordWrapEnabled = true
+            verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
+            horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
+            orientation = Legend.LegendOrientation.HORIZONTAL
+            setDrawInside(false)                        // show without chart
+        }
+    }
+
+    fun showPieChart() {
+        configDescriptionLegendDisplay()
+        pieChart.apply {
+            setDrawEntryLabels(false)
+            description.isEnabled = false
+            data = initPieData()
+            invalidate()
+        }
+    }
+
+}

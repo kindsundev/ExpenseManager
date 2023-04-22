@@ -11,15 +11,14 @@ import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.*
 import com.kindsundev.expense.manager.common.Constant
-import com.kindsundev.expense.manager.common.Logger
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.FragmentReportBinding
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
-import com.kindsundev.expense.manager.ui.home.report.chart.BalanceHistoryChart
+import com.kindsundev.expense.manager.ui.home.report.chart.MyLineChart
+import com.kindsundev.expense.manager.ui.home.report.chart.MyPieChart
 import com.kindsundev.expense.manager.ui.home.report.wallet.ReportWalletBottomSheet
 import com.kindsundev.expense.manager.ui.home.report.wallet.ReportWalletContract
 import com.kindsundev.expense.manager.utils.*
-import kotlin.collections.ArrayList
 
 class ReportFragment : Fragment(), ReportContract.View {
     private var _binding : FragmentReportBinding? = null
@@ -35,7 +34,9 @@ class ReportFragment : Fragment(), ReportContract.View {
     private lateinit var mExpensePieChart: PieChart
     private lateinit var mIncomePieChart: PieChart
 
-    private lateinit var balanceHistoryChart: BalanceHistoryChart
+    private lateinit var balanceHistoryChart: MyLineChart
+    private lateinit var expenseChart: MyPieChart
+    private lateinit var incomeChart: MyPieChart
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,31 +90,17 @@ class ReportFragment : Fragment(), ReportContract.View {
     }
 
     private fun initIncomePieChart() {
-        val pieDataSet = PieDataSet(incomePieData(), "")
-        pieDataSet.valueLineWidth = 2.5f
-        pieDataSet.valueTextSize = 10f
-        pieDataSet.colors = formatColorList()
-
-        val pieData = PieData(pieDataSet)
-        mIncomePieChart.data = pieData
-        mIncomePieChart.setEntryLabelTextSize(10f)
-        mIncomePieChart.invalidate()
+        incomeChart = MyPieChart(mIncomePieChart, incomePieDataDefault())
+        incomeChart.showPieChart()
     }
 
     private fun initExpensePieChart() {
-        val pieDataSet = PieDataSet(expensePieData(), "")
-        pieDataSet.valueLineWidth = 2.5f
-        pieDataSet.valueTextSize = 10f
-        pieDataSet.colors = formatColorList()
-
-        val pieData = PieData(pieDataSet)
-        mExpensePieChart.data = pieData
-        mExpensePieChart.setEntryLabelTextSize(10f)
-        mExpensePieChart.invalidate()
+        expenseChart = MyPieChart(mExpensePieChart, expensePieDataDefault())
+        expenseChart.showPieChart()
     }
 
     private fun initBalanceHistoryChart() {
-        balanceHistoryChart = BalanceHistoryChart(mBalanceHistoryLineChart, balanceHistoryDataDefault())
+        balanceHistoryChart = MyLineChart(mBalanceHistoryLineChart, balanceHistoryDataDefault())
         balanceHistoryChart.showLineChart()
     }
 
@@ -136,7 +123,7 @@ class ReportFragment : Fragment(), ReportContract.View {
 
     private fun updateBalanceHistoryChart() {
         val newData = reportPresenter.getBalanceHistorySevenDays(mWallet)
-        balanceHistoryChart = BalanceHistoryChart(mBalanceHistoryLineChart, newData)
+        balanceHistoryChart = MyLineChart(mBalanceHistoryLineChart, newData)
         balanceHistoryChart.showLineChart()
     }
 
