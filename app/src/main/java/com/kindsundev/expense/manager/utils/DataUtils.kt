@@ -102,10 +102,6 @@ fun hashCodeForID(vararg data: String): Int {
     return result
 }
 
-
-// ---------------------------- TEMP DATE FOR UI ----------------------------
-
-// Income vs Expense Chart
 fun incomeBarData(): ArrayList<BarEntry> {
     val data = ArrayList<BarEntry>()
     data.add(BarEntry(0F, 3F))
