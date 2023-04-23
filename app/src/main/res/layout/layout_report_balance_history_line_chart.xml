@@ -31,6 +31,16 @@
             android:layout_width="match_parent"
             android:layout_height="300dp" />
 
+        <TextView
+            android:id="@+id/tv_no_data"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:background="@drawable/bg_gray_rectangle_border"
+            android:gravity="center"
+            android:text="@string/required_data"
+            android:textColor="@color/secondaryDarkColor"
+            android:visibility="gone" />
+
     </LinearLayout>
 
 

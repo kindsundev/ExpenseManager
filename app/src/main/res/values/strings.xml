@@ -159,5 +159,6 @@
     <string name="transaction_count">Transactions</string>
     <string name="balance_history">Balance History</string>
     <string name="income_vs_expense">Income vs Expense</string>
+    <string name="required_data">You need to provide data for chart, create any transaction!</string>
 
 </resources>
