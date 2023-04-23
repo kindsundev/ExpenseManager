@@ -21,7 +21,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="6dp"
             android:layout_marginBottom="24dp"
-            android:text="@string/income_vs_expense"
+            android:text="@string/assets"
             android:textSize="22sp"
             android:textStyle="bold" />
 
