@@ -62,6 +62,7 @@ class MyBarChart(
             setDrawBarShadow(false)
             setDrawGridBackground(false)
             setFitBars(true)
+            animateXY(700, 700)
             data = initBarData()
         }
         barChart.invalidate()

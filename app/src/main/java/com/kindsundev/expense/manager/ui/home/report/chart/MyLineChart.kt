@@ -60,6 +60,7 @@ class MyLineChart(
             axisRight.isEnabled = false
             legend.xOffset = -10f
             description.isEnabled = false
+            animateXY(700, 700)
             lineChart.data = initLineData()
         }
         lineChart.invalidate()

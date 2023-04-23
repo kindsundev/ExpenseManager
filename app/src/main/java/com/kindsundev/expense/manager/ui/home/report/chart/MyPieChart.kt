@@ -62,6 +62,7 @@ class MyPieChart(
         pieChart.apply {
             setDrawEntryLabels(false)
             description.isEnabled = false
+            animateXY(700, 700)
             data = initPieData()
             invalidate()
         }
