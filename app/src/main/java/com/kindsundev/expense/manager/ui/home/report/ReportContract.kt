@@ -8,10 +8,22 @@ import com.kindsundev.expense.manager.data.model.WalletModel
 interface ReportContract {
 
     interface Presenter {
-        fun getBalanceHistorySevenDays(wallet: WalletModel): ArrayList<Entry>
+        fun calculateTotalAmountOfIncomeAndExpense(wallet: WalletModel)
 
-        fun getPercentageInCategory(wallet: WalletModel, name: String): ArrayList<PieEntry>
+        fun calculatePercentageInIncome(wallet: WalletModel)
 
-        fun getTotalAmountOfIncomeAndExpense(wallet: WalletModel): ArrayList<BarEntry>
+        fun calculatePercentageInExpense(wallet: WalletModel)
+
+        fun calculateBalanceHistoryLastSevenDays(wallet: WalletModel)
+    }
+
+    interface View {
+        fun showNewAssetsInAndOutChart(result: ArrayList<BarEntry>)
+
+        fun showNewPercentageIncomeChart(result: ArrayList<PieEntry>)
+
+        fun showNewPercentageExpenseChart(result: ArrayList<PieEntry>)
+
+        fun showNewBalanceHistoryChart(result: ArrayList<Entry>)
     }
 }

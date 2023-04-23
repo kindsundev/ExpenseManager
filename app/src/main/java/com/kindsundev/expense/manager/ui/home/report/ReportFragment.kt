@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.charts.PieChart
+import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.PieEntry
 import com.kindsundev.expense.manager.common.Constant
-import com.kindsundev.expense.manager.common.Logger
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.FragmentReportBinding
 import com.kindsundev.expense.manager.ui.home.report.chart.MyBarChart
@@ -19,27 +22,26 @@ import com.kindsundev.expense.manager.ui.home.report.wallet.ReportWalletBottomSh
 import com.kindsundev.expense.manager.ui.home.report.wallet.ReportWalletContract
 import com.kindsundev.expense.manager.utils.*
 
-class ReportFragment : Fragment(){
+class ReportFragment : Fragment(), ReportContract.View {
     private var _binding : FragmentReportBinding? = null
     private val binding get() = _binding
 
     private lateinit var reportPresenter: ReportPresenter
     private lateinit var mWalletBottomSheet: ReportWalletBottomSheet
-    private lateinit var mWallet : WalletModel
 
-    private lateinit var mIncomeAndExpenseBarChart: BarChart
+    private lateinit var mAssetsIOBarChart: BarChart
     private lateinit var mIncomePieChart: PieChart
     private lateinit var mExpensePieChart: PieChart
     private lateinit var mBalanceHistoryLineChart: LineChart
 
-    private lateinit var totalChart: MyBarChart
+    private lateinit var assetsIOChart: MyBarChart
     private lateinit var incomeChart: MyPieChart
     private lateinit var expenseChart: MyPieChart
     private lateinit var balanceHistoryChart: MyLineChart
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        reportPresenter = ReportPresenter()
+        reportPresenter = ReportPresenter(this)
     }
 
     override fun onCreateView(
@@ -58,15 +60,15 @@ class ReportFragment : Fragment(){
     }
 
     private fun mappingViews() {
-        mIncomeAndExpenseBarChart = binding!!.barChart.incomeAndExpense
+        mAssetsIOBarChart = binding!!.barChart.incomeAndExpense
         mBalanceHistoryLineChart = binding!!.lineChart.balance
         mExpensePieChart = binding!!.ePieChart.expense
         mIncomePieChart = binding!!.iPieChart.income
     }
 
     private fun initIncomeAndExpenseBarChart() {
-        totalChart = MyBarChart(mIncomeAndExpenseBarChart, incomeAndExpenseDataDefault())
-        totalChart.showBarChart()
+        assetsIOChart = MyBarChart(mAssetsIOBarChart, incomeAndExpenseDataDefault())
+        assetsIOChart.showBarChart()
     }
 
     private fun initIncomePieChart() {
@@ -91,23 +93,25 @@ class ReportFragment : Fragment(){
     private fun onClickSelectWallet() {
         mWalletBottomSheet = ReportWalletBottomSheet(object: ReportWalletContract.Listener {
             override fun onClickWalletItem(wallet: WalletModel) {
-                mWallet = wallet
-                binding!!.selectWallet.tvWalletName.text = mWallet.name
+                requestNewChartData(wallet)
+                binding!!.selectWallet.tvWalletName.text = wallet.name
                 mWalletBottomSheet.dismiss()
-                updateIncomeAndExpenseChart()
-                updateIncomeChart()
-                updateExpenseChart()
-                updateBalanceHistoryChart()
             }
         })
         mWalletBottomSheet.show(parentFragmentManager, Constant.REPORT_WALLET_BOTTOM_SHEET_WALLET_NAME)
     }
 
-    private fun updateIncomeAndExpenseChart() {
-        val newData = reportPresenter.getTotalAmountOfIncomeAndExpense(mWallet)
-        totalChart = MyBarChart(mIncomeAndExpenseBarChart, newData)
-        totalChart.showBarChart()
-        if (newData.isEmpty()) {
+    private fun requestNewChartData(wallet: WalletModel) {
+        reportPresenter.calculateTotalAmountOfIncomeAndExpense(wallet)
+        reportPresenter.calculatePercentageInIncome(wallet)
+        reportPresenter.calculatePercentageInExpense(wallet)
+        reportPresenter.calculateBalanceHistoryLastSevenDays(wallet)
+    }
+
+    override fun showNewAssetsInAndOutChart(result: ArrayList<BarEntry>) {
+        assetsIOChart = MyBarChart(mAssetsIOBarChart, result)
+        assetsIOChart.showBarChart()
+        if (result.isEmpty()) {
             binding!!.barChart.incomeAndExpense.visibility = View.GONE
             binding!!.barChart.tvNoData.visibility = View.VISIBLE
         } else {
@@ -116,37 +120,40 @@ class ReportFragment : Fragment(){
         }
     }
 
-    private fun updateIncomeChart() {
-        val newData = reportPresenter.getPercentageInCategory(mWallet, Constant.TRANSACTION_TYPE_INCOME)
-        incomeChart = MyPieChart(mIncomePieChart, newData, Constant.TRANSACTION_TYPE_INCOME)
+    override fun showNewPercentageIncomeChart(result: ArrayList<PieEntry>) {
+        incomeChart = MyPieChart(mIncomePieChart, result, Constant.TRANSACTION_TYPE_INCOME)
         incomeChart.showPieChart()
-        if (newData.isEmpty()) {
-            binding!!.iPieChart.income.visibility = View.GONE
-            binding!!.iPieChart.tvNoData.visibility = View.VISIBLE
+        checkAndChangePieLayout(
+            data = result,
+            chart = binding!!.iPieChart.income,
+            message = binding!!.iPieChart.tvNoData
+        )
+    }
+
+    private fun checkAndChangePieLayout(data: ArrayList<PieEntry>, chart: PieChart, message: TextView) {
+        if (data.isEmpty()) {
+            chart.visibility = View.GONE
+            message.visibility = View.VISIBLE
         } else {
-            binding!!.iPieChart.income.visibility = View.VISIBLE
-            binding!!.iPieChart.tvNoData.visibility = View.GONE
+            chart.visibility = View.VISIBLE
+            message.visibility = View.GONE
         }
     }
 
-    private fun updateExpenseChart() {
-        val newData = reportPresenter.getPercentageInCategory(mWallet, Constant.TRANSACTION_TYPE_EXPENSE)
-        expenseChart = MyPieChart(mExpensePieChart, newData, Constant.TRANSACTION_TYPE_EXPENSE)
+    override fun showNewPercentageExpenseChart(result: ArrayList<PieEntry>) {
+        expenseChart = MyPieChart(mExpensePieChart, result, Constant.TRANSACTION_TYPE_EXPENSE)
         expenseChart.showPieChart()
-        if (newData.isEmpty()) {
-            binding!!.ePieChart.expense.visibility = View.GONE
-            binding!!.ePieChart.tvNoData.visibility = View.VISIBLE
-        } else {
-            binding!!.ePieChart.expense.visibility = View.VISIBLE
-            binding!!.ePieChart.tvNoData.visibility = View.GONE
-        }
+        checkAndChangePieLayout(
+            data = result,
+            chart = binding!!.ePieChart.expense,
+            message = binding!!.ePieChart.tvNoData
+        )
     }
 
-    private fun updateBalanceHistoryChart() {
-        val newData = reportPresenter.getBalanceHistorySevenDays(mWallet)
-        balanceHistoryChart = MyLineChart(mBalanceHistoryLineChart, newData)
+    override fun showNewBalanceHistoryChart(result: ArrayList<Entry>) {
+        balanceHistoryChart = MyLineChart(mBalanceHistoryLineChart, result)
         balanceHistoryChart.showLineChart()
-        if (newData.isEmpty()) {
+        if (result.isEmpty()) {
             binding!!.lineChart.balance.visibility = View.GONE
             binding!!.lineChart.tvNoData.visibility = View.VISIBLE
         } else {
