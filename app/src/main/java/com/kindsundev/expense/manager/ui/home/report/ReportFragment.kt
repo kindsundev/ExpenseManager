@@ -9,9 +9,9 @@ import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.charts.PieChart
 import com.kindsundev.expense.manager.common.Constant
+import com.kindsundev.expense.manager.common.Logger
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.FragmentReportBinding
-import com.kindsundev.expense.manager.ui.custom.LoadingDialog
 import com.kindsundev.expense.manager.ui.home.report.chart.MyBarChart
 import com.kindsundev.expense.manager.ui.home.report.chart.MyLineChart
 import com.kindsundev.expense.manager.ui.home.report.chart.MyPieChart
@@ -19,10 +19,9 @@ import com.kindsundev.expense.manager.ui.home.report.wallet.ReportWalletBottomSh
 import com.kindsundev.expense.manager.ui.home.report.wallet.ReportWalletContract
 import com.kindsundev.expense.manager.utils.*
 
-class ReportFragment : Fragment(), ReportContract.View {
+class ReportFragment : Fragment(){
     private var _binding : FragmentReportBinding? = null
     private val binding get() = _binding
-    private val loadingDialog by lazy { LoadingDialog() }
 
     private lateinit var reportPresenter: ReportPresenter
     private lateinit var mWalletBottomSheet: ReportWalletBottomSheet
@@ -40,7 +39,7 @@ class ReportFragment : Fragment(), ReportContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        reportPresenter = ReportPresenter(this)
+        reportPresenter = ReportPresenter()
     }
 
     override fun onCreateView(
@@ -108,40 +107,56 @@ class ReportFragment : Fragment(), ReportContract.View {
         val newData = reportPresenter.getTotalAmountOfIncomeAndExpense(mWallet)
         totalChart = MyBarChart(mIncomeAndExpenseBarChart, newData)
         totalChart.showBarChart()
+        if (newData.isEmpty()) {
+            binding!!.barChart.incomeAndExpense.visibility = View.GONE
+            binding!!.barChart.tvNoData.visibility = View.VISIBLE
+        } else {
+            binding!!.barChart.incomeAndExpense.visibility = View.VISIBLE
+            binding!!.barChart.tvNoData.visibility = View.GONE
+        }
     }
 
     private fun updateIncomeChart() {
         val newData = reportPresenter.getPercentageInCategory(mWallet, Constant.TRANSACTION_TYPE_INCOME)
         incomeChart = MyPieChart(mIncomePieChart, newData, Constant.TRANSACTION_TYPE_INCOME)
         incomeChart.showPieChart()
+        if (newData.isEmpty()) {
+            binding!!.iPieChart.income.visibility = View.GONE
+            binding!!.iPieChart.tvNoData.visibility = View.VISIBLE
+        } else {
+            binding!!.iPieChart.income.visibility = View.VISIBLE
+            binding!!.iPieChart.tvNoData.visibility = View.GONE
+        }
     }
 
     private fun updateExpenseChart() {
         val newData = reportPresenter.getPercentageInCategory(mWallet, Constant.TRANSACTION_TYPE_EXPENSE)
         expenseChart = MyPieChart(mExpensePieChart, newData, Constant.TRANSACTION_TYPE_EXPENSE)
         expenseChart.showPieChart()
+        if (newData.isEmpty()) {
+            binding!!.ePieChart.expense.visibility = View.GONE
+            binding!!.ePieChart.tvNoData.visibility = View.VISIBLE
+        } else {
+            binding!!.ePieChart.expense.visibility = View.VISIBLE
+            binding!!.ePieChart.tvNoData.visibility = View.GONE
+        }
     }
 
     private fun updateBalanceHistoryChart() {
         val newData = reportPresenter.getBalanceHistorySevenDays(mWallet)
         balanceHistoryChart = MyLineChart(mBalanceHistoryLineChart, newData)
         balanceHistoryChart.showLineChart()
+        if (newData.isEmpty()) {
+            binding!!.lineChart.balance.visibility = View.GONE
+            binding!!.lineChart.tvNoData.visibility = View.VISIBLE
+        } else {
+            binding!!.lineChart.balance.visibility = View.VISIBLE
+            binding!!.lineChart.tvNoData.visibility = View.GONE
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    override fun onLoad() {
-        TODO("Not yet implemented")
-    }
-
-    override fun onError(message: String) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onSuccess() {
-        TODO("Not yet implemented")
     }
 }
