@@ -82,17 +82,30 @@ class ExpenseReportUtils {
         data.add(PieEntry(calculatePercentage(health, transactions), "Health"))
         data.add(PieEntry(calculatePercentage(child, transactions), "Child"))
         data.add(PieEntry(calculatePercentage(other, transactions), "Other"))
+        cleanPercentageJunkData(data)
         return data
     }
 
     /*
-    * why cast here?
-    * - because lis.size : Int and transactions.size : Int
-    * => Int / Int = Int (result = 0)
+    * Why cast here?
+    * - because lis.size : Int and transactions.size : Int (Int / Int = Int (result = 0))
     * */
     private fun calculatePercentage(
         list : ArrayList<TransactionModel>, transactions : ArrayList<TransactionModel>
     ): Float {
         return (list.size.toFloat() / transactions.size.toFloat()) * 100
     }
+
+    /*
+    * If current wallet has not transaction, then category list at above is null.
+    * From there, it will calculate the junk data, so we need to clean it
+    * */
+    private fun cleanPercentageJunkData(data: ArrayList<PieEntry>) {
+        var count = 0
+        for (entry in data) {
+            if (entry.x == 0.0f && entry.y.isNaN()) { count++ }
+        }
+        if (count == data.size) data.clear()
+    }
+
 }

@@ -55,6 +55,7 @@ class IncomeReportUtils {
         data.add(PieEntry(calculatePercentage(bons, transactions), "Bons"))
         data.add(PieEntry(calculatePercentage(interestRate, transactions), "Interest Rate"))
         data.add(PieEntry(calculatePercentage(other, transactions), "Other"))
+        cleanPercentageJunkData(data)
         return data
     }
 
@@ -62,6 +63,14 @@ class IncomeReportUtils {
         list : ArrayList<TransactionModel>, transactions : ArrayList<TransactionModel>
     ): Float {
         return (list.size.toFloat() / transactions.size.toFloat()) * 100
+    }
+
+    private fun cleanPercentageJunkData(data: ArrayList<PieEntry>) {
+        var count = 0
+        for (entry in data) {
+            if (entry.x == 0.0f && entry.y.isNaN()) { count++ }
+        }
+        if (count == data.size) data.clear()
     }
 
 }
