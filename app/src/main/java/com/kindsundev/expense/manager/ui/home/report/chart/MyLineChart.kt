@@ -2,7 +2,6 @@ package com.kindsundev.expense.manager.ui.home.report.chart
 
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.AxisBase
-import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -53,26 +52,15 @@ class MyLineChart(
         }
     }
 
-    private fun configLineChart() {
+    fun showLineChart() {
         configLabelAtXAxis()
-        val mDescription = Description()
-        mDescription.text = ""
-
         lineChart.apply {
             setExtraOffsets(0f,0f,0f,10f)
             axisLeft.valueFormatter = largeValueFormatter
             axisRight.isEnabled = false
             legend.xOffset = -10f
-            description = mDescription
-        }
-
-    }
-
-    fun showLineChart() {
-        configLineChart()
-        lineChart.data = initLineData()
-        if (lineChart.data == null || lineChart.data.dataSets.isEmpty() || lineChart.data.dataSets[0].entryCount <= 0) {
-            lineChart.setNoDataText("This wallet has no balance fluctuations")
+            description.isEnabled = false
+            lineChart.data = initLineData()
         }
         lineChart.invalidate()
     }
