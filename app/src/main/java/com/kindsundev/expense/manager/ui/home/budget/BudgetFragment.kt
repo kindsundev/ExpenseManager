@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.kindsundev.expense.manager.common.Constant
 import com.kindsundev.expense.manager.databinding.FragmentBudgetBinding
+import com.kindsundev.expense.manager.utils.requestPremium
 
 class BudgetFragment : Fragment() {
     private var _binding : FragmentBudgetBinding? = null
@@ -44,11 +45,21 @@ class BudgetFragment : Fragment() {
         )
     }
 
-    private fun initDebtListener() {}
+    private fun initDebtListener() {
+        binding!!.debt.tvCreateDebt.setOnClickListener { activity?.requestPremium() }
+        binding!!.debt.tvUpdateDebt.setOnClickListener { activity?.requestPremium() }
+        binding!!.debt.tvDeleteDebt.setOnClickListener { activity?.requestPremium() }
+    }
 
-    private fun initSavingsListener() {}
+    private fun initSavingsListener() {
+        binding!!.savings.tvCreateSavings.setOnClickListener { activity?.requestPremium() }
+        binding!!.savings.tvUpdateSavings.setOnClickListener { activity?.requestPremium() }
+        binding!!.savings.tvDeleteSavings.setOnClickListener { activity?.requestPremium() }
+    }
 
-    private fun initPlannedListener() {}
+    private fun initPlannedListener() {
+
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -71,7 +71,7 @@ fun Context.showToast(message: String) {
 }
 
 fun Context.requestPremium() {
-    val message = "You must update to premium to be using featured!!"
+    val message = "This feature is for premium!"
     showToast(message)
 }
 

@@ -166,7 +166,7 @@ class TransactionFragment : Fragment(), TransactionContract.View,
                 transactionPresenter.createTransaction(wallet.id!!, transaction)
             }
         } else {
-            activity?.onFeatureIsDevelop()
+            activity?.requestPremium()
         }
     }
 
