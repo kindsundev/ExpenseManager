@@ -47,6 +47,7 @@
         android:layout_height="0dp"
         android:layout_marginHorizontal="8dp"
         android:layout_marginTop="16dp"
+        android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -60,7 +61,7 @@
             <include
                 android:id="@+id/incomeAndExpense"
                 layout="@layout/layout_transaction_main_in_ex"
-                android:visibility="visible"/>
+                android:visibility="visible" />
 
             <include
                 android:id="@+id/debt"
