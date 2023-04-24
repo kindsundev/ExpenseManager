@@ -49,16 +49,16 @@ class TransactionFragment : Fragment(),
     ): View {
         _binding = FragmentTransactionBinding.inflate(layoutInflater)
         displaySwitchBottomNavigation(requireActivity() as HomeActivity, false)
-        formatInputCurrencyBalance(binding!!.edtAmount)
-        initView()
+        formatInputCurrencyBalance(binding!!.main.edtAmount)
+        initCurrentData()
         initWalletBottomSheet()
         initListener()
         return binding!!.root
     }
 
-    private fun initView() {
-        binding!!.tvCategoryName.text = categoryName
-        binding!!.tvTime.text = getCurrentDateTime()
+    private fun initCurrentData() {
+        binding!!.main.tvCategoryName.text = categoryName
+        binding!!.main.tvTime.text = getCurrentDateTime()
     }
 
     private fun initWalletBottomSheet() {
@@ -68,34 +68,25 @@ class TransactionFragment : Fragment(),
 
     override fun onClickWalletItem(wallet: WalletModel) {
         this.wallet = wallet
-        binding!!.tvWalletName.text = wallet.name
+        binding!!.main.tvWalletName.text = wallet.name
         transactionWalletBottomSheet.hideBottomSheet()
     }
 
     private fun initListener() {
-        binding!!.tvWalletName.setOnClickListener { initWalletBottomSheet() }
-        binding!!.itemCategory.setOnClickListener { findNavController().popBackStack() }
-        binding!!.itemEvent.setOnClickListener { activity?.requestPremium() }
-        binding!!.switchOptimization.setOnClickListener { activity?.requestPremium() }
-        binding!!.tvShowMore.setOnClickListener { activity?.requestPremium() }
-        binding!!.btnSave.setOnClickListener { onClickSave() }
         binding!!.btnArrowDown.setOnClickListener { findNavController().popBackStack() }
-        binding!!.itemTime.setOnClickListener { onClickSetDateTime() }
-    }
-
-    private fun onClickSave() {
-        if (binding!!.edtAmount.text.isEmpty()) {
-            activity?.showToast("Please enter your amount")
-        } else {
-            transaction = initTransactionData()
-            transactionPresenter.createTransaction(wallet.id!!, transaction)
-        }
+        binding!!.main.tvWalletName.setOnClickListener { initWalletBottomSheet() }
+        binding!!.main.itemCategory.setOnClickListener { findNavController().popBackStack() }
+        binding!!.main.itemTime.setOnClickListener { onClickSetDateTime() }
+        binding!!.advanced.itemEvent.setOnClickListener { activity?.requestPremium() }
+        binding!!.advanced.switchOptimization.setOnClickListener { activity?.requestPremium() }
+        binding!!.advanced.tvShowMore.setOnClickListener { activity?.requestPremium() }
+        binding!!.confirm.btnSave.setOnClickListener { onClickSave() }
     }
 
     private fun initTransactionData(): TransactionModel {
-        val amount = binding!!.edtAmount.text.toString().trim().replace(",","")
-        val date = binding!!.tvTime.text.toString().trim()
-        val note = binding!!.edtDescription.text.toString().trim()
+        val amount = binding!!.main.edtAmount.text.toString().trim().replace(",","")
+        val date = binding!!.main.tvTime.text.toString().trim()
+        val note = binding!!.main.edtDescription.text.toString().trim()
         val id = hashCodeForID(transactionType!!, categoryName!!, date, note)
         return TransactionModel(
             id, transactionType!!, categoryName!!, amount.toDouble(), date, note
@@ -105,16 +96,18 @@ class TransactionFragment : Fragment(),
     private fun onClickSetDateTime() {
         DateTimePickerDialog(requireContext(), object : ResultDateTimeCallback {
             override fun resultNewDateTime(newDateTime: String) {
-                binding!!.tvTime.text = newDateTime
+                binding!!.main.tvTime.text = newDateTime
             }
         }).onShowDateTimePickerDialog()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        displaySwitchBottomNavigation(requireActivity() as HomeActivity, true)
-        _binding = null
-        transactionPresenter.cleanUp()
+    private fun onClickSave() {
+        if (binding!!.main.edtAmount.text.isEmpty()) {
+            activity?.showToast("Please enter your amount")
+        } else {
+            transaction = initTransactionData()
+            transactionPresenter.createTransaction(wallet.id!!, transaction)
+        }
     }
 
     override fun onLoad() {
@@ -137,5 +130,12 @@ class TransactionFragment : Fragment(),
             wallet.id!!, transactionType!!, wallet.balance!!.toDouble(),
             transaction.amount!!
         )
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        displaySwitchBottomNavigation(requireActivity() as HomeActivity, true)
+        _binding = null
+        transactionPresenter.cleanUp()
     }
 }

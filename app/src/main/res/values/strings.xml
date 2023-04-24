@@ -57,7 +57,7 @@
     <string name="email_type">email@gmail.com</string>
     <string name="no_thanks">No, thanks</string>
     <string name="security">Security!</string>
-    <string name="please_login_before_changing_your_any">Please login before changing your...</string>
+    <string name="please_login_before_changing_your_any">Please login before changing your…</string>
     <string name="transaction">Transaction</string>
     <string name="expense">Expense</string>
     <string name="income">Income</string>
@@ -110,7 +110,7 @@
     <string name="balance">Balance</string>
     <string name="create_wallet">Create Wallet</string>
     <string name="currency">Currency</string>
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="usd">USD</string>
     <string name="vnd">VND</string>
@@ -161,5 +161,9 @@
     <string name="income_vs_expense">Income vs Expense</string>
     <string name="assets">Assets</string>
     <string name="required_data">You need to provide data for chart, create any transaction!</string>
+    <string name="next">Next</string>
+    <string name="tag">Tag</string>
+    <string name="tips">Tips</string>
+    <string name="more">More</string>
 
 </resources>
