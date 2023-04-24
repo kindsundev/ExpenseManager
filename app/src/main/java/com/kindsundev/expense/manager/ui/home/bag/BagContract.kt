@@ -7,18 +7,15 @@ import com.kindsundev.expense.manager.ui.base.BaseView
 interface BagContract {
 
     interface Presenter {
-        fun handlerGetWallets()
+        fun handleGetWallets()
 
-        fun getWallets() : ArrayList<WalletModel>
-
-        fun handlerGetTransactions(walletId: String)
-
-        fun getBills(): ArrayList<BillModel>
-
+        fun handleGetBillsAndSort(wallet: WalletModel)
     }
 
     interface View : BaseView {
-        fun onSuccess(status: Boolean)
+        fun onSuccessWallets(result: ArrayList<WalletModel>)
+
+        fun onSuccessBills(result: ArrayList<BillModel>)
     }
 
     interface Listener {

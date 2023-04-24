@@ -1,55 +1,59 @@
 package com.kindsundev.expense.manager.ui.home.bag
 
-import com.kindsundev.expense.manager.data.firebase.TransactionFirebase
+import com.kindsundev.expense.manager.data.firebase.WalletFirebase
 import com.kindsundev.expense.manager.data.model.BillModel
 import com.kindsundev.expense.manager.data.model.WalletModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.*
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class BagPresenter(
     private val view: BagContract.View,
 ) : BagContract.Presenter {
-    private val transactionFirebase by lazy { TransactionFirebase() }
     private val compositeDisposable = CompositeDisposable()
-    private var mWallets = ArrayList<WalletModel>()
-    private var mBills = ArrayList<BillModel>()
+    private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
+    private val walletFirebase = WalletFirebase()
 
-    override fun handlerGetWallets() {
+    override fun handleGetWallets() {
         view.onLoad()
-        mWallets.clear()
-        val disposable = transactionFirebase.getWallets()
+        val wallets = ArrayList<WalletModel>()
+        val disposable = walletFirebase.getWallets()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
                 onError = { view.onError(it.message.toString()) },
-                onComplete = { view.onSuccess() },
-                onNext = { mWallets.add(it) }
+                onComplete = { view.onSuccessWallets(wallets) },
+                onNext = { wallets.add(it) }
             )
         compositeDisposable.add(disposable)
     }
 
-    override fun getWallets(): ArrayList<WalletModel> = mWallets
+    override fun handleGetBillsAndSort(wallet: WalletModel) {
+        scope.launch {
+            val bills = wallet.getBills()
+            val result = sortBillsByNewest(bills)
+            withContext(Dispatchers.Main) {
+                view.onSuccessBills(ArrayList(result))
+            }
+        }
+    }
 
-    override fun handlerGetTransactions(walletId: String) {
-        mBills.clear()
-        val disposable = TransactionFirebase().getTransactions(walletId)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeBy(
-                onError = { view.onError(it.message.toString()) },
-                onComplete = { view.onSuccess(true) },
-                onNext = {
-                    mBills.add(it)
+    private fun sortBillsByNewest(data: ArrayList<BillModel>): List<BillModel> {
+        var list : List<BillModel> = listOf()
+        if (data.isNotEmpty()) {
+            list = data.sortedByDescending { bill ->
+                bill.date?.let {
+                    SimpleDateFormat("dd E MMMM yyyy", Locale.ENGLISH).parse(it)
                 }
-            )
-        compositeDisposable.add(disposable)
+            }
+        }
+        return list
     }
 
-    override fun getBills(): ArrayList<BillModel>  = mBills
-
-    fun cleanUp() {
-        compositeDisposable.clear()
-    }
+    fun cleanUp() = compositeDisposable.clear()
 }
