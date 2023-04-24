@@ -55,6 +55,12 @@ class BagFragment : Fragment(), BillAdapterContract.Listener, BagContract.View {
         return binding!!.root
     }
 
+    /*
+    * This function is used to get the wallet id stored in preferences.
+    * - Purpose is to restore previously selected user wallet when they return to this fragment
+    * - Flow: save in stop lifecycle and retrieve in onCreate then init it
+    * Note: Set it == null in destroy lifecycle, then everything works fine
+    * */
     private fun getCurrentWalletId() {
         mCurrentWalletId = (context as HomeActivity).getCurrentWalletId()
         if (mCurrentWalletId == Constant.VALUE_DATA_IS_NULL) {
