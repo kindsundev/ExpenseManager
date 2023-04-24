@@ -14,16 +14,19 @@ import com.kindsundev.expense.manager.ui.custom.ResultDateTimeCallback
 import com.kindsundev.expense.manager.ui.custom.DateTimePickerDialog
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
 import com.kindsundev.expense.manager.ui.home.HomeActivity
+import com.kindsundev.expense.manager.ui.home.note.transaction.debt.TransactionDebtBottomSheet
+import com.kindsundev.expense.manager.ui.home.note.transaction.debt.TransactionDebtContract
 import com.kindsundev.expense.manager.ui.home.note.transaction.wallet.TransactionWalletBottomSheet
 import com.kindsundev.expense.manager.ui.home.note.transaction.wallet.TransactionWalletContract
 import com.kindsundev.expense.manager.utils.*
 
-class TransactionFragment : Fragment(),
-    TransactionWalletContract.Listener, TransactionContract.View {
+class TransactionFragment : Fragment(), TransactionContract.View,
+    TransactionWalletContract.Listener, TransactionDebtContract.Listener {
     private var _binding: FragmentTransactionBinding? = null
     private val binding get() = _binding
 
-    private lateinit var transactionWalletBottomSheet: TransactionWalletBottomSheet
+    private lateinit var walletBottomSheet: TransactionWalletBottomSheet
+    private lateinit var debtBottomSheet: TransactionDebtBottomSheet
     private lateinit var transactionPresenter: TransactionPresenter
     private val loadingDialog by lazy { LoadingDialog() }
 
@@ -49,65 +52,132 @@ class TransactionFragment : Fragment(),
     ): View {
         _binding = FragmentTransactionBinding.inflate(layoutInflater)
         displaySwitchBottomNavigation(requireActivity() as HomeActivity, false)
-        formatInputCurrencyBalance(binding!!.main.edtAmount)
-        initCurrentData()
-        initWalletBottomSheet()
+        switchLayout()
         initListener()
         return binding!!.root
     }
 
+    private fun isNotDebtLayout() : Boolean {
+        if (transactionType == Constant.TRANSACTION_TYPE_DEBT) {
+            return false
+        }
+        return true
+    }
+
+    private fun switchLayout() {
+        if (isNotDebtLayout()) {
+            binding!!.debt.root.visibility = View.GONE
+            binding!!.incomeAndExpense.root.visibility = View.VISIBLE
+            formatInputCurrencyBalance(binding!!.incomeAndExpense.edtAmount)
+            initCurrentData()
+            initWalletBottomSheet()
+        } else {
+            binding!!.incomeAndExpense.root.visibility = View.GONE
+            binding!!.debt.root.visibility = View.VISIBLE
+            formatInputCurrencyBalance(binding!!.debt.edtAmount)
+            initCurrentData()
+            initDebtBottomSheet()
+        }
+    }
+
     private fun initCurrentData() {
-        binding!!.main.tvCategoryName.text = categoryName
-        binding!!.main.tvTime.text = getCurrentDateTime()
+        if (isNotDebtLayout()) {
+            binding!!.incomeAndExpense.tvCategoryName.text = categoryName
+            binding!!.incomeAndExpense.tvTime.text = getCurrentDateTime()
+        } else {
+            binding!!.debt.tvCategoryName.text = categoryName
+            binding!!.debt.tvTime.text = getCurrentDateTime()
+        }
+    }
+
+    private fun initDebtBottomSheet() {
+        debtBottomSheet = TransactionDebtBottomSheet(this)
+        debtBottomSheet.show(parentFragmentManager, Constant.TRANSACTION_WALLET_BOTTOM_SHEET_DEBT_NAME)
+    }
+
+    override fun debtBottomSheetHasDismiss() {
+        initWalletBottomSheet()
     }
 
     private fun initWalletBottomSheet() {
-        transactionWalletBottomSheet = TransactionWalletBottomSheet(this)
-        transactionWalletBottomSheet.show(parentFragmentManager, Constant.TRANSACTION_WALLET_BOTTOM_SHEET_WALLET_NAME)
+        walletBottomSheet = TransactionWalletBottomSheet(this)
+        walletBottomSheet.show(parentFragmentManager, Constant.TRANSACTION_WALLET_BOTTOM_SHEET_WALLET_NAME)
     }
 
     override fun onClickWalletItem(wallet: WalletModel) {
         this.wallet = wallet
-        binding!!.main.tvWalletName.text = wallet.name
-        transactionWalletBottomSheet.hideBottomSheet()
+        binding!!.incomeAndExpense.tvWalletName.text = wallet.name
+        binding!!.debt.tvWalletName.text = wallet.name
+        walletBottomSheet.hideBottomSheet()
     }
 
     private fun initListener() {
         binding!!.btnArrowDown.setOnClickListener { findNavController().popBackStack() }
-        binding!!.main.tvWalletName.setOnClickListener { initWalletBottomSheet() }
-        binding!!.main.itemCategory.setOnClickListener { findNavController().popBackStack() }
-        binding!!.main.itemTime.setOnClickListener { onClickSetDateTime() }
+        binding!!.incomeAndExpense.tvWalletName.setOnClickListener { initWalletBottomSheet() }
+        binding!!.incomeAndExpense.itemCategory.setOnClickListener { findNavController().popBackStack() }
+        binding!!.incomeAndExpense.itemTime.setOnClickListener { onClickSetDateTime() }
+
+        binding!!.debt.itemPerson.setOnClickListener { initDebtBottomSheet() }
+        binding!!.debt.itemTime.setOnClickListener { onClickSetDateTime() }
+        binding!!.debt.itemDueDate.setOnClickListener { onClickSetDueDate()}
+        binding!!.debt.itemRemindDate.setOnClickListener { onClickSetRemindDate() }
+
         binding!!.advanced.itemEvent.setOnClickListener { activity?.requestPremium() }
         binding!!.advanced.switchOptimization.setOnClickListener { activity?.requestPremium() }
         binding!!.advanced.tvShowMore.setOnClickListener { activity?.requestPremium() }
-        binding!!.confirm.btnSave.setOnClickListener { onClickSave() }
-    }
 
-    private fun initTransactionData(): TransactionModel {
-        val amount = binding!!.main.edtAmount.text.toString().trim().replace(",","")
-        val date = binding!!.main.tvTime.text.toString().trim()
-        val note = binding!!.main.edtDescription.text.toString().trim()
-        val id = hashCodeForID(transactionType!!, categoryName!!, date, note)
-        return TransactionModel(
-            id, transactionType!!, categoryName!!, amount.toDouble(), date, note
-        )
+        binding!!.confirm.btnSave.setOnClickListener { onClickSave() }
     }
 
     private fun onClickSetDateTime() {
         DateTimePickerDialog(requireContext(), object : ResultDateTimeCallback {
             override fun resultNewDateTime(newDateTime: String) {
-                binding!!.main.tvTime.text = newDateTime
+                if (isNotDebtLayout()) {
+                    binding!!.incomeAndExpense.tvTime.text = newDateTime
+                } else {
+                    binding!!.debt.tvTime.text = newDateTime
+                }
+            }
+        }).onShowDateTimePickerDialog()
+    }
+
+    private fun onClickSetDueDate() {
+        DateTimePickerDialog(requireContext(), object : ResultDateTimeCallback {
+            override fun resultNewDateTime(newDateTime: String) {
+                binding!!.debt.tvDueDate.text = newDateTime
+            }
+        }).onShowDateTimePickerDialog()
+    }
+
+    private fun onClickSetRemindDate() {
+        DateTimePickerDialog(requireContext(), object : ResultDateTimeCallback {
+            override fun resultNewDateTime(newDateTime: String) {
+                binding!!.debt.tvRemindDate.text = newDateTime
             }
         }).onShowDateTimePickerDialog()
     }
 
     private fun onClickSave() {
-        if (binding!!.main.edtAmount.text.isEmpty()) {
-            activity?.showToast("Please enter your amount")
+        if (isNotDebtLayout()) {
+            if (binding!!.incomeAndExpense.edtAmount.text.isEmpty()) {
+                activity?.showToast("Please enter your amount")
+            } else {
+                transaction = initTransactionDataInIAE()
+                transactionPresenter.createTransaction(wallet.id!!, transaction)
+            }
         } else {
-            transaction = initTransactionData()
-            transactionPresenter.createTransaction(wallet.id!!, transaction)
+            activity?.onFeatureIsDevelop()
         }
+    }
+
+    private fun initTransactionDataInIAE(): TransactionModel {
+        val amount = binding!!.incomeAndExpense.edtAmount.text.toString().trim().replace(",","")
+        val date = binding!!.incomeAndExpense.tvTime.text.toString().trim()
+        val note = binding!!.incomeAndExpense.edtDescription.text.toString().trim()
+        val id = hashCodeForID(transactionType!!, categoryName!!, date, note)
+        return TransactionModel(
+            id, transactionType!!, categoryName!!, amount.toDouble(), date, note
+        )
     }
 
     override fun onLoad() {

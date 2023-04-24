@@ -83,7 +83,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginHorizontal="8dp"
                 android:layout_weight="2.8"
-                android:hint="@string/name"
+                android:hint="@string/wallet_name"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 

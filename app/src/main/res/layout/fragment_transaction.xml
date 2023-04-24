@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -28,8 +27,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_keyboard_arrow_down"
-            android:contentDescription="@string/button_back" />
+            android:contentDescription="@string/button_back"
+            android:src="@drawable/ic_keyboard_arrow_down" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -59,16 +58,22 @@
             android:orientation="vertical">
 
             <include
-                android:id="@+id/main"
-                layout="@layout/layout_transaction_main"/>
+                android:id="@+id/incomeAndExpense"
+                layout="@layout/layout_transaction_main_in_ex"
+                android:visibility="visible"/>
+
+            <include
+                android:id="@+id/debt"
+                layout="@layout/layout_transaction_main_debt"
+                android:visibility="gone" />
 
             <include
                 android:id="@+id/advanced"
-                layout="@layout/layout_transaction_advanced"/>
+                layout="@layout/layout_transaction_advanced" />
 
             <include
                 android:id="@+id/confirm"
-                layout="@layout/layout_transaction_confirm"/>
+                layout="@layout/layout_transaction_confirm" />
 
         </LinearLayout>
 

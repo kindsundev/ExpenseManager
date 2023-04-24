@@ -31,6 +31,7 @@
     <string name="contact">Contact</string>
     <string name="feedback">Feedback</string>
     <string name="name">Name</string>
+    <string name="wallet_name">Wallet name</string>
     <string name="please_wait">Please wait…</string>
     <string name="logout">Logout</string>
     <string name="no">No</string>
@@ -98,6 +99,7 @@
     <string name="create_transaction">Create Transaction</string>
     <string name="amount">Amount</string>
     <string name="category">Category</string>
+    <string name="person">Person</string>
     <string name="time">Time</string>
     <string name="description">Description</string>
     <string name="show_more">Show More</string>
@@ -165,5 +167,7 @@
     <string name="tag">Tag</string>
     <string name="tips">Tips</string>
     <string name="more">More</string>
+    <string name="due_date">Due date</string>
+    <string name="remind_date">Remind date</string>
 
 </resources>

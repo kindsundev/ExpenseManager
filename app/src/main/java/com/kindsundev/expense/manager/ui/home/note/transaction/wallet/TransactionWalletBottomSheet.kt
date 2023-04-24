@@ -13,7 +13,7 @@ import com.kindsundev.expense.manager.utils.showToast
 import com.kindsundev.expense.manager.utils.startLoadingDialog
 
 class TransactionWalletBottomSheet(
-    private val actionListener: TransactionWalletContract.Listener,
+    private val listener: TransactionWalletContract.Listener,
 ) : BottomSheetDialogFragment(), TransactionWalletContract.View{
     private var _binding: BottomSheetSelectWalletBinding? = null
     private val binding get() = _binding
@@ -63,7 +63,7 @@ class TransactionWalletBottomSheet(
 
     private fun initDataToRecyclerView() {
         wallets = transactionWalletPresenter.getWallets()
-        transactionWalletAdapter = TransactionWalletAdapter(wallets, actionListener)
+        transactionWalletAdapter = TransactionWalletAdapter(wallets, listener)
         binding!!.rvWallets.adapter = transactionWalletAdapter
     }
 
