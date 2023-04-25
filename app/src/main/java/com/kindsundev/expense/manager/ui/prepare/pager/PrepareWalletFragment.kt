@@ -54,7 +54,7 @@ class PrepareWalletFragment : Fragment(), PrepareWalletContract.View {
         if (checkNotNullData()) {
             if (checkValidData(binding!!.edtName.text.toString(), binding!!.edtBalance.text.toString())) {
                 wallet = initWalletData()
-                preparePresenter.handlerCreateWallet(wallet)
+                preparePresenter.handleCreateWallet(wallet)
             }
         }
     }
@@ -134,6 +134,8 @@ class PrepareWalletFragment : Fragment(), PrepareWalletContract.View {
         _binding = null
         preparePresenter.cleanUp()
     }
+
+    override fun onSuccessWallets(wallets: ArrayList<WalletModel>) {}
 
     override fun onLoad() {
         startLoadingDialog(loadingDialog, parentFragmentManager, true)

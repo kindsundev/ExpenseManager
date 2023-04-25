@@ -18,19 +18,19 @@ import com.kindsundev.expense.manager.utils.showToast
 import com.kindsundev.expense.manager.utils.startLoadingDialog
 
 class ProvideWalletFragment : Fragment(),
-    PrepareWalletContract.View, PrepareWalletContract.Listener, PrepareWalletContract.Result {
+    PrepareWalletContract.View,  PrepareWalletContract.Result {
     private var _binding: FragmentProvideWalletBinding? = null
     private val binding get() = _binding
     private val loadingDialog by lazy { LoadingDialog() }
 
-    private lateinit var prepareWalletPresenter: PrepareWalletPresenter
-    private lateinit var walletAdapter: ProvideWalletAdapter
-    private lateinit var wallets : ArrayList<WalletModel>
+    private lateinit var mPrepareWalletPresenter: PrepareWalletPresenter
+    private lateinit var mWalletAdapter: ProvideWalletAdapter
+    private lateinit var mWallets : ArrayList<WalletModel>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        prepareWalletPresenter = PrepareWalletPresenter(this)
-        wallets = ArrayList()
+        mPrepareWalletPresenter = PrepareWalletPresenter(this)
+        mWallets = ArrayList()
     }
 
     override fun onCreateView(
@@ -39,27 +39,23 @@ class ProvideWalletFragment : Fragment(),
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentProvideWalletBinding.inflate(inflater, container, false)
-        initRecyclerView()
-        return binding!!.root
-    }
-
-    private fun initRecyclerView() {
         binding!!.rcvWallets.layoutManager = LinearLayoutManager(context)
-        prepareWalletPresenter.handlerGetWallets()
+        mPrepareWalletPresenter.handleGetWallets()
+        return binding!!.root
     }
 
     override fun onResume() {
         super.onResume()
-        if (wallets.isNotEmpty()) {
-            wallets.clear()
-            prepareWalletPresenter.handlerGetWallets()
+        if (mWallets.isNotEmpty()) {
+            mWallets.clear()
+            mPrepareWalletPresenter.handleGetWallets()
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-        prepareWalletPresenter.cleanUp()
+    override fun onSuccessWallets(wallets: ArrayList<WalletModel>) {
+        mWallets = wallets
+        initDataToRecyclerView(wallets)
+        startLoadingDialog(loadingDialog, parentFragmentManager, false)
     }
 
     override fun onLoad() {
@@ -71,26 +67,16 @@ class ProvideWalletFragment : Fragment(),
         activity?.showToast(message)
     }
 
-    override fun onSuccess() {
-        initDataToRecyclerView()
-        startLoadingDialog(loadingDialog, parentFragmentManager, false)
-    }
+    override fun onSuccess() {}
 
-    private fun initDataToRecyclerView() {
-        wallets = prepareWalletPresenter.getWallets()
-        walletAdapter = ProvideWalletAdapter(wallets, this)
-        binding!!.rcvWallets.adapter = walletAdapter
-        if (wallets.isEmpty()) {
-            binding!!.rcvWallets.visibility = View.GONE
-            binding!!.tvMessageNull.visibility = View.VISIBLE
-        } else {
-            binding!!.tvMessageNull.visibility = View.GONE
-            binding!!.rcvWallets.visibility = View.VISIBLE
-        }
-    }
-
-    override fun onClickWalletItem(walletModel: WalletModel) {
-        startHomeActivity(walletModel.id.toString())
+    private fun initDataToRecyclerView(wallets: ArrayList<WalletModel>) {
+        mWalletAdapter = ProvideWalletAdapter(wallets, object : PrepareWalletContract.Listener {
+            override fun onClickWalletItem(walletModel: WalletModel) {
+                startHomeActivity(walletModel.id.toString())
+            }
+        })
+        binding!!.rcvWallets.adapter = mWalletAdapter
+        switchLayout(wallets)
     }
 
     private fun startHomeActivity(id: String) {
@@ -104,11 +90,27 @@ class ProvideWalletFragment : Fragment(),
             })
     }
 
+    private fun switchLayout(data: ArrayList<WalletModel>) {
+        if (data.isEmpty()) {
+            binding!!.rcvWallets.visibility = View.GONE
+            binding!!.tvMessageNull.visibility = View.VISIBLE
+        } else {
+            binding!!.tvMessageNull.visibility = View.GONE
+            binding!!.rcvWallets.visibility = View.VISIBLE
+        }
+    }
+
     override fun onResultCreateWallet(status: Boolean) {
         if (status) {
-            prepareWalletPresenter.handlerGetWallets()
-            wallets.clear()
-            initDataToRecyclerView()
+            mPrepareWalletPresenter.handleGetWallets()
+            mWallets.clear()
+            initDataToRecyclerView(mWallets)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+        mPrepareWalletPresenter.cleanUp()
     }
 }
