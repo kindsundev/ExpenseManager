@@ -108,7 +108,7 @@ class TransactionFragment : Fragment(), TransactionContract.View,
         this.wallet = wallet
         binding!!.incomeAndExpense.tvWalletName.text = wallet.name
         binding!!.debt.tvWalletName.text = wallet.name
-        walletBottomSheet.hideBottomSheet()
+        walletBottomSheet.dismiss()
     }
 
     private fun initListener() {

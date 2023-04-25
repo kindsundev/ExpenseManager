@@ -19,7 +19,6 @@ class TransactionWalletBottomSheet(
     private val binding get() = _binding
     private val loadingDialog by lazy { LoadingDialog() }
 
-    private var wallets = ArrayList<WalletModel>()
     private lateinit var transactionWalletAdapter: TransactionWalletAdapter
     private lateinit var transactionWalletPresenter: TransactionWalletPresenter
 
@@ -31,38 +30,23 @@ class TransactionWalletBottomSheet(
         _binding = BottomSheetSelectWalletBinding.inflate(layoutInflater)
         transactionWalletPresenter = TransactionWalletPresenter(this)
         initRecyclerView()
-        initListener()
+        binding!!.btnArrowDown.setOnClickListener { this.dismiss() }
         return binding!!.root
     }
 
     private fun initRecyclerView() {
         binding!!.rvWallets.layoutManager = LinearLayoutManager(context)
-        transactionWalletPresenter.handlerGetWallets()
+        transactionWalletPresenter.handleGetWallets()
     }
 
-    private fun initListener() {
-        binding!!.btnArrowDown.setOnClickListener { hideBottomSheet() }
-    }
+    override fun onSuccess() {}
 
-    fun hideBottomSheet() { this.dismiss() }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-        transactionWalletPresenter.cleanUp()
-    }
-
-    override fun onSuccess(message: String) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onSuccess() {
-        initDataToRecyclerView()
+    override fun onSuccessWallets(wallets: ArrayList<WalletModel>) {
+        initDataToRecyclerView(wallets)
         startLoadingDialog(loadingDialog, parentFragmentManager, false)
     }
 
-    private fun initDataToRecyclerView() {
-        wallets = transactionWalletPresenter.getWallets()
+    private fun initDataToRecyclerView(wallets: ArrayList<WalletModel>) {
         transactionWalletAdapter = TransactionWalletAdapter(wallets, listener)
         binding!!.rvWallets.adapter = transactionWalletAdapter
     }
@@ -74,5 +58,11 @@ class TransactionWalletBottomSheet(
     override fun onError(message: String) {
         startLoadingDialog(loadingDialog, parentFragmentManager, false)
         activity?.showToast(message)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+        transactionWalletPresenter.cleanUp()
     }
 }
