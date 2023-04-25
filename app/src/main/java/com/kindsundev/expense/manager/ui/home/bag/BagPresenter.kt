@@ -17,12 +17,11 @@ class BagPresenter(
 ) : BagContract.Presenter {
     private val compositeDisposable = CompositeDisposable()
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
-    private val walletFirebase = WalletFirebase()
 
     override fun handleGetWallets() {
         view.onLoad()
         val wallets = ArrayList<WalletModel>()
-        val disposable = walletFirebase.getWallets()
+        val disposable = WalletFirebase().getWallets()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
