@@ -6,15 +6,15 @@ import com.kindsundev.expense.manager.ui.base.BaseView
 interface BudgetWalletContract {
 
     interface Presenter {
-        fun handlerGetWallets()
+        fun handleGetWallets()
 
-        fun getWallets() : ArrayList<WalletModel>
-
-        fun handlerCreateWallet(wallet: WalletModel)
+        fun handleCreateWallet(wallet: WalletModel)
     }
 
     interface View : BaseView {
         fun onSuccess(message: String)
+
+        fun onSuccessWallets(wallets: ArrayList<WalletModel>)
     }
 
     interface Listener {

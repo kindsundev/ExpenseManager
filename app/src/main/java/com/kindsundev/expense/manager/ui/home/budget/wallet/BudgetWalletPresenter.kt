@@ -13,25 +13,22 @@ class BudgetWalletPresenter(
 ) : BudgetWalletContract.Presenter {
     private val compositeDisposable = CompositeDisposable()
     private val walletFirebase by lazy { WalletFirebase() }
-    private var mWallets = ArrayList<WalletModel>()
 
-    override fun handlerGetWallets() {
+    override fun handleGetWallets() {
         view.onLoad()
-        mWallets.clear()
+        val mWallets = ArrayList<WalletModel>()
         val disposable = walletFirebase.getWallets()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
                 onError = { view.onError(it.message.toString()) },
-                onComplete = { view.onSuccess() },
+                onComplete = { view.onSuccessWallets(mWallets) },
                 onNext = { mWallets.add(it) }
             )
         compositeDisposable.add(disposable)
     }
 
-    override fun getWallets(): ArrayList<WalletModel> = mWallets
-
-    override fun handlerCreateWallet(wallet: WalletModel) {
+    override fun handleCreateWallet(wallet: WalletModel) {
         view.onLoad()
         val disposable = walletFirebase.upsertWallet(wallet)
             .subscribeOn(Schedulers.io())
@@ -45,7 +42,5 @@ class BudgetWalletPresenter(
         compositeDisposable.add(disposable)
     }
 
-    fun cleanUp() {
-        compositeDisposable.clear()
-    }
+    fun cleanUp() : Unit = compositeDisposable.clear()
 }

@@ -29,16 +29,13 @@ class BudgetWalletFragment : Fragment(),
     private val args: BudgetWalletFragmentArgs by navArgs()
 
     private lateinit var walletPresenter: BudgetWalletPresenter
-    private lateinit var mWallets: ArrayList<WalletModel>
     private lateinit var mWalletAdapter : BudgetWalletAdapter
-    private lateinit var createWalletDialog: CreateWalletDialog
     private lateinit var mWalletDetailBottomSheet: BudgetWalletBottomSheet
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         displaySwitchBottomNavigation(requireActivity() as HomeActivity, false)
         walletPresenter = BudgetWalletPresenter(this)
-        mWallets = ArrayList()
     }
 
     override fun onCreateView(
@@ -47,7 +44,7 @@ class BudgetWalletFragment : Fragment(),
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentBudgetWalletBinding.inflate(layoutInflater)
-        walletPresenter.handlerGetWallets()
+        walletPresenter.handleGetWallets()
         initListener()
         checkAndActionAsRequired()
         return binding!!.root
@@ -59,18 +56,12 @@ class BudgetWalletFragment : Fragment(),
     }
 
     private fun onClickCreateWallet() {
-        createWalletDialog = CreateWalletDialog(object : BudgetWalletContract.Result {
+        val createWalletDialog = CreateWalletDialog(object : BudgetWalletContract.Result {
             override fun onResultCreateWallet(status: Boolean) {
-                if (status) { refreshData() }
+                if (status) { walletPresenter.handleGetWallets() }
             }
         })
         createWalletDialog.show(parentFragmentManager, createWalletDialog.tag)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        displaySwitchBottomNavigation(requireActivity() as HomeActivity, true)
-        _binding = null
     }
 
     override fun onLoad() {
@@ -87,14 +78,15 @@ class BudgetWalletFragment : Fragment(),
         activity?.showToast(message)
     }
 
-    override fun onSuccess() {
-        initRecyclerViewWallets()
+    override fun onSuccess() {}
+
+    override fun onSuccessWallets(wallets: ArrayList<WalletModel>) {
+        initRecyclerViewWallets(wallets)
         startLoadingDialog(loadingDialog, parentFragmentManager, false)
     }
 
-    private fun initRecyclerViewWallets() {
-        mWallets = walletPresenter.getWallets()
-        mWalletAdapter = BudgetWalletAdapter(mWallets, this)
+    private fun initRecyclerViewWallets(wallets: ArrayList<WalletModel>) {
+        mWalletAdapter = BudgetWalletAdapter(wallets, this)
         binding!!.rcvWallets.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = mWalletAdapter
@@ -138,7 +130,12 @@ class BudgetWalletFragment : Fragment(),
     }
 
     private fun refreshData() {
-        walletPresenter.handlerGetWallets()
-        mWallets.clear()
+        walletPresenter.handleGetWallets()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        displaySwitchBottomNavigation(requireActivity() as HomeActivity, true)
+        _binding = null
     }
 }

@@ -66,7 +66,7 @@ class CreateWalletDialog(
         if (checkNotNullData()) {
             if (checkValidData(binding!!.edtName.text.toString(), binding!!.edtBalance.text.toString())) {
                 val wallet = initWalletData()
-                walletPresenter.handlerCreateWallet(wallet)
+                walletPresenter.handleCreateWallet(wallet)
             }
         }
     }
@@ -159,6 +159,8 @@ class CreateWalletDialog(
     }
 
     override fun onSuccess() {}
+
+    override fun onSuccessWallets(wallets: ArrayList<WalletModel>) {}
 
     override fun onDestroyView() {
         super.onDestroyView()
