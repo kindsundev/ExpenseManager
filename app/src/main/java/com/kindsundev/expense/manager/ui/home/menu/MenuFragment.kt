@@ -10,7 +10,6 @@ import androidx.fragment.app.FragmentManager
 import androidx.navigation.findNavController
 import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Constant
-import com.kindsundev.expense.manager.data.firebase.AuthFirebase
 import com.kindsundev.expense.manager.data.model.UserModel
 import com.kindsundev.expense.manager.databinding.FragmentMenuBinding
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
@@ -24,13 +23,11 @@ class MenuFragment : Fragment(), MenuContract.View {
     private val loadingDialog by lazy { LoadingDialog() }
 
     private lateinit var menuPresenter: MenuPresenter
-    private lateinit var auth: AuthFirebase
-    private var user: UserModel? = null
     private var menuFragmentManager: FragmentManager? = null
+    private var user: UserModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        auth = AuthFirebase()
         menuPresenter = MenuPresenter(this)
         menuFragmentManager = activity?.supportFragmentManager
     }
@@ -60,13 +57,14 @@ class MenuFragment : Fragment(), MenuContract.View {
     }
 
     private fun initListener() {
-        binding!!.rlLogout.setOnClickListener { onCLickLogout() }
         binding!!.imgUserAvatar.setOnClickListener { onStartUserInfo() }
-    }
-
-    private fun onCLickLogout() {
-        menuFragmentManager?.let {
-            LogoutDialog().show(it, Constant.LOGOUT_DIALOG_NAME)
+        binding!!.rlLogout.setOnClickListener { onCLickLogout() }
+        binding!!.rlTutorial.setOnClickListener { }
+        binding!!.rlFeedback.setOnClickListener { }
+        binding!!.rlContact.setOnClickListener { }
+        binding!!.rlPolicy.setOnClickListener { }
+        binding!!.rlAbout.setOnClickListener {
+            it.findNavController().navigate(MenuFragmentDirections.actionMenuFragmentToAboutFragment())
         }
     }
 
@@ -77,9 +75,10 @@ class MenuFragment : Fragment(), MenuContract.View {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    private fun onCLickLogout() {
+        menuFragmentManager?.let {
+            LogoutDialog().show(it, Constant.LOGOUT_DIALOG_NAME)
+        }
     }
 
     override fun onLoad() {
@@ -92,5 +91,10 @@ class MenuFragment : Fragment(), MenuContract.View {
 
     override fun onSuccess() {
         menuFragmentManager?.let { startLoadingDialog(loadingDialog, it, false) }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

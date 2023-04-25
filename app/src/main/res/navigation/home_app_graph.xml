@@ -91,6 +91,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_menuFragment_to_aboutFragment"
+            app:destination="@id/aboutFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
 
     <fragment
@@ -117,5 +124,9 @@
         android:label="TransactionFragment"
         app:popUpTo="@id/noteFragment"
         app:popUpToInclusive="false" />
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.kindsundev.expense.manager.ui.home.menu.about.AboutFragment"
+        android:label="AboutFragment" />
 
 </navigation>

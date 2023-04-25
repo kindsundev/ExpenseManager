@@ -169,5 +169,12 @@
     <string name="more">More</string>
     <string name="due_date">Due date</string>
     <string name="remind_date">Remind date</string>
+    <string name="img_wallet">Image Wallet</string>
+    <string name="current_version">Version: 1.1.1</string>
+    <string name="founder">Founder:</string>
+    <string name="author_name">Dinh Tien Duong</string>
+    <string name="message">Message:</string>
+    <string name="thank_user">\tThank you for your interest and using our application. We always strive to improve and provide the best experience for users. With a personal and financial perspective, our application will help you manage your finances more intelligently and efficiently.\n\n\tWe believe that personal finance is one of the most important topics for everyone\'s life. Therefore, we have tried to incorporate the necessary knowledge, experience, and tools into the application to help you manage your finances most effectively.\n\n\tTo help us improve the application, we would greatly appreciate your contributions. Let us know your opinions, feedback, and suggestions. We will always listen and try to meet the needs of users.\n\n\tOnce again, thank you for trusting and using our application. We wish you all the success and happiness in life.</string>
+    <string name="copyright">Copyright © 2023 Tien Duong</string>
 
 </resources>
