@@ -19,7 +19,6 @@ class ReportWalletBottomSheet(
     private val binding get() = _binding
     private val loadingDialog by lazy { LoadingDialog() }
 
-    private var wallets = ArrayList<WalletModel>()
     private lateinit var walletAdapter: ReportWalletAdapter
     private lateinit var walletPresenter: ReportWalletPresenter
 
@@ -31,36 +30,23 @@ class ReportWalletBottomSheet(
         _binding = BottomSheetSelectWalletBinding.inflate(layoutInflater)
         walletPresenter = ReportWalletPresenter(this)
         initRecyclerView()
-        initListener()
+        binding!!.btnArrowDown.setOnClickListener { this.dismiss() }
         return binding!!.root
     }
 
     private fun initRecyclerView() {
         binding!!.rvWallets.layoutManager = LinearLayoutManager(context)
-        walletPresenter.handlerGetWallets()
+        walletPresenter.handleGetWallets()
     }
 
-    private fun initListener() {
-        binding!!.btnArrowDown.setOnClickListener { hideBottomSheet() }
-    }
+    override fun onSuccess() {}
 
-    private fun hideBottomSheet() { this.dismiss() }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-        walletPresenter.cleanUp()
-    }
-
-    override fun onSuccess(message: String) {}
-
-    override fun onSuccess() {
-        initDataToRecyclerView()
+    override fun onSuccessWallets(wallets: ArrayList<WalletModel>) {
+        initDataToRecyclerView(wallets)
         startLoadingDialog(loadingDialog, parentFragmentManager, false)
     }
 
-    private fun initDataToRecyclerView() {
-        wallets = walletPresenter.getWallets()
+    private fun initDataToRecyclerView(wallets: ArrayList<WalletModel>) {
         walletAdapter = ReportWalletAdapter(wallets, listener)
         binding!!.rvWallets.adapter = walletAdapter
     }
@@ -72,5 +58,11 @@ class ReportWalletBottomSheet(
     override fun onError(message: String) {
         startLoadingDialog(loadingDialog, parentFragmentManager, false)
         activity?.showToast(message)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+        walletPresenter.cleanUp()
     }
 }

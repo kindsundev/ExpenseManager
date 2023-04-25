@@ -6,13 +6,11 @@ import com.kindsundev.expense.manager.ui.base.BaseView
 interface ReportWalletContract {
 
     interface Presenter {
-        fun handlerCreateWallet(wallet: WalletModel)
-
-        fun handlerGetWallets()
+        fun handleGetWallets()
     }
 
     interface View : BaseView {
-        fun onSuccess(message: String)
+        fun onSuccessWallets(wallets: ArrayList<WalletModel>)
     }
 
     interface Listener {
