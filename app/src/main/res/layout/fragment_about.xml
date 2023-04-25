@@ -52,7 +52,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="16dp"
                 android:contentDescription="@string/img_wallet"
-                android:src="@mipmap/ic_expense_launcher" />
+                android:src="@drawable/ic_expense_launcher" />
 
             <TextView
                 android:layout_width="wrap_content"
