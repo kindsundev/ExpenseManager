@@ -25,7 +25,8 @@
             android:background="@drawable/ic_back"
             android:contentDescription="@string/button_back"
             android:minWidth="30dp"
-            android:minHeight="30dp" />
+            android:minHeight="30dp"
+            tools:ignore="TouchTargetSizeCheck" />
 
         <TextView
             style="@style/TitleTopFragment"
@@ -55,7 +56,7 @@
             android:layout_height="wrap_content"
             android:text="@string/rate_your_experience"
             android:textColor="@color/black"
-            android:textSize="30sp"
+            android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -65,7 +66,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/are_you_satisfied_with_the_app"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:fontFamily="sans-serif-medium"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0"
@@ -101,7 +102,7 @@
             android:fontFamily="sans-serif-medium"
             android:layout_marginTop="16dp"
             android:text="@string/tell_us_what_can_be_improved"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="parent"
