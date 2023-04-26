@@ -10,7 +10,7 @@ import androidx.navigation.findNavController
 import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.databinding.FragmentFeedbackBinding
 import com.kindsundev.expense.manager.ui.home.HomeActivity
-import com.kindsundev.expense.manager.utils.displaySwitchBottomNavigation
+import com.kindsundev.expense.manager.utils.toggleBottomNavigation
 import com.kindsundev.expense.manager.utils.showToast
 
 class FeedbackFragment: Fragment() {
@@ -24,7 +24,7 @@ class FeedbackFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentFeedbackBinding.inflate(inflater)
-        displaySwitchBottomNavigation(requireActivity() as HomeActivity, false)
+        toggleBottomNavigation(requireActivity() as HomeActivity, false)
         initListener()
         return binding!!.root
     }
@@ -55,7 +55,7 @@ class FeedbackFragment: Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        displaySwitchBottomNavigation(requireActivity() as HomeActivity, true)
+        toggleBottomNavigation(requireActivity() as HomeActivity, true)
         _binding = null
     }
 }

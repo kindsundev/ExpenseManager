@@ -77,7 +77,7 @@ fun Context.requestPremium() {
 
 fun String.toEditable(): Editable =  Editable.Factory.getInstance().newEditable(this)
 
-fun displaySwitchBottomNavigation(activity: HomeActivity, state: Boolean) {
+fun toggleBottomNavigation(activity: HomeActivity, state: Boolean) {
     val navBar: BottomNavigationView =  activity.findViewById(R.id.bottomNavigationView)
     if (state) {
         navBar.visibility = View.VISIBLE

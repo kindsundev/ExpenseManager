@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.kindsundev.expense.manager.databinding.FragmentAboutBinding
 import com.kindsundev.expense.manager.ui.home.HomeActivity
-import com.kindsundev.expense.manager.utils.displaySwitchBottomNavigation
+import com.kindsundev.expense.manager.utils.toggleBottomNavigation
 
 class AboutFragment : Fragment() {
     private var _binding: FragmentAboutBinding? = null
@@ -20,14 +20,14 @@ class AboutFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAboutBinding.inflate(layoutInflater)
-        displaySwitchBottomNavigation(requireActivity() as HomeActivity, false)
+        toggleBottomNavigation(requireActivity() as HomeActivity, false)
         binding!!.btnBack.setOnClickListener { it.findNavController().popBackStack() }
         return binding!!.root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        displaySwitchBottomNavigation(requireActivity() as HomeActivity, true)
+        toggleBottomNavigation(requireActivity() as HomeActivity, true)
         _binding = null
     }
 }

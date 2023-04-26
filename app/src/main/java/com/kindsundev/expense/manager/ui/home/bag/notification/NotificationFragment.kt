@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.kindsundev.expense.manager.databinding.FragmentNotificationBinding
 import com.kindsundev.expense.manager.ui.home.HomeActivity
-import com.kindsundev.expense.manager.utils.displaySwitchBottomNavigation
+import com.kindsundev.expense.manager.utils.toggleBottomNavigation
 
 class NotificationFragment : Fragment() {
     private var _binding: FragmentNotificationBinding? = null
@@ -20,7 +20,7 @@ class NotificationFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentNotificationBinding.inflate(inflater)
-        displaySwitchBottomNavigation(requireActivity() as HomeActivity, false)
+        toggleBottomNavigation(requireActivity() as HomeActivity, false)
         initListener()
         return binding!!.root
     }
@@ -31,7 +31,7 @@ class NotificationFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        displaySwitchBottomNavigation(requireActivity() as HomeActivity, true)
+        toggleBottomNavigation(requireActivity() as HomeActivity, true)
         _binding = null
     }
 }

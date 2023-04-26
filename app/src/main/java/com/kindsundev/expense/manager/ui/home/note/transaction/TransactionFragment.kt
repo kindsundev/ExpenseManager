@@ -51,7 +51,7 @@ class TransactionFragment : Fragment(), TransactionContract.View,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentTransactionBinding.inflate(layoutInflater)
-        displaySwitchBottomNavigation(requireActivity() as HomeActivity, false)
+        toggleBottomNavigation(requireActivity() as HomeActivity, false)
         switchLayout()
         initListener()
         return binding!!.root
@@ -204,7 +204,7 @@ class TransactionFragment : Fragment(), TransactionContract.View,
 
     override fun onDestroyView() {
         super.onDestroyView()
-        displaySwitchBottomNavigation(requireActivity() as HomeActivity, true)
+        toggleBottomNavigation(requireActivity() as HomeActivity, true)
         _binding = null
         transactionPresenter.cleanUp()
     }

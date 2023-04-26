@@ -22,7 +22,7 @@ import com.kindsundev.expense.manager.ui.home.bag.adapter.BillAdapterContract
 import com.kindsundev.expense.manager.ui.home.bag.adapter.BillParentAdapter
 import com.kindsundev.expense.manager.ui.home.bag.detail.TransactionBottomSheet
 import com.kindsundev.expense.manager.ui.home.bag.detail.TransactionDetailContract
-import com.kindsundev.expense.manager.utils.displaySwitchBottomNavigation
+import com.kindsundev.expense.manager.utils.toggleBottomNavigation
 import com.kindsundev.expense.manager.utils.showToast
 import com.kindsundev.expense.manager.utils.startLoadingDialog
 
@@ -50,7 +50,7 @@ class TransactionSearchFragment: Fragment(), TransactionSearchContract.View {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSearchTransactionBinding.inflate(layoutInflater)
-        displaySwitchBottomNavigation(requireActivity() as HomeActivity, false)
+        toggleBottomNavigation(requireActivity() as HomeActivity, false)
         initListener()
         return binding!!.root
     }
@@ -76,7 +76,7 @@ class TransactionSearchFragment: Fragment(), TransactionSearchContract.View {
 
     override fun onDestroy() {
         super.onDestroy()
-        displaySwitchBottomNavigation(requireActivity() as HomeActivity, true)
+        toggleBottomNavigation(requireActivity() as HomeActivity, true)
         _binding = null
         searchPresenter.cleanUp()
     }

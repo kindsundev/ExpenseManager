@@ -9,7 +9,7 @@ import androidx.navigation.findNavController
 import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.databinding.FragmentPolicyBinding
 import com.kindsundev.expense.manager.ui.home.HomeActivity
-import com.kindsundev.expense.manager.utils.displaySwitchBottomNavigation
+import com.kindsundev.expense.manager.utils.toggleBottomNavigation
 
 class PolicyFragment : Fragment() {
     private var _binding: FragmentPolicyBinding? = null
@@ -21,7 +21,7 @@ class PolicyFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentPolicyBinding.inflate(inflater)
-        displaySwitchBottomNavigation(requireActivity() as HomeActivity, false)
+        toggleBottomNavigation(requireActivity() as HomeActivity, false)
         initGeneralTermsData()
         initListener()
         return binding!!.root
@@ -54,7 +54,7 @@ class PolicyFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        displaySwitchBottomNavigation(requireActivity() as HomeActivity, true)
+        toggleBottomNavigation(requireActivity() as HomeActivity, true)
         _binding = null
     }
 }

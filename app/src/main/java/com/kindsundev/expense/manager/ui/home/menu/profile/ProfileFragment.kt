@@ -30,7 +30,7 @@ import com.kindsundev.expense.manager.ui.home.menu.profile.update.UpdateEmailDia
 import com.kindsundev.expense.manager.ui.home.menu.profile.update.UpdateNameDialog
 import com.kindsundev.expense.manager.ui.home.menu.profile.update.UpdatePasswordDialog
 import com.kindsundev.expense.manager.ui.home.menu.profile.update.ResultUpdateCallBack
-import com.kindsundev.expense.manager.utils.displaySwitchBottomNavigation
+import com.kindsundev.expense.manager.utils.toggleBottomNavigation
 import com.kindsundev.expense.manager.utils.loadUserAvatar
 import com.kindsundev.expense.manager.utils.onFeatureIsDevelop
 import com.kindsundev.expense.manager.utils.startLoadingDialog
@@ -129,7 +129,7 @@ class ProfileFragment : Fragment(), ProfileContact.View, ResultUpdateCallBack {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentProfileBinding.inflate(layoutInflater)
-        displaySwitchBottomNavigation(requireActivity() as HomeActivity, false)
+        toggleBottomNavigation(requireActivity() as HomeActivity, false)
         displayUserInfo()
         initListener()
         return binding!!.root
@@ -188,7 +188,7 @@ class ProfileFragment : Fragment(), ProfileContact.View, ResultUpdateCallBack {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        displaySwitchBottomNavigation(requireActivity() as HomeActivity, true)
+        toggleBottomNavigation(requireActivity() as HomeActivity, true)
         _binding = null
         profilePresenter.cleanUp()
     }

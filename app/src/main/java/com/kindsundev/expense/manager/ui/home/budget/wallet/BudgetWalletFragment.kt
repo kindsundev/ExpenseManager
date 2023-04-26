@@ -17,7 +17,7 @@ import com.kindsundev.expense.manager.ui.home.HomeActivity
 import com.kindsundev.expense.manager.ui.home.budget.wallet.adapter.BudgetWalletAdapter
 import com.kindsundev.expense.manager.ui.home.budget.wallet.detail.BudgetWalletBottomSheet
 import com.kindsundev.expense.manager.ui.home.budget.wallet.detail.BudgetWalletDetailContract
-import com.kindsundev.expense.manager.utils.displaySwitchBottomNavigation
+import com.kindsundev.expense.manager.utils.toggleBottomNavigation
 import com.kindsundev.expense.manager.utils.showToast
 import com.kindsundev.expense.manager.utils.startLoadingDialog
 
@@ -34,7 +34,7 @@ class BudgetWalletFragment : Fragment(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        displaySwitchBottomNavigation(requireActivity() as HomeActivity, false)
+        toggleBottomNavigation(requireActivity() as HomeActivity, false)
         walletPresenter = BudgetWalletPresenter(this)
     }
 
@@ -135,7 +135,7 @@ class BudgetWalletFragment : Fragment(),
 
     override fun onDestroyView() {
         super.onDestroyView()
-        displaySwitchBottomNavigation(requireActivity() as HomeActivity, true)
+        toggleBottomNavigation(requireActivity() as HomeActivity, true)
         _binding = null
     }
 }
