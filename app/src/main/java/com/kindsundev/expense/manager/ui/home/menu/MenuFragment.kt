@@ -60,7 +60,9 @@ class MenuFragment : Fragment(), MenuContract.View {
         binding!!.imgUserAvatar.setOnClickListener { onStartUserInfo() }
         binding!!.rlLogout.setOnClickListener { onCLickLogout() }
         binding!!.rlTutorial.setOnClickListener { }
-        binding!!.rlFeedback.setOnClickListener { }
+        binding!!.rlFeedback.setOnClickListener {
+            it.findNavController().navigate(MenuFragmentDirections.actionMenuFragmentToFeedbackFragment())
+        }
         binding!!.rlContact.setOnClickListener { }
         binding!!.rlPolicy.setOnClickListener { }
         binding!!.rlAbout.setOnClickListener {

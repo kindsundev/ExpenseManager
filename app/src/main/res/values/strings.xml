@@ -176,5 +176,16 @@
     <string name="message">Message:</string>
     <string name="thank_user">\tThank you for your interest and using our application. We always strive to improve and provide the best experience for users. With a personal and financial perspective, our application will help you manage your finances more intelligently and efficiently.\n\n\tWe believe that personal finance is one of the most important topics for everyone\'s life. Therefore, we have tried to incorporate the necessary knowledge, experience, and tools into the application to help you manage your finances most effectively.\n\n\tTo help us improve the application, we would greatly appreciate your contributions. Let us know your opinions, feedback, and suggestions. We will always listen and try to meet the needs of users.\n\n\tOnce again, thank you for trusting and using our application. We wish you all the success and happiness in life.</string>
     <string name="copyright">Copyright © 2023 Tien Duong</string>
+    <string name="rate_your_experience">Rate your experience</string>
+    <string name="are_you_satisfied_with_the_app">Are you satisfied with the app</string>
+    <string name="tell_us_what_can_be_improved">Tell us what can be Improved?</string>
+    <string name="overall_app">Overall App</string>
+    <string name="customer_support">Customer Support</string>
+    <string name="speed_and_efficiency">Speed and Efficiency</string>
+    <string name="repair_quality">Repair Quality</string>
+    <string name="incorrect_data">Incorrect data</string>
+    <string name="send">Send</string>
+    <string name="comment">Comment…</string>
+
 
 </resources>
