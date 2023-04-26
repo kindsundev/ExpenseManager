@@ -196,6 +196,7 @@
     <string name="data_management_child_line_2">&#x2022; The application will use security measures to protect user data from external attacks such as hacker attacks, viruses, malware, etc.</string>
     <string name="data_management_child_line_3">&#x2022; Users can back up and restore their data from the server at any time.</string>
     <string name="last_updated_on_04_26_2023">Last updated on 04/26/2023</string>
+    <string name="notification">Notification</string>
 
 
 </resources>
