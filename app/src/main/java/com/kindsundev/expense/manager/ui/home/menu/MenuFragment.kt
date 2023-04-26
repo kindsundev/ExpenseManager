@@ -63,6 +63,9 @@ class MenuFragment : Fragment(), MenuContract.View {
         binding!!.rlLogout.setOnClickListener { onCLickLogout() }
         binding!!.rlTutorial.setOnClickListener { openTutorialYoutube() }
         binding!!.rlContact.setOnClickListener { openContactEmail() }
+        binding!!.rlSettings.setOnClickListener {
+            it.findNavController().navigate(MenuFragmentDirections.actionMenuFragmentToSettingsFragment())
+        }
         binding!!.rlFeedback.setOnClickListener {
             it.findNavController().navigate(MenuFragmentDirections.actionMenuFragmentToFeedbackFragment())
         }
