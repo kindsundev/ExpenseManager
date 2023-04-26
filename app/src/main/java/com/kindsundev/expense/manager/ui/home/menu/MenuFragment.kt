@@ -1,5 +1,7 @@
 package com.kindsundev.expense.manager.ui.home.menu
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -63,7 +65,9 @@ class MenuFragment : Fragment(), MenuContract.View {
         binding!!.rlFeedback.setOnClickListener {
             it.findNavController().navigate(MenuFragmentDirections.actionMenuFragmentToFeedbackFragment())
         }
-        binding!!.rlContact.setOnClickListener { }
+        binding!!.rlContact.setOnClickListener {
+            openContactEmail()
+        }
         binding!!.rlPolicy.setOnClickListener { }
         binding!!.rlAbout.setOnClickListener {
             it.findNavController().navigate(MenuFragmentDirections.actionMenuFragmentToAboutFragment())
@@ -80,6 +84,17 @@ class MenuFragment : Fragment(), MenuContract.View {
     private fun onCLickLogout() {
         menuFragmentManager?.let {
             LogoutDialog().show(it, Constant.LOGOUT_DIALOG_NAME)
+        }
+    }
+
+    private fun openContactEmail() {
+        val intent = Intent(Intent.ACTION_SENDTO).apply {
+            data = Uri.parse("mailto:")
+            putExtra(Intent.EXTRA_EMAIL, arrayOf("mr.duongtiendev@gmail.com"))
+            putExtra(Intent.EXTRA_SUBJECT, "Expense Manager App")
+        }
+        if (intent.resolveActivity(requireContext().packageManager) != null) {
+            startActivity(intent)
         }
     }
 
