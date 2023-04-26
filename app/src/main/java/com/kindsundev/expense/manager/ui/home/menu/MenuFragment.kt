@@ -61,11 +61,11 @@ class MenuFragment : Fragment(), MenuContract.View {
     private fun initListener() {
         binding!!.imgUserAvatar.setOnClickListener { onStartUserInfo() }
         binding!!.rlLogout.setOnClickListener { onCLickLogout() }
-        binding!!.rlTutorial.setOnClickListener { }
+        binding!!.rlTutorial.setOnClickListener { openTutorialYoutube() }
+        binding!!.rlContact.setOnClickListener { openContactEmail() }
         binding!!.rlFeedback.setOnClickListener {
             it.findNavController().navigate(MenuFragmentDirections.actionMenuFragmentToFeedbackFragment())
         }
-        binding!!.rlContact.setOnClickListener { openContactEmail() }
         binding!!.rlPolicy.setOnClickListener {
             it.findNavController().navigate(MenuFragmentDirections.actionMenuFragmentToPolicyFragment())
         }
@@ -85,6 +85,13 @@ class MenuFragment : Fragment(), MenuContract.View {
         menuFragmentManager?.let {
             LogoutDialog().show(it, Constant.LOGOUT_DIALOG_NAME)
         }
+    }
+
+    private fun openTutorialYoutube() {
+        val myYoutubeChannelId = "UCprYNL7hlWXV9sj08FijDpw"
+        val uri = Uri.parse("http://www.youtube.com/channel/$myYoutubeChannelId")
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        startActivity(intent)
     }
 
     private fun openContactEmail() {
