@@ -46,7 +46,7 @@
 
             <RadioButton
                 android:id="@+id/btn_expense"
-                style="@style/RadioButtonAdd"
+                style="@style/RadioButtonRadius"
                 android:layout_width="0dp"
                 android:layout_height="35dp"
                 android:layout_margin="4dp"
@@ -56,7 +56,7 @@
 
             <RadioButton
                 android:id="@+id/btn_income"
-                style="@style/RadioButtonAdd"
+                style="@style/RadioButtonRadius"
                 android:layout_width="0dp"
                 android:layout_height="35dp"
                 android:layout_marginTop="4dp"
@@ -67,7 +67,7 @@
 
             <RadioButton
                 android:id="@+id/btn_debt"
-                style="@style/RadioButtonAdd"
+                style="@style/RadioButtonRadius"
                 android:layout_width="0dp"
                 android:layout_height="35dp"
                 android:layout_margin="4dp"

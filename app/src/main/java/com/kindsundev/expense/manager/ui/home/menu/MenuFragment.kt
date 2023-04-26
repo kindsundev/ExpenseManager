@@ -65,10 +65,10 @@ class MenuFragment : Fragment(), MenuContract.View {
         binding!!.rlFeedback.setOnClickListener {
             it.findNavController().navigate(MenuFragmentDirections.actionMenuFragmentToFeedbackFragment())
         }
-        binding!!.rlContact.setOnClickListener {
-            openContactEmail()
+        binding!!.rlContact.setOnClickListener { openContactEmail() }
+        binding!!.rlPolicy.setOnClickListener {
+            it.findNavController().navigate(MenuFragmentDirections.actionMenuFragmentToPolicyFragment())
         }
-        binding!!.rlPolicy.setOnClickListener { }
         binding!!.rlAbout.setOnClickListener {
             it.findNavController().navigate(MenuFragmentDirections.actionMenuFragmentToAboutFragment())
         }

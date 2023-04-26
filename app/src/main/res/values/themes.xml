@@ -82,7 +82,7 @@
 
     <!-- NoteFragment Layout -->
 
-    <style name="RadioButtonAdd">
+    <style name="RadioButtonRadius">
         <item name="android:textColor">@color/control_switch_color_selector</item>
         <item name="fontFamily">sans-serif-medium</item>
         <item name="android:gravity">center</item>

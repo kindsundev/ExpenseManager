@@ -186,6 +186,16 @@
     <string name="incorrect_data">Incorrect data</string>
     <string name="send">Send</string>
     <string name="comment">Comment…</string>
+    <string name="general_terms">General Terms</string>
+    <string name="general_terms_child_line_1">&#x2022; Users must provide accurate and complete information when registering an account and using the application.</string>
+    <string name="general_terms_child_line_2">&#x2022; The application will collect information about the user such as name, email address, password, and financial data such as spending amount, date and time.</string>
+    <string name="general_terms_child_line_3">&#x2022; The application will use the user\'s information only to provide the service and will not share this information with any third party.</string>
+    <string name="general_terms_child_line_4">&#x2022; The application will use security measures to protect user information and accounts.</string>
+    <string name="data_management">Data Management</string>
+    <string name="data_management_child_line_1">&#x2022; The application will store user data on a secure and protected server</string>
+    <string name="data_management_child_line_2">&#x2022; The application will use security measures to protect user data from external attacks such as hacker attacks, viruses, malware, etc.</string>
+    <string name="data_management_child_line_3">&#x2022; Users can back up and restore their data from the server at any time.</string>
+    <string name="last_updated_on_04_26_2023">Last updated on 04/26/2023</string>
 
 
 </resources>

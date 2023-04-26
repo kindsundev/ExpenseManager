@@ -105,6 +105,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_menuFragment_to_policyFragment"
+            app:destination="@id/policyFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
 
     <fragment
@@ -139,5 +146,9 @@
         android:id="@+id/feedbackFragment"
         android:name="com.kindsundev.expense.manager.ui.home.menu.feedback.FeedbackFragment"
         android:label="FeedbackFragment" />
+    <fragment
+        android:id="@+id/policyFragment"
+        android:name="com.kindsundev.expense.manager.ui.home.menu.policy.PolicyFragment"
+        android:label="PolicyFragment" />
 
 </navigation>
