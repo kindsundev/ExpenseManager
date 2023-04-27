@@ -197,6 +197,20 @@
     <string name="data_management_child_line_3">&#x2022; Users can back up and restore their data from the server at any time.</string>
     <string name="last_updated_on_04_26_2023">Last updated on 04/26/2023</string>
     <string name="notification">Notification</string>
+    <string name="display">Display</string>
+    <string name="language">Language</string>
+    <string name="theme">Theme</string>
+    <string name="date">Date</string>
+    <string name="select_date_format">Select date format</string>
+    <string name="first_day_of_week">First Day Of Week</string>
+    <string name="first_day_of_month">First Day Of Month</string>
+    <string name="first_month_of_year">First Month Of Year</string>
+    <string name="date_format">Date Format</string>
+    <string name="daily_reminder">Daily Reminder</string>
+    <string name="tone">Tone</string>
+    <string name="advanced">Advanced</string>
+    <string name="backup_restore"><![CDATA[Backup & Restore]]></string>
+    <string name="import_export"><![CDATA[Import & Export]]></string>
 
 
 </resources>

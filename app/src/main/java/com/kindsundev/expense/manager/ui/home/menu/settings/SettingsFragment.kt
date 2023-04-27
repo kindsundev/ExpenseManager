@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.kindsundev.expense.manager.databinding.FragmentSettingsBinding
 import com.kindsundev.expense.manager.ui.home.HomeActivity
+import com.kindsundev.expense.manager.utils.onFeatureIsDevelop
+import com.kindsundev.expense.manager.utils.requestPremium
 import com.kindsundev.expense.manager.utils.toggleBottomNavigation
 
 class SettingsFragment : Fragment() {
@@ -27,6 +29,21 @@ class SettingsFragment : Fragment() {
 
     private fun initListener() {
         binding!!.btnBack.setOnClickListener { it.findNavController().popBackStack() }
+        binding!!.rlTheme.setOnClickListener { activity?.onFeatureIsDevelop() }
+        binding!!.rlLanguage.setOnClickListener { openSettingsLanguage() }
+        binding!!.rlDateFormat.setOnClickListener { activity?.onFeatureIsDevelop() }
+        binding!!.rlFirstDayOfWeek.setOnClickListener { activity?.onFeatureIsDevelop() }
+        binding!!.rlFirstDayOfMonth.setOnClickListener {activity?.onFeatureIsDevelop() }
+        binding!!.rlFirstMonthOfYear.setOnClickListener { activity?.onFeatureIsDevelop()}
+        binding!!.rlNotificationTone.setOnClickListener { activity?.onFeatureIsDevelop() }
+        binding!!.rlDailyReminder.setOnClickListener { activity?.onFeatureIsDevelop() }
+        binding!!.rlSecurity.setOnClickListener { activity?.requestPremium()}
+        binding!!.rlImportExport.setOnClickListener { activity?.requestPremium()}
+        binding!!.rlBackupRestore.setOnClickListener { activity?.requestPremium() }
+    }
+
+    private fun openSettingsLanguage() {
+
     }
 
     override fun onDestroyView() {
