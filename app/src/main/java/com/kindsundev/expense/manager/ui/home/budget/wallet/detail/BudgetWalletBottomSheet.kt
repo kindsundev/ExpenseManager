@@ -84,7 +84,7 @@ class BudgetWalletBottomSheet(
     }
 
     private fun onClickDeleteWallet() {
-        val alertDialog = MaterialAlertDialogBuilder(requireContext(), R.style.DeleteWarningAlertDialog)
+        val alertDialog = MaterialAlertDialogBuilder(requireContext(), R.style.ConfirmAlertDialog)
             .setTitle(R.string.delete_wallet)
             .setMessage(R.string.message_for_delete_wallet)
             .setCancelable(false)

@@ -57,7 +57,7 @@
     <string name="please_enter_your_new_password">Please enter your new email</string>
     <string name="email_type">email@gmail.com</string>
     <string name="no_thanks">No, thanks</string>
-    <string name="security">Security!</string>
+    <string name="security">Security</string>
     <string name="please_login_before_changing_your_any">Please login before changing your…</string>
     <string name="transaction">Transaction</string>
     <string name="expense">Expense</string>
@@ -136,6 +136,10 @@
     <string name="search">Search</string>
     <string name="picker_date_here">Picker Date Here</string>
     <string name="delete_transaction">Delete Transaction</string>
+    <string name="restart_app">Restart Application</string>
+    <string name="message_for_restart_app">
+        Request permission to restart the application
+    </string>
     <string name="message_for_delete_transaction">
         It will restore the balance before making the transaction
     </string>
@@ -211,6 +215,9 @@
     <string name="advanced">Advanced</string>
     <string name="backup_restore"><![CDATA[Backup & Restore]]></string>
     <string name="import_export"><![CDATA[Import & Export]]></string>
+    <string name="select_language">Select Language</string>
+    <string name="english">English</string>
+    <string name="vietnamese">Vietnamese</string>
 
 
 </resources>

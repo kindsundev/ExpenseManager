@@ -101,14 +101,14 @@ class TransactionBottomSheet(
     }
 
     private fun onClickRemoveTransaction() {
-        val alertDialog = MaterialAlertDialogBuilder(requireContext(), R.style.DeleteWarningAlertDialog)
+        val alertDialog = MaterialAlertDialogBuilder(requireContext(), R.style.ConfirmAlertDialog)
             .setTitle(R.string.delete_transaction)
             .setMessage(R.string.message_for_delete_transaction)
             .setCancelable(false)
-            .setPositiveButton("OK") { _, _ ->
+            .setPositiveButton(R.string.ok) { _, _ ->
                 detailPresenter.handlerDeleteTransaction(wallet.id!!, date, transaction.id!!)
             }
-            .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
+            .setNegativeButton(R.string.cancel) { dialog, _ -> dialog.dismiss() }
             .create()
         alertDialog.window?.apply {
             setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
