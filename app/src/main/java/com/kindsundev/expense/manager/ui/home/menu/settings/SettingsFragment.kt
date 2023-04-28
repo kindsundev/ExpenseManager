@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import com.kindsundev.expense.manager.common.Constant
 import com.kindsundev.expense.manager.databinding.FragmentSettingsBinding
 import com.kindsundev.expense.manager.ui.home.HomeActivity
 import com.kindsundev.expense.manager.utils.onFeatureIsDevelop
@@ -43,7 +44,8 @@ class SettingsFragment : Fragment() {
     }
 
     private fun openSettingsLanguage() {
-
+        val dialog = LanguageDialog()
+        dialog.show(parentFragmentManager, Constant.UPDATE_LANGUAGE_DIALOG_NAME)
     }
 
     override fun onDestroyView() {
