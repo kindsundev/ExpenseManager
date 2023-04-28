@@ -1,5 +1,6 @@
 package com.kindsundev.expense.manager.ui.home.report
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.PieEntry
+import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Constant
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.FragmentReportBinding
@@ -23,9 +25,8 @@ import com.kindsundev.expense.manager.ui.home.report.wallet.ReportWalletContract
 import com.kindsundev.expense.manager.utils.*
 
 class ReportFragment : Fragment(), ReportContract.View {
-    private var _binding : FragmentReportBinding? = null
+    private var _binding: FragmentReportBinding? = null
     private val binding get() = _binding
-
     private lateinit var reportPresenter: ReportPresenter
     private lateinit var mWalletBottomSheet: ReportWalletBottomSheet
 
@@ -39,6 +40,12 @@ class ReportFragment : Fragment(), ReportContract.View {
     private lateinit var expenseChart: MyPieChart
     private lateinit var balanceHistoryChart: MyLineChart
 
+    private lateinit var balanceLegend: String
+    private lateinit var sevenDayLabels: List<String>
+    private lateinit var assetsLabels: Array<String>
+
+    override fun getCurrentContext(): Context = requireContext()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         reportPresenter = ReportPresenter(this)
@@ -50,6 +57,7 @@ class ReportFragment : Fragment(), ReportContract.View {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentReportBinding.inflate(inflater, container, false)
+        getStringLabelValue()
         mappingViews()
         initIncomeAndExpenseBarChart()
         initIncomePieChart()
@@ -57,6 +65,15 @@ class ReportFragment : Fragment(), ReportContract.View {
         initBalanceHistoryChart()
         initListener()
         return binding!!.root
+    }
+
+    private fun getStringLabelValue() {
+        balanceLegend = requireContext().getString(R.string.balance)
+        sevenDayLabels = requireContext().resources.getStringArray(R.array.seven_day).toList()
+        assetsLabels = arrayOf(
+            requireContext().getString(R.string.income),
+            requireContext().getString(R.string.expense)
+        )
     }
 
     private fun mappingViews() {
@@ -67,22 +84,39 @@ class ReportFragment : Fragment(), ReportContract.View {
     }
 
     private fun initIncomeAndExpenseBarChart() {
-        assetsIOChart = MyBarChart(mAssetsIOBarChart, incomeAndExpenseDataDefault())
+        assetsIOChart = MyBarChart(mAssetsIOBarChart, incomeAndExpenseDataDefault(), assetsLabels)
         assetsIOChart.showBarChart()
     }
 
     private fun initIncomePieChart() {
-        incomeChart = MyPieChart(mIncomePieChart, incomePieDataDefault(), Constant.TRANSACTION_TYPE_INCOME)
+        incomeChart =
+            MyPieChart(
+                getCurrentContext(),
+                mIncomePieChart,
+                incomePieDataDefault(getCurrentContext()),
+                Constant.TRANSACTION_TYPE_INCOME
+            )
         incomeChart.showPieChart()
     }
 
     private fun initExpensePieChart() {
-        expenseChart = MyPieChart(mExpensePieChart, expensePieDataDefault(), Constant.TRANSACTION_TYPE_EXPENSE)
+        expenseChart =
+            MyPieChart(
+                getCurrentContext(),
+                mExpensePieChart,
+                expensePieDataDefault(getCurrentContext()),
+                Constant.TRANSACTION_TYPE_EXPENSE
+            )
         expenseChart.showPieChart()
     }
 
     private fun initBalanceHistoryChart() {
-        balanceHistoryChart = MyLineChart(mBalanceHistoryLineChart, balanceHistoryDataDefault())
+        balanceHistoryChart = MyLineChart(
+            mBalanceHistoryLineChart,
+            balanceHistoryDataDefault(),
+            sevenDayLabels,
+            balanceLegend
+        )
         balanceHistoryChart.showLineChart()
     }
 
@@ -91,14 +125,17 @@ class ReportFragment : Fragment(), ReportContract.View {
     }
 
     private fun onClickSelectWallet() {
-        mWalletBottomSheet = ReportWalletBottomSheet(object: ReportWalletContract.Listener {
+        mWalletBottomSheet = ReportWalletBottomSheet(object : ReportWalletContract.Listener {
             override fun onClickWalletItem(wallet: WalletModel) {
                 requestNewChartData(wallet)
                 binding!!.selectWallet.tvWalletName.text = wallet.name
                 mWalletBottomSheet.dismiss()
             }
         })
-        mWalletBottomSheet.show(parentFragmentManager, Constant.REPORT_WALLET_BOTTOM_SHEET_WALLET_NAME)
+        mWalletBottomSheet.show(
+            parentFragmentManager,
+            Constant.REPORT_WALLET_BOTTOM_SHEET_WALLET_NAME
+        )
     }
 
     private fun requestNewChartData(wallet: WalletModel) {
@@ -109,7 +146,7 @@ class ReportFragment : Fragment(), ReportContract.View {
     }
 
     override fun showNewAssetsInAndOutChart(result: ArrayList<BarEntry>) {
-        assetsIOChart = MyBarChart(mAssetsIOBarChart, result)
+        assetsIOChart = MyBarChart(mAssetsIOBarChart, result, assetsLabels)
         assetsIOChart.showBarChart()
         if (result.isEmpty()) {
             binding!!.barChart.incomeAndExpense.visibility = View.GONE
@@ -121,7 +158,12 @@ class ReportFragment : Fragment(), ReportContract.View {
     }
 
     override fun showNewPercentageIncomeChart(result: ArrayList<PieEntry>) {
-        incomeChart = MyPieChart(mIncomePieChart, result, Constant.TRANSACTION_TYPE_INCOME)
+        incomeChart = MyPieChart(
+            getCurrentContext(),
+            mIncomePieChart,
+            result,
+            Constant.TRANSACTION_TYPE_INCOME
+        )
         incomeChart.showPieChart()
         checkAndChangePieLayout(
             data = result,
@@ -130,7 +172,11 @@ class ReportFragment : Fragment(), ReportContract.View {
         )
     }
 
-    private fun checkAndChangePieLayout(data: ArrayList<PieEntry>, chart: PieChart, message: TextView) {
+    private fun checkAndChangePieLayout(
+        data: ArrayList<PieEntry>,
+        chart: PieChart,
+        message: TextView
+    ) {
         if (data.isEmpty()) {
             chart.visibility = View.GONE
             message.visibility = View.VISIBLE
@@ -141,7 +187,12 @@ class ReportFragment : Fragment(), ReportContract.View {
     }
 
     override fun showNewPercentageExpenseChart(result: ArrayList<PieEntry>) {
-        expenseChart = MyPieChart(mExpensePieChart, result, Constant.TRANSACTION_TYPE_EXPENSE)
+        expenseChart = MyPieChart(
+            getCurrentContext(),
+            mExpensePieChart,
+            result,
+            Constant.TRANSACTION_TYPE_EXPENSE
+        )
         expenseChart.showPieChart()
         checkAndChangePieLayout(
             data = result,
@@ -151,7 +202,8 @@ class ReportFragment : Fragment(), ReportContract.View {
     }
 
     override fun showNewBalanceHistoryChart(result: ArrayList<Entry>) {
-        balanceHistoryChart = MyLineChart(mBalanceHistoryLineChart, result)
+        balanceHistoryChart =
+            MyLineChart(mBalanceHistoryLineChart, result, sevenDayLabels, balanceLegend)
         balanceHistoryChart.showLineChart()
         if (result.isEmpty()) {
             binding!!.lineChart.balance.visibility = View.GONE

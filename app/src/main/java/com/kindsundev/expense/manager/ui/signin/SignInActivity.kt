@@ -1,10 +1,12 @@
 package com.kindsundev.expense.manager.ui.signin
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import com.kindsundev.expense.manager.R
 
 import com.kindsundev.expense.manager.databinding.ActivitySignInBinding
 import com.kindsundev.expense.manager.ui.signup.SignUpActivity
@@ -14,6 +16,8 @@ import com.kindsundev.expense.manager.utils.startPrepareWalletActivity
 class SignInActivity : AppCompatActivity(), SignInContract.View {
     private lateinit var binding: ActivitySignInBinding
     private lateinit var signInPresenter: SignInPresenter
+
+    override fun getCurrentContext(): Context = this
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +60,7 @@ class SignInActivity : AppCompatActivity(), SignInContract.View {
     override fun onSuccess() {
         binding.progressBar.visibility = View.GONE
         binding.tvForgetPassword.visibility = View.VISIBLE
-        Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, R.string.login_successful, Toast.LENGTH_SHORT).show()
         startPrepareWalletActivity()
     }
 

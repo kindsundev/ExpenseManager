@@ -3,6 +3,7 @@ package com.kindsundev.expense.manager.ui.prepare
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.google.android.material.tabs.TabLayoutMediator
+import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.databinding.ActivityPrepareWalletBinding
 import com.kindsundev.expense.manager.ui.prepare.pager.WalletViewPager
 
@@ -22,10 +23,10 @@ class PrepareWalletActivity : AppCompatActivity() {
         TabLayoutMediator(binding.tabPrepareWallet, binding.viewPagerWallet) { tab, position ->
             when (position) {
                 0 -> {
-                    tab.text = "Prepare"
+                    tab.text = this.getString(R.string.prepare)
                 }
                 else -> {
-                    tab.text = "Provide"
+                    tab.text = this.getString(R.string.provide)
                 }
             }
         }.attach()

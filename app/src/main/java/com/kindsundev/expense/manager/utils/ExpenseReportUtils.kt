@@ -1,12 +1,13 @@
 package com.kindsundev.expense.manager.utils
 
+import android.content.Context
 import com.github.mikephil.charting.data.PieEntry
+import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Constant
-import com.kindsundev.expense.manager.common.Logger
 import com.kindsundev.expense.manager.data.model.BillModel
 import com.kindsundev.expense.manager.data.model.TransactionModel
 
-class ExpenseReportUtils {
+class ExpenseReportUtils(private val context: Context) {
     private val needFul = ArrayList<TransactionModel>()
     private val enjoy = ArrayList<TransactionModel>()
     private val offering = ArrayList<TransactionModel>()
@@ -45,29 +46,29 @@ class ExpenseReportUtils {
     private fun groupClassification(transactions : ArrayList<TransactionModel>) {
         transactions.forEach {
             when(it.category) {
-                "Eat" -> needFul.add(it)
-                "Bill" -> needFul.add(it)
-                "Move" -> needFul.add(it)
-                "House" -> needFul.add(it)
-                "Shopping" -> needFul.add(it)
+                context.getString(R.string.eat) -> needFul.add(it)
+                context.getString(R.string.bill) -> needFul.add(it)
+                context.getString(R.string.move) -> needFul.add(it)
+                context.getString(R.string.house) -> needFul.add(it)
+                context.getString(R.string.shopping) -> needFul.add(it)
 
-                "Entertainment" -> enjoy.add(it)
-                "Outfit" -> enjoy.add(it)
-                "Travel" -> enjoy.add(it)
-                "Beautify" -> enjoy.add(it)
-                "Party" -> enjoy.add(it)
+                context.getString(R.string.entertainment) -> enjoy.add(it)
+                context.getString(R.string.outfit) -> enjoy.add(it)
+                context.getString(R.string.travel) -> enjoy.add(it)
+                context.getString(R.string.beautify) -> enjoy.add(it)
+                context.getString(R.string.party) -> enjoy.add(it)
 
-                "Gift" -> offering.add(it)
-                "Charity" -> offering.add(it)
+                context.getString(R.string.gift) -> offering.add(it)
+                context.getString(R.string.charity) -> offering.add(it)
 
-                "Doctor" -> health.add(it)
-                "Sport" -> health.add(it)
-                "Insurance" -> health.add(it)
+                context.getString(R.string.doctor) -> health.add(it)
+                context.getString(R.string.sport) -> health.add(it)
+                context.getString(R.string.insurance) -> health.add(it)
 
-                "Child" -> child.add(it)
+                context.getString(R.string.child) -> child.add(it)
 
-                "Fees" -> other.add(it)
-                "Drop" -> other.add(it)
+                context.getString(R.string.fees) -> other.add(it)
+                context.getString(R.string.drop) -> other.add(it)
 
                 else -> {}
             }
@@ -76,12 +77,12 @@ class ExpenseReportUtils {
 
     private fun initPieData(transactions: ArrayList<TransactionModel>): ArrayList<PieEntry> {
         val data = ArrayList<PieEntry>()
-        data.add(PieEntry(calculatePercentage(needFul, transactions), "NeedFul"))
-        data.add(PieEntry(calculatePercentage(enjoy, transactions), "Enjoy"))
-        data.add(PieEntry(calculatePercentage(offering, transactions), "Offering"))
-        data.add(PieEntry(calculatePercentage(health, transactions), "Health"))
-        data.add(PieEntry(calculatePercentage(child, transactions), "Child"))
-        data.add(PieEntry(calculatePercentage(other, transactions), "Other"))
+        data.add(PieEntry(calculatePercentage(needFul, transactions), context.getString(R.string.needful)))
+        data.add(PieEntry(calculatePercentage(enjoy, transactions), context.getString(R.string.enjoy)))
+        data.add(PieEntry(calculatePercentage(offering, transactions), context.getString(R.string.offering)))
+        data.add(PieEntry(calculatePercentage(health, transactions), context.getString(R.string.health)))
+        data.add(PieEntry(calculatePercentage(child, transactions), context.getString(R.string.child)))
+        data.add(PieEntry(calculatePercentage(other, transactions), context.getString(R.string.other)))
         cleanPercentageJunkData(data)
         return data
     }

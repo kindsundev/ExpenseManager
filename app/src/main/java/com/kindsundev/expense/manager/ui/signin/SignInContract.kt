@@ -8,7 +8,5 @@ interface SignInContract {
         fun handlerSignIn(email: String, password: String)
     }
 
-    interface View : BaseView {
-
-    }
+    interface View : BaseView
 }

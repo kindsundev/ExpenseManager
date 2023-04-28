@@ -36,9 +36,6 @@ fun Context.startPrepareWalletActivity() =
         startActivity(it)
     }
 
-fun Context.onFeatureIsDevelop() {
-    Toast.makeText(this, "This feature is in development", Toast.LENGTH_SHORT).show()
-}
 
 fun startLoadingDialog(progress: LoadingDialog, manager: FragmentManager, status: Boolean) {
     if (status) {
@@ -57,28 +54,23 @@ fun Context.loadUserAvatar(link: String?, default: Int, target: ImageView) {
         .into(target)
 }
 
-fun Fragment.hideKeyboard() {
-    view?.let { activity?.hideKeyboard(it) }
-}
+fun Fragment.hideKeyboard() = view?.let { activity?.hideKeyboard(it) }
 
 private fun Context.hideKeyboard(view: View) {
     val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
     inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
 }
 
-fun Context.showToast(message: String) {
-    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-}
+fun Context.showMessage(message: String) = Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 
-fun Context.requestPremium() {
-    val message = "This feature is for premium!"
-    showToast(message)
-}
+fun Context.onFeatureIsDevelop() = showMessage(getString(R.string.on_developing))
 
-fun String.toEditable(): Editable =  Editable.Factory.getInstance().newEditable(this)
+fun Context.requestPremium() = showMessage(getString(R.string.for_premium))
+
+fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
 
 fun toggleBottomNavigation(activity: HomeActivity, state: Boolean) {
-    val navBar: BottomNavigationView =  activity.findViewById(R.id.bottomNavigationView)
+    val navBar: BottomNavigationView = activity.findViewById(R.id.bottomNavigationView)
     if (state) {
         navBar.visibility = View.VISIBLE
     } else {
@@ -94,13 +86,13 @@ fun formatDisplayCurrencyBalance(amount: String): String {
 * UI: android:inputType="numberDecimal"
 * GetValue: replace(",", "")
 * */
-fun formatInputCurrencyBalance(editText : EditText) {
+fun formatInputCurrencyBalance(editText: EditText) {
     val decimalFormat = DecimalFormat("###,###,###")
-    editText.addTextChangedListener(object : TextWatcher{
+    editText.addTextChangedListener(object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            val userInput = s.toString().replace(",","")
+            val userInput = s.toString().replace(",", "")
             if (userInput.isNotEmpty()) {
                 val value = userInput.toDouble()
                 editText.removeTextChangedListener(this)
@@ -114,30 +106,30 @@ fun formatInputCurrencyBalance(editText : EditText) {
     })
 }
 
-fun expenseColorList(data: ArrayList<PieEntry>): ArrayList<Int> {
+fun expenseColorList(context: Context, data: ArrayList<PieEntry>): ArrayList<Int> {
     val colors = ArrayList<Int>()
     for (entry in data) {
-        when(entry.label) {
-            "NeedFul" -> colors.add(Color.parseColor(Constant.GREEN_COLOR_CODE))
-            "Enjoy" -> colors.add(Color.parseColor(Constant.TEA_COLOR_CODE))
-            "Offering" -> colors.add(Color.parseColor(Constant.PURPLE_COLOR_CODE))
-            "Health" -> colors.add(Color.parseColor(Constant.RED_COLOR_CODE))
-            "Child" -> colors.add(Color.parseColor(Constant.YELLOW_COLOR_CODE))
-            "Other" -> colors.add(Color.parseColor(Constant.GRAY_COLOR_CODE))
+        when (entry.label) {
+            context.getString(R.string.needful) -> colors.add(Color.parseColor(Constant.GREEN_COLOR_CODE))
+            context.getString(R.string.enjoy) -> colors.add(Color.parseColor(Constant.TEA_COLOR_CODE))
+            context.getString(R.string.offering) -> colors.add(Color.parseColor(Constant.PURPLE_COLOR_CODE))
+            context.getString(R.string.health) -> colors.add(Color.parseColor(Constant.RED_COLOR_CODE))
+            context.getString(R.string.child) -> colors.add(Color.parseColor(Constant.YELLOW_COLOR_CODE))
+            context.getString(R.string.other) -> colors.add(Color.parseColor(Constant.GRAY_COLOR_CODE))
             else -> {}
         }
     }
     return colors
 }
 
-fun incomeColorList(data: ArrayList<PieEntry>): ArrayList<Int> {
+fun incomeColorList(context: Context, data: ArrayList<PieEntry>): ArrayList<Int> {
     val colors = ArrayList<Int>()
     for (entry in data) {
-        when(entry.label) {
-            "Salary" -> colors.add(Color.parseColor(Constant.GREEN_COLOR_CODE))
-            "Bons" -> colors.add(Color.parseColor(Constant.RED_COLOR_CODE))
-            "Interest Rate" -> colors.add(Color.parseColor(Constant.YELLOW_COLOR_CODE))
-            "Other" -> colors.add(Color.parseColor(Constant.GRAY_COLOR_CODE))
+        when (entry.label) {
+            context.getString(R.string.salary) -> colors.add(Color.parseColor(Constant.GREEN_COLOR_CODE))
+            context.getString(R.string.bonus) -> colors.add(Color.parseColor(Constant.RED_COLOR_CODE))
+            context.getString(R.string.interest_rate)  -> colors.add(Color.parseColor(Constant.YELLOW_COLOR_CODE))
+            context.getString(R.string.other) -> colors.add(Color.parseColor(Constant.GRAY_COLOR_CODE))
             else -> {}
         }
     }

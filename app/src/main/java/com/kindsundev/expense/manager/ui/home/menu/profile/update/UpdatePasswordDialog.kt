@@ -20,7 +20,7 @@ import com.kindsundev.expense.manager.ui.home.menu.profile.ProfileContact
 import com.kindsundev.expense.manager.ui.home.menu.profile.ProfilePresenter
 import com.kindsundev.expense.manager.utils.checkPassword
 import com.kindsundev.expense.manager.utils.hideKeyboard
-import com.kindsundev.expense.manager.utils.showToast
+import com.kindsundev.expense.manager.utils.showMessage
 import com.kindsundev.expense.manager.utils.startLoadingDialog
 
 class UpdatePasswordDialog : DialogFragment(), ProfileContact.View {
@@ -29,6 +29,8 @@ class UpdatePasswordDialog : DialogFragment(), ProfileContact.View {
 
     private lateinit var profilePresenter: ProfilePresenter
     private val loadingDialog by lazy { LoadingDialog() }
+
+    override fun getCurrentContext(): Context = requireContext()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -78,11 +80,11 @@ class UpdatePasswordDialog : DialogFragment(), ProfileContact.View {
     private fun checkValidPassword(password: String): Boolean {
         return when (checkPassword(password)) {
             Status.WRONG_PASSWORD_EMPTY -> {
-                activity?.showToast("Password must be not null")
+                activity?.showMessage(getCurrentContext().getString(R.string.password_not_null))
                 false
             }
             Status.WRONG_PASSWORD_LENGTH -> {
-                activity?.showToast("Password must be greater than or equal to 6")
+                activity?.showMessage(getCurrentContext().getString(R.string.password_to_short))
                 false
             }
             else -> true

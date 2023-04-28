@@ -1,5 +1,6 @@
 package com.kindsundev.expense.manager.ui.prepare
 
+import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Logger
 import com.kindsundev.expense.manager.data.firebase.WalletFirebase
 import com.kindsundev.expense.manager.data.model.WalletModel
@@ -13,6 +14,7 @@ class PrepareWalletPresenter(
 ) : PrepareWalletContract.Presenter {
     private val compositeDisposable = CompositeDisposable()
     private var walletFirebase = WalletFirebase()
+    private lateinit var message: String
 
     override fun handleCreateWallet(wallet: WalletModel) {
         view.onLoad()
@@ -22,7 +24,8 @@ class PrepareWalletPresenter(
             .subscribe({
                 view.onSuccess()
             }, {
-                view.onError("Please check data from input")
+                message = view.getCurrentContext().getString(R.string.check_data_from_input)
+                view.onError(message)
                 Logger.error("Create wallet: ${it.message!!}")
             })
         compositeDisposable.add(disposable)
@@ -35,7 +38,11 @@ class PrepareWalletPresenter(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
-                onError = { view.onError(it.message.toString()) },
+                onError = {
+                    message = view.getCurrentContext().getString(R.string.something_error)
+                    view.onError(message)
+                    Logger.error("Get wallets: ${it.message}")
+                },
                 onComplete = { view.onSuccessWallets(mWallets) },
                 onNext = { mWallets.add(it) }
             )

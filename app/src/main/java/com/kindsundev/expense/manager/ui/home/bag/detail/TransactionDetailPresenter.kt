@@ -1,5 +1,6 @@
 package com.kindsundev.expense.manager.ui.home.bag.detail
 
+import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Constant
 import com.kindsundev.expense.manager.common.Logger
 import com.kindsundev.expense.manager.data.firebase.TransactionFirebase
@@ -13,6 +14,7 @@ class TransactionDetailPresenter(
 ): TransactionDetailContract.Presenter {
     private val transactionFirebase by lazy { TransactionFirebase() }
     private val compositeDisposable = CompositeDisposable()
+    private lateinit var message: String
 
     override fun updateTransaction(walletID: Int, transaction: TransactionModel) {
         view.onLoad()
@@ -22,7 +24,8 @@ class TransactionDetailPresenter(
             .subscribe({
                 view.onSuccess()
             }, {
-                view.onError("Something went wrong, please try again later!")
+                message = view.getCurrentContext().getString(R.string.something_error)
+                view.onError(message)
                 Logger.error("Create transaction: ${it.message!!}")
             })
         compositeDisposable.add(disposable)
@@ -109,9 +112,11 @@ class TransactionDetailPresenter(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                view.onSuccess("Update transaction success")
+                message = view.getCurrentContext().getString(R.string.update_transaction_success)
+                view.onSuccess(message)
             }, {
-                view.onError(it.message!!)
+                message = view.getCurrentContext().getString(R.string.update_balance_failed)
+                view.onError(message)
                 Logger.error("Update balance: ${it.message!!}")
             })
         compositeDisposable.add(disposable)
@@ -126,7 +131,8 @@ class TransactionDetailPresenter(
             .subscribe({
                 view.onSuccess(true)
             }, {
-                view.onError(it.message!!)
+                message = view.getCurrentContext().getString(R.string.delete_transaction_failed)
+                view.onError(message)
                 Logger.error("Delete transaction: ${it.message!!}")
             })
         compositeDisposable.add(disposable)

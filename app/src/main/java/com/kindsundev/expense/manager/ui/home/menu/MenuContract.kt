@@ -9,7 +9,5 @@ interface MenuContract {
         fun getCurrentUser() : UserModel
     }
 
-    interface View : BaseView {
-
-    }
+    interface View : BaseView
 }

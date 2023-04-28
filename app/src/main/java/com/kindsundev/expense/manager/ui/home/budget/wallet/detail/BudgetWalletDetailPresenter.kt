@@ -1,5 +1,6 @@
 package com.kindsundev.expense.manager.ui.home.budget.wallet.detail
 
+import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Logger
 import com.kindsundev.expense.manager.data.firebase.WalletFirebase
 import com.kindsundev.expense.manager.data.model.WalletModel
@@ -12,6 +13,7 @@ class BudgetWalletDetailPresenter(
 ) : BudgetWalletDetailContract.Presenter {
     private val compositeDisposable = CompositeDisposable()
     private val walletFirebase by lazy { WalletFirebase() }
+    private lateinit var message: String
 
     override fun updateWallet(wallet: WalletModel) {
         view.onLoad()
@@ -19,9 +21,11 @@ class BudgetWalletDetailPresenter(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                view.onSuccess("Update Wallet Success")
+                message = view.getCurrentContext().getString(R.string.update_wallet_success)
+                view.onSuccess(message)
             }, {
-                view.onError("Something error, please try again later!")
+                message = view.getCurrentContext().getString(R.string.update_wallet_failed)
+                view.onError(message)
                 Logger.error("Update Wallet: ${it.message!!}")
             })
         compositeDisposable.add(disposable)
@@ -33,9 +37,11 @@ class BudgetWalletDetailPresenter(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                view.onSuccess("Delete Wallet Success")
+                message = view.getCurrentContext().getString(R.string.delete_wallet_success)
+                view.onSuccess(message)
             }, {
-                view.onError("Something error, please try again later!")
+                message = view.getCurrentContext().getString(R.string.delete_wallet_failed)
+                view.onError(message)
                 Logger.error("Delete Wallet: ${it.message!!}")
             })
         compositeDisposable.add(disposable)

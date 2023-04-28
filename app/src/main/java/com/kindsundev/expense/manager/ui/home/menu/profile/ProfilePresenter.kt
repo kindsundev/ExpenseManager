@@ -1,5 +1,6 @@
 package com.kindsundev.expense.manager.ui.home.menu.profile
 
+import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Logger
 import com.kindsundev.expense.manager.data.firebase.UserFirebase
 import com.kindsundev.expense.manager.data.model.UserModel
@@ -17,9 +18,9 @@ import io.reactivex.schedulers.Schedulers
 class ProfilePresenter(
     private val view: ProfileContact.View
 ) : ProfileContact.Presenter {
-
     private val compositeDisposable = CompositeDisposable()
     private val user = UserFirebase()
+    private lateinit var message: String
     
     override fun updateAvatar(uri: String?) {
         view.onLoad()
@@ -27,9 +28,11 @@ class ProfilePresenter(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                view.onSuccess("Avatar update success")
+                message = view.getCurrentContext().getString(R.string.update_avatar_success)
+                view.onSuccess(message)
             }, {
-                view.onError("Avatar updated failed")
+                message = view.getCurrentContext().getString(R.string.update_avatar_failed)
+                view.onError(message)
                 Logger.error("Avatar update failed: ${it.message}")
             })
         compositeDisposable.add(disposable)
@@ -41,9 +44,11 @@ class ProfilePresenter(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                view.onSuccess("Name update success")
+                message = view.getCurrentContext().getString(R.string.update_name_success)
+                view.onSuccess(message)
             }, {
-                view.onError("You need to login again before updating")
+                message = view.getCurrentContext().getString(R.string.update_name_failed)
+                view.onError(message)
                 Logger.error("Name update failed: ${it.message}")
             })
         compositeDisposable.add(disposable)
@@ -55,9 +60,11 @@ class ProfilePresenter(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                view.onSuccess("Email update success")
+                message = view.getCurrentContext().getString(R.string.update_email_success)
+                view.onSuccess(message)
             }, {
-                view.onError("You need to login again before updating")
+                message = view.getCurrentContext().getString(R.string.request_re_login)
+                view.onError(message)
                 Logger.error("Email update failed: ${it.message}")
             })
         compositeDisposable.add(disposable)
@@ -69,14 +76,15 @@ class ProfilePresenter(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                view.onSuccess("Password update success")
+                message = view.getCurrentContext().getString(R.string.update_password_success)
+                view.onSuccess(message)
             }, {
-                view.onError("You need to login again before updating")
+                message = view.getCurrentContext().getString(R.string.request_re_login)
+                view.onError(message)
                 Logger.error("Password update failed: ${it.message}")
             })
         compositeDisposable.add(disposable)
     }
-
 
     override fun getUserAfterUpdate(): UserModel {
         val userAuth =  UserFirebase().user

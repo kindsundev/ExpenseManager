@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
+import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.databinding.ActivitySplashingBinding
 import com.kindsundev.expense.manager.utils.isNetWorkAvailable
 import com.kindsundev.expense.manager.utils.startPrepareWalletActivity
@@ -40,9 +41,9 @@ class SplashingActivity : AppCompatActivity(), SplashingContact.View {
 
     private fun checkNetworkStatus() {
         if (isNetWorkAvailable(this)) {
-            Toast.makeText(this, "Network connected", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, R.string.network_connected, Toast.LENGTH_SHORT).show()
         } else {
-            Toast.makeText(this, "Network disconnected", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, R.string.network_disconnected, Toast.LENGTH_SHORT).show()
         }
     }
 

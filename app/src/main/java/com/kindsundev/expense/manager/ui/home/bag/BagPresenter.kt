@@ -1,5 +1,7 @@
 package com.kindsundev.expense.manager.ui.home.bag
 
+import com.kindsundev.expense.manager.R
+import com.kindsundev.expense.manager.common.Logger
 import com.kindsundev.expense.manager.data.firebase.WalletFirebase
 import com.kindsundev.expense.manager.data.model.BillModel
 import com.kindsundev.expense.manager.data.model.WalletModel
@@ -25,7 +27,11 @@ class BagPresenter(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
-                onError = { view.onError(it.message.toString()) },
+                onError = {
+                    val message = view.getCurrentContext().getString(R.string.something_error)
+                    view.onError(message)
+                    Logger.error(it.message.toString())
+                },
                 onComplete = { view.onSuccessWallets(wallets) },
                 onNext = { wallets.add(it) }
             )

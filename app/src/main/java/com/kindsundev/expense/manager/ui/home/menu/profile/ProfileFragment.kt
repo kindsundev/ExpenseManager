@@ -51,6 +51,8 @@ class ProfileFragment : Fragment(), ProfileContact.View, ResultUpdateCallBack {
     private lateinit var updateEmailDialog: UpdateEmailDialog
     private lateinit var updatePasswordDialog: UpdatePasswordDialog
 
+    override fun getCurrentContext(): Context = requireContext()
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         registerActivityResult()
@@ -103,7 +105,7 @@ class ProfileFragment : Fragment(), ProfileContact.View, ResultUpdateCallBack {
             if (isGranted) {
                 openPhotoGallery()
             } else {
-                val message = "This feature required a permission that the user has denied"
+                val message = getCurrentContext().getString(R.string.permission_denied)
                 Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
             }
         }
@@ -114,7 +116,12 @@ class ProfileFragment : Fragment(), ProfileContact.View, ResultUpdateCallBack {
             addCategory(Intent.CATEGORY_OPENABLE)
             type = "image/*"
         }
-        activityResultLauncher.launch(Intent.createChooser(intent, "Select picture"))
+        activityResultLauncher.launch(
+            Intent.createChooser(
+                intent,
+                getCurrentContext().getString(R.string.select_picture)
+            )
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

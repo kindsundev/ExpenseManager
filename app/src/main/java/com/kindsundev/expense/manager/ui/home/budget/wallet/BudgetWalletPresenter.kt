@@ -1,5 +1,6 @@
 package com.kindsundev.expense.manager.ui.home.budget.wallet
 
+import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Logger
 import com.kindsundev.expense.manager.data.firebase.WalletFirebase
 import com.kindsundev.expense.manager.data.model.WalletModel
@@ -13,6 +14,7 @@ class BudgetWalletPresenter(
 ) : BudgetWalletContract.Presenter {
     private val compositeDisposable = CompositeDisposable()
     private val walletFirebase by lazy { WalletFirebase() }
+    private lateinit var message : String
 
     override fun handleGetWallets() {
         view.onLoad()
@@ -21,7 +23,11 @@ class BudgetWalletPresenter(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
-                onError = { view.onError(it.message.toString()) },
+                onError = {
+                    message = view.getCurrentContext().getString(R.string.something_error)
+                    view.onError(message)
+                    Logger.error(it.message.toString())
+                },
                 onComplete = { view.onSuccessWallets(mWallets) },
                 onNext = { mWallets.add(it) }
             )
@@ -34,9 +40,11 @@ class BudgetWalletPresenter(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                view.onSuccess("Create wallet success")
+                message = view.getCurrentContext().getString(R.string.create_wallet_success)
+                view.onSuccess(message)
             }, {
-                view.onError("Please check data from input")
+                message = view.getCurrentContext().getString(R.string.check_data_from_input)
+                view.onError(message)
                 Logger.error("Create wallet: ${it.message!!}")
             })
         compositeDisposable.add(disposable)

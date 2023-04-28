@@ -1,5 +1,6 @@
 package com.kindsundev.expense.manager.ui.home.bag.search
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -23,7 +24,7 @@ import com.kindsundev.expense.manager.ui.home.bag.adapter.BillParentAdapter
 import com.kindsundev.expense.manager.ui.home.bag.detail.TransactionBottomSheet
 import com.kindsundev.expense.manager.ui.home.bag.detail.TransactionDetailContract
 import com.kindsundev.expense.manager.utils.toggleBottomNavigation
-import com.kindsundev.expense.manager.utils.showToast
+import com.kindsundev.expense.manager.utils.showMessage
 import com.kindsundev.expense.manager.utils.startLoadingDialog
 
 class TransactionSearchFragment: Fragment(), TransactionSearchContract.View {
@@ -37,6 +38,8 @@ class TransactionSearchFragment: Fragment(), TransactionSearchContract.View {
     private lateinit var mCurrentTimePicker: String
     private lateinit var mBill : ArrayList<BillModel>
     private lateinit var mWallet: WalletModel
+
+    override fun getCurrentContext(): Context = requireContext()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,7 +90,7 @@ class TransactionSearchFragment: Fragment(), TransactionSearchContract.View {
 
     override fun onError(message: String) {
         startLoadingDialog(loadingDialog, parentFragmentManager, false)
-        activity?.showToast(message)
+        activity?.showMessage(message)
     }
 
     override fun onSuccess() {

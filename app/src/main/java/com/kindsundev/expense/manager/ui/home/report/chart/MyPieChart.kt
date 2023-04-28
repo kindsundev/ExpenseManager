@@ -1,5 +1,6 @@
 package com.kindsundev.expense.manager.ui.home.report.chart
 
+import android.content.Context
 import android.graphics.Color
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.Legend
@@ -14,6 +15,7 @@ import java.text.DecimalFormat
 import kotlin.collections.ArrayList
 
 class MyPieChart(
+    private val context: Context,
     private val pieChart: PieChart,
     private val data: ArrayList<PieEntry>,
     private val name: String
@@ -26,9 +28,9 @@ class MyPieChart(
             valueTextSize = 10f
             valueTextColor = Color.WHITE
             if (name == Constant.TRANSACTION_TYPE_EXPENSE) {
-                colors = expenseColorList(data)
+                colors = expenseColorList(context, data)
             } else if (name == Constant.TRANSACTION_TYPE_INCOME) {
-                colors = incomeColorList(data)
+                colors = incomeColorList(context, data)
             }
         }
         return dataSet

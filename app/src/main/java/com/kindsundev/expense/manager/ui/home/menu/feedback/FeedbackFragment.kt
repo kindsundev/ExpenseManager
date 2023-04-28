@@ -11,7 +11,7 @@ import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.databinding.FragmentFeedbackBinding
 import com.kindsundev.expense.manager.ui.home.HomeActivity
 import com.kindsundev.expense.manager.utils.toggleBottomNavigation
-import com.kindsundev.expense.manager.utils.showToast
+import com.kindsundev.expense.manager.utils.showMessage
 
 class FeedbackFragment: Fragment() {
     private var _binding : FragmentFeedbackBinding? = null
@@ -34,7 +34,7 @@ class FeedbackFragment: Fragment() {
             it.findNavController().popBackStack()
         }
         binding!!.btnSend.setOnClickListener {
-            activity?.showToast("Thank you for feedback!")
+            activity?.showMessage(requireContext().getString(R.string.thank_for_feedback))
             it.findNavController().popBackStack()
         }
         binding!!.btnTransparency.setOnClickListener { toggleButtonBackground(it as Button) }

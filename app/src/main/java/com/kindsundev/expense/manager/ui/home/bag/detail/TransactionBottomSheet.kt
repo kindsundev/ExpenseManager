@@ -1,5 +1,6 @@
 package com.kindsundev.expense.manager.ui.home.bag.detail
 
+import android.content.Context
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -28,6 +29,8 @@ class TransactionBottomSheet(
     private lateinit var detailPresenter: TransactionDetailPresenter
     private val loadingDialog by lazy { LoadingDialog() }
     private lateinit var mNewTransaction: TransactionModel
+
+    override fun getCurrentContext(): Context = requireContext()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,13 +79,16 @@ class TransactionBottomSheet(
     }
 
     private fun onClickUpdateTransaction() {
+        val message : String
         if (binding!!.edtAmount.text.isEmpty()) {
-            activity?.showToast("Please enter amount value!")
+            message = getCurrentContext().getString(R.string.please_enter_amount)
+            activity?.showMessage(message)
         } else {
             val oldValue = transaction.amount
             val newValue = binding!!.edtAmount.text.toString().replace(",","").toDouble()
             if (oldValue == newValue) {
-                activity?.showToast("Please do not enter the old money")
+                message = getCurrentContext().getString(R.string.do_not_enter_old_money)
+                activity?.showMessage(message)
             } else {
                 mNewTransaction = getNewTransaction()
                 detailPresenter.updateTransaction(wallet.id!!, mNewTransaction)
@@ -131,7 +137,7 @@ class TransactionBottomSheet(
     }
 
     override fun onSuccess(message: String) {
-        activity?.showToast(message)
+        activity?.showMessage(message)
         hideBottomSheet()
         callback.notificationSuccess(true)
         startLoadingDialog(loadingDialog, parentFragmentManager, false)
@@ -154,6 +160,6 @@ class TransactionBottomSheet(
 
     override fun onError(message: String) {
         startLoadingDialog(loadingDialog, parentFragmentManager, false)
-        activity?.showToast(message)
+        activity?.showMessage(message)
     }
 }

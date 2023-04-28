@@ -1,11 +1,13 @@
 package com.kindsundev.expense.manager.ui.home.note.transaction
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Constant
 import com.kindsundev.expense.manager.data.model.TransactionModel
 import com.kindsundev.expense.manager.data.model.WalletModel
@@ -34,6 +36,8 @@ class TransactionFragment : Fragment(), TransactionContract.View,
     private lateinit var transaction: TransactionModel
     private var transactionType: String? = null
     private var categoryName: String? = null
+
+    override fun getCurrentContext(): Context = requireContext()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -160,7 +164,7 @@ class TransactionFragment : Fragment(), TransactionContract.View,
     private fun onClickSave() {
         if (isNotDebtLayout()) {
             if (binding!!.incomeAndExpense.edtAmount.text.isEmpty()) {
-                activity?.showToast("Please enter your amount")
+                activity?.showMessage(getCurrentContext().getString(R.string.please_enter_amount))
             } else {
                 transaction = initTransactionDataInIAE()
                 transactionPresenter.createTransaction(wallet.id!!, transaction)
@@ -186,11 +190,11 @@ class TransactionFragment : Fragment(), TransactionContract.View,
 
     override fun onError(message: String) {
         startLoadingDialog(loadingDialog, parentFragmentManager, false)
-        activity?.showToast(message)
+        activity?.showMessage(message)
     }
 
     override fun onSuccess(message: String) {
-        activity?.showToast(message)
+        activity?.showMessage(message)
         findNavController().popBackStack()
     }
 

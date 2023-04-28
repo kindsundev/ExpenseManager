@@ -1,5 +1,6 @@
 package com.kindsundev.expense.manager.ui.home.bag
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -37,6 +38,8 @@ class BagFragment : Fragment(), BillAdapterContract.Listener, BagContract.View {
     private lateinit var mCurrentWalletId: String
     private lateinit var mCurrentWallet: WalletModel
 
+    override fun getCurrentContext(): Context = requireContext()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -58,7 +61,7 @@ class BagFragment : Fragment(), BillAdapterContract.Listener, BagContract.View {
     * Note: Set it == null in destroy lifecycle, then everything works fine
     * */
     private fun getCurrentWalletId() {
-        mCurrentWalletId = (context as HomeActivity).getCurrentWalletId()
+        mCurrentWalletId = (getCurrentContext() as HomeActivity).getCurrentWalletId()
         if (mCurrentWalletId == Constant.VALUE_DATA_IS_NULL) {
             mCurrentWalletId = PreferenceHelper.getString(
                 requireContext(),
@@ -176,7 +179,7 @@ class BagFragment : Fragment(), BillAdapterContract.Listener, BagContract.View {
 
     override fun onError(message: String) {
         startLoadingDialog(loadingDialog, parentFragmentManager, false)
-        activity?.showToast(message)
+        activity?.showMessage(message)
     }
 
     override fun onStop() {
@@ -192,7 +195,7 @@ class BagFragment : Fragment(), BillAdapterContract.Listener, BagContract.View {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        (context as HomeActivity).setCurrentWalletIdDefaultValue()
+        (getCurrentContext() as HomeActivity).setCurrentWalletIdDefaultValue()
         bagPresenter.cleanUp()
     }
 }

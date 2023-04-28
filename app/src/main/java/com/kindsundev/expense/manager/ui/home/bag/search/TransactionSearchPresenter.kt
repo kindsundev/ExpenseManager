@@ -1,5 +1,7 @@
 package com.kindsundev.expense.manager.ui.home.bag.search
 
+import com.kindsundev.expense.manager.R
+import com.kindsundev.expense.manager.common.Logger
 import com.kindsundev.expense.manager.data.firebase.TransactionFirebase
 import com.kindsundev.expense.manager.data.model.BillModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -20,7 +22,11 @@ class TransactionSearchPresenter(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
-                onError = { view.onError(it.message.toString()) },
+                onError = {
+                    val message = view.getCurrentContext().getString(R.string.something_error)
+                    view.onError(message)
+                    Logger.error(it.message.toString())
+                },
                 onComplete = { view.onSuccess() },
                 onNext = {mBill.add(it)}
             )

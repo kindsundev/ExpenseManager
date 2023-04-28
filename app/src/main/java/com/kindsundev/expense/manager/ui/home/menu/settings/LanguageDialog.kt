@@ -12,7 +12,7 @@ import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.databinding.DialogLanguageBinding
-import com.kindsundev.expense.manager.utils.showToast
+import com.kindsundev.expense.manager.utils.showMessage
 
 class LanguageDialog : DialogFragment() {
     private var _binding: DialogLanguageBinding? = null
@@ -63,7 +63,7 @@ class LanguageDialog : DialogFragment() {
             .setMessage(R.string.message_for_restart_app)
             .setCancelable(false)
             .setPositiveButton(R.string.ok) { _, _ ->
-                activity?.showToast("Success")
+                activity?.showMessage("Success")
             }
             .setNegativeButton(R.string.cancel) { dialog, _ -> dialog.dismiss() }
             .create()

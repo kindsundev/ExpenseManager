@@ -11,11 +11,11 @@ import com.kindsundev.expense.manager.utils.incomeAndExpenseColorList
 
 class MyBarChart(
     private val barChart: BarChart,
-    private val data: ArrayList<BarEntry>
+    private val data: ArrayList<BarEntry>,
+    private val labels: Array<String>
 ) {
-
     private fun initBarDataSet(): BarDataSet {
-        val dataSet = BarDataSet(data, "Total")
+        val dataSet = BarDataSet(data, "")
         dataSet.apply {
             valueTextSize = 10f
             colors = incomeAndExpenseColorList()
@@ -33,7 +33,7 @@ class MyBarChart(
             setDrawAxisLine(false)
             granularity = 1f
             labelCount = 2
-            valueFormatter = IndexAxisValueFormatter(arrayOf("Income", "Expense"))
+            valueFormatter = IndexAxisValueFormatter(labels)
         }
     }
 

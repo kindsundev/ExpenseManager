@@ -1,5 +1,67 @@
 <resources>
+    <string-array name="seven_day">
+        <item>Day 1</item>
+        <item>Day 2</item>
+        <item>Day 3</item>
+        <item>Day 4</item>
+        <item>Day 5</item>
+        <item>Day 6</item>
+        <item>Day 7</item>
+    </string-array>
     <string name="app_name">Expense Manager</string>
+    <string name="network_connected">Network connected</string>
+    <string name="network_disconnected">Network disconnected</string>
+    <string name="email_not_null">Email mus not be null</string>
+    <string name="email_invalidate">Email invalidate</string>
+    <string name="password_not_null">Password must not be null</string>
+    <string name="password_to_short">Password must be greater than or equal to 6</string>
+    <string name="email_password_null">Please input full email and password</string>
+    <string name="email_already_used">The email address is already in use by another account</string>
+    <string name="login_successful">Login successful</string>
+    <string name="check_email_password">Please check email or password</string>
+    <string name="prepare">Prepare</string>
+    <string name="provide">Provide</string>
+    <string name="check_data_from_input">Please check data from input</string>
+    <string name="please_enter_full_data">Please enter full data</string>
+    <string name="something_error">Something error, please try again later</string>
+    <string name="name_not_null">Don\'t name to empty</string>
+    <string name="name_to_short">Don\'t name to short</string>
+    <string name="name_to_long">Don\'t name to long</string>
+    <string name="name_cannot_digits">Name cannot is digits</string>
+    <string name="name_cannot_character">Name cannot is special character</string>
+    <string name="balance_not_null">Don\'t balance not null</string>
+    <string name="balance_cannot_character">Balance cannot is special character</string>
+    <string name="do_not_enter_old_money">Balance cannot is special character</string>
+    <string name="please_enter_amount">Please enter amount value</string>
+    <string name="update_transaction_success">Update transaction successful</string>
+    <string name="update_balance_failed">Update balance failed</string>
+    <string name="delete_transaction_failed">Delete transaction failed</string>
+    <string name="create_wallet_success">Create wallet successful</string>
+    <string name="update_wallet_success">Update wallet successful</string>
+    <string name="update_wallet_failed">Update wallet failed</string>
+    <string name="delete_wallet_success">Delete wallet successful</string>
+    <string name="delete_wallet_failed">Delete wallet failed</string>
+    <string name="request_select_wallet_update">Please select the wallet you want to update!</string>
+    <string name="request_select_wallet_delete">Please select the wallet you want to delete!</string>
+    <string name="please_enter_balance">Please enter balance</string>
+    <string name="please_enter_name">Please enter name</string>
+    <string name="transaction_count_number">Transactions count</string>
+    <string name="update_avatar_success">Update avatar successful</string>
+    <string name="update_avatar_failed">Update avatar failed</string>
+    <string name="update_name_success">Update name successful</string>
+    <string name="update_name_failed">Update name failed</string>
+    <string name="update_email_success">Update email successful</string>
+    <string name="update_email_failed">Update email failed</string>
+    <string name="update_password_success">Update password successful</string>
+    <string name="update_password_failed">Update password failed</string>
+    <string name="request_re_login">You need to login again before updating</string>
+    <string name="thank_for_feedback">Thank you for feedback</string>
+    <string name="create_transaction_success">Create transaction successful</string>
+    <string name="create_transaction_failed">Create transaction failed</string>
+    <string name="permission_denied">This feature required a permission that the user has denied</string>
+    <string name="select_picture">Select picture</string>
+    <string name="on_developing">This feature is in development</string>
+    <string name="for_premium">This feature is for premium</string>
     <string name="image_login_top">Image Login Top</string>
     <string name="image_login_center_end">Image Login Center End</string>
     <string name="login_welcome_sign_in">Hi \nPlease login</string>
@@ -218,6 +280,4 @@
     <string name="select_language">Select Language</string>
     <string name="english">English</string>
     <string name="vietnamese">Vietnamese</string>
-
-
 </resources>

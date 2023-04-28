@@ -1,6 +1,7 @@
 package com.kindsundev.expense.manager.ui.home.budget.wallet
 
 import android.app.Dialog
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -26,6 +27,9 @@ class CreateWalletDialog(
 
     private val loadingDialog by lazy { LoadingDialog() }
     private lateinit var walletPresenter: BudgetWalletPresenter
+    private lateinit var message: String
+
+    override fun getCurrentContext(): Context = requireContext()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         _binding = DialogCreateWalletBinding.inflate(layoutInflater)
@@ -75,7 +79,7 @@ class CreateWalletDialog(
         val name = binding!!.edtName.text.toString()
         val balance = binding!!.edtBalance.text.toString()
         return if (name.isEmpty() && balance.isEmpty()) {
-            Toast.makeText(activity, "Please enter full data", Toast.LENGTH_SHORT).show()
+            activity?.showMessage(getCurrentContext().getString(R.string.please_enter_full_data))
             false
         } else {
             true
@@ -104,23 +108,28 @@ class CreateWalletDialog(
     private fun checkValidName(name: String): Boolean {
         return when (checkName(name)) {
             Status.WRONG_NAME_EMPTY -> {
-                activity?.showToast("Don't name to empty")
+                message = getCurrentContext().getString(R.string.name_not_null)
+                activity?.showMessage(message)
                 return false
             }
             Status.WRONG_NAME_SHORT -> {
-                activity?.showToast("Don't name to short")
+                message = getCurrentContext().getString(R.string.name_to_short)
+                activity?.showMessage(message)
                 return false
             }
             Status.WRONG_NAME_LONG -> {
-                activity?.showToast("Don't name to long")
+                message = getCurrentContext().getString(R.string.name_to_long)
+                activity?.showMessage(message)
                 return false
             }
             Status.WRONG_NAME_HAS_DIGITS -> {
-                activity?.showToast("Name cannot is digits")
+                message = getCurrentContext().getString(R.string.name_cannot_digits)
+                activity?.showMessage(message)
                 return false
             }
             Status.WRONG_HAS_SPECIAL_CHARACTER -> {
-                activity?.showToast("Name cannot is special character")
+                message = getCurrentContext().getString(R.string.name_cannot_character)
+                activity?.showMessage(message)
                 return false
             }
             else -> true
@@ -130,11 +139,13 @@ class CreateWalletDialog(
     private fun checkValidBalance(balance: String): Boolean {
         return when (checkBalance(balance)) {
             Status.WRONG_BALANCE_EMPTY -> {
-                activity?.showToast("Don't balance not null")
+                message = getCurrentContext().getString(R.string.balance_not_null)
+                activity?.showMessage(message)
                 return false
             }
             Status.WRONG_HAS_SPECIAL_CHARACTER -> {
-                activity?.showToast("Balance cannot is digits")
+                message = getCurrentContext().getString(R.string.balance_cannot_character)
+                activity?.showMessage(message)
                 return false
             }
             else -> true

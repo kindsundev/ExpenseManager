@@ -12,12 +12,14 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 
 class MyLineChart(
     private val lineChart: LineChart,
-    private val data: ArrayList<Entry>
+    private val data: ArrayList<Entry>,
+    private val labels: List<String>,
+    private val legend: String
 ) {
     private val largeValueFormatter = LargeValueFormatter()
 
     private fun initLineDataSet(): LineDataSet {
-        val dataSet = LineDataSet(data, "Balance")
+        val dataSet = LineDataSet(data, legend)
         dataSet.apply {
             lineWidth = 2.5f
             valueTextSize = 10f
@@ -35,7 +37,6 @@ class MyLineChart(
     }
 
     private fun configLabelAtXAxis() {
-        val labels = listOf("Day 1", "Day 2", "Day 3", "Day 4", "Day 5", "Day 6", "Day 7", )
         lineChart.xAxis.apply {
             position = XAxis.XAxisPosition.BOTTOM
             granularity = 0.5f

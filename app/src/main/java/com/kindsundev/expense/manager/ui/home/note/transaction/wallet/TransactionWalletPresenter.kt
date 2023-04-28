@@ -1,5 +1,7 @@
 package com.kindsundev.expense.manager.ui.home.note.transaction.wallet
 
+import com.kindsundev.expense.manager.R
+import com.kindsundev.expense.manager.common.Logger
 import com.kindsundev.expense.manager.data.firebase.WalletFirebase
 import com.kindsundev.expense.manager.data.model.WalletModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -19,7 +21,11 @@ class TransactionWalletPresenter(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
-                onError = { view.onError(it.message.toString()) },
+                onError = {
+                    val message = view.getCurrentContext().getString(R.string.something_error)
+                    view.onError(message)
+                    Logger.error(it.message.toString())
+                },
                 onComplete = {view.onSuccessWallets(mWallets)},
                 onNext = { mWallets.add(it) }
             )

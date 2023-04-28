@@ -1,5 +1,6 @@
 package com.kindsundev.expense.manager.ui.signup
 
+import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Logger
 import com.kindsundev.expense.manager.common.Status
 import com.kindsundev.expense.manager.data.firebase.AuthFirebase
@@ -11,9 +12,9 @@ import io.reactivex.schedulers.Schedulers
 class SignUpPresenter(
     private val view: SignUpContract.View
 ) : SignUpContract.Presenter {
-
     private val compositeDisposable = CompositeDisposable()
     private val authFirebase by lazy { AuthFirebase() }
+    private lateinit var message: String
 
     override fun handlerSignUp( email: String, password: String) {
         checkDataFromInput(email, password)
@@ -24,19 +25,24 @@ class SignUpPresenter(
     private fun checkDataFromInput(email: String, password: String) {
         when (checkEmailAndPassword(email, password)) {
             Status.WRONG_EMAIL_EMPTY -> {
-                view.onError("Email mus not be null")
+                message = view.getCurrentContext().getString(R.string.email_not_null)
+                view.onError(message)
             }
             Status.WRONG_EMAIL_PATTERN -> {
-                view.onError("Email invalidate")
+                message = view.getCurrentContext().getString(R.string.email_invalidate)
+                view.onError(message)
             }
             Status.WRONG_PASSWORD_EMPTY -> {
-                view.onError("Password must not be null")
+                message = view.getCurrentContext().getString(R.string.password_not_null)
+                view.onError(message)
             }
             Status.WRONG_PASSWORD_LENGTH -> {
-                view.onError("Password must be greater than or equal to 6")
+                message = view.getCurrentContext().getString(R.string.password_to_short)
+                view.onError(message)
             }
             Status.WRONG_EMAIL_PASSWORD_EMPTY -> {
-                view.onError("Please input full email and password")
+                message = view.getCurrentContext().getString(R.string.email_password_null)
+                view.onError(message)
             }
             else -> {}
         }
@@ -49,7 +55,8 @@ class SignUpPresenter(
             .subscribe({
                 view.onSuccess()
             }, {
-                view.onError("The email address is already in use by another account")
+                message = view.getCurrentContext().getString(R.string.email_already_used)
+                view.onError(message)
                 Logger.error("Sign Up: ${it.message}")
             })
         compositeDisposable.add(disposableSignUp)

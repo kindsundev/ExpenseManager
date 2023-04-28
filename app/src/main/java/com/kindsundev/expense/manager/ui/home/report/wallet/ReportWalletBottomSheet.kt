@@ -1,5 +1,6 @@
 package com.kindsundev.expense.manager.ui.home.report.wallet
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +10,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.BottomSheetSelectWalletBinding
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
-import com.kindsundev.expense.manager.utils.showToast
+import com.kindsundev.expense.manager.utils.showMessage
 import com.kindsundev.expense.manager.utils.startLoadingDialog
 
 class ReportWalletBottomSheet(
@@ -21,6 +22,8 @@ class ReportWalletBottomSheet(
 
     private lateinit var walletAdapter: ReportWalletAdapter
     private lateinit var walletPresenter: ReportWalletPresenter
+
+    override fun getCurrentContext(): Context = requireContext()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,7 +38,7 @@ class ReportWalletBottomSheet(
     }
 
     private fun initRecyclerView() {
-        binding!!.rvWallets.layoutManager = LinearLayoutManager(context)
+        binding!!.rvWallets.layoutManager = LinearLayoutManager(getCurrentContext())
         walletPresenter.handleGetWallets()
     }
 
@@ -57,7 +60,7 @@ class ReportWalletBottomSheet(
 
     override fun onError(message: String) {
         startLoadingDialog(loadingDialog, parentFragmentManager, false)
-        activity?.showToast(message)
+        activity?.showMessage(message)
     }
 
     override fun onDestroyView() {

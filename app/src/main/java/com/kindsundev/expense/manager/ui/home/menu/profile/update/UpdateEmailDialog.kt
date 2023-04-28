@@ -20,7 +20,7 @@ import com.kindsundev.expense.manager.ui.home.menu.profile.ProfileContact
 import com.kindsundev.expense.manager.ui.home.menu.profile.ProfilePresenter
 import com.kindsundev.expense.manager.utils.checkEmail
 import com.kindsundev.expense.manager.utils.hideKeyboard
-import com.kindsundev.expense.manager.utils.showToast
+import com.kindsundev.expense.manager.utils.showMessage
 import com.kindsundev.expense.manager.utils.startLoadingDialog
 
 class UpdateEmailDialog(
@@ -31,6 +31,8 @@ class UpdateEmailDialog(
 
     private lateinit var profilePresenter: ProfilePresenter
     private val loadingDialog by lazy { LoadingDialog() }
+
+    override fun getCurrentContext(): Context = requireContext()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -79,11 +81,11 @@ class UpdateEmailDialog(
     private fun checkValidEmail(email: String): Boolean {
         return when (checkEmail(email)) {
             Status.WRONG_EMAIL_EMPTY -> {
-                activity?.showToast("Email mus not be null")
+                activity?.showMessage(getCurrentContext().getString(R.string.email_not_null))
                 false
             }
             Status.WRONG_EMAIL_PATTERN -> {
-                activity?.showToast("Email invalidate")
+                activity?.showMessage(getCurrentContext().getString(R.string.email_invalidate))
                 false
             }
             else -> true

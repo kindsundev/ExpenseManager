@@ -8,10 +8,8 @@ interface SplashingContact {
     }
 
     interface View {
-
         fun isLoggedIn()
 
         fun notLoggedIn()
-
     }
 }

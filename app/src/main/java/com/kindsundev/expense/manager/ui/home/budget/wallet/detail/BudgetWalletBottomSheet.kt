@@ -1,6 +1,7 @@
 package com.kindsundev.expense.manager.ui.home.budget.wallet.detail
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -24,6 +25,8 @@ class BudgetWalletBottomSheet(
 
     private lateinit var mWalletDetailPresenter: BudgetWalletDetailPresenter
     private lateinit var mCurrentWallet: WalletModel
+
+    override fun getCurrentContext(): Context = requireContext()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +54,8 @@ class BudgetWalletBottomSheet(
             binding!!.radioBtnVnd.isChecked = true
         }
         val transactionAmount: Int = wallet.getTransactionCount()
-        binding!!.tvTransactionCount.text = "Transactions count: $transactionAmount"
+        val transactionTitle = getCurrentContext().getString(R.string.transaction_count_number)
+        binding!!.tvTransactionCount.text = "${transactionTitle}: $transactionAmount"
         binding!!.edtName.text = wallet.name!!.toEditable()
         binding!!.edtBalance.text = formatDisplayCurrencyBalance(wallet.balance.toString()).toEditable()
     }
@@ -64,9 +68,9 @@ class BudgetWalletBottomSheet(
 
     private fun onCLickSaveUpdateWallet() {
         if (binding!!.edtBalance.text.toString().isEmpty()) {
-            activity?.showToast("Please enter balance!")
+            activity?.showMessage(getCurrentContext().getString(R.string.please_enter_amount))
         } else if (binding!!.edtName.text.toString().isEmpty()) {
-            activity?.showToast("Please enter name!")
+            activity?.showMessage(getCurrentContext().getString(R.string.please_enter_name))
         } else {
             mCurrentWallet = getCurrentWallet()
             mWalletDetailPresenter.updateWallet(mCurrentWallet)
@@ -88,10 +92,12 @@ class BudgetWalletBottomSheet(
             .setTitle(R.string.delete_wallet)
             .setMessage(R.string.message_for_delete_wallet)
             .setCancelable(false)
-            .setPositiveButton("OK") { _, _ ->
+            .setPositiveButton(getCurrentContext().getString(R.string.ok)) { _, _ ->
                 mWalletDetailPresenter.deleteWallet(wallet)
             }
-            .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
+            .setNegativeButton(getCurrentContext().getString(R.string.cancel)) { dialog, _ ->
+                dialog.dismiss()
+            }
             .create()
         alertDialog.window?.apply {
             setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
@@ -112,13 +118,13 @@ class BudgetWalletBottomSheet(
 
     override fun onError(message: String) {
         startLoadingDialog(loadingDialog, parentFragmentManager, false)
-        activity?.showToast(message)
+        activity?.showMessage(message)
     }
 
     override fun onSuccess() {}
 
     override fun onSuccess(message: String) {
-        activity?.showToast(message)
+        activity?.showMessage(message)
         this.dismiss()
         callback.onSuccessAndRequiredRefreshData(true)
         startLoadingDialog(loadingDialog, parentFragmentManager, false)

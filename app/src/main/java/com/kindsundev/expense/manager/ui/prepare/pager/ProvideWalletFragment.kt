@@ -1,5 +1,6 @@
 package com.kindsundev.expense.manager.ui.prepare.pager
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,7 +15,7 @@ import com.kindsundev.expense.manager.ui.custom.LoadingDialog
 import com.kindsundev.expense.manager.ui.home.HomeActivity
 import com.kindsundev.expense.manager.ui.prepare.PrepareWalletContract
 import com.kindsundev.expense.manager.ui.prepare.PrepareWalletPresenter
-import com.kindsundev.expense.manager.utils.showToast
+import com.kindsundev.expense.manager.utils.showMessage
 import com.kindsundev.expense.manager.utils.startLoadingDialog
 
 class ProvideWalletFragment : Fragment(),
@@ -26,6 +27,8 @@ class ProvideWalletFragment : Fragment(),
     private lateinit var mPrepareWalletPresenter: PrepareWalletPresenter
     private lateinit var mWalletAdapter: ProvideWalletAdapter
     private lateinit var mWallets : ArrayList<WalletModel>
+
+    override fun getCurrentContext(): Context = requireContext()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +42,7 @@ class ProvideWalletFragment : Fragment(),
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentProvideWalletBinding.inflate(inflater, container, false)
-        binding!!.rcvWallets.layoutManager = LinearLayoutManager(context)
+        binding!!.rcvWallets.layoutManager = LinearLayoutManager(getCurrentContext())
         mPrepareWalletPresenter.handleGetWallets()
         return binding!!.root
     }
@@ -64,7 +67,7 @@ class ProvideWalletFragment : Fragment(),
 
     override fun onError(message: String) {
         startLoadingDialog(loadingDialog, parentFragmentManager, false)
-        activity?.showToast(message)
+        activity?.showMessage(message)
     }
 
     override fun onSuccess() {}

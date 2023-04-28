@@ -1,5 +1,6 @@
 package com.kindsundev.expense.manager.ui.home.budget.wallet
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Constant
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.FragmentBudgetWalletBinding
@@ -18,7 +20,7 @@ import com.kindsundev.expense.manager.ui.home.budget.wallet.adapter.BudgetWallet
 import com.kindsundev.expense.manager.ui.home.budget.wallet.detail.BudgetWalletBottomSheet
 import com.kindsundev.expense.manager.ui.home.budget.wallet.detail.BudgetWalletDetailContract
 import com.kindsundev.expense.manager.utils.toggleBottomNavigation
-import com.kindsundev.expense.manager.utils.showToast
+import com.kindsundev.expense.manager.utils.showMessage
 import com.kindsundev.expense.manager.utils.startLoadingDialog
 
 class BudgetWalletFragment : Fragment(),
@@ -31,6 +33,8 @@ class BudgetWalletFragment : Fragment(),
     private lateinit var walletPresenter: BudgetWalletPresenter
     private lateinit var mWalletAdapter : BudgetWalletAdapter
     private lateinit var mWalletDetailBottomSheet: BudgetWalletBottomSheet
+
+    override fun getCurrentContext(): Context = requireContext()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,12 +74,12 @@ class BudgetWalletFragment : Fragment(),
 
     override fun onError(message: String) {
         startLoadingDialog(loadingDialog, parentFragmentManager, false)
-        activity?.showToast(message)
+        activity?.showMessage(message)
     }
 
     override fun onSuccess(message: String) {
         startLoadingDialog(loadingDialog, parentFragmentManager, false)
-        activity?.showToast(message)
+        activity?.showMessage(message)
     }
 
     override fun onSuccess() {}
@@ -94,16 +98,17 @@ class BudgetWalletFragment : Fragment(),
     }
 
     private fun checkAndActionAsRequired() {
+        val message: String
         when (args.keyAction) {
             Constant.ACTION_CREATE_WALLET -> {
                 onClickCreateWallet()
             }
             Constant.ACTION_UPDATE_WALLET -> {
-                val message = "Please select the wallet you want to update!"
+                message = getCurrentContext().getString(R.string.request_select_wallet_update)
                 showNotificationRequired(message)
             }
             else -> {
-                val message = "Please select the wallet you want to delete!"
+                message = getCurrentContext().getString(R.string.request_select_wallet_delete)
                 showNotificationRequired(message)
             }
         }

@@ -1,9 +1,11 @@
 package com.kindsundev.expense.manager.utils
 
+import android.content.Context
 import android.util.Patterns
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.PieEntry
+import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Constant
 import com.kindsundev.expense.manager.common.Status
 import java.time.LocalDateTime
@@ -109,23 +111,23 @@ fun incomeAndExpenseDataDefault() : ArrayList<BarEntry> {
     return data
 }
 
-fun expensePieDataDefault(): ArrayList<PieEntry> {
+fun expensePieDataDefault(context: Context): ArrayList<PieEntry> {
     val data = ArrayList<PieEntry>()
-    data.add(PieEntry(30F, "NeedFul"))
-    data.add(PieEntry(15F, "Enjoy"))
-    data.add(PieEntry(10F, "Offering"))
-    data.add(PieEntry(10F, "Health"))
-    data.add(PieEntry(30F, "Child"))
-    data.add(PieEntry(5F, "Other"))
+    data.add(PieEntry(30F, context.getString(R.string.needful)))
+    data.add(PieEntry(15F, context.getString(R.string.enjoy)))
+    data.add(PieEntry(10F, context.getString(R.string.offering)))
+    data.add(PieEntry(10F, context.getString(R.string.health)))
+    data.add(PieEntry(30F, context.getString(R.string.child)))
+    data.add(PieEntry(5F, context.getString(R.string.other)))
     return data
 }
 
-fun incomePieDataDefault(): ArrayList<PieEntry> {
+fun incomePieDataDefault(context: Context): ArrayList<PieEntry> {
     val data = ArrayList<PieEntry>()
-    data.add(PieEntry(70F, "Salary"))
-    data.add(PieEntry(5F, "Bons"))
-    data.add(PieEntry(20F, "Interest Rate"))
-    data.add(PieEntry(5F, "Other"))
+    data.add(PieEntry(70F, context.getString(R.string.salary)))
+    data.add(PieEntry(5F, context.getString(R.string.bonus)))
+    data.add(PieEntry(20F, context.getString(R.string.interest_rate)))
+    data.add(PieEntry(5F, context.getString(R.string.other)))
     return data
 }
 

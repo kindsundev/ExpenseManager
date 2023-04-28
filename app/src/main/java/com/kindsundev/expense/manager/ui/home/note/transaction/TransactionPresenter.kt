@@ -1,5 +1,6 @@
 package com.kindsundev.expense.manager.ui.home.note.transaction
 
+import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Constant
 import com.kindsundev.expense.manager.common.Logger
 import com.kindsundev.expense.manager.data.firebase.TransactionFirebase
@@ -13,6 +14,7 @@ class TransactionPresenter(
 ) : TransactionContract.Presenter {
     private val transactionFirebase by lazy { TransactionFirebase() }
     private val compositeDisposable = CompositeDisposable()
+    private lateinit var message: String
 
     override fun createTransaction(walletID: Int, transaction: TransactionModel) {
         view.onLoad()
@@ -22,7 +24,8 @@ class TransactionPresenter(
             .subscribe({
                 view.onSuccess()
             }, {
-                view.onError("Something went wrong, please try again later!")
+                message = view.getCurrentContext().getString(R.string.create_transaction_failed)
+                view.onError(message)
                 Logger.error("Create transaction: ${it.message!!}")
             })
         compositeDisposable.add(disposable)
@@ -48,9 +51,11 @@ class TransactionPresenter(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                view.onSuccess("Create transaction success")
+                message = view.getCurrentContext().getString(R.string.create_transaction_success)
+                view.onSuccess(message)
             }, {
-                view.onError(it.message!!)
+                message = view.getCurrentContext().getString(R.string.create_transaction_failed)
+                view.onError(message)
                 Logger.error("Update balance: ${it.message!!}")
             })
         compositeDisposable.add(disposable)

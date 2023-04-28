@@ -14,9 +14,9 @@ class ReportPresenter(
     private val view: ReportContract.View
 ): ReportContract.Presenter {
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
+    private val expenseReport = ExpenseReportUtils(view.getCurrentContext())
+    private val incomeReport = IncomeReportUtils(view.getCurrentContext())
     private val balanceReport = BalanceReportUtils()
-    private val expenseReport = ExpenseReportUtils()
-    private val incomeReport = IncomeReportUtils()
     private val totalReport = TotalReportUtils()
 
     override fun calculateTotalAmountOfIncomeAndExpense(wallet: WalletModel) {

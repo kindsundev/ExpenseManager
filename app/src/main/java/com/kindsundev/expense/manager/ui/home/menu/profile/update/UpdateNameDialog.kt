@@ -20,7 +20,7 @@ import com.kindsundev.expense.manager.ui.home.menu.profile.ProfileContact
 import com.kindsundev.expense.manager.ui.home.menu.profile.ProfilePresenter
 import com.kindsundev.expense.manager.utils.checkName
 import com.kindsundev.expense.manager.utils.hideKeyboard
-import com.kindsundev.expense.manager.utils.showToast
+import com.kindsundev.expense.manager.utils.showMessage
 import com.kindsundev.expense.manager.utils.startLoadingDialog
 
 class UpdateNameDialog(
@@ -31,6 +31,8 @@ class UpdateNameDialog(
 
     private lateinit var profilePresenter: ProfilePresenter
     private val loadingDialog by lazy { LoadingDialog() }
+
+    override fun getCurrentContext(): Context = requireContext()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -78,25 +80,31 @@ class UpdateNameDialog(
     }
 
     private fun checkValidName(name: String): Boolean {
+        val message: String
         when (checkName(name)) {
             Status.WRONG_NAME_EMPTY -> {
-                activity?.showToast("Don't name to empty")
+                message = getCurrentContext().getString(R.string.name_not_null)
+                activity?.showMessage(message)
                 return false
             }
             Status.WRONG_NAME_SHORT -> {
-                activity?.showToast("Don't name to short")
+                message = getCurrentContext().getString(R.string.name_to_short)
+                activity?.showMessage(message)
                 return false
             }
             Status.WRONG_NAME_LONG -> {
-                activity?.showToast("Don't name to long")
+                message = getCurrentContext().getString(R.string.name_to_long)
+                activity?.showMessage(message)
                 return false
             }
             Status.WRONG_NAME_HAS_DIGITS -> {
-                activity?.showToast("Name cannot is digits")
+                message = getCurrentContext().getString(R.string.name_cannot_digits)
+                activity?.showMessage(message)
                 return false
             }
             Status.WRONG_HAS_SPECIAL_CHARACTER -> {
-                activity?.showToast("Name cannot is special character")
+                message = getCurrentContext().getString(R.string.name_cannot_character)
+                activity?.showMessage(message)
                 return false
             }
             else -> return true

@@ -1,11 +1,13 @@
 package com.kindsundev.expense.manager.utils
 
+import android.content.Context
 import com.github.mikephil.charting.data.PieEntry
+import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Constant
 import com.kindsundev.expense.manager.data.model.BillModel
 import com.kindsundev.expense.manager.data.model.TransactionModel
 
-class IncomeReportUtils {
+class IncomeReportUtils(private val context: Context) {
     private val salary = ArrayList<TransactionModel>()
     private val bons = ArrayList<TransactionModel>()
     private val interestRate = ArrayList<TransactionModel>()
@@ -40,10 +42,10 @@ class IncomeReportUtils {
     private fun groupClassification(transactions : ArrayList<TransactionModel>) {
         transactions.forEach {
             when(it.category) {
-                "Salary" -> salary.add(it)
-                "Bons" -> bons.add(it)
-                "Interest Rate" -> interestRate.add(it)
-                "Other" -> other.add(it)
+                context.getString(R.string.salary) -> salary.add(it)
+                context.getString(R.string.bonus) -> bons.add(it)
+                context.getString(R.string.interest_rate) -> interestRate.add(it)
+                context.getString(R.string.other) -> other.add(it)
                 else -> {}
             }
         }
@@ -51,10 +53,10 @@ class IncomeReportUtils {
 
     private fun initPieData(transactions: ArrayList<TransactionModel>): ArrayList<PieEntry> {
         val data = ArrayList<PieEntry>()
-        data.add(PieEntry(calculatePercentage(salary, transactions), "Salary"))
-        data.add(PieEntry(calculatePercentage(bons, transactions), "Bons"))
-        data.add(PieEntry(calculatePercentage(interestRate, transactions), "Interest Rate"))
-        data.add(PieEntry(calculatePercentage(other, transactions), "Other"))
+        data.add(PieEntry(calculatePercentage(salary, transactions), context.getString(R.string.salary)))
+        data.add(PieEntry(calculatePercentage(bons, transactions), context.getString(R.string.bonus)))
+        data.add(PieEntry(calculatePercentage(interestRate, transactions), context.getString(R.string.interest_rate)))
+        data.add(PieEntry(calculatePercentage(other, transactions), context.getString(R.string.other)))
         cleanPercentageJunkData(data)
         return data
     }

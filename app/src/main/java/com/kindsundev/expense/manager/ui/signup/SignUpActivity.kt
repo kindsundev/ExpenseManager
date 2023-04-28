@@ -1,5 +1,6 @@
 package com.kindsundev.expense.manager.ui.signup
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -11,6 +12,8 @@ import com.kindsundev.expense.manager.utils.startPrepareWalletActivity
 class SignUpActivity : AppCompatActivity(), SignUpContract.View {
     private lateinit var binding: ActivitySignUpBinding
     private lateinit var signUpPresenter : SignUpPresenter
+
+    override fun getCurrentContext(): Context = this
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
