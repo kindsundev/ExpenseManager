@@ -58,7 +58,9 @@ class BudgetFragment : Fragment() {
     }
 
     private fun initPlannedListener() {
-
+        binding!!.planned.tvCreatePlan.setOnClickListener { activity?.requestPremium() }
+        binding!!.planned.tvUpdatePlan.setOnClickListener { activity?.requestPremium() }
+        binding!!.planned.tvDeletePlan.setOnClickListener { activity?.requestPremium() }
     }
 
     override fun onDestroyView() {

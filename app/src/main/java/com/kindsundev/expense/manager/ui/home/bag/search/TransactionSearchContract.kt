@@ -7,10 +7,10 @@ interface TransactionSearchContract {
 
     interface Presenter {
         fun searchTransactionInDay(walletID: String, date: String)
-
-        fun getBill(): ArrayList<BillModel>
     }
 
-    interface View : BaseView
+    interface View : BaseView {
+        fun onSuccessBills(bills: ArrayList<BillModel>)
+    }
 
 }

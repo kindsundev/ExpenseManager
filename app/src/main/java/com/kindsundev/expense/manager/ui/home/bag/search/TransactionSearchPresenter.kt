@@ -13,11 +13,10 @@ class TransactionSearchPresenter(
     val view : TransactionSearchContract.View
 ) : TransactionSearchContract.Presenter {
     private val compositeDisposable = CompositeDisposable()
-    private var mBill = ArrayList<BillModel>()
 
     override fun searchTransactionInDay(walletID: String, date: String) {
         view.onLoad()
-        mBill.clear()
+        val mBill = ArrayList<BillModel>()
         val disposable = TransactionFirebase().getTransactionsInDay(walletID, date)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -27,15 +26,11 @@ class TransactionSearchPresenter(
                     view.onError(message)
                     Logger.error(it.message.toString())
                 },
-                onComplete = { view.onSuccess() },
+                onComplete = { view.onSuccessBills(mBill) },
                 onNext = {mBill.add(it)}
             )
         compositeDisposable.add(disposable)
     }
 
-    override fun getBill(): ArrayList<BillModel> = mBill
-
-    fun cleanUp() {
-        compositeDisposable.clear()
-    }
+    fun cleanUp() = compositeDisposable.clear()
 }

@@ -36,7 +36,6 @@ class TransactionSearchFragment: Fragment(), TransactionSearchContract.View {
     private lateinit var searchPresenter: TransactionSearchPresenter
     private lateinit var transactionBottomSheet: TransactionBottomSheet
     private lateinit var mCurrentTimePicker: String
-    private lateinit var mBill : ArrayList<BillModel>
     private lateinit var mWallet: WalletModel
 
     override fun getCurrentContext(): Context = requireContext()
@@ -93,17 +92,18 @@ class TransactionSearchFragment: Fragment(), TransactionSearchContract.View {
         activity?.showMessage(message)
     }
 
-    override fun onSuccess() {
-        initRecyclerViewTransaction()
+    override fun onSuccess() {}
+
+    override fun onSuccessBills(bills: ArrayList<BillModel>) {
+        initRecyclerViewTransaction(bills)
         startLoadingDialog(loadingDialog, parentFragmentManager, false)
     }
 
-    private fun initRecyclerViewTransaction(){
-        mBill = searchPresenter.getBill()
+    private fun initRecyclerViewTransaction(bills: ArrayList<BillModel>) {
         switchLayout()
         binding!!.rcvTransaction.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = BillParentAdapter(mBill, object: BillAdapterContract.Listener {
+            adapter = BillParentAdapter(bills, object: BillAdapterContract.Listener {
                 override fun onClickTransaction(date: String, transaction: TransactionModel) {
                     showTransactionDetail(date, transaction)
                 }

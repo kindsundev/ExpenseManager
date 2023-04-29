@@ -32,7 +32,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginStart="8dp"
-            android:background="@drawable/ic_info"
+            android:background="@drawable/ic_info_yellow"
             app:layout_constraintBottom_toBottomOf="@id/layout_content"
             app:layout_constraintStart_toStartOf="@id/layout_content"
             app:layout_constraintTop_toTopOf="@id/layout_content"
@@ -58,7 +58,7 @@
             android:layout_marginTop="2dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="18dp"
-            android:text="@string/please_login_before_changing_your_any"
+            android:text="@string/please_re_login"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/shapeableImageView1"
             app:layout_constraintTop_toBottomOf="@+id/textView2" />

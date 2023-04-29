@@ -1,13 +1,4 @@
 <resources>
-    <string-array name="seven_day">
-        <item>Day 1</item>
-        <item>Day 2</item>
-        <item>Day 3</item>
-        <item>Day 4</item>
-        <item>Day 5</item>
-        <item>Day 6</item>
-        <item>Day 7</item>
-    </string-array>
     <string name="app_name">Expense Manager</string>
     <string name="network_connected">Network connected</string>
     <string name="network_disconnected">Network disconnected</string>
@@ -87,7 +78,7 @@
     <string name="expenditure_plan">Expenditure Plan</string>
     <string name="save_money">Save Money</string>
     <string name="debt_book">Debt Book</string>
-    <string name="money">1.000.000 $</string>
+    <string name="money" translatable="false">1.000.000 $</string>
     <string name="settings">Settings</string>
     <string name="security_policy">Security Policy</string>
     <string name="contact">Contact</string>
@@ -113,14 +104,14 @@
     <string name="premium">Premium</string>
     <string name="update_name">Update Name</string>
     <string name="update_email">Update Email</string>
-    <string name="update_password">Update Email</string>
+    <string name="update_password">Update Password</string>
     <string name="please_enter_your_new_name">Please enter your new name</string>
     <string name="please_enter_your_new_email">Please enter your new email</string>
-    <string name="please_enter_your_new_password">Please enter your new email</string>
+    <string name="please_enter_your_new_password">Please enter your new password</string>
     <string name="email_type">email@gmail.com</string>
     <string name="no_thanks">No, thanks</string>
     <string name="security">Security</string>
-    <string name="please_login_before_changing_your_any">Please login before changing your…</string>
+    <string name="please_re_login">Please login before changing your</string>
     <string name="transaction">Transaction</string>
     <string name="expense">Expense</string>
     <string name="income">Income</string>
@@ -168,9 +159,9 @@
     <string name="event">Events</string>
     <string name="optimization">Optimization</string>
     <string name="save">Save</string>
-    <string name="_100">$ 100.000</string>
-    <string name="_100_00">100.000.000</string>
-    <string name="_0">0</string>
+    <string name="_100" translatable="false">$ 100.000</string>
+    <string name="_100_00" translatable="false">100.000.000</string>
+    <string name="_0" translatable="false">0</string>
     <string name="balance">Balance</string>
     <string name="create_wallet">Create Wallet</string>
     <string name="currency">Currency</string>
@@ -181,10 +172,10 @@
     <string name="upgrade">Upgrade</string>
     <string name="dollar">$</string>
     <string name="tuesday">Tuesday</string>
-    <string name="_500_000">$ 500.000</string>
-    <string name="_21">21</string>
+    <string name="_500_000" translatable="false">$ 500.000</string>
+    <string name="_21" translatable="false">21</string>
     <string name="march_2023">March, 2023</string>
-    <string name="_100_500_000">$ 100.500.000</string>
+    <string name="_100_500_000" translatable="false">$ 100.500.000</string>
     <string name="note">Note</string>
     <string name="prepare_wallet">Prepare Wallet</string>
     <string name="you_already_have_a_wallet">You already have a wallet?</string>
@@ -198,6 +189,15 @@
     <string name="search">Search</string>
     <string name="picker_date_here">Picker Date Here</string>
     <string name="delete_transaction">Delete Transaction</string>
+    <string-array name="seven_day">
+        <item>Day 1</item>
+        <item>Day 2</item>
+        <item>Day 3</item>
+        <item>Day 4</item>
+        <item>Day 5</item>
+        <item>Day 6</item>
+        <item>Day 7</item>
+    </string-array>
     <string name="restart_app">Restart Application</string>
     <string name="message_for_restart_app">
         Request permission to restart the application
