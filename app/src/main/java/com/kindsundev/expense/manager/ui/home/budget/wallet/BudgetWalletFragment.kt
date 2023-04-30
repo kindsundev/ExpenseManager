@@ -117,7 +117,7 @@ class BudgetWalletFragment : Fragment(),
     private fun showNotificationRequired(message: String) {
         val snackBar = Snackbar.make(
             binding!!.coordinatorBudgetWalletContainer,
-            message, Snackbar.LENGTH_INDEFINITE
+            message, Snackbar.LENGTH_LONG
         )
         snackBar.setAction("OK") {
             snackBar.dismiss()

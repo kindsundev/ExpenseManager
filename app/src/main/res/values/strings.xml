@@ -34,6 +34,8 @@
     <string name="delete_wallet_failed">Delete wallet failed</string>
     <string name="request_select_wallet_update">Please select the wallet you want to update!</string>
     <string name="request_select_wallet_delete">Please select the wallet you want to delete!</string>
+    <string name="request_select_plan_update">Please select the plan you want to update!</string>
+    <string name="request_select_plan_delete">Please select the plan you want to delete!</string>
     <string name="please_enter_balance">Please enter balance</string>
     <string name="please_enter_name">Please enter name</string>
     <string name="transaction_count_number">Transactions count</string>
@@ -280,4 +282,6 @@
     <string name="select_language">Select Language</string>
     <string name="english">English</string>
     <string name="vietnamese">Vietnamese</string>
+    <string name="spending_plan">Spending Plan</string>
+    <string name="image">image</string>
 </resources>

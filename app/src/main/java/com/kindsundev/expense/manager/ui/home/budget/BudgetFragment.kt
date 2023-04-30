@@ -21,9 +21,9 @@ class BudgetFragment : Fragment() {
     ): View {
         _binding = FragmentBudgetBinding.inflate(inflater, container, false)
         initWalletListener()
+        initPlannedListener()
         initDebtListener()
         initSavingsListener()
-        initPlannedListener()
         return binding!!.root
     }
 
@@ -45,6 +45,24 @@ class BudgetFragment : Fragment() {
         )
     }
 
+    private fun initPlannedListener() {
+        binding!!.planned.tvCreatePlan.setOnClickListener {
+            startBudgetPlanFragment(Constant.ACTION_CREATE_SPENDING_PLAN)
+        }
+        binding!!.planned.tvUpdatePlan.setOnClickListener {
+            startBudgetPlanFragment(Constant.ACTION_UPDATE_SPENDING_PLAN)
+        }
+        binding!!.planned.tvDeletePlan.setOnClickListener {
+            startBudgetPlanFragment(Constant.ACTION_DELETE_SPENDING_PLAN)
+        }
+    }
+
+    private fun startBudgetPlanFragment(action : String) {
+        findNavController().navigate(
+            BudgetFragmentDirections.actionBudgetFragmentToBudgetPlanFragment(action)
+        )
+    }
+
     private fun initDebtListener() {
         binding!!.debt.tvCreateDebt.setOnClickListener { activity?.requestPremium() }
         binding!!.debt.tvUpdateDebt.setOnClickListener { activity?.requestPremium() }
@@ -55,12 +73,6 @@ class BudgetFragment : Fragment() {
         binding!!.savings.tvCreateSavings.setOnClickListener { activity?.requestPremium() }
         binding!!.savings.tvUpdateSavings.setOnClickListener { activity?.requestPremium() }
         binding!!.savings.tvDeleteSavings.setOnClickListener { activity?.requestPremium() }
-    }
-
-    private fun initPlannedListener() {
-        binding!!.planned.tvCreatePlan.setOnClickListener { activity?.requestPremium() }
-        binding!!.planned.tvUpdatePlan.setOnClickListener { activity?.requestPremium() }
-        binding!!.planned.tvDeletePlan.setOnClickListener { activity?.requestPremium() }
     }
 
     override fun onDestroyView() {

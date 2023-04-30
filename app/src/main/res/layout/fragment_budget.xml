@@ -49,16 +49,16 @@
                     layout="@layout/layout_budget_wallet" />
 
                 <include
+                    android:id="@+id/planned"
+                    layout="@layout/layout_budget_planned" />
+
+                <include
                     android:id="@+id/debt"
                     layout="@layout/layout_budget_debt" />
 
                 <include
                     android:id="@+id/savings"
                     layout="@layout/layout_budget_savings" />
-
-                <include
-                    android:id="@+id/planned"
-                    layout="@layout/layout_budget_planned" />
 
             </LinearLayout>
 
