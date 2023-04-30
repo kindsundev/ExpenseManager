@@ -284,4 +284,8 @@
     <string name="vietnamese">Vietnamese</string>
     <string name="spending_plan">Spending Plan</string>
     <string name="image">image</string>
+    <string name="create_spending_plan">Create Spending Plan</string>
+    <string name="estimated_amount">Estimated amount</string>
+    <string name="start_day">Start day</string>
+    <string name="end_day">End day</string>
 </resources>

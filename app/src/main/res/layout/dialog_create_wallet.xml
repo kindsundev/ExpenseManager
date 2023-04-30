@@ -54,7 +54,7 @@
                 android:layout_weight="1"
                 android:paddingHorizontal="16dp"
                 android:text="@string/currency"
-                android:textSize="18sp" />
+                android:textSize="17sp" />
 
             <RadioGroup
                 android:id="@+id/radio_group_currency"

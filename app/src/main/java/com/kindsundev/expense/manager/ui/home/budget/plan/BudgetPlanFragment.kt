@@ -38,7 +38,8 @@ class BudgetPlanFragment : Fragment() {
     }
 
     private fun onClickCreateSpendingPlan() {
-        activity?.showMessage("done")
+        val dialog = CreatePlanDialog()
+        dialog.show(parentFragmentManager, dialog.tag)
     }
 
     private fun checkAndActionAsRequired() {
