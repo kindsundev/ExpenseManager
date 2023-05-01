@@ -38,7 +38,6 @@ class BudgetWalletFragment : Fragment(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        toggleBottomNavigation(requireActivity() as HomeActivity, false)
         walletPresenter = BudgetWalletPresenter(this)
     }
 
@@ -48,6 +47,7 @@ class BudgetWalletFragment : Fragment(),
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentBudgetWalletBinding.inflate(layoutInflater)
+        toggleBottomNavigation(requireActivity() as HomeActivity, false)
         walletPresenter.handleGetWallets()
         initListener()
         checkAndActionAsRequired()
@@ -140,7 +140,7 @@ class BudgetWalletFragment : Fragment(),
 
     override fun onDestroyView() {
         super.onDestroyView()
-        toggleBottomNavigation(requireActivity() as HomeActivity, true)
         _binding = null
+        toggleBottomNavigation(requireActivity() as HomeActivity, true)
     }
 }
