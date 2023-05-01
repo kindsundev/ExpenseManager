@@ -11,8 +11,13 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Constant
+import com.kindsundev.expense.manager.common.Logger
+import com.kindsundev.expense.manager.data.model.PlanModel
 import com.kindsundev.expense.manager.databinding.FragmentBudgetPlanBinding
-import com.kindsundev.expense.manager.utils.showMessage
+import com.kindsundev.expense.manager.ui.home.HomeActivity
+import com.kindsundev.expense.manager.ui.home.budget.plan.dialog.CreatePlanContract
+import com.kindsundev.expense.manager.ui.home.budget.plan.dialog.CreatePlanDialog
+import com.kindsundev.expense.manager.utils.toggleBottomNavigation
 
 class BudgetPlanFragment : Fragment() {
     private var _binding: FragmentBudgetPlanBinding? = null
@@ -27,6 +32,7 @@ class BudgetPlanFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentBudgetPlanBinding.inflate(layoutInflater)
+        toggleBottomNavigation(requireActivity() as HomeActivity, false)
         initListener()
         checkAndActionAsRequired()
         return binding!!.root
@@ -38,7 +44,12 @@ class BudgetPlanFragment : Fragment() {
     }
 
     private fun onClickCreateSpendingPlan() {
-        val dialog = CreatePlanDialog()
+        val dialog = CreatePlanDialog(object: CreatePlanContract.Result {
+            override fun onSuccessPlan(walletId: Int, plan: PlanModel) {
+                Logger.error(plan.toString())
+                // call presenter add to database is here
+            }
+        })
         dialog.show(parentFragmentManager, dialog.tag)
     }
 
@@ -74,5 +85,6 @@ class BudgetPlanFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        toggleBottomNavigation(requireActivity() as HomeActivity, true)
     }
 }
