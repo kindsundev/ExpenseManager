@@ -67,7 +67,7 @@ class PrepareWalletFragment : Fragment(), PrepareWalletContract.View {
         val name = binding!!.edtName.text.toString()
         val balance = binding!!.edtBalance.text.toString()
         return if (name.isEmpty() && balance.isEmpty()) {
-            message = getCurrentContext().getString(R.string.please_enter_full_data)
+            message = getCurrentContext().getString(R.string.please_provide_full_data)
             activity?.showMessage(message)
             false
         } else {

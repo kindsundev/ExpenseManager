@@ -79,7 +79,7 @@ class CreateWalletDialog(
         val name = binding!!.edtName.text.toString()
         val balance = binding!!.edtBalance.text.toString()
         return if (name.isEmpty() && balance.isEmpty()) {
-            activity?.showMessage(getCurrentContext().getString(R.string.please_enter_full_data))
+            activity?.showMessage(getCurrentContext().getString(R.string.please_provide_full_data))
             false
         } else {
             true
