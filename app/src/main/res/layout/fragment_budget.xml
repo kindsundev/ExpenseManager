@@ -50,6 +50,10 @@
                 android:id="@+id/debt"
                 layout="@layout/layout_budget_debt" />
 
+            <include
+                android:id="@+id/savings"
+                layout="@layout/layout_budget_savings" />
+
         </LinearLayout>
 
     </ScrollView>

@@ -50,6 +50,7 @@
         <Button
             android:id="@+id/btn_wallet_manager"
             android:layout_width="180dp"
+            android:backgroundTint="@color/green"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:text="@string/wallet_manager" />

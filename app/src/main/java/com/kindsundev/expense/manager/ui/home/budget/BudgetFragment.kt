@@ -35,6 +35,9 @@ class BudgetFragment : Fragment() {
                 BudgetFragmentDirections.actionBudgetFragmentToBudgetPlanFragment()
             )
         }
+        binding!!.savings.btnSavingsManager.setOnClickListener {
+            activity?.requestPremium()
+        }
         binding!!.debt.btnDebtManager.setOnClickListener {
             activity?.requestPremium()
         }

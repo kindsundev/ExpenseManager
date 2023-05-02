@@ -25,10 +25,6 @@ class BudgetPlanFragment : Fragment(){
     private lateinit var bottomSheetWallet: BudgetWalletBottomSheet
     private lateinit var mCurrentWallet: WalletModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
