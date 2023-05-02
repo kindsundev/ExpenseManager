@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_select_wallet"
+        android:icon="@drawable/ic_account_balance_yellow"
+        android:title="@string/select_wallet" />
+    <item
+        android:id="@+id/action_add_plan"
+        android:icon="@drawable/ic_plan"
+        android:title="@string/create_plan" />
+</menu>
