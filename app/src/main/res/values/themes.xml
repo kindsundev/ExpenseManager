@@ -14,9 +14,13 @@
         <item name="actionOverflowButtonStyle">@style/MyOverflowButtonStyle</item>
     </style>
 
+    <!-- Toolbar-->
+
     <style name="MyOverflowButtonStyle" parent="Widget.AppCompat.ActionButton.Overflow">
         <item name="android:tint">@color/white</item>
     </style>
+
+    <!-- General   -->
 
     <style name="EditTextLoginInput" parent="Widget.AppCompat.EditText">
         <item name="android:layout_marginStart">32dp</item>
@@ -33,8 +37,6 @@
     <style name="FullScreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowFullscreen">true</item>
     </style>
-
-    <!-- General   -->
 
     <style name="TitleTopFragment" parent="Theme.ExpenseManager">
         <item name="android:textColor">@color/white</item>

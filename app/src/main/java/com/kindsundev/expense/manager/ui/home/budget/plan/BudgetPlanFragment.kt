@@ -25,7 +25,6 @@ class BudgetPlanFragment : Fragment(){
     private lateinit var bottomSheetWallet: BudgetWalletBottomSheet
     private lateinit var mCurrentWallet: WalletModel
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
