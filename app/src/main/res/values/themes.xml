@@ -10,6 +10,12 @@
         <item name="colorOnSecondary">@color/white</item>
 
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+
+        <item name="actionOverflowButtonStyle">@style/MyOverflowButtonStyle</item>
+    </style>
+
+    <style name="MyOverflowButtonStyle" parent="Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:tint">@color/white</item>
     </style>
 
     <style name="EditTextLoginInput" parent="Widget.AppCompat.EditText">
