@@ -1,11 +1,11 @@
 package com.kindsundev.expense.manager.ui.home.budget.plan
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Logger
 import com.kindsundev.expense.manager.data.model.PlanModel
 import com.kindsundev.expense.manager.data.model.WalletModel
@@ -17,12 +17,18 @@ import com.kindsundev.expense.manager.ui.home.budget.plan.wallet.BudgetWalletBot
 import com.kindsundev.expense.manager.ui.home.budget.plan.wallet.BudgetWalletContract
 import com.kindsundev.expense.manager.utils.toggleBottomNavigation
 
-class BudgetPlanFragment : Fragment() {
+class BudgetPlanFragment : Fragment(){
     private var _binding: FragmentBudgetPlanBinding? = null
     private val binding get() = _binding
+    private lateinit var toolbar: Toolbar
 
     private lateinit var bottomSheetWallet: BudgetWalletBottomSheet
     private lateinit var mCurrentWallet: WalletModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,13 +37,32 @@ class BudgetPlanFragment : Fragment() {
     ): View {
         _binding = FragmentBudgetPlanBinding.inflate(layoutInflater)
         toggleBottomNavigation(requireActivity() as HomeActivity, false)
+        initToolbar()
+        initBottomSheetWallet()
         initListener()
         return binding!!.root
     }
 
+    private fun initToolbar() {
+        toolbar = binding!!.toolbar
+        toolbar.inflateMenu(R.menu.plan_manager_menu)
+    }
+
     private fun initListener() {
-        binding!!.btnBack.setOnClickListener { it.findNavController().popBackStack() }
-        binding!!.btnSelectWallet.setOnClickListener { initBottomSheetWallet() }
+        binding!!.btnBack.setOnClickListener {it.findNavController().popBackStack() }
+        toolbar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.action_select_wallet -> {
+                    initBottomSheetWallet()
+                    true
+                }
+                R.id.action_add_plan -> {
+                    onClickCreateSpendingPlan()
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     private fun initBottomSheetWallet() {
