@@ -7,10 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
-import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Constant
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.FragmentBudgetWalletBinding
@@ -28,7 +25,6 @@ class BudgetWalletFragment : Fragment(),
     private var _binding: FragmentBudgetWalletBinding? = null
     private val binding get() = _binding
     private val loadingDialog by lazy { LoadingDialog() }
-    private val args: BudgetWalletFragmentArgs by navArgs()
 
     private lateinit var walletPresenter: BudgetWalletPresenter
     private lateinit var mWalletAdapter : BudgetWalletAdapter
@@ -50,7 +46,6 @@ class BudgetWalletFragment : Fragment(),
         toggleBottomNavigation(requireActivity() as HomeActivity, false)
         walletPresenter.handleGetWallets()
         initListener()
-        checkAndActionAsRequired()
         return binding!!.root
     }
 
@@ -95,34 +90,6 @@ class BudgetWalletFragment : Fragment(),
             layoutManager = LinearLayoutManager(requireContext())
             adapter = mWalletAdapter
         }
-    }
-
-    private fun checkAndActionAsRequired() {
-        val message: String
-        when (args.keyAction) {
-            Constant.ACTION_CREATE_WALLET -> {
-                onClickCreateWallet()
-            }
-            Constant.ACTION_UPDATE_WALLET -> {
-                message = getCurrentContext().getString(R.string.request_select_wallet_update)
-                showNotificationRequired(message)
-            }
-            else -> {
-                message = getCurrentContext().getString(R.string.request_select_wallet_delete)
-                showNotificationRequired(message)
-            }
-        }
-    }
-
-    private fun showNotificationRequired(message: String) {
-        val snackBar = Snackbar.make(
-            binding!!.coordinatorBudgetWalletContainer,
-            message, Snackbar.LENGTH_LONG
-        )
-        snackBar.setAction("OK") {
-            snackBar.dismiss()
-        }
-        snackBar.show()
     }
 
     override fun onClickEditWallet(wallet: WalletModel) {

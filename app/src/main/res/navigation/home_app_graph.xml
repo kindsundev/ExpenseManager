@@ -53,9 +53,6 @@
         android:id="@+id/budgetWalletFragment"
         android:name="com.kindsundev.expense.manager.ui.home.budget.wallet.BudgetWalletFragment"
         android:label="BudgetWalletFragment">
-        <argument
-            android:name="keyAction"
-            app:argType="string" />
     </fragment>
 
     <fragment
@@ -158,9 +155,6 @@
         android:id="@+id/budgetPlanFragment"
         android:name="com.kindsundev.expense.manager.ui.home.budget.plan.BudgetPlanFragment"
         android:label="BudgetPlanFragment">
-        <argument
-            android:name="keyAction"
-            app:argType="string" />
     </fragment>
 
 </navigation>
