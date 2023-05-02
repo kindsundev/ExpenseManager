@@ -289,4 +289,5 @@
     <string name="estimated_amount">Estimated amount</string>
     <string name="start_day">Start day</string>
     <string name="end_day">End day</string>
+    <string name="edit">Edit</string>
 </resources>
