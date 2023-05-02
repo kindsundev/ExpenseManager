@@ -2,6 +2,7 @@ package com.kindsundev.expense.manager.ui.home.budget.plan.dialog
 
 import android.content.Context
 import com.kindsundev.expense.manager.data.model.PlanModel
+import com.kindsundev.expense.manager.data.model.WalletModel
 
 interface CreatePlanContract {
     interface Presenter {
@@ -10,7 +11,7 @@ interface CreatePlanContract {
             amount: String,
             startDate: String,
             endDate: String,
-            wallet: String
+            walletId: Int
         ): PlanModel
     }
 
@@ -21,6 +22,6 @@ interface CreatePlanContract {
     }
 
     interface Result {
-        fun onSuccessPlan(walletId: Int, plan: PlanModel)
+        fun onSuccessPlan(wallet: WalletModel, plan: PlanModel)
     }
 }

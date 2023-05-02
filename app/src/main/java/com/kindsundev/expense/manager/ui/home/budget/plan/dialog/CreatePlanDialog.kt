@@ -22,7 +22,6 @@ import com.kindsundev.expense.manager.ui.home.budget.plan.wallet.BudgetWalletBot
 import com.kindsundev.expense.manager.ui.home.budget.plan.wallet.BudgetWalletContract
 import com.kindsundev.expense.manager.utils.formatInputCurrencyBalance
 import com.kindsundev.expense.manager.utils.showMessage
-import kotlin.properties.Delegates
 
 class CreatePlanDialog(
     private val listener: CreatePlanContract.Result
@@ -30,8 +29,8 @@ class CreatePlanDialog(
     private var _binding: DialogCreatePlanBinding? = null
     private val binding get() = _binding
     private lateinit var walletBottomSheet: BudgetWalletBottomSheet
-    private var currentWalletId by Delegates.notNull<Int>()
     private lateinit var dialogPresenter: CreatePlanPresenter
+    private lateinit var mCurrentWallet: WalletModel
 
     override fun getCurrentContext(): Context = requireContext()
 
@@ -76,7 +75,7 @@ class CreatePlanDialog(
     private fun onClickSelectWallet() {
         walletBottomSheet = BudgetWalletBottomSheet(object: BudgetWalletContract.Listener {
             override fun onClickWalletItem(wallet: WalletModel) {
-                currentWalletId = wallet.id!!
+                mCurrentWallet = wallet
                 binding!!.tvWallet.text = wallet.name
                 walletBottomSheet.dismiss()
             }
@@ -105,13 +104,17 @@ class CreatePlanDialog(
         val amount = binding!!.edtEstimatedAmount.text.toString().replace(",", "")
         val startDate = binding!!.tvStartDay.text.toString()
         val endDate = binding!!.tvEndDay.text.toString()
-        val wallet = binding!!.tvWallet.text.toString()
-        val plan = dialogPresenter.handleDataFromInput(name, amount, startDate, endDate, wallet)
-        if (plan.id != 0) {
-            listener.onSuccessPlan(currentWalletId, plan)
-            this.dismiss()
+        if (binding!!.tvWallet.text.toString() == getCurrentContext().getString(R.string.wallet)) {
+            activity?.showMessage(requireContext().getString(R.string.please_select_wallet))
         } else {
-            Logger.error("address: onClickCreatePlan() from CreatePlanDialog in Plan")
+            val walletId = mCurrentWallet.id!!
+            val plan = dialogPresenter.handleDataFromInput(name, amount, startDate, endDate, walletId)
+            if (plan.id != 0 && plan.walletId != 0) {
+                listener.onSuccessPlan(mCurrentWallet, plan)
+                this.dismiss()
+            } else {
+                Logger.error("address: onClickCreatePlan() from CreatePlanDialog in Plan")
+            }
         }
     }
 

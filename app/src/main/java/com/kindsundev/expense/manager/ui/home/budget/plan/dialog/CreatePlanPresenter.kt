@@ -16,11 +16,11 @@ class CreatePlanPresenter(
         amount: String,
         startDate: String,
         endDate: String,
-        wallet: String
+        walletId: Int
     ): PlanModel {
-        if (isValidData(name, amount, startDate, endDate, wallet)) {
-            val id = hashCodeForID(name, amount, startDate, endDate, wallet)
-            return PlanModel(id, name, amount.toDouble(), startDate, endDate)
+        if (isValidData(name, amount, startDate, endDate, walletId)) {
+            val id = hashCodeForID(name, amount, startDate, endDate, walletId.toString())
+            return PlanModel(id, walletId, name, amount.toDouble(), startDate, endDate)
         }
         return PlanModel()
     }
@@ -30,13 +30,13 @@ class CreatePlanPresenter(
         amount: String,
         startDate: String,
         endDate: String,
-        wallet: String
+        walletId: Int
     ): Boolean {
         if (name.isNotEmpty()
             && amount.isNotEmpty()
             && startDate != view.getCurrentContext().getString(R.string.start_day)
             && endDate != view.getCurrentContext().getString(R.string.end_day)
-            && wallet != view.getCurrentContext().getString(R.string.wallet)
+            && walletId != 0
         ) {
             if (isValidDate(startDate, endDate)) {
                 return true
