@@ -34,15 +34,26 @@ class DateTimePickerDialog(
     private fun getCurrentDateTimeCalender() {
         val rightNow = LocalDateTime.now()
         currentDay = rightNow.dayOfMonth
-        currentMonth = rightNow.monthValue  - 1
+        currentMonth = rightNow.monthValue - 1
         currentYear = rightNow.year
         currentHour = rightNow.hour
         currentMinute = rightNow.minute
     }
 
+    /*
+    * Why me handle (-1) & (+1) here?
+    * - DatePickerDialog: [month] range [0-11] not [1-12]
+    * - LocalDateTime: [month] range [1-12]
+    * -> LocalDateTime: [month - 1] then Result: [month + 1]
+    *
+    * (If not handle as so,
+    * then it is currently May but when displayed as June,
+    * then select June but the result is still May.
+    * This means data inconsistency between data and client)
+    * */
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
         newDay = dayOfMonth
-        newMonth = month
+        newMonth = month + 1
         newYear = year
         getCurrentDateTimeCalender()
         TimePickerDialog(context, this, currentHour, currentMinute, true).show()
