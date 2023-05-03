@@ -9,7 +9,6 @@ class Constant {
         const val UPDATE_NAME_DIALOG_NAME = "UPDATE_NAME_FRAGMENT"
         const val UPDATE_EMAIL_DIALOG_NAME = "UPDATE_EMAIL_FRAGMENT"
         const val UPDATE_PASSWORD_DIALOG_NAME = "UPDATE_PASSWORD_FRAGMENT"
-        const val UPDATE_LANGUAGE_DIALOG_NAME = "UPDATE_LANGUAGE_FRAGMENT"
 
         const val REPORT_WALLET_BOTTOM_SHEET_WALLET_NAME = "REPORT_WALLET_BOTTOM_SHEET"
         const val TRANSACTION_WALLET_BOTTOM_SHEET_WALLET_NAME = "TRANS_WALLET_BOTTOM_SHEET"
@@ -40,19 +39,12 @@ class Constant {
 
         const val MY_REFERENCE_NAME = "users"
         const val MY_REFERENCE_CHILD_WALLETS = "wallets"
-        const val MY_REFERENCE_CHILD_TRANSACTION = "transactions"
+        const val MY_REFERENCE_CHILD_TRANSACTIONS = "transactions"
+        const val MY_REFERENCE_CHILD_PLANS = "plans"
         const val REF_FIELD_BALANCE = "balance"
         const val FAKE_DATA_NULL = "[404] -> this transaction is null"
 
         const val KEY_CURRENT_WALLET_ID = "CURRENT_WALLET_ID"
         const val VALUE_DATA_IS_NULL= "NULL"
-
-        const val ACTION_CREATE_WALLET = "CREATE_WALLET_REQUIRED"
-        const val ACTION_UPDATE_WALLET = "UPDATE_WALLET_REQUIRED"
-        const val ACTION_DELETE_WALLET = "DELETE_WALLET_REQUIRED"
-
-        const val ACTION_CREATE_SPENDING_PLAN = "CREATE_PLAN_REQUIRED"
-        const val ACTION_UPDATE_SPENDING_PLAN = "UPDATE_PLAN_REQUIRED"
-        const val ACTION_DELETE_SPENDING_PLAN = "DELETE_PLAN_REQUIRED"
     }
 }

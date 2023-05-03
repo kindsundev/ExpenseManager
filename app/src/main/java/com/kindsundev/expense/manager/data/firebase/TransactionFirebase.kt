@@ -15,7 +15,7 @@ class TransactionFirebase : BaseFirebase() {
         Completable.create { emitter ->
             initPointerGeneric()
                 .child(walletId.toString())
-                .child(Constant.MY_REFERENCE_CHILD_TRANSACTION)
+                .child(Constant.MY_REFERENCE_CHILD_TRANSACTIONS)
                 .child(getCurrentDate())
                 .child(transaction.id.toString())
                 .setValue(transaction)
@@ -47,7 +47,7 @@ class TransactionFirebase : BaseFirebase() {
         Observable.create { subscriber ->
         initPointerGeneric()
             .child(walletID)
-            .child(Constant.MY_REFERENCE_CHILD_TRANSACTION)
+            .child(Constant.MY_REFERENCE_CHILD_TRANSACTIONS)
             .child(date)
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -79,7 +79,7 @@ class TransactionFirebase : BaseFirebase() {
         Completable.create { emitter ->
             initPointerGeneric()
                 .child(walletID)
-                .child(Constant.MY_REFERENCE_CHILD_TRANSACTION)
+                .child(Constant.MY_REFERENCE_CHILD_TRANSACTIONS)
                 .child(dateKey)
                 .child(transactionId)
                 .removeValue()
