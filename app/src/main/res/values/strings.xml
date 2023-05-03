@@ -28,6 +28,7 @@
     <string name="please_enter_amount">Please enter amount value</string>
     <string name="update_transaction_success">Update transaction successful</string>
     <string name="update_balance_failed">Update balance failed</string>
+    <string name="delete_transaction_success">Delete transaction successful</string>
     <string name="delete_transaction_failed">Delete transaction failed</string>
     <string name="create_wallet_success">Create wallet successful</string>
     <string name="update_wallet_success">Update wallet successful</string>
@@ -53,6 +54,8 @@
     <string name="thank_for_feedback">Thank you for feedback</string>
     <string name="create_transaction_success">Create transaction successful</string>
     <string name="create_transaction_failed">Create transaction failed</string>
+    <string name="create_plan_success">Create plan success</string>
+    <string name="create_plan_failed">Create plan failed</string>
     <string name="permission_denied">This feature required a permission that the user has denied</string>
     <string name="select_picture">Select picture</string>
     <string name="on_developing">This feature is in development</string>

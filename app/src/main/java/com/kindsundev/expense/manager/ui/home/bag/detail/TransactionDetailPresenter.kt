@@ -15,6 +15,7 @@ class TransactionDetailPresenter(
     private val transactionFirebase by lazy { TransactionFirebase() }
     private val compositeDisposable = CompositeDisposable()
     private lateinit var message: String
+    private var actionDelete = false
 
     override fun updateTransaction(walletID: Int, transaction: TransactionModel) {
         view.onLoad()
@@ -113,7 +114,11 @@ class TransactionDetailPresenter(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 message = view.getCurrentContext().getString(R.string.update_transaction_success)
+                if (actionDelete) {
+                    message = view.getCurrentContext().getString(R.string.delete_transaction_success)
+                }
                 view.onSuccess(message)
+                actionDelete = false
             }, {
                 message = view.getCurrentContext().getString(R.string.update_balance_failed)
                 view.onError(message)
@@ -129,6 +134,7 @@ class TransactionDetailPresenter(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
+                actionDelete = true
                 view.onSuccess(true)
             }, {
                 message = view.getCurrentContext().getString(R.string.delete_transaction_failed)
