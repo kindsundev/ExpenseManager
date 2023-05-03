@@ -4,7 +4,6 @@ import android.app.DatePickerDialog
 import android.content.Context
 import android.icu.text.SimpleDateFormat
 import android.widget.DatePicker
-import com.kindsundev.expense.manager.common.Logger
 import java.time.LocalDateTime
 import java.util.*
 import kotlin.properties.Delegates
@@ -40,6 +39,10 @@ class DateSelectionDialog(
         listener.resultNewDateTime(result)
     }
 
+    /*
+    * calendar.setMonth() format zero-based index (0->1, 1->2...),
+    * so we don't need to add 1 unit to the month
+    * */
     private fun formatDate(year: Int, month: Int, dayOfMonth: Int): String {
         val calendar = Calendar.getInstance()
         calendar.timeInMillis = 0
