@@ -76,6 +76,7 @@ class CreatePlanDialog(
             override fun onClickWalletItem(wallet: WalletModel) {
                 mCurrentWallet = wallet
                 binding!!.tvWallet.text = wallet.name
+                binding!!.tvWallet.setTextColor(Color.BLACK)
                 walletBottomSheet.dismiss()
             }
         })
@@ -86,6 +87,7 @@ class CreatePlanDialog(
         DateTimePickerDialog(requireContext(), object : ResultDateTimeCallback {
             override fun resultNewDateTime(newDateTime: String) {
                 binding!!.tvStartDay.text = newDateTime
+                binding!!.tvStartDay.setTextColor(Color.BLACK)
             }
         }).onShowDateTimePickerDialog()
     }
@@ -94,6 +96,7 @@ class CreatePlanDialog(
         DateTimePickerDialog(requireContext(), object : ResultDateTimeCallback {
             override fun resultNewDateTime(newDateTime: String) {
                 binding!!.tvEndDay.text = newDateTime
+                binding!!.tvEndDay.setTextColor(Color.BLACK)
             }
         }).onShowDateTimePickerDialog()
     }

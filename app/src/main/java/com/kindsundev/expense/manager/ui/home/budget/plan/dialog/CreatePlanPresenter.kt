@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit
 
 class CreatePlanPresenter(
     val view: CreatePlanContract.View
-): CreatePlanContract.Presenter {
+) : CreatePlanContract.Presenter {
 
     override fun handleDataFromInput(
         name: String,
@@ -30,19 +30,30 @@ class CreatePlanPresenter(
         startDate: String,
         endDate: String,
     ): Boolean {
+        val message: String
         if (name.isNotEmpty()
             && amount.isNotEmpty()
             && startDate != view.getCurrentContext().getString(R.string.start_day)
             && endDate != view.getCurrentContext().getString(R.string.end_day)
         ) {
-            if (isValidDate(startDate, endDate)) {
-                return true
+            val amountToLarge = amount.replace(",", "").length > 15
+            return when {
+                amountToLarge -> {
+                    message = view.getCurrentContext().getString(R.string.amount_to_large)
+                    view.showMessageInvalidData(message)
+                    false
+                }
+                !isValidDate(startDate, endDate) -> {
+                    message = view.getCurrentContext().getString(R.string.please_provide_valid_date_plan)
+                    view.showMessageInvalidData(message)
+                    false
+                }
+                else -> {
+                    true
+                }
             }
-            val message = view.getCurrentContext().getString(R.string.please_provide_valid_date_plan)
-            view.showMessageInvalidData(message)
-            return false
         }
-        val message = view.getCurrentContext().getString(R.string.please_provide_full_data)
+        message = view.getCurrentContext().getString(R.string.please_provide_full_data)
         view.showMessageInvalidData(message)
         return false
     }

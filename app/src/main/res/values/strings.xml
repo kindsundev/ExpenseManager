@@ -16,6 +16,7 @@
     <string name="please_provide_full_data">Please provide full data</string>
     <string name="please_provide_valid_date_plan">Request time is more than 1 day</string>
     <string name="please_select_wallet">Please select wallet</string>
+    <string name="amount_to_large">The amount is too large</string>
     <string name="something_error">Something error, please try again later</string>
     <string name="name_not_null">Don\'t name to empty</string>
     <string name="name_to_short">Don\'t name to short</string>
