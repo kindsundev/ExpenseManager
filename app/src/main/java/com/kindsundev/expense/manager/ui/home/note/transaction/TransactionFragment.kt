@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Constant
 import com.kindsundev.expense.manager.data.model.TransactionModel
 import com.kindsundev.expense.manager.data.model.WalletModel
@@ -163,9 +162,10 @@ class TransactionFragment : Fragment(), TransactionContract.View,
 
     private fun onClickSave() {
         if (isNotDebtLayout()) {
-            if (binding!!.incomeAndExpense.edtAmount.text.isEmpty()) {
-                activity?.showMessage(getCurrentContext().getString(R.string.please_enter_amount))
-            } else {
+            val amountText = binding!!.incomeAndExpense.edtAmount.text.toString()
+            val walletNameHint = binding!!.incomeAndExpense.tvWalletName.hint.toString()
+            val walletNameText = binding!!.incomeAndExpense.tvWalletName.text.toString()
+            if (transactionPresenter.isDataFromInputValid(amountText, walletNameHint, walletNameText)) {
                 transaction = initTransactionDataInIAE()
                 transactionPresenter.createTransaction(wallet.id!!, transaction)
             }
@@ -186,6 +186,10 @@ class TransactionFragment : Fragment(), TransactionContract.View,
 
     override fun onLoad() {
         startLoadingDialog(loadingDialog, parentFragmentManager, true)
+    }
+
+    override fun onShowMessage(message: String) {
+        activity?.showMessage(message)
     }
 
     override fun onError(message: String) {

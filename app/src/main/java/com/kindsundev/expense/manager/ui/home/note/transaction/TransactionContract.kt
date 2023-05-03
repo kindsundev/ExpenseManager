@@ -12,6 +12,8 @@ interface TransactionContract {
     }
 
     interface View : BaseView {
+        fun onShowMessage(message: String)
+
         fun onSuccess(message: String)
     }
 }

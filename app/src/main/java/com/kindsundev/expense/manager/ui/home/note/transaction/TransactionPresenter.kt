@@ -16,6 +16,28 @@ class TransactionPresenter(
     private val compositeDisposable = CompositeDisposable()
     private lateinit var message: String
 
+    fun isDataFromInputValid(
+        amount: String,
+        walletNameHint: String,
+        walletNameText: String
+    ): Boolean {
+        return when {
+            amount.isEmpty() -> {
+                message = view.getCurrentContext().getString(R.string.please_enter_amount)
+                view.onShowMessage(message)
+                false
+            }
+            walletNameHint == view.getCurrentContext()
+                .getString(R.string.wallet) && walletNameText.isEmpty()
+            -> {
+                message = view.getCurrentContext().getString(R.string.please_select_wallet)
+                view.onShowMessage(message)
+                false
+            }
+            else -> true
+        }
+    }
+
     override fun createTransaction(walletID: Int, transaction: TransactionModel) {
         view.onLoad()
         val disposable = transactionFirebase.upsertTransaction(walletID, transaction)
