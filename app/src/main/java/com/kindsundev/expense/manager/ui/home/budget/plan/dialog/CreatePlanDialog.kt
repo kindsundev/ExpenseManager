@@ -13,7 +13,6 @@ import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Constant
-import com.kindsundev.expense.manager.common.Logger
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.DialogCreatePlanBinding
 import com.kindsundev.expense.manager.ui.custom.DateTimePickerDialog
@@ -107,13 +106,10 @@ class CreatePlanDialog(
         if (binding!!.tvWallet.text.toString() == getCurrentContext().getString(R.string.wallet)) {
             activity?.showMessage(requireContext().getString(R.string.please_select_wallet))
         } else {
-            val walletId = mCurrentWallet.id!!
-            val plan = dialogPresenter.handleDataFromInput(name, amount, startDate, endDate, walletId)
-            if (plan.id != 0 && plan.walletId != 0) {
+            val plan = dialogPresenter.handleDataFromInput(name, amount, startDate, endDate)
+            if (plan.id != 0) {
                 listener.onSuccessPlan(mCurrentWallet, plan)
                 this.dismiss()
-            } else {
-                Logger.error("address: onClickCreatePlan() from CreatePlanDialog in Plan")
             }
         }
     }

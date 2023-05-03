@@ -8,10 +8,12 @@ interface BudgetPlanContract {
     interface Presenter {
         fun handleGetPlans()
 
-        fun handleCreatePlan()
+        fun handleCreatePlan(walletId: Int, plan: PlanModel)
     }
 
     interface View : BaseView {
+        fun onSuccess(message: String)
+
         fun onSuccessPlan(plans: ArrayList<PlanModel>)
     }
 }

@@ -1,29 +1,36 @@
 package com.kindsundev.expense.manager.ui.home.budget.plan
 
+import android.content.Context
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.kindsundev.expense.manager.R
-import com.kindsundev.expense.manager.common.Logger
 import com.kindsundev.expense.manager.data.model.PlanModel
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.FragmentBudgetPlanBinding
+import com.kindsundev.expense.manager.ui.custom.LoadingDialog
 import com.kindsundev.expense.manager.ui.home.HomeActivity
 import com.kindsundev.expense.manager.ui.home.budget.plan.dialog.CreatePlanContract
 import com.kindsundev.expense.manager.ui.home.budget.plan.dialog.CreatePlanDialog
 import com.kindsundev.expense.manager.ui.home.budget.plan.wallet.BudgetWalletBottomSheet
 import com.kindsundev.expense.manager.ui.home.budget.plan.wallet.BudgetWalletContract
+import com.kindsundev.expense.manager.utils.showMessage
+import com.kindsundev.expense.manager.utils.startLoadingDialog
 import com.kindsundev.expense.manager.utils.toggleBottomNavigation
 
-class BudgetPlanFragment : Fragment(){
+class BudgetPlanFragment : Fragment(), BudgetPlanContract.View {
     private var _binding: FragmentBudgetPlanBinding? = null
     private val binding get() = _binding
     private lateinit var toolbar: Toolbar
+    private val loadingDialog by lazy { LoadingDialog() }
 
     private lateinit var bottomSheetWallet: BudgetWalletBottomSheet
+    private lateinit var mPlanPresenter: BudgetPlanPresenter
     private lateinit var mCurrentWallet: WalletModel
+
+    override fun getCurrentContext(): Context = requireContext()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,6 +38,7 @@ class BudgetPlanFragment : Fragment(){
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentBudgetPlanBinding.inflate(layoutInflater)
+        mPlanPresenter = BudgetPlanPresenter(this)
         toggleBottomNavigation(requireActivity() as HomeActivity, false)
         initToolbar()
         initBottomSheetWallet()
@@ -73,10 +81,7 @@ class BudgetPlanFragment : Fragment(){
     private fun onClickCreateSpendingPlan() {
         val dialog = CreatePlanDialog(object: CreatePlanContract.Result {
             override fun onSuccessPlan(wallet: WalletModel, plan: PlanModel) {
-                mCurrentWallet = wallet
-                Logger.error(wallet.toString())
-                Logger.warn(plan.toString())
-                // call presenter add to database is here
+                mPlanPresenter.handleCreatePlan(wallet.id!!, plan)
             }
         })
         dialog.show(parentFragmentManager, dialog.tag)
@@ -85,6 +90,28 @@ class BudgetPlanFragment : Fragment(){
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        mPlanPresenter.cleanUp()
         toggleBottomNavigation(requireActivity() as HomeActivity, true)
     }
+
+    override fun onSuccessPlan(plans: ArrayList<PlanModel>) {
+
+    }
+
+    override fun onLoad() {
+        startLoadingDialog(loadingDialog, parentFragmentManager, true)
+    }
+
+    override fun onError(message: String) {
+        startLoadingDialog(loadingDialog, parentFragmentManager, false)
+        activity?.showMessage(message)
+    }
+
+    override fun onSuccess(message: String) {
+        startLoadingDialog(loadingDialog, parentFragmentManager, false)
+        activity?.showMessage(message)
+        // reload new data
+    }
+
+    override fun onSuccess() {}
 }

@@ -11,7 +11,6 @@ interface CreatePlanContract {
             amount: String,
             startDate: String,
             endDate: String,
-            walletId: Int
         ): PlanModel
     }
 
