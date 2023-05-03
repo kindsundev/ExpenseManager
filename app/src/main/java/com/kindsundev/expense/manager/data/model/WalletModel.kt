@@ -13,6 +13,7 @@ data class WalletModel(
     val origin: Double? = 0.0,
     val balance: Double? = 0.0,
     val transactions: HashMap<String, HashMap<String, TransactionModel>>? = null,
+    val plans: HashMap<String, HashMap<String, PlanModel>>? = null
 ) : Parcelable {
 
     fun getTransactionCount(): Int {
