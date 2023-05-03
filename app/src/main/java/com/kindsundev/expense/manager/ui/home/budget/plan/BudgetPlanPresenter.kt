@@ -4,19 +4,27 @@ import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Logger
 import com.kindsundev.expense.manager.data.firebase.PlanFirebase
 import com.kindsundev.expense.manager.data.model.PlanModel
+import com.kindsundev.expense.manager.data.model.WalletModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.*
 
 class BudgetPlanPresenter(
     private val view: BudgetPlanContract.View
 ): BudgetPlanContract.Presenter {
+    private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
     private val compositeDisposable = CompositeDisposable()
     private val planFirebase = PlanFirebase()
     private lateinit var message: String
 
-    override fun handleGetPlans() {
-
+    override fun handleGetPlans(wallet: WalletModel) {
+        scope.launch {
+            val plans = wallet.getPlanList()
+            withContext(Dispatchers.Main) {
+                view.onSuccessPlan(plans)
+            }
+        }
     }
 
     override fun handleCreatePlan(walletId: Int, plan: PlanModel) {

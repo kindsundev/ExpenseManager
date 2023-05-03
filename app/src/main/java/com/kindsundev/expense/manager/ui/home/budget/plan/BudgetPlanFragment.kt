@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.kindsundev.expense.manager.R
+import com.kindsundev.expense.manager.common.Logger
 import com.kindsundev.expense.manager.data.model.PlanModel
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.FragmentBudgetPlanBinding
@@ -28,7 +29,6 @@ class BudgetPlanFragment : Fragment(), BudgetPlanContract.View {
 
     private lateinit var bottomSheetWallet: BudgetWalletBottomSheet
     private lateinit var mPlanPresenter: BudgetPlanPresenter
-    private lateinit var mCurrentWallet: WalletModel
 
     override fun getCurrentContext(): Context = requireContext()
 
@@ -71,11 +71,16 @@ class BudgetPlanFragment : Fragment(), BudgetPlanContract.View {
     private fun initBottomSheetWallet() {
         bottomSheetWallet = BudgetWalletBottomSheet(object: BudgetWalletContract.Listener {
             override fun onClickWalletItem(wallet: WalletModel) {
-                mCurrentWallet = wallet
+                mPlanPresenter.handleGetPlans(wallet)
                 bottomSheetWallet.dismiss()
             }
         })
         bottomSheetWallet.show(parentFragmentManager, bottomSheetWallet.tag)
+
+    }
+
+    override fun onSuccessPlan(plans: ArrayList<PlanModel>) {
+        Logger.warn(plans.toString())
     }
 
     private fun onClickCreateSpendingPlan() {
@@ -94,9 +99,7 @@ class BudgetPlanFragment : Fragment(), BudgetPlanContract.View {
         toggleBottomNavigation(requireActivity() as HomeActivity, true)
     }
 
-    override fun onSuccessPlan(plans: ArrayList<PlanModel>) {
 
-    }
 
     override fun onLoad() {
         startLoadingDialog(loadingDialog, parentFragmentManager, true)

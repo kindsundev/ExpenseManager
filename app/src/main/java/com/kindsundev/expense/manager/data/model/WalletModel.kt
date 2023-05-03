@@ -28,9 +28,8 @@ data class WalletModel(
 
     fun getBills(): ArrayList<BillModel> {
         val bills = ArrayList<BillModel>()
-        val data = transactions
-        data?.let {
-            for ((date, map) in data) {
+        transactions?.let {
+            for ((date, map) in it) {
                 val transactions = ArrayList<TransactionModel>()
                 for ((_, model) in map) { transactions.add(model) }
                 val bill = BillModel(date, transactions)
@@ -38,5 +37,17 @@ data class WalletModel(
             }
         }
         return bills
+    }
+
+    fun getPlanList(): ArrayList<PlanModel> {
+        val list = ArrayList<PlanModel>()
+        plans?.let {
+            for ((_, map) in it) {
+                for ((_, model) in map) {
+                    list.add(model)
+                }
+            }
+        }
+        return list
     }
 }

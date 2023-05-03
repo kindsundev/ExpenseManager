@@ -1,12 +1,13 @@
 package com.kindsundev.expense.manager.ui.home.budget.plan
 
 import com.kindsundev.expense.manager.data.model.PlanModel
+import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.ui.base.BaseView
 
 interface BudgetPlanContract {
 
     interface Presenter {
-        fun handleGetPlans()
+        fun handleGetPlans(wallet: WalletModel)
 
         fun handleCreatePlan(walletId: Int, plan: PlanModel)
     }
