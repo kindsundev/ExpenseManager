@@ -6,8 +6,8 @@ import android.view.*
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.kindsundev.expense.manager.R
-import com.kindsundev.expense.manager.common.Logger
 import com.kindsundev.expense.manager.data.model.PlanModel
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.FragmentBudgetPlanBinding
@@ -80,7 +80,14 @@ class BudgetPlanFragment : Fragment(), BudgetPlanContract.View {
     }
 
     override fun onSuccessPlan(plans: ArrayList<PlanModel>) {
-        Logger.warn(plans.toString())
+        binding!!.rcvPlans.apply {
+            layoutManager = LinearLayoutManager(getCurrentContext())
+            adapter = BudgetPlanAdapter(plans, object: BudgetPlanContract.Listener {
+                override fun onClickPlanItem(plan: PlanModel) {
+                    activity?.showMessage(plan.estimatedAmount.toString())
+                }
+            })
+        }
     }
 
     private fun onClickCreateSpendingPlan() {
@@ -91,15 +98,6 @@ class BudgetPlanFragment : Fragment(), BudgetPlanContract.View {
         })
         dialog.show(parentFragmentManager, dialog.tag)
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-        mPlanPresenter.cleanUp()
-        toggleBottomNavigation(requireActivity() as HomeActivity, true)
-    }
-
-
 
     override fun onLoad() {
         startLoadingDialog(loadingDialog, parentFragmentManager, true)
@@ -117,4 +115,11 @@ class BudgetPlanFragment : Fragment(), BudgetPlanContract.View {
     }
 
     override fun onSuccess() {}
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+        mPlanPresenter.cleanUp()
+        toggleBottomNavigation(requireActivity() as HomeActivity, true)
+    }
 }

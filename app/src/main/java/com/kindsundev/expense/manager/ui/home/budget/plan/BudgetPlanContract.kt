@@ -17,4 +17,8 @@ interface BudgetPlanContract {
 
         fun onSuccessPlan(plans: ArrayList<PlanModel>)
     }
+
+    interface Listener {
+        fun onClickPlanItem(plan: PlanModel)
+    }
 }

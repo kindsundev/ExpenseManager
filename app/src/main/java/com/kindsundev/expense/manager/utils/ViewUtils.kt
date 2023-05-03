@@ -82,6 +82,21 @@ fun formatDisplayCurrencyBalance(amount: String): String {
     return DecimalFormat("###,###,###").format(amount.toDouble())
 }
 
+fun abbreviateNumber(number: Double): String {
+    val suffix = charArrayOf(' ', 'k', 'm', 'b', 't')
+    var value = number
+    var index = 0
+    while (value >= 1000) {
+        value /= 1000
+        index++
+    }
+    return if (value % 1 == 0.0) {
+        String.format("%d%s", value.toInt(), suffix[index])
+    } else {
+        String.format("%.2f%s", value, suffix[index])
+    }
+}
+
 /*
 * UI: android:inputType="numberDecimal"
 * GetValue: replace(",", "")
@@ -140,18 +155,3 @@ fun incomeAndExpenseColorList() = listOf(
     Color.parseColor(Constant.GREEN_COLOR_CODE),
     Color.parseColor(Constant.RED_COLOR_CODE)
 )
-
-fun abbreviateNumber(number: Double): String {
-    val suffix = charArrayOf(' ', 'k', 'm', 'b', 't')
-    var value = number
-    var index = 0
-    while (value >= 1000) {
-        value /= 1000
-        index++
-    }
-    return if (value % 1 == 0.0) {
-        String.format("%d%s", value.toInt(), suffix[index])
-    } else {
-        String.format("%.2f%s", value, suffix[index])
-    }
-}

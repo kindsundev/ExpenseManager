@@ -300,4 +300,7 @@
     <string name="debt_manager">Debt Manager</string>
     <string name="menu">Menu</string>
     <string name="savings_manager">Savings Manager</string>
+    <string name="plan_name">Plan Name</string>
+    <string name="current_balance">Current Balance</string>
+    <string name="estimate">Estimate</string>
 </resources>
