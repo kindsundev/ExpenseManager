@@ -304,4 +304,6 @@
     <string name="plan_name">Plan Name</string>
     <string name="current_balance">Current Balance</string>
     <string name="estimate">Estimate</string>
+    <string name="this_wallet_has_no_plans">This wallet has no plans</string>
+    <string name="create">Create</string>
 </resources>

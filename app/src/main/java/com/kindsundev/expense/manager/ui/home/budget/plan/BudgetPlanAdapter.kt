@@ -16,8 +16,7 @@ class BudgetPlanAdapter(
         RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlanViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
-        val view = LayoutPlanItemBinding.inflate(layoutInflater)
+        val view = LayoutPlanItemBinding.inflate(LayoutInflater.from(parent.context))
         return PlanViewHolder(view)
     }
 

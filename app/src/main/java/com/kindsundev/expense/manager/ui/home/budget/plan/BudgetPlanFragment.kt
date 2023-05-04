@@ -69,24 +69,38 @@ class BudgetPlanFragment : Fragment(), BudgetPlanContract.View {
     }
 
     private fun initBottomSheetWallet() {
-        bottomSheetWallet = BudgetWalletBottomSheet(object: BudgetWalletContract.Listener {
-            override fun onClickWalletItem(wallet: WalletModel) {
-                mPlanPresenter.handleGetPlans(wallet)
-                bottomSheetWallet.dismiss()
-            }
-        })
+        bottomSheetWallet = BudgetWalletBottomSheet(
+            object : BudgetWalletContract.Listener {
+                override fun onClickWalletItem(wallet: WalletModel) {
+                    mPlanPresenter.handleGetPlans(wallet)
+                    bottomSheetWallet.dismiss()
+                }
+            })
         bottomSheetWallet.show(parentFragmentManager, bottomSheetWallet.tag)
-
     }
 
     override fun onSuccessPlan(plans: ArrayList<PlanModel>) {
-        binding!!.rcvPlans.apply {
-            layoutManager = LinearLayoutManager(getCurrentContext())
-            adapter = BudgetPlanAdapter(plans, object: BudgetPlanContract.Listener {
-                override fun onClickPlanItem(plan: PlanModel) {
-                    activity?.showMessage(plan.estimatedAmount.toString())
-                }
-            })
+        if (!toggleLayoutEmpty(plans.isEmpty())) {
+            binding!!.rcvPlans.apply {
+                layoutManager = LinearLayoutManager(getCurrentContext())
+                adapter = BudgetPlanAdapter(plans, object: BudgetPlanContract.Listener {
+                    override fun onClickPlanItem(plan: PlanModel) {
+                        activity?.showMessage(plan.estimatedAmount.toString())
+                    }
+                })
+            }
+        }
+    }
+
+    private fun toggleLayoutEmpty(enable: Boolean): Boolean {
+        return if(enable) {
+            binding!!.rcvPlans.visibility = View.GONE
+            binding!!.cvNoPlans.visibility = View.VISIBLE
+            true
+        } else {
+            binding!!.rcvPlans.visibility = View.VISIBLE
+            binding!!.cvNoPlans.visibility = View.GONE
+            false
         }
     }
 
@@ -111,7 +125,6 @@ class BudgetPlanFragment : Fragment(), BudgetPlanContract.View {
     override fun onSuccess(message: String) {
         startLoadingDialog(loadingDialog, parentFragmentManager, false)
         activity?.showMessage(message)
-        // reload new data
     }
 
     override fun onSuccess() {}
