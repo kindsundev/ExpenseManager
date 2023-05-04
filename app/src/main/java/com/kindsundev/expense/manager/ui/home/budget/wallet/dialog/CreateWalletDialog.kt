@@ -1,4 +1,4 @@
-package com.kindsundev.expense.manager.ui.home.budget.wallet
+package com.kindsundev.expense.manager.ui.home.budget.wallet.dialog
 
 import android.app.Dialog
 import android.content.Context
@@ -17,6 +17,8 @@ import com.kindsundev.expense.manager.common.Status
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.DialogCreateWalletBinding
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
+import com.kindsundev.expense.manager.ui.home.budget.wallet.BudgetWalletContract
+import com.kindsundev.expense.manager.ui.home.budget.wallet.BudgetWalletPresenter
 import com.kindsundev.expense.manager.utils.*
 
 class CreateWalletDialog(

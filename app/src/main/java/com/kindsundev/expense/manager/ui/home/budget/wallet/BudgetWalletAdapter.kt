@@ -1,4 +1,4 @@
-package com.kindsundev.expense.manager.ui.home.budget.wallet.adapter
+package com.kindsundev.expense.manager.ui.home.budget.wallet
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.LayoutBudgetWalletItemBinding
-import com.kindsundev.expense.manager.ui.home.budget.wallet.BudgetWalletContract
 import com.kindsundev.expense.manager.utils.formatDisplayCurrencyBalance
 
 class BudgetWalletAdapter(
