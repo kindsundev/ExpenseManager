@@ -7,6 +7,7 @@ import com.kindsundev.expense.manager.data.model.PlanModel
 import com.kindsundev.expense.manager.data.model.WalletModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.*
 
@@ -19,6 +20,7 @@ class BudgetPlanPresenter(
     private lateinit var message: String
 
     override fun handleGetPlans(wallet: WalletModel) {
+        view.onLoad()
         scope.launch {
             val plans = wallet.getPlanList()
             withContext(Dispatchers.Main) {
@@ -40,6 +42,24 @@ class BudgetPlanPresenter(
                 view.onError(message)
                 Logger.error("Create plan: ${it.message!!}")
             })
+        compositeDisposable.add(disposable)
+    }
+
+    fun handleGetPlans(walletId: Int) {
+        view.onLoad()
+        val plans = ArrayList<PlanModel>()
+        val disposable = planFirebase.getPlanList(walletId)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy(
+                onError = {
+                    message = view.getCurrentContext().getString(R.string.something_error)
+                    view.onError(message)
+                    Logger.warn(it.message.toString())
+                },
+                onComplete = { view.onSuccessPlan(plans) },
+                onNext = { plans.add(it) }
+            )
         compositeDisposable.add(disposable)
     }
 
