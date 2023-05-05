@@ -74,7 +74,7 @@ class BudgetPlanFragment : Fragment(), BudgetPlanContract.View {
         bottomSheetWallet = BudgetWalletBottomSheet(
             object : BudgetWalletContract.Listener {
                 override fun onClickWalletItem(wallet: WalletModel) {
-                    mPlanPresenter.handleGetPlans(wallet)
+                    mPlanPresenter.handleGetPlansInWallet(wallet)
                     currentWalletId = wallet.id!!
                     bottomSheetWallet.dismiss()
                 }
@@ -131,7 +131,7 @@ class BudgetPlanFragment : Fragment(), BudgetPlanContract.View {
     override fun onSuccess(message: String) {
         startLoadingDialog(loadingDialog, parentFragmentManager, false)
         activity?.showMessage(message)
-        mPlanPresenter.handleGetPlans(currentWalletId)
+        mPlanPresenter.handleGetPlansInFirebase(currentWalletId)
     }
 
     override fun onSuccess() {}

@@ -7,9 +7,11 @@ import com.kindsundev.expense.manager.ui.base.BaseView
 interface BudgetPlanContract {
 
     interface Presenter {
-        fun handleGetPlans(wallet: WalletModel)
+        fun handleGetPlansInWallet(wallet: WalletModel)
 
         fun handleCreatePlan(walletId: Int, plan: PlanModel)
+
+        fun handleGetPlansInFirebase(walletId: Int)
     }
 
     interface View : BaseView {

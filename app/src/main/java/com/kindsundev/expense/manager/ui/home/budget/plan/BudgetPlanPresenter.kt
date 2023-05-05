@@ -19,7 +19,12 @@ class BudgetPlanPresenter(
     private val planFirebase = PlanFirebase()
     private lateinit var message: String
 
-    override fun handleGetPlans(wallet: WalletModel) {
+    /*
+    * when the user selects the wallet,
+    * it already has the data of the plans,
+    * so instead of calling firebase we will extract the data
+    * */
+    override fun handleGetPlansInWallet(wallet: WalletModel) {
         view.onLoad()
         scope.launch {
             val plans = wallet.getPlanList()
@@ -45,7 +50,8 @@ class BudgetPlanPresenter(
         compositeDisposable.add(disposable)
     }
 
-    fun handleGetPlans(walletId: Int) {
+    // call to firebase when plan created (update ui)
+    override fun handleGetPlansInFirebase(walletId: Int) {
         view.onLoad()
         val plans = ArrayList<PlanModel>()
         val disposable = planFirebase.getPlanList(walletId)
