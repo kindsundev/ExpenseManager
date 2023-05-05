@@ -3,7 +3,6 @@ package com.kindsundev.expense.manager.ui.home.budget.plan
 import android.content.Context
 import android.os.Bundle
 import android.view.*
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -26,7 +25,6 @@ import kotlin.properties.Delegates
 class BudgetPlanFragment : Fragment(), BudgetPlanContract.View {
     private var _binding: FragmentBudgetPlanBinding? = null
     private val binding get() = _binding
-    private lateinit var toolbar: Toolbar
     private val loadingDialog by lazy { LoadingDialog() }
 
     private lateinit var bottomSheetWallet: BudgetWalletBottomSheet
@@ -43,20 +41,18 @@ class BudgetPlanFragment : Fragment(), BudgetPlanContract.View {
         _binding = FragmentBudgetPlanBinding.inflate(layoutInflater)
         mPlanPresenter = BudgetPlanPresenter(this)
         toggleBottomNavigation(requireActivity() as HomeActivity, false)
-        initToolbar()
+        binding!!.toolbar.inflateMenu(R.menu.plan_manager_menu)
         initBottomSheetWallet()
         initListener()
         return binding!!.root
     }
 
-    private fun initToolbar() {
-        toolbar = binding!!.toolbar
-        toolbar.inflateMenu(R.menu.plan_manager_menu)
-    }
-
     private fun initListener() {
-        binding!!.btnBack.setOnClickListener {it.findNavController().popBackStack() }
-        toolbar.setOnMenuItemClickListener { menuItem ->
+        binding!!.btnBack.setOnClickListener {
+            it.findNavController().popBackStack()
+            toggleBottomNavigation(requireActivity() as HomeActivity, true)
+        }
+        binding!!.toolbar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.action_select_wallet -> {
                     initBottomSheetWallet()
@@ -148,6 +144,5 @@ class BudgetPlanFragment : Fragment(), BudgetPlanContract.View {
         super.onDestroyView()
         _binding = null
         mPlanPresenter.cleanUp()
-        toggleBottomNavigation(requireActivity() as HomeActivity, true)
     }
 }
