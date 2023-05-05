@@ -50,14 +50,13 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
         android:id="@+id/budgetWalletFragment"
         android:name="com.kindsundev.expense.manager.ui.home.budget.wallet.BudgetWalletFragment"
-        android:label="BudgetWalletFragment">
-    </fragment>
+        android:label="BudgetWalletFragment" />
 
     <fragment
         android:id="@+id/noteFragment"
@@ -158,7 +157,26 @@
     <fragment
         android:id="@+id/budgetPlanFragment"
         android:name="com.kindsundev.expense.manager.ui.home.budget.plan.BudgetPlanFragment"
-        android:label="BudgetPlanFragment">
+        android:label="BudgetPlanFragment" >
+        <action
+            android:id="@+id/action_budgetPlanFragment_to_budgetPlanDetailFragment"
+            app:destination="@id/budgetPlanDetailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/budgetPlanDetailFragment"
+        android:name="com.kindsundev.expense.manager.ui.home.budget.plan.detail.BudgetPlanDetailFragment"
+        android:label="BudgetPlanDetailFragment">
+        <argument
+            android:name="walletId"
+            app:argType="integer" />
+        <argument
+            android:name="plan"
+            app:argType="com.kindsundev.expense.manager.data.model.PlanModel" />
     </fragment>
 
 </navigation>

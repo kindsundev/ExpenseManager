@@ -302,8 +302,12 @@
     <string name="menu">Menu</string>
     <string name="savings_manager">Savings Manager</string>
     <string name="plan_name">Plan Name</string>
-    <string name="current_balance">Current Balance</string>
+    <string name="current_balance">Current balance</string>
     <string name="estimate">Estimate</string>
     <string name="this_wallet_has_no_plans">This wallet has no plans</string>
     <string name="create">Create</string>
+    <string name="detailed_plan">Detailed Plan</string>
+    <string name="temp_date">05/05/2023</string>
+    <string name="start">Start</string>
+    <string name="end">End</string>
 </resources>

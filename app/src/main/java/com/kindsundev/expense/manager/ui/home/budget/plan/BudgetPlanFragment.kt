@@ -6,6 +6,7 @@ import android.view.*
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.data.model.PlanModel
@@ -87,9 +88,9 @@ class BudgetPlanFragment : Fragment(), BudgetPlanContract.View {
         if (!toggleLayoutEmpty(plans.isEmpty())) {
             binding!!.rcvPlans.apply {
                 layoutManager = LinearLayoutManager(getCurrentContext())
-                adapter = BudgetPlanAdapter(plans, object: BudgetPlanContract.Listener {
+                adapter = BudgetPlanAdapter(plans, object : BudgetPlanContract.Listener {
                     override fun onClickPlanItem(plan: PlanModel) {
-                        activity?.showMessage(plan.estimatedAmount.toString())
+                        navigatePlanDetailFragment(plan)
                     }
                 })
             }
@@ -107,6 +108,13 @@ class BudgetPlanFragment : Fragment(), BudgetPlanContract.View {
             binding!!.cvNoPlans.visibility = View.GONE
             false
         }
+    }
+
+    private fun navigatePlanDetailFragment(plan: PlanModel) {
+        findNavController().navigate(
+            BudgetPlanFragmentDirections
+                .actionBudgetPlanFragmentToBudgetPlanDetailFragment(currentWalletId, plan)
+        )
     }
 
     private fun onClickCreateSpendingPlan() {
