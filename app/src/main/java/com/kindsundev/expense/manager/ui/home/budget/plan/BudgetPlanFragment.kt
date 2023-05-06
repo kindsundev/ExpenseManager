@@ -3,6 +3,7 @@ package com.kindsundev.expense.manager.ui.home.budget.plan
 import android.content.Context
 import android.os.Bundle
 import android.view.*
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -40,10 +41,11 @@ class BudgetPlanFragment : Fragment(), BudgetPlanContract.View {
     ): View {
         _binding = FragmentBudgetPlanBinding.inflate(layoutInflater)
         mPlanPresenter = BudgetPlanPresenter(this)
-        toggleBottomNavigation(requireActivity() as HomeActivity, false)
         binding!!.toolbar.inflateMenu(R.menu.plan_manager_menu)
+        toggleBottomNavigation(requireActivity() as HomeActivity, false)
         initBottomSheetWallet()
         initListener()
+        handleBackNavigation()
         return binding!!.root
     }
 
@@ -90,8 +92,8 @@ class BudgetPlanFragment : Fragment(), BudgetPlanContract.View {
                     }
                 })
             }
-            startLoadingDialog(loadingDialog, parentFragmentManager, false)
         }
+        startLoadingDialog(loadingDialog, parentFragmentManager, false)
     }
 
     private fun toggleLayoutEmpty(enable: Boolean): Boolean {
@@ -144,5 +146,12 @@ class BudgetPlanFragment : Fragment(), BudgetPlanContract.View {
         super.onDestroyView()
         _binding = null
         mPlanPresenter.cleanUp()
+    }
+
+    private fun handleBackNavigation() {
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            findNavController().popBackStack()
+            toggleBottomNavigation(requireActivity() as HomeActivity, true)
+        }
     }
 }
