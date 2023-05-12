@@ -19,19 +19,25 @@ Expense Manager is an Android application developed using Kotlin programming lan
 ## Screenshots
 
 - Sign/Signup
+
 ![Login](https://github.com/mrduongtien/ExpenseManager/assets/105474421/dafd2f1d-8f60-46bd-b1f0-6a1b8b3c069c)
 
 - Prepare Wallet
+
 ![Prepare](https://github.com/mrduongtien/ExpenseManager/assets/105474421/6c4c0c48-21a7-49bf-b318-cc5883efce1d)
 
-- Other Fragment
+- Other Features
+
 ![Other](https://github.com/mrduongtien/ExpenseManager/assets/105474421/0ba702c9-c967-4a24-8a97-39b1a5577351)
 
-- Budget Fragment
+- Manager
+
 ![Budget](https://github.com/mrduongtien/ExpenseManager/assets/105474421/5288fb8e-88bd-4128-b004-232857e58f10)
 
-- Add Transaction Fragment
+- Add Transaction
+
 ![Add](https://github.com/mrduongtien/ExpenseManager/assets/105474421/614956b1-611e-4534-8cf0-3cac8eb99d07)
 
-- Report Fragment
+- Report
+
 ![Report](https://github.com/mrduongtien/ExpenseManager/assets/105474421/9e64cd4f-8aff-423b-a583-ae383c93adf3)
