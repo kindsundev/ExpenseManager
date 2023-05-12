@@ -1,6 +1,6 @@
 # Expense Manager
 
-Expense Manager is an Android application developed using the Kotlin programming language. It allows users to create multiple wallets, manage receipts and payments, plan spending, and receive notifications when a set consumption is reached.
+Expense Manager is an Android application developed using Kotlin programming language and applying MVP architecture. It allows users to create multiple wallets, manage receipts and payments, plan spending, and receive notifications when a set consumption is reached.
 
 ## Features
 
@@ -17,3 +17,5 @@ Expense Manager is an Android application developed using the Kotlin programming
 - Asynchronous programming: RxJava and Coroutine
 
 ## Screenshots
+
+![Login](https://github.com/mrduongtien/ExpenseManager/assets/105474421/dafd2f1d-8f60-46bd-b1f0-6a1b8b3c069c)
