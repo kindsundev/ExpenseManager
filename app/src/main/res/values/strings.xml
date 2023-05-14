@@ -226,6 +226,8 @@
     <string name="create_plan">Create Plan</string>
     <string name="update_plan">Update Plan</string>
     <string name="delete_plan">Delete Plan</string>
+    <string name="delete_plan_success">Delete plan success</string>
+    <string name="delete_plan_failed">Delete plan failed</string>
     <string name="create_savings">Create Savings</string>
     <string name="update_savings">Update Savings</string>
     <string name="delete_savings">Delete Savings</string>
@@ -310,4 +312,5 @@
     <string name="temp_date">05/05/2023</string>
     <string name="start">Start</string>
     <string name="end">End</string>
+    <string name="confirm_delete_plan">Do you really want to delete this plan?</string>
 </resources>

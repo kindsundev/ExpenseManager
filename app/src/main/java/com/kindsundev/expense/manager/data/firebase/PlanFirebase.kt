@@ -59,4 +59,21 @@ class PlanFirebase: BaseFirebase() {
                 }
             })
         }
+
+    fun deletePlan(walletId: Int, dateKey: String, planId: Int) =
+        Completable.create { emitter ->
+            initPointerPlan(walletId)
+                .child(dateKey)
+                .child(planId.toString())
+                .removeValue()
+                .addOnCompleteListener {
+                    if (!emitter.isDisposed) {
+                        if (it.isSuccessful) {
+                            emitter.onComplete()
+                        } else {
+                            emitter.onError(it.exception!!)
+                        }
+                    }
+                }
+        }
 }
