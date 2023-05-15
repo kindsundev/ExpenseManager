@@ -93,4 +93,26 @@ class PlanFirebase: BaseFirebase() {
                     }
                 }
         }
+
+    fun getPlan(walletId: Int, dateKey: String, planId: Int): Observable<PlanModel> =
+        Observable.create { subscriber ->
+            initPointerPlan(walletId)
+                .child(dateKey)
+                .child(planId.toString())
+                .addValueEventListener(object: ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if ((!subscriber.isDisposed) && (snapshot.hasChildren())) {
+                            val data = snapshot.getValue(PlanModel::class.java)
+                            data?.let {
+                                subscriber.onNext(data)
+                                subscriber.onComplete()
+                            }
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        subscriber.onError(error.toException())
+                    }
+                })
+        }
 }

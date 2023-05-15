@@ -21,7 +21,8 @@ import com.kindsundev.expense.manager.utils.*
 
 class UpdatePlanDialog(
     private val walletId: Int,
-    private val currentPlan: PlanModel
+    private val currentPlan: PlanModel,
+    private val listener: UpdatePlanContract.Listener
 ) : DialogFragment(), UpdatePlanContract.View {
     private var _binding: DialogUpdatePlanBinding? = null
     private val binding get() = _binding
@@ -127,10 +128,12 @@ class UpdatePlanDialog(
         activity?.showMessage(message)
     }
 
-    override fun onSuccess() {
+    override fun onSuccess() {}
+
+    override fun onSuccess(walletId: Int, dateKey: String, planId: Int) {
         startLoadingDialog(loadingDialog, parentFragmentManager, false)
         activity?.showMessage(getCurrentContext().getString(R.string.update_plan_success))
+        listener.requestUpdateData(walletId, dateKey, planId)
         this.dismiss()
-        // callback re-load data in previous fragment
     }
 }

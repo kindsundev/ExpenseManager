@@ -15,6 +15,7 @@ import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.data.model.PlanModel
 import com.kindsundev.expense.manager.databinding.FragmentBudgetPlanDetailBinding
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
+import com.kindsundev.expense.manager.ui.home.budget.plan.dialog.update.UpdatePlanContract
 import com.kindsundev.expense.manager.ui.home.budget.plan.dialog.update.UpdatePlanDialog
 import com.kindsundev.expense.manager.utils.formatDisplayCurrencyBalance
 import com.kindsundev.expense.manager.utils.showMessage
@@ -95,7 +96,11 @@ class BudgetPlanDetailFragment : Fragment(), BudgetPlanDetailContract.View {
     }
 
     private fun initPlanDetailBottomSheet() {
-        val dialog = UpdatePlanDialog(mWalletId, mPlan)
+        val dialog = UpdatePlanDialog(mWalletId, mPlan, object: UpdatePlanContract.Listener{
+            override fun requestUpdateData(walletId: Int, dateKey: String, planId: Int) {
+                planDetailPresenter.handleGetPlan(walletId, dateKey, planId)
+            }
+        })
         dialog.show(parentFragmentManager, dialog.tag)
     }
 
@@ -134,6 +139,12 @@ class BudgetPlanDetailFragment : Fragment(), BudgetPlanDetailContract.View {
         startLoadingDialog(loadingDialog, parentFragmentManager, false)
         activity?.showMessage(getCurrentContext().getString(R.string.delete_plan_success))
         findNavController().popBackStack()
+    }
+
+    override fun onSuccessPlan(plan: PlanModel) {
+        startLoadingDialog(loadingDialog, parentFragmentManager, false)
+        mPlan = plan
+        initPlanData()
     }
 
     override fun onDestroyView() {

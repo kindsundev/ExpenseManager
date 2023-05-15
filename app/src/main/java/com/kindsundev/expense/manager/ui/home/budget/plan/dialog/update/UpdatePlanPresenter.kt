@@ -1,6 +1,7 @@
 package com.kindsundev.expense.manager.ui.home.budget.plan.dialog.update
 
 import com.kindsundev.expense.manager.R
+import com.kindsundev.expense.manager.common.Logger
 import com.kindsundev.expense.manager.data.firebase.PlanFirebase
 import com.kindsundev.expense.manager.data.model.PlanModel
 import com.kindsundev.expense.manager.utils.dateFormatConversion
@@ -32,6 +33,7 @@ class UpdatePlanPresenter(
         } else {
             if (isValidData(name, startDate, endDate, estimatedAmount)) {
                 val dateKey = dateFormatConversion(currentPlan.startDate!!)
+                Logger.error(dateKey) // not current day when create (tonight update)
                 currentPlan.name = name
                 currentPlan.startDate = startDate
                 currentPlan.endDate = endDate
@@ -43,7 +45,7 @@ class UpdatePlanPresenter(
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
-                        view.onSuccess()
+                        view.onSuccess(walletId, dateKey, currentPlan.id!!)
                     }, {
                         view.onError(
                             view.getCurrentContext().getString(R.string.update_plan_failed)

@@ -18,5 +18,11 @@ interface UpdatePlanContract {
 
     interface View : BaseView {
         fun showMessageInvalidData(message: String)
+
+        fun onSuccess(walletId: Int, dateKey: String, planId: Int)
+    }
+
+    interface Listener {
+        fun requestUpdateData(walletId: Int, dateKey: String, planId: Int)
     }
 }
