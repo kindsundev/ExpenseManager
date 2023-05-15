@@ -18,7 +18,7 @@ class PlanFirebase: BaseFirebase() {
             .child(Constant.MY_REFERENCE_CHILD_PLANS)
 
 
-    fun upsertPlan(walletId: Int, plan: PlanModel) =
+    fun insertPlan(walletId: Int, plan: PlanModel) =
         Completable.create { emitter ->
             initPointerPlan(walletId)
                 .child(getCurrentDate())
@@ -34,6 +34,23 @@ class PlanFirebase: BaseFirebase() {
                     }
                 }
         }
+
+    fun updatePlan(walletId: Int, dateKey: String, plan: PlanModel) =
+        Completable.create { emitter ->
+            initPointerPlan(walletId)
+                .child(dateKey)
+                .child(plan.id.toString())
+                .setValue(plan)
+                .addOnCompleteListener {
+                    if (!emitter.isDisposed) {
+                        if (it.isSuccessful) {
+                            emitter.onComplete()
+                        } else {
+                            emitter.onError(it.exception!!)
+                        }
+                    }
+                }
+    }
 
     fun getPlanList(walletId: Int): Observable<PlanModel> =
         Observable.create { subscriber ->

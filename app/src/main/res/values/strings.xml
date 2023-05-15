@@ -225,6 +225,8 @@
     <string name="savings">Savings</string>
     <string name="create_plan">Create Plan</string>
     <string name="update_plan">Update Plan</string>
+    <string name="update_plan_success">Update plan success</string>
+    <string name="update_plan_failed">Update plan failed</string>
     <string name="delete_plan">Delete Plan</string>
     <string name="delete_plan_success">Delete plan success</string>
     <string name="delete_plan_failed">Delete plan failed</string>
@@ -313,4 +315,5 @@
     <string name="start">Start</string>
     <string name="end">End</string>
     <string name="confirm_delete_plan">Do you really want to delete this plan?</string>
+    <string name="no_data_changed">No data changed, please try again</string>
 </resources>

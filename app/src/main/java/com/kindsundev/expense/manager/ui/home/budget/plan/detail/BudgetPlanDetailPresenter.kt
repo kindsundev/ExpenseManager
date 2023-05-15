@@ -1,12 +1,11 @@
 package com.kindsundev.expense.manager.ui.home.budget.plan.detail
 
-import android.icu.text.SimpleDateFormat
 import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.data.firebase.PlanFirebase
+import com.kindsundev.expense.manager.utils.dateFormatConversion
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import java.util.*
 
 class BudgetPlanDetailPresenter(
     private val view: BudgetPlanDetailContract.View
@@ -26,15 +25,6 @@ class BudgetPlanDetailPresenter(
                 view.onError(view.getCurrentContext().getString(R.string.delete_plan_failed))
             })
         compositeDisposable.add(disposable)
-    }
-
-    private fun dateFormatConversion(date: String): String {
-        val stringArray = date.split(",")
-        val stringDate = stringArray[1]
-        val inputDateFormat = SimpleDateFormat("d-M-yyyy", Locale.getDefault())
-        val outputDateFormat = SimpleDateFormat("dd EEEE MMMM yyyy", Locale.getDefault())
-        val inputDate = inputDateFormat.parse(stringDate)
-        return outputDateFormat.format(inputDate)
     }
 
     fun cleanUp() = compositeDisposable.dispose()

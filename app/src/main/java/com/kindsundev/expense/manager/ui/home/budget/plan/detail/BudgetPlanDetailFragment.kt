@@ -15,6 +15,7 @@ import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.data.model.PlanModel
 import com.kindsundev.expense.manager.databinding.FragmentBudgetPlanDetailBinding
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
+import com.kindsundev.expense.manager.ui.home.budget.plan.dialog.update.UpdatePlanDialog
 import com.kindsundev.expense.manager.utils.formatDisplayCurrencyBalance
 import com.kindsundev.expense.manager.utils.showMessage
 import com.kindsundev.expense.manager.utils.startLoadingDialog
@@ -94,7 +95,8 @@ class BudgetPlanDetailFragment : Fragment(), BudgetPlanDetailContract.View {
     }
 
     private fun initPlanDetailBottomSheet() {
-        activity?.showMessage("Update button clicked")
+        val dialog = UpdatePlanDialog(mWalletId, mPlan)
+        dialog.show(parentFragmentManager, dialog.tag)
     }
 
     private fun initDeletePlanDialog() {
