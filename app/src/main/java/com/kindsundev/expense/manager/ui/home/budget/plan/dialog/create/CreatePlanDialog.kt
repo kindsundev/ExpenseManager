@@ -1,4 +1,4 @@
-package com.kindsundev.expense.manager.ui.home.budget.plan.dialog
+package com.kindsundev.expense.manager.ui.home.budget.plan.dialog.create
 
 import android.app.Dialog
 import android.content.Context

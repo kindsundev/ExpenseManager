@@ -36,7 +36,7 @@ class BudgetPlanPresenter(
 
     override fun handleCreatePlan(walletId: Int, plan: PlanModel) {
         view.onLoad()
-        val disposable = planFirebase.upsertPlan(walletId, plan)
+        val disposable = planFirebase.insertPlan(walletId, plan)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({

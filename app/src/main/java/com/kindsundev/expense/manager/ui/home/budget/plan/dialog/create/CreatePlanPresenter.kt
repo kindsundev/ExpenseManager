@@ -1,4 +1,4 @@
-package com.kindsundev.expense.manager.ui.home.budget.plan.dialog
+package com.kindsundev.expense.manager.ui.home.budget.plan.dialog.create
 
 import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.data.model.PlanModel
