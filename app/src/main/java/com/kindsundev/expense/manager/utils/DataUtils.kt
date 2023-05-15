@@ -8,9 +8,12 @@ import com.github.mikephil.charting.data.PieEntry
 import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Constant
 import com.kindsundev.expense.manager.common.Status
+import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.*
 import java.util.regex.Pattern
+import kotlin.collections.ArrayList
 
 fun checkEmailAndPassword(email: String, password: String): Status {
     return if (email.isEmpty()) {
@@ -94,6 +97,16 @@ fun getCurrentDate(): String {
 fun getCurrentDateTime(): String {
     return LocalDateTime.now()
         .format(DateTimeFormatter.ofPattern("HH:mm, dd-MM-yyyy"))
+}
+
+fun dateFormatConversion(date: String): String {
+    val stringArray = date.split(",")
+    val stringDate = stringArray[1]
+    val inputDateFormat = SimpleDateFormat("d-M-yyyy", Locale.getDefault())
+    val outputDateFormat =
+        SimpleDateFormat("dd EEEE MMMM yyyy", Locale.getDefault())
+    val inputDate = inputDateFormat.parse(stringDate)
+    return outputDateFormat.format(inputDate!!)
 }
 
 fun hashCodeForID(vararg data: String): Int {
