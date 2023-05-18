@@ -21,7 +21,8 @@ import com.kindsundev.expense.manager.utils.*
 
 class UpdatePlanDialog(
     private val walletId: Int,
-    private val currentPlan: PlanModel,
+    private val date: String,
+    private val plan: PlanModel,
     private val listener: UpdatePlanContract.Listener
 ) : DialogFragment(), UpdatePlanContract.View {
     private var _binding: DialogUpdatePlanBinding? = null
@@ -63,11 +64,11 @@ class UpdatePlanDialog(
     }
 
     private fun initCurrentData() {
-        val amount = formatDisplayCurrencyBalance(currentPlan.estimatedAmount.toString()).trim()
+        val amount = formatDisplayCurrencyBalance(plan.estimatedAmount.toString()).trim()
         binding!!.edtEstimatedAmount.text = amount.toEditable()
-        binding!!.edtName.text = currentPlan.name!!.toEditable()
-        binding!!.tvStartDay.text = currentPlan.startDate
-        binding!!.tvEndDay.text = currentPlan.endDate
+        binding!!.edtName.text = plan.name!!.toEditable()
+        binding!!.tvStartDay.text = plan.startDate
+        binding!!.tvEndDay.text = plan.endDate
     }
 
     private fun initListener() {
@@ -100,19 +101,18 @@ class UpdatePlanDialog(
         val estimatedAmount = binding!!.edtEstimatedAmount.text.toString().replace(",", "")
         val startDate = binding!!.tvStartDay.text.toString()
         val endDate = binding!!.tvEndDay.text.toString()
-        updatePlanPresenter.handleUpdatePlan(
+        updatePlanPresenter.handleDataFromInput(
             name,
             estimatedAmount,
             startDate,
             endDate,
             walletId,
-            currentPlan
+            plan
         )
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    override fun onPlanValidation(plan: PlanModel) {
+        updatePlanPresenter.handleUpdatePlan(walletId, date, plan)
     }
 
     override fun showMessageInvalidData(message: String) {
@@ -136,4 +136,10 @@ class UpdatePlanDialog(
         listener.requestUpdateData(walletId, dateKey, planId)
         this.dismiss()
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
 }

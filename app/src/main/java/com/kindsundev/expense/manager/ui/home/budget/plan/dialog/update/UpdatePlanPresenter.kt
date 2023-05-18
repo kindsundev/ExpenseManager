@@ -1,10 +1,8 @@
 package com.kindsundev.expense.manager.ui.home.budget.plan.dialog.update
 
 import com.kindsundev.expense.manager.R
-import com.kindsundev.expense.manager.common.Logger
 import com.kindsundev.expense.manager.data.firebase.PlanFirebase
 import com.kindsundev.expense.manager.data.model.PlanModel
-import com.kindsundev.expense.manager.utils.dateFormatConversion
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -18,7 +16,7 @@ class UpdatePlanPresenter(
 
     private val compositeDisposable = CompositeDisposable()
 
-    override fun handleUpdatePlan(
+    override fun handleDataFromInput(
         name: String,
         estimatedAmount: String,
         startDate: String,
@@ -26,34 +24,38 @@ class UpdatePlanPresenter(
         walletId: Int,
         currentPlan: PlanModel
     ) {
-        if (name == currentPlan.name && startDate == currentPlan.startDate && endDate == currentPlan.endDate) {
+        if (name == currentPlan.name
+            && estimatedAmount.toDouble() == currentPlan.estimatedAmount
+            && startDate == currentPlan.startDate
+            && endDate == currentPlan.endDate) {
             view.showMessageInvalidData(
                 view.getCurrentContext().getString(R.string.no_data_changed)
             )
         } else {
             if (isValidData(name, startDate, endDate, estimatedAmount)) {
-                val dateKey = dateFormatConversion(currentPlan.startDate!!)
-                Logger.error(dateKey) // not current day when create (tonight update)
                 currentPlan.name = name
                 currentPlan.startDate = startDate
                 currentPlan.endDate = endDate
                 val amount = estimatedAmount.toDouble()
                 if (amount != currentPlan.estimatedAmount) currentPlan.estimatedAmount = amount
-
-                view.onLoad()
-                val disposable = PlanFirebase().updatePlan(walletId, dateKey ,currentPlan)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
-                        view.onSuccess(walletId, dateKey, currentPlan.id!!)
-                    }, {
-                        view.onError(
-                            view.getCurrentContext().getString(R.string.update_plan_failed)
-                        )
-                    })
-                compositeDisposable.add(disposable)
+                view.onPlanValidation(currentPlan)
             }
         }
+    }
+
+    override fun handleUpdatePlan(walletId: Int, dateKey: String, plan: PlanModel) {
+        view.onLoad()
+        val disposable = PlanFirebase().updatePlan(walletId, dateKey, plan)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                view.onSuccess(walletId, dateKey, plan.id!!)
+            }, {
+                view.onError(
+                    view.getCurrentContext().getString(R.string.update_plan_failed)
+                )
+            })
+        compositeDisposable.add(disposable)
     }
 
     private fun isValidData(

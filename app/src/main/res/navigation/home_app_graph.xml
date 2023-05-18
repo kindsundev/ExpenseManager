@@ -175,6 +175,9 @@
             android:name="walletId"
             app:argType="integer" />
         <argument
+            android:name="date"
+            app:argType="string"/>
+        <argument
             android:name="plan"
             app:argType="com.kindsundev.expense.manager.data.model.PlanModel" />
     </fragment>

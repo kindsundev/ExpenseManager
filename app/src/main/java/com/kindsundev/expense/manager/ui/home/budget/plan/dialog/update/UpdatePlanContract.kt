@@ -6,7 +6,7 @@ import com.kindsundev.expense.manager.ui.base.BaseView
 interface UpdatePlanContract {
 
     interface Presenter {
-        fun handleUpdatePlan(
+        fun handleDataFromInput(
             name: String,
             estimatedAmount: String,
             startDate: String,
@@ -14,10 +14,14 @@ interface UpdatePlanContract {
             walletId: Int,
             currentPlan: PlanModel
         )
+
+        fun handleUpdatePlan(walletId: Int, dateKey: String, plan: PlanModel)
     }
 
     interface View : BaseView {
         fun showMessageInvalidData(message: String)
+
+        fun onPlanValidation(plan: PlanModel)
 
         fun onSuccess(walletId: Int, dateKey: String, planId: Int)
     }
