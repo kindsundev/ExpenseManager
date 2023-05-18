@@ -31,6 +31,7 @@ class BudgetPlanDetailFragment : Fragment(), BudgetPlanDetailContract.View {
     private val args by navArgs<BudgetPlanDetailFragmentArgs>()
     private var mWalletId by Delegates.notNull<Int>()
     private lateinit var mPlan: PlanModel
+    private lateinit var mDate: String
     private lateinit var planDetailPresenter: BudgetPlanDetailPresenter
 
     override fun getCurrentContext(): Context = requireContext()
@@ -52,6 +53,7 @@ class BudgetPlanDetailFragment : Fragment(), BudgetPlanDetailContract.View {
     private fun getDataFromBudgetPlan() {
         mPlan = args.plan
         mWalletId = args.walletId
+        mDate = args.date
     }
 
     private fun initPlanData() {
@@ -96,7 +98,7 @@ class BudgetPlanDetailFragment : Fragment(), BudgetPlanDetailContract.View {
     }
 
     private fun initPlanDetailBottomSheet() {
-        val dialog = UpdatePlanDialog(mWalletId, mPlan, object: UpdatePlanContract.Listener{
+        val dialog = UpdatePlanDialog(mWalletId, mDate, mPlan, object: UpdatePlanContract.Listener{
             override fun requestUpdateData(walletId: Int, dateKey: String, planId: Int) {
                 planDetailPresenter.handleGetPlan(walletId, dateKey, planId)
             }

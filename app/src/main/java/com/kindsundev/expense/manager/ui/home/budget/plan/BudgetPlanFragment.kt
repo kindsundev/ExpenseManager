@@ -31,6 +31,7 @@ class BudgetPlanFragment : Fragment(), BudgetPlanContract.View {
     private lateinit var bottomSheetWallet: BudgetWalletBottomSheet
     private lateinit var mPlanPresenter: BudgetPlanPresenter
     private var currentWalletId by Delegates.notNull<Int>()
+    private lateinit var currentDate: String
 
     override fun getCurrentContext(): Context = requireContext()
 
@@ -82,12 +83,13 @@ class BudgetPlanFragment : Fragment(), BudgetPlanContract.View {
 
     }
 
-    override fun onSuccessPlan(plans: ArrayList<PlanModel>) {
+    override fun onSuccessPlanMap(plans: HashMap<String, PlanModel>) {
         if (!toggleLayoutEmpty(plans.isEmpty())) {
             binding!!.rcvPlans.apply {
                 layoutManager = LinearLayoutManager(getCurrentContext())
                 adapter = BudgetPlanAdapter(plans, object : BudgetPlanContract.Listener {
-                    override fun onClickPlanItem(plan: PlanModel) {
+                    override fun onClickPlanItem(date: String, plan: PlanModel) {
+                        currentDate = date
                         navigatePlanDetailFragment(plan)
                     }
                 })
@@ -97,7 +99,7 @@ class BudgetPlanFragment : Fragment(), BudgetPlanContract.View {
     }
 
     private fun toggleLayoutEmpty(enable: Boolean): Boolean {
-        return if(enable) {
+        return if (enable) {
             binding!!.rcvPlans.visibility = View.GONE
             binding!!.cvNoPlans.visibility = View.VISIBLE
             true
@@ -111,12 +113,16 @@ class BudgetPlanFragment : Fragment(), BudgetPlanContract.View {
     private fun navigatePlanDetailFragment(plan: PlanModel) {
         findNavController().navigate(
             BudgetPlanFragmentDirections
-                .actionBudgetPlanFragmentToBudgetPlanDetailFragment(currentWalletId, plan)
+                .actionBudgetPlanFragmentToBudgetPlanDetailFragment(
+                    currentWalletId,
+                    currentDate,
+                    plan
+                )
         )
     }
 
     private fun onClickCreateSpendingPlan() {
-        val dialog = CreatePlanDialog(object: CreatePlanContract.Result {
+        val dialog = CreatePlanDialog(object : CreatePlanContract.Result {
             override fun onSuccessPlan(wallet: WalletModel, plan: PlanModel) {
                 mPlanPresenter.handleCreatePlan(wallet.id!!, plan)
                 currentWalletId = wallet.id

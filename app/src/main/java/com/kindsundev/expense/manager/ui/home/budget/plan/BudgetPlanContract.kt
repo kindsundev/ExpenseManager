@@ -17,10 +17,10 @@ interface BudgetPlanContract {
     interface View : BaseView {
         fun onSuccess(message: String)
 
-        fun onSuccessPlan(plans: ArrayList<PlanModel>)
+        fun onSuccessPlanMap(plans: HashMap<String, PlanModel>)
     }
 
     interface Listener {
-        fun onClickPlanItem(plan: PlanModel)
+        fun onClickPlanItem(date: String, plan: PlanModel)
     }
 }

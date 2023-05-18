@@ -27,9 +27,9 @@ class BudgetPlanPresenter(
     override fun handleGetPlansInWallet(wallet: WalletModel) {
         view.onLoad()
         scope.launch {
-            val plans = wallet.getPlanList()
+            val plans = wallet.getPlanMap()
             withContext(Dispatchers.Main) {
-                view.onSuccessPlan(plans)
+                view.onSuccessPlanMap(plans)
             }
         }
     }
@@ -53,8 +53,8 @@ class BudgetPlanPresenter(
     // call to firebase when plan created (update ui)
     override fun handleGetPlansInFirebase(walletId: Int) {
         view.onLoad()
-        val plans = ArrayList<PlanModel>()
-        val disposable = planFirebase.getPlanList(walletId)
+        val dataMap = HashMap<String, PlanModel>()
+        val disposable = planFirebase.getPlanMap(walletId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
@@ -63,8 +63,12 @@ class BudgetPlanPresenter(
                     view.onError(message)
                     Logger.warn(it.message.toString())
                 },
-                onComplete = { view.onSuccessPlan(plans) },
-                onNext = { plans.add(it) }
+                onComplete = { view.onSuccessPlanMap(dataMap) },
+                onNext = {
+                    it?.let {
+                        it.date?.let { key -> it.plan?.let { value -> dataMap[key] = value } }
+                    }
+                }
             )
         compositeDisposable.add(disposable)
     }
