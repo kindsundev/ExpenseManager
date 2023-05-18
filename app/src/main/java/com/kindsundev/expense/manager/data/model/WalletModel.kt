@@ -39,15 +39,15 @@ data class WalletModel(
         return bills
     }
 
-    fun getPlanList(): ArrayList<PlanModel> {
-        val list = ArrayList<PlanModel>()
+    fun getPlanMap(): HashMap<String, PlanModel> {
+        val data = HashMap<String, PlanModel>()
         plans?.let {
-            for ((_, map) in it) {
+            for ((date, map) in it) {
                 for ((_, model) in map) {
-                    list.add(model)
+                    data[date] = model
                 }
             }
         }
-        return list
+        return data
     }
 }
