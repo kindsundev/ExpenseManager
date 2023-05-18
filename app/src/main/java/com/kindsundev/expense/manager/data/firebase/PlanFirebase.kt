@@ -6,6 +6,7 @@ import com.google.firebase.database.ValueEventListener
 import com.kindsundev.expense.manager.common.Constant
 import com.kindsundev.expense.manager.data.base.BaseFirebase
 import com.kindsundev.expense.manager.data.model.PlanModel
+import com.kindsundev.expense.manager.data.model.PlannedModel
 import com.kindsundev.expense.manager.utils.getCurrentDate
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -52,7 +53,7 @@ class PlanFirebase: BaseFirebase() {
                 }
     }
 
-    fun getPlanList(walletId: Int): Observable<PlanModel> =
+    fun getPlanMap(walletId: Int): Observable<PlannedModel> =
         Observable.create { subscriber ->
             initPointerPlan(walletId).addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -60,13 +61,10 @@ class PlanFirebase: BaseFirebase() {
                         for (data in snapshot.children) {
                             for (child in data.children) {
                                 val value = child.getValue(PlanModel::class.java)
-                                value?.let {
-                                    subscriber.onNext(value)
-                                }
+                                val planned = PlannedModel(child.key, value)
+                                subscriber.onNext(planned)
                             }
                         }
-                        subscriber.onComplete()
-                    } else {
                         subscriber.onComplete()
                     }
                 }
@@ -76,6 +74,7 @@ class PlanFirebase: BaseFirebase() {
                 }
             })
         }
+
 
     fun deletePlan(walletId: Int, dateKey: String, planId: Int) =
         Completable.create { emitter ->
