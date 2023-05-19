@@ -6,9 +6,9 @@ import com.kindsundev.expense.manager.ui.base.BaseView
 interface BudgetPlanDetailContract {
 
     interface Presenter {
-        fun handleDeletePlan(walletId: Int, startDate: String, planId: Int)
+        fun handleDeletePlan(walletId: Int, dateKey: String, planId: Int)
 
-        fun handleGetPlan(walletId: Int, startDate: String, planId: Int)
+        fun handleGetPlan(walletId: Int, dateKey: String, planId: Int)
     }
 
     interface View : BaseView {

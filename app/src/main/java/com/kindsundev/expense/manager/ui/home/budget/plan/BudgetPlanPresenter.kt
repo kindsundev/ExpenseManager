@@ -4,6 +4,7 @@ import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Logger
 import com.kindsundev.expense.manager.data.firebase.PlanFirebase
 import com.kindsundev.expense.manager.data.model.PlanModel
+import com.kindsundev.expense.manager.data.model.PlannedModel
 import com.kindsundev.expense.manager.data.model.WalletModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -27,7 +28,7 @@ class BudgetPlanPresenter(
     override fun handleGetPlansInWallet(wallet: WalletModel) {
         view.onLoad()
         scope.launch {
-            val plans = wallet.getPlanMap()
+            val plans = wallet.getPlanList()
             withContext(Dispatchers.Main) {
                 view.onSuccessPlanMap(plans)
             }
@@ -53,7 +54,7 @@ class BudgetPlanPresenter(
     // call to firebase when plan created (update ui)
     override fun handleGetPlansInFirebase(walletId: Int) {
         view.onLoad()
-        val dataMap = HashMap<String, PlanModel>()
+        val list = ArrayList<PlannedModel>()
         val disposable = planFirebase.getPlanMap(walletId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -63,12 +64,8 @@ class BudgetPlanPresenter(
                     view.onError(message)
                     Logger.warn(it.message.toString())
                 },
-                onComplete = { view.onSuccessPlanMap(dataMap) },
-                onNext = {
-                    it?.let {
-                        it.date?.let { key -> it.plan?.let { value -> dataMap[key] = value } }
-                    }
-                }
+                onComplete = { view.onSuccessPlanMap(list) },
+                onNext = { list.add(it) }
             )
         compositeDisposable.add(disposable)
     }

@@ -4,7 +4,6 @@ import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Logger
 import com.kindsundev.expense.manager.data.firebase.PlanFirebase
 import com.kindsundev.expense.manager.data.model.PlanModel
-import com.kindsundev.expense.manager.utils.dateFormatConversion
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
@@ -16,8 +15,7 @@ class BudgetPlanDetailPresenter(
     private val planFirebase by lazy { PlanFirebase() }
     private val compositeDisposable = CompositeDisposable()
 
-    override fun handleDeletePlan(walletId: Int, startDate: String, planId: Int) {
-        val dateKey = dateFormatConversion(startDate)
+    override fun handleDeletePlan(walletId: Int, dateKey: String, planId: Int) {
         view.onLoad()
         val disposable = planFirebase.deletePlan(walletId, dateKey, planId)
             .subscribeOn(Schedulers.io())
@@ -30,10 +28,10 @@ class BudgetPlanDetailPresenter(
         compositeDisposable.add(disposable)
     }
 
-    override fun handleGetPlan(walletId: Int, startDate: String, planId: Int) {
+    override fun handleGetPlan(walletId: Int, dateKey: String, planId: Int) {
         view.onLoad()
         var plan = PlanModel()
-        val disposable = planFirebase.getPlan(walletId, startDate, planId)
+        val disposable = planFirebase.getPlan(walletId, dateKey, planId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(

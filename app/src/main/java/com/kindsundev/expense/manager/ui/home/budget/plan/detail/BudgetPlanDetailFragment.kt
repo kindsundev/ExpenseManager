@@ -73,7 +73,7 @@ class BudgetPlanDetailFragment : Fragment(), BudgetPlanDetailContract.View {
         binding!!.toolbar.setOnMenuItemClickListener { menuItem ->
             when(menuItem.itemId) {
                 R.id.action_update_plan -> {
-                    initPlanDetailBottomSheet()
+                    initUpdatePlanDialog()
                     true
                 }
                 R.id.action_delete_plan -> {
@@ -97,7 +97,7 @@ class BudgetPlanDetailFragment : Fragment(), BudgetPlanDetailContract.View {
         }
     }
 
-    private fun initPlanDetailBottomSheet() {
+    private fun initUpdatePlanDialog() {
         val dialog = UpdatePlanDialog(mWalletId, mDate, mPlan, object: UpdatePlanContract.Listener{
             override fun requestUpdateData(walletId: Int, dateKey: String, planId: Int) {
                 planDetailPresenter.handleGetPlan(walletId, dateKey, planId)
@@ -112,7 +112,7 @@ class BudgetPlanDetailFragment : Fragment(), BudgetPlanDetailContract.View {
             .setMessage(R.string.confirm_delete_plan)
             .setCancelable(false)
             .setPositiveButton(R.string.ok) { _, _ ->
-                planDetailPresenter.handleDeletePlan(mWalletId, mPlan.startDate!!, mPlan.id!!)
+                planDetailPresenter.handleDeletePlan(mWalletId, mDate, mPlan.id!!)
             }
             .setNegativeButton(R.string.cancel) { dialog, _ -> dialog.dismiss() }
             .create()

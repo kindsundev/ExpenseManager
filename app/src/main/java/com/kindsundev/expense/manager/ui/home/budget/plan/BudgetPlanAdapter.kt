@@ -4,11 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.kindsundev.expense.manager.data.model.PlanModel
+import com.kindsundev.expense.manager.data.model.PlannedModel
 import com.kindsundev.expense.manager.databinding.LayoutPlanItemBinding
 import com.kindsundev.expense.manager.utils.abbreviateNumber
 
 class BudgetPlanAdapter(
-    private val dataMap: HashMap<String, PlanModel>,
+    private val plans: ArrayList<PlannedModel>,
     private val listener: BudgetPlanContract.Listener
 ) : RecyclerView.Adapter<BudgetPlanAdapter.PlanViewHolder>() {
 
@@ -21,14 +22,13 @@ class BudgetPlanAdapter(
     }
 
     override fun onBindViewHolder(holder: PlanViewHolder, position: Int) {
-        val keys = dataMap.keys.toList()
-        val currentKey = keys[position]
-        val plan = dataMap[currentKey]
-
-        initDataToPlan(holder.binding, plan!!)
-        // set percentage..
-        holder.binding.root.setOnClickListener {
-            listener.onClickPlanItem(currentKey, plan)
+        val planned = plans[position]
+        planned.plan?.let {
+            initDataToPlan(holder.binding, planned.plan)
+            // set percentage..
+            holder.binding.root.setOnClickListener {
+                listener.onClickPlanItem(planned)
+            }
         }
     }
 
@@ -38,5 +38,5 @@ class BudgetPlanAdapter(
         binding.tvEstimateAmount.text = abbreviateNumber(plan.estimatedAmount!!)
     }
 
-    override fun getItemCount(): Int = dataMap.size
+    override fun getItemCount(): Int = plans.size
 }

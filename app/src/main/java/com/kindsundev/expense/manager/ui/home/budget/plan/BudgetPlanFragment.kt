@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.data.model.PlanModel
+import com.kindsundev.expense.manager.data.model.PlannedModel
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.FragmentBudgetPlanBinding
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
@@ -31,7 +32,6 @@ class BudgetPlanFragment : Fragment(), BudgetPlanContract.View {
     private lateinit var bottomSheetWallet: BudgetWalletBottomSheet
     private lateinit var mPlanPresenter: BudgetPlanPresenter
     private var currentWalletId by Delegates.notNull<Int>()
-    private lateinit var currentDate: String
 
     override fun getCurrentContext(): Context = requireContext()
 
@@ -83,14 +83,13 @@ class BudgetPlanFragment : Fragment(), BudgetPlanContract.View {
 
     }
 
-    override fun onSuccessPlanMap(plans: HashMap<String, PlanModel>) {
+    override fun onSuccessPlanMap(plans: ArrayList<PlannedModel>) {
         if (!toggleLayoutEmpty(plans.isEmpty())) {
             binding!!.rcvPlans.apply {
                 layoutManager = LinearLayoutManager(getCurrentContext())
                 adapter = BudgetPlanAdapter(plans, object : BudgetPlanContract.Listener {
-                    override fun onClickPlanItem(date: String, plan: PlanModel) {
-                        currentDate = date
-                        navigatePlanDetailFragment(plan)
+                    override fun onClickPlanItem(planned: PlannedModel) {
+                        navigatePlanDetailFragment(planned)
                     }
                 })
             }
@@ -110,13 +109,13 @@ class BudgetPlanFragment : Fragment(), BudgetPlanContract.View {
         }
     }
 
-    private fun navigatePlanDetailFragment(plan: PlanModel) {
+    private fun navigatePlanDetailFragment(planned: PlannedModel) {
         findNavController().navigate(
             BudgetPlanFragmentDirections
                 .actionBudgetPlanFragmentToBudgetPlanDetailFragment(
                     currentWalletId,
-                    currentDate,
-                    plan
+                    planned.date!!,
+                    planned.plan!!
                 )
         )
     }
