@@ -11,11 +11,14 @@ import io.reactivex.Observable
 
 class TransactionFirebase : BaseFirebase() {
 
+    private fun initPointerTransaction(walletId: Int) =
+        initPointerGeneric()
+            .child(walletId.toString())
+            .child(Constant.MY_REFERENCE_CHILD_TRANSACTIONS)
+
     fun upsertTransaction(walletId: Int, transaction: TransactionModel) =
         Completable.create { emitter ->
-            initPointerGeneric()
-                .child(walletId.toString())
-                .child(Constant.MY_REFERENCE_CHILD_TRANSACTIONS)
+            initPointerTransaction(walletId)
                 .child(getCurrentDate())
                 .child(transaction.id.toString())
                 .setValue(transaction)
@@ -30,8 +33,8 @@ class TransactionFirebase : BaseFirebase() {
                 }
         }
 
-    fun updateBalance(walletID: Int, newValue: Double) = Completable.create { emitter ->
-        initPointerGeneric().child(walletID.toString())
+    fun updateBalance(walletId: Int, newValue: Double) = Completable.create { emitter ->
+        initPointerGeneric().child(walletId.toString())
             .child(Constant.REF_FIELD_BALANCE).setValue(newValue).addOnCompleteListener {
                 if (!emitter.isDisposed) {
                     if (it.isSuccessful) {
@@ -43,11 +46,9 @@ class TransactionFirebase : BaseFirebase() {
             }
     }
 
-    fun getTransactionsInDay(walletID: String, date: String) : Observable<BillModel> =
+    fun getTransactionsInDay(walletId: Int, date: String) : Observable<BillModel> =
         Observable.create { subscriber ->
-        initPointerGeneric()
-            .child(walletID)
-            .child(Constant.MY_REFERENCE_CHILD_TRANSACTIONS)
+            initPointerTransaction(walletId)
             .child(date)
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -75,11 +76,9 @@ class TransactionFirebase : BaseFirebase() {
             })
     }
 
-    fun deleteTransaction(walletID: String, dateKey: String, transactionId: String) =
+    fun deleteTransaction(walletId: Int, dateKey: String, transactionId: String) =
         Completable.create { emitter ->
-            initPointerGeneric()
-                .child(walletID)
-                .child(Constant.MY_REFERENCE_CHILD_TRANSACTIONS)
+            initPointerTransaction(walletId)
                 .child(dateKey)
                 .child(transactionId)
                 .removeValue()

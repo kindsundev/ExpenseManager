@@ -130,7 +130,7 @@ class TransactionDetailPresenter(
     override fun handlerDeleteTransaction(walletID: Int, date: String, transactionId: Int) {
         view.onLoad()
         val disposable = transactionFirebase
-            .deleteTransaction(walletID.toString(), date, transactionId.toString())
+            .deleteTransaction(walletID, date, transactionId.toString())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
@@ -159,7 +159,5 @@ class TransactionDetailPresenter(
         }
     }
 
-    fun cleanUp() {
-        compositeDisposable.clear()
-    }
+    fun cleanUp() = compositeDisposable.clear()
 }

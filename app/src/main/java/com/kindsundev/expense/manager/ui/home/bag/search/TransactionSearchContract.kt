@@ -6,7 +6,7 @@ import com.kindsundev.expense.manager.ui.base.BaseView
 interface TransactionSearchContract {
 
     interface Presenter {
-        fun searchTransactionInDay(walletID: String, date: String)
+        fun searchTransactionInDay(walletId: Int, date: String)
     }
 
     interface View : BaseView {

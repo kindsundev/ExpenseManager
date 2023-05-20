@@ -67,7 +67,7 @@ class TransactionSearchFragment: Fragment(), TransactionSearchContract.View {
             override fun resultNewDateTime(newDateTime: String) {
                 mCurrentTimePicker = newDateTime
                 binding!!.tvDate.text = newDateTime
-                searchPresenter.searchTransactionInDay(mWallet.id!!.toString(), newDateTime)
+                searchPresenter.searchTransactionInDay(mWallet.id!!, newDateTime)
             }
         }).onShowDatePickerDialog()
     }
@@ -126,6 +126,6 @@ class TransactionSearchFragment: Fragment(), TransactionSearchContract.View {
     }
 
     private fun refreshData() {
-        searchPresenter.searchTransactionInDay(mWallet.id!!.toString(), mCurrentTimePicker)
+        searchPresenter.searchTransactionInDay(mWallet.id!!, mCurrentTimePicker)
     }
 }

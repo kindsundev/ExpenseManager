@@ -14,10 +14,10 @@ class TransactionSearchPresenter(
 ) : TransactionSearchContract.Presenter {
     private val compositeDisposable = CompositeDisposable()
 
-    override fun searchTransactionInDay(walletID: String, date: String) {
+    override fun searchTransactionInDay(walletId: Int, date: String) {
         view.onLoad()
         val mBill = ArrayList<BillModel>()
-        val disposable = TransactionFirebase().getTransactionsInDay(walletID, date)
+        val disposable = TransactionFirebase().getTransactionsInDay(walletId, date)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
