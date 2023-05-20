@@ -40,7 +40,7 @@ class TransactionPresenter(
 
     override fun createTransaction(walletID: Int, transaction: TransactionModel) {
         view.onLoad()
-        val disposable = transactionFirebase.upsertTransaction(walletID, transaction)
+        val disposable = transactionFirebase.insertTransaction(walletID, transaction)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({

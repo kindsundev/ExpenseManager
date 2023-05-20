@@ -17,9 +17,9 @@ class TransactionDetailPresenter(
     private lateinit var message: String
     private var actionDelete = false
 
-    override fun updateTransaction(walletID: Int, transaction: TransactionModel) {
+    override fun updateTransaction(walletId: Int, dateKey: String, transaction: TransactionModel) {
         view.onLoad()
-        val disposable = TransactionFirebase().upsertTransaction(walletID, transaction)
+        val disposable = TransactionFirebase().updateTransaction(walletId, dateKey, transaction)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
@@ -127,10 +127,10 @@ class TransactionDetailPresenter(
         compositeDisposable.add(disposable)
     }
 
-    override fun handlerDeleteTransaction(walletID: Int, date: String, transactionId: Int) {
+    override fun handlerDeleteTransaction(walletId: Int, date: String, transactionId: Int) {
         view.onLoad()
         val disposable = transactionFirebase
-            .deleteTransaction(walletID, date, transactionId.toString())
+            .deleteTransaction(walletId, date, transactionId.toString())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({

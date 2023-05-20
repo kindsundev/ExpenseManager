@@ -91,7 +91,7 @@ class TransactionBottomSheet(
                 activity?.showMessage(message)
             } else {
                 mNewTransaction = getNewTransaction()
-                detailPresenter.updateTransaction(wallet.id!!, mNewTransaction)
+                detailPresenter.updateTransaction(wallet.id!!, date, mNewTransaction)
             }
         }
     }

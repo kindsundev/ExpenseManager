@@ -16,10 +16,27 @@ class TransactionFirebase : BaseFirebase() {
             .child(walletId.toString())
             .child(Constant.MY_REFERENCE_CHILD_TRANSACTIONS)
 
-    fun upsertTransaction(walletId: Int, transaction: TransactionModel) =
+    fun insertTransaction(walletId: Int, transaction: TransactionModel) =
         Completable.create { emitter ->
             initPointerTransaction(walletId)
                 .child(getCurrentDate())
+                .child(transaction.id.toString())
+                .setValue(transaction)
+                .addOnCompleteListener {
+                    if (!emitter.isDisposed) {
+                        if (it.isSuccessful) {
+                            emitter.onComplete()
+                        } else {
+                            emitter.onError(it.exception!!)
+                        }
+                    }
+                }
+        }
+
+    fun updateTransaction(walletId: Int, dateKey: String, transaction: TransactionModel) =
+        Completable.create { emitter ->
+            initPointerTransaction(walletId)
+                .child(dateKey)
                 .child(transaction.id.toString())
                 .setValue(transaction)
                 .addOnCompleteListener {

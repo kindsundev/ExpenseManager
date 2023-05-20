@@ -7,7 +7,7 @@ interface TransactionDetailContract {
 
     interface Presenter {
 
-        fun updateTransaction(walletID: Int, transaction: TransactionModel)
+        fun updateTransaction(walletId: Int, dateKey: String, transaction: TransactionModel)
 
         fun handlerUpdateBalance(
             walletId: Int,
@@ -17,7 +17,7 @@ interface TransactionDetailContract {
             afterMoney: Double
         )
 
-        fun handlerDeleteTransaction(walletID: Int, date: String, transactionId: Int)
+        fun handlerDeleteTransaction(walletId: Int, date: String, transactionId: Int)
 
         fun checkAndRestoreBalance(
             walletId: Int,
