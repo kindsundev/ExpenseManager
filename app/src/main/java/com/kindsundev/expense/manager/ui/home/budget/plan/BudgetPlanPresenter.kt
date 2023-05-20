@@ -28,7 +28,7 @@ class BudgetPlanPresenter(
     override fun handleGetPlansInWallet(wallet: WalletModel) {
         view.onLoad()
         scope.launch {
-            val plans = wallet.getPlanList()
+            val plans = wallet.getPlannedList()
             withContext(Dispatchers.Main) {
                 view.onSuccessPlanMap(plans)
             }

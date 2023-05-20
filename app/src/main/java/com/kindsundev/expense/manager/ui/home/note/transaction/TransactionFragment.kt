@@ -1,13 +1,16 @@
 package com.kindsundev.expense.manager.ui.home.note.transaction
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Constant
+import com.kindsundev.expense.manager.data.model.PlanModel
 import com.kindsundev.expense.manager.data.model.TransactionModel
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.FragmentTransactionBinding
@@ -17,24 +20,28 @@ import com.kindsundev.expense.manager.ui.custom.LoadingDialog
 import com.kindsundev.expense.manager.ui.home.HomeActivity
 import com.kindsundev.expense.manager.ui.home.note.transaction.debt.TransactionDebtBottomSheet
 import com.kindsundev.expense.manager.ui.home.note.transaction.debt.TransactionDebtContract
+import com.kindsundev.expense.manager.ui.home.note.transaction.plan.TransactionPlanBottomSheet
+import com.kindsundev.expense.manager.ui.home.note.transaction.plan.TransactionPlanContract
 import com.kindsundev.expense.manager.ui.home.note.transaction.wallet.TransactionWalletBottomSheet
 import com.kindsundev.expense.manager.ui.home.note.transaction.wallet.TransactionWalletContract
 import com.kindsundev.expense.manager.utils.*
 
-class TransactionFragment : Fragment(), TransactionContract.View,
-    TransactionWalletContract.Listener, TransactionDebtContract.Listener {
+class TransactionFragment : Fragment(), TransactionContract.View {
     private var _binding: FragmentTransactionBinding? = null
     private val binding get() = _binding
+    private var transactionType: String? = null
+    private var categoryName: String? = null
+
+    private val loadingDialog by lazy { LoadingDialog() }
+    private lateinit var transactionPresenter: TransactionPresenter
 
     private lateinit var walletBottomSheet: TransactionWalletBottomSheet
     private lateinit var debtBottomSheet: TransactionDebtBottomSheet
-    private lateinit var transactionPresenter: TransactionPresenter
-    private val loadingDialog by lazy { LoadingDialog() }
+    private lateinit var planBottomSheet: TransactionPlanBottomSheet
 
-    private lateinit var wallet: WalletModel
-    private lateinit var transaction: TransactionModel
-    private var transactionType: String? = null
-    private var categoryName: String? = null
+    private lateinit var mWallet: WalletModel
+    private lateinit var mTransaction: TransactionModel
+    private var mPlan: PlanModel? = null
 
     override fun getCurrentContext(): Context = requireContext()
 
@@ -94,24 +101,27 @@ class TransactionFragment : Fragment(), TransactionContract.View,
     }
 
     private fun initDebtBottomSheet() {
-        debtBottomSheet = TransactionDebtBottomSheet(this)
+        debtBottomSheet = TransactionDebtBottomSheet(object: TransactionDebtContract.Listener {
+            override fun debtBottomSheetHasDismiss() {
+                initWalletBottomSheet()
+            }
+        })
         debtBottomSheet.show(parentFragmentManager, Constant.TRANSACTION_WALLET_BOTTOM_SHEET_DEBT_NAME)
     }
 
-    override fun debtBottomSheetHasDismiss() {
-        initWalletBottomSheet()
-    }
-
     private fun initWalletBottomSheet() {
-        walletBottomSheet = TransactionWalletBottomSheet(this)
+        walletBottomSheet = TransactionWalletBottomSheet(object: TransactionWalletContract.Listener {
+            override fun onClickWalletItem(wallet: WalletModel) {
+                mWallet = wallet
+                binding!!.incomeAndExpense.tvWalletName.text = wallet.name
+                binding!!.debt.tvWalletName.text = wallet.name
+                binding!!.advanced.tvPlan.text = ""
+                binding!!.advanced.tvPlan.hint = getCurrentContext().getString(R.string.plan)
+                mPlan = null
+                walletBottomSheet.dismiss()
+            }
+        })
         walletBottomSheet.show(parentFragmentManager, Constant.TRANSACTION_WALLET_BOTTOM_SHEET_WALLET_NAME)
-    }
-
-    override fun onClickWalletItem(wallet: WalletModel) {
-        this.wallet = wallet
-        binding!!.incomeAndExpense.tvWalletName.text = wallet.name
-        binding!!.debt.tvWalletName.text = wallet.name
-        walletBottomSheet.dismiss()
     }
 
     private fun initListener() {
@@ -125,8 +135,8 @@ class TransactionFragment : Fragment(), TransactionContract.View,
         binding!!.debt.itemDueDate.setOnClickListener { onClickSetDueDate()}
         binding!!.debt.itemRemindDate.setOnClickListener { onClickSetRemindDate() }
 
+        binding!!.advanced.itemPlan.setOnClickListener { initPlanBottomSheet() }
         binding!!.advanced.itemEvent.setOnClickListener { activity?.requestPremium() }
-        binding!!.advanced.switchOptimization.setOnClickListener { activity?.requestPremium() }
         binding!!.advanced.tvShowMore.setOnClickListener { activity?.requestPremium() }
 
         binding!!.confirm.btnSave.setOnClickListener { onClickSave() }
@@ -166,8 +176,8 @@ class TransactionFragment : Fragment(), TransactionContract.View,
             val walletNameHint = binding!!.incomeAndExpense.tvWalletName.hint.toString()
             val walletNameText = binding!!.incomeAndExpense.tvWalletName.text.toString()
             if (transactionPresenter.isDataFromInputValid(amountText, walletNameHint, walletNameText)) {
-                transaction = initTransactionDataInIAE()
-                transactionPresenter.createTransaction(wallet.id!!, transaction)
+                mTransaction = initTransactionDataInIAE()
+                transactionPresenter.createTransaction(mWallet.id!!, mTransaction)
             }
         } else {
             activity?.requestPremium()
@@ -182,6 +192,25 @@ class TransactionFragment : Fragment(), TransactionContract.View,
         return TransactionModel(
             id, transactionType!!, categoryName!!, amount.toDouble(), date, note
         )
+    }
+
+    private fun initPlanBottomSheet() {
+        if (binding!!.incomeAndExpense.tvWalletName.text.isEmpty()) {
+            activity?.showMessage(
+                getCurrentContext().getString(R.string.please_select_wallet_before)
+            )
+        } else {
+            planBottomSheet =
+                TransactionPlanBottomSheet(mWallet, object : TransactionPlanContract.Listener {
+                    override fun onClickPlanItem(plan: PlanModel) {
+                        mPlan = plan
+                        binding!!.advanced.tvPlan.text = plan.name
+                        binding!!.advanced.tvPlan.setTextColor(Color.BLACK)
+                        planBottomSheet.dismiss()
+                    }
+                })
+            planBottomSheet.show(parentFragmentManager, Constant.TRANSACTION_WALLET_BOTTOM_SHEET_PLAN_NAME)
+        }
     }
 
     override fun onLoad() {
@@ -205,8 +234,8 @@ class TransactionFragment : Fragment(), TransactionContract.View,
     override fun onSuccess() {
         startLoadingDialog(loadingDialog, parentFragmentManager, false)
         transactionPresenter.handlerUpdateBalance(
-            wallet.id!!, transactionType!!, wallet.balance!!.toDouble(),
-            transaction.amount!!
+            mWallet.id!!, transactionType!!, mWallet.balance!!.toDouble(),
+            mTransaction.amount!!
         )
     }
 

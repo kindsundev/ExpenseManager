@@ -17,7 +17,7 @@ class TransactionWalletPresenter(
     override fun handleGetWallets() {
         view.onLoad()
         val mWallets: ArrayList<WalletModel> = ArrayList()
-        val disposable = WalletFirebase() .getWallets()
+        val disposable = WalletFirebase().getWallets()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
