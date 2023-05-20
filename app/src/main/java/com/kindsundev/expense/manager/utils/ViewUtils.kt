@@ -19,10 +19,12 @@ import com.github.mikephil.charting.data.PieEntry
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Constant
+import com.kindsundev.expense.manager.common.Logger
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
 import com.kindsundev.expense.manager.ui.home.HomeActivity
 import com.kindsundev.expense.manager.ui.prepare.PrepareWalletActivity
 import com.kindsundev.expense.manager.ui.signin.SignInActivity
+import java.text.ParseException
 
 fun Context.startSignInActivity() =
     Intent(this, SignInActivity::class.java).also {
@@ -109,11 +111,17 @@ fun formatInputCurrencyBalance(editText: EditText) {
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             val userInput = s.toString().replace(",", "")
             if (userInput.isNotEmpty()) {
-                val value = userInput.toDouble()
-                editText.removeTextChangedListener(this)
-                editText.setText(decimalFormat.format(value))
-                editText.setSelection(decimalFormat.format(value).length)
-                editText.addTextChangedListener(this)
+                try {
+                    val value = decimalFormat.parse(userInput)?.toDouble()
+                    if (value != null) {
+                        editText.removeTextChangedListener(this)
+                        editText.setText(decimalFormat.format(value))
+                        editText.setSelection(decimalFormat.format(value).length)
+                        editText.addTextChangedListener(this)
+                    }
+                } catch (e: ParseException) {
+                    Logger.error(e.message.toString())
+                }
             }
         }
 
