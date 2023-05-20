@@ -67,7 +67,7 @@ class TransactionFragment : Fragment(), TransactionContract.View {
         return binding!!.root
     }
 
-    private fun isNotDebtLayout() : Boolean {
+    private fun isNotDebtLayout(): Boolean {
         if (transactionType == Constant.TRANSACTION_TYPE_DEBT) {
             return false
         }
@@ -101,27 +101,32 @@ class TransactionFragment : Fragment(), TransactionContract.View {
     }
 
     private fun initDebtBottomSheet() {
-        debtBottomSheet = TransactionDebtBottomSheet(object: TransactionDebtContract.Listener {
+        debtBottomSheet = TransactionDebtBottomSheet(object : TransactionDebtContract.Listener {
             override fun debtBottomSheetHasDismiss() {
                 initWalletBottomSheet()
             }
         })
-        debtBottomSheet.show(parentFragmentManager, Constant.TRANSACTION_WALLET_BOTTOM_SHEET_DEBT_NAME)
+        debtBottomSheet.show(
+            parentFragmentManager, Constant.TRANSACTION_WALLET_BOTTOM_SHEET_DEBT_NAME
+        )
     }
 
     private fun initWalletBottomSheet() {
-        walletBottomSheet = TransactionWalletBottomSheet(object: TransactionWalletContract.Listener {
-            override fun onClickWalletItem(wallet: WalletModel) {
-                mWallet = wallet
-                binding!!.incomeAndExpense.tvWalletName.text = wallet.name
-                binding!!.debt.tvWalletName.text = wallet.name
-                binding!!.advanced.tvPlan.text = ""
-                binding!!.advanced.tvPlan.hint = getCurrentContext().getString(R.string.plan)
-                mPlan = null
-                walletBottomSheet.dismiss()
-            }
-        })
-        walletBottomSheet.show(parentFragmentManager, Constant.TRANSACTION_WALLET_BOTTOM_SHEET_WALLET_NAME)
+        walletBottomSheet =
+            TransactionWalletBottomSheet(object : TransactionWalletContract.Listener {
+                override fun onClickWalletItem(wallet: WalletModel) {
+                    mWallet = wallet
+                    binding!!.incomeAndExpense.tvWalletName.text = wallet.name
+                    binding!!.debt.tvWalletName.text = wallet.name
+                    binding!!.advanced.tvPlan.text = ""
+                    binding!!.advanced.tvPlan.hint = getCurrentContext().getString(R.string.plan)
+                    mPlan = null
+                    walletBottomSheet.dismiss()
+                }
+            })
+        walletBottomSheet.show(
+            parentFragmentManager, Constant.TRANSACTION_WALLET_BOTTOM_SHEET_WALLET_NAME
+        )
     }
 
     private fun initListener() {
@@ -132,7 +137,7 @@ class TransactionFragment : Fragment(), TransactionContract.View {
 
         binding!!.debt.itemPerson.setOnClickListener { initDebtBottomSheet() }
         binding!!.debt.itemTime.setOnClickListener { onClickSetDateTime() }
-        binding!!.debt.itemDueDate.setOnClickListener { onClickSetDueDate()}
+        binding!!.debt.itemDueDate.setOnClickListener { onClickSetDueDate() }
         binding!!.debt.itemRemindDate.setOnClickListener { onClickSetRemindDate() }
 
         binding!!.advanced.itemPlan.setOnClickListener { initPlanBottomSheet() }
@@ -175,7 +180,12 @@ class TransactionFragment : Fragment(), TransactionContract.View {
             val amountText = binding!!.incomeAndExpense.edtAmount.text.toString()
             val walletNameHint = binding!!.incomeAndExpense.tvWalletName.hint.toString()
             val walletNameText = binding!!.incomeAndExpense.tvWalletName.text.toString()
-            if (transactionPresenter.isDataFromInputValid(amountText, walletNameHint, walletNameText)) {
+            if (transactionPresenter.isDataFromInputValid(
+                    amountText,
+                    walletNameHint,
+                    walletNameText
+                )
+            ) {
                 mTransaction = initTransactionDataInIAE()
                 transactionPresenter.createTransaction(mWallet.id!!, mTransaction)
             }
@@ -185,12 +195,13 @@ class TransactionFragment : Fragment(), TransactionContract.View {
     }
 
     private fun initTransactionDataInIAE(): TransactionModel {
-        val amount = binding!!.incomeAndExpense.edtAmount.text.toString().trim().replace(",","")
+        val amount = binding!!.incomeAndExpense.edtAmount.text.toString().trim().replace(",", "")
         val date = binding!!.incomeAndExpense.tvTime.text.toString().trim()
         val note = binding!!.incomeAndExpense.edtDescription.text.toString().trim()
         val id = hashCodeForID(transactionType!!, categoryName!!, date, note)
+        val planId = mPlan?.id
         return TransactionModel(
-            id, transactionType!!, categoryName!!, amount.toDouble(), date, note
+            id, transactionType!!, categoryName!!, amount.toDouble(), date, note, planId
         )
     }
 
@@ -209,7 +220,10 @@ class TransactionFragment : Fragment(), TransactionContract.View {
                         planBottomSheet.dismiss()
                     }
                 })
-            planBottomSheet.show(parentFragmentManager, Constant.TRANSACTION_WALLET_BOTTOM_SHEET_PLAN_NAME)
+            planBottomSheet.show(
+                parentFragmentManager,
+                Constant.TRANSACTION_WALLET_BOTTOM_SHEET_PLAN_NAME
+            )
         }
     }
 

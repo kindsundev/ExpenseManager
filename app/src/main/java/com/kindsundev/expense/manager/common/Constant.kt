@@ -43,7 +43,6 @@ class Constant {
         const val MY_REFERENCE_CHILD_TRANSACTIONS = "transactions"
         const val MY_REFERENCE_CHILD_PLANS = "plans"
         const val REF_FIELD_BALANCE = "balance"
-        const val FAKE_DATA_NULL = "[404] -> this transaction is null"
 
         const val KEY_CURRENT_WALLET_ID = "CURRENT_WALLET_ID"
         const val VALUE_DATA_IS_NULL= "NULL"
