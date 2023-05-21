@@ -10,17 +10,25 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kindsundev.expense.manager.R
+import com.kindsundev.expense.manager.common.Constant
+import com.kindsundev.expense.manager.data.model.BillModel
 import com.kindsundev.expense.manager.data.model.PlanModel
+import com.kindsundev.expense.manager.data.model.TransactionModel
+import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.FragmentBudgetPlanDetailBinding
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
+import com.kindsundev.expense.manager.ui.home.bag.adapter.BillAdapterContract
+import com.kindsundev.expense.manager.ui.home.bag.adapter.BillParentAdapter
+import com.kindsundev.expense.manager.ui.home.bag.detail.TransactionBottomSheet
+import com.kindsundev.expense.manager.ui.home.bag.detail.TransactionDetailContract
 import com.kindsundev.expense.manager.ui.home.budget.plan.dialog.update.UpdatePlanContract
 import com.kindsundev.expense.manager.ui.home.budget.plan.dialog.update.UpdatePlanDialog
 import com.kindsundev.expense.manager.utils.formatDisplayCurrencyBalance
 import com.kindsundev.expense.manager.utils.showMessage
 import com.kindsundev.expense.manager.utils.startLoadingDialog
-import kotlin.properties.Delegates
 
 class BudgetPlanDetailFragment : Fragment(), BudgetPlanDetailContract.View {
     private var _binding: FragmentBudgetPlanDetailBinding? = null
@@ -29,7 +37,7 @@ class BudgetPlanDetailFragment : Fragment(), BudgetPlanDetailContract.View {
     private val loadingDialog by lazy { LoadingDialog() }
 
     private val args by navArgs<BudgetPlanDetailFragmentArgs>()
-    private var mWalletId by Delegates.notNull<Int>()
+    private lateinit var mWallet : WalletModel
     private lateinit var mPlan: PlanModel
     private lateinit var mDate: String
     private lateinit var planDetailPresenter: BudgetPlanDetailPresenter
@@ -46,13 +54,14 @@ class BudgetPlanDetailFragment : Fragment(), BudgetPlanDetailContract.View {
         planDetailPresenter = BudgetPlanDetailPresenter(this)
         getDataFromBudgetPlan()
         initPlanData()
+        planDetailPresenter.handleGetBills(mWallet, mPlan.id!!)
         initListener()
         return binding!!.root
     }
 
     private fun getDataFromBudgetPlan() {
         mPlan = args.plan
-        mWalletId = args.walletId
+        mWallet = args.wallet
         mDate = args.date
     }
 
@@ -98,7 +107,7 @@ class BudgetPlanDetailFragment : Fragment(), BudgetPlanDetailContract.View {
     }
 
     private fun initUpdatePlanDialog() {
-        val dialog = UpdatePlanDialog(mWalletId, mDate, mPlan, object: UpdatePlanContract.Listener{
+        val dialog = UpdatePlanDialog(mWallet.id!!, mDate, mPlan, object: UpdatePlanContract.Listener{
             override fun requestUpdateData(walletId: Int, dateKey: String, planId: Int) {
                 planDetailPresenter.handleGetPlan(walletId, dateKey, planId)
             }
@@ -112,7 +121,7 @@ class BudgetPlanDetailFragment : Fragment(), BudgetPlanDetailContract.View {
             .setMessage(R.string.confirm_delete_plan)
             .setCancelable(false)
             .setPositiveButton(R.string.ok) { _, _ ->
-                planDetailPresenter.handleDeletePlan(mWalletId, mDate, mPlan.id!!)
+                planDetailPresenter.handleDeletePlan(mWallet.id!!, mDate, mPlan.id!!)
             }
             .setNegativeButton(R.string.cancel) { dialog, _ -> dialog.dismiss() }
             .create()
@@ -147,6 +156,32 @@ class BudgetPlanDetailFragment : Fragment(), BudgetPlanDetailContract.View {
         startLoadingDialog(loadingDialog, parentFragmentManager, false)
         mPlan = plan
         initPlanData()
+
+    }
+
+    override fun onSuccessBill(bills: ArrayList<BillModel>) {
+        startLoadingDialog(loadingDialog, parentFragmentManager, false)
+        initRecyclerView(bills)
+    }
+
+    private fun initRecyclerView(bills: ArrayList<BillModel>) {
+        binding!!.rcvBills.apply {
+            layoutManager = LinearLayoutManager(getCurrentContext())
+            adapter = BillParentAdapter(bills, object: BillAdapterContract.Listener {
+                override fun onClickTransaction(date: String, transaction: TransactionModel) {
+                    initTransactionBottomSheet(date, transaction)
+                }
+            })
+        }
+    }
+
+    private fun initTransactionBottomSheet(date: String, transaction: TransactionModel) {
+        val bottomSheet = TransactionBottomSheet(object : TransactionDetailContract.Result {
+            override fun onActionSuccess() {
+                // refresh
+            }
+        }, mWallet, date, transaction)
+        bottomSheet.show(parentFragmentManager, Constant.TRANSACTION_WALLET_BOTTOM_SHEET_TRANSACTION_NAME)
     }
 
     override fun onDestroyView() {

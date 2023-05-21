@@ -22,7 +22,6 @@ import com.kindsundev.expense.manager.ui.home.budget.plan.wallet.BudgetWalletCon
 import com.kindsundev.expense.manager.utils.showMessage
 import com.kindsundev.expense.manager.utils.startLoadingDialog
 import com.kindsundev.expense.manager.utils.toggleBottomNavigation
-import kotlin.properties.Delegates
 
 class BudgetPlanFragment : Fragment(), BudgetPlanContract.View {
     private var _binding: FragmentBudgetPlanBinding? = null
@@ -31,7 +30,7 @@ class BudgetPlanFragment : Fragment(), BudgetPlanContract.View {
 
     private lateinit var bottomSheetWallet: BudgetWalletBottomSheet
     private lateinit var mPlanPresenter: BudgetPlanPresenter
-    private var currentWalletId by Delegates.notNull<Int>()
+    private lateinit var mWallet : WalletModel
 
     override fun getCurrentContext(): Context = requireContext()
 
@@ -75,7 +74,7 @@ class BudgetPlanFragment : Fragment(), BudgetPlanContract.View {
             object : BudgetWalletContract.Listener {
                 override fun onClickWalletItem(wallet: WalletModel) {
                     mPlanPresenter.handleGetPlansInWallet(wallet)
-                    currentWalletId = wallet.id!!
+                    mWallet = wallet
                     bottomSheetWallet.dismiss()
                 }
             })
@@ -113,7 +112,7 @@ class BudgetPlanFragment : Fragment(), BudgetPlanContract.View {
         findNavController().navigate(
             BudgetPlanFragmentDirections
                 .actionBudgetPlanFragmentToBudgetPlanDetailFragment(
-                    currentWalletId,
+                    mWallet,
                     planned.date!!,
                     planned.plan!!
                 )
@@ -124,7 +123,7 @@ class BudgetPlanFragment : Fragment(), BudgetPlanContract.View {
         val dialog = CreatePlanDialog(object : CreatePlanContract.Result {
             override fun onSuccessPlan(wallet: WalletModel, plan: PlanModel) {
                 mPlanPresenter.handleCreatePlan(wallet.id!!, plan)
-                currentWalletId = wallet.id
+                mWallet = wallet
             }
         })
         dialog.show(parentFragmentManager, dialog.tag)
@@ -142,7 +141,7 @@ class BudgetPlanFragment : Fragment(), BudgetPlanContract.View {
     override fun onSuccess(message: String) {
         startLoadingDialog(loadingDialog, parentFragmentManager, false)
         activity?.showMessage(message)
-        mPlanPresenter.handleGetPlansInFirebase(currentWalletId)
+        mPlanPresenter.handleGetPlansInFirebase(mWallet.id!!)
     }
 
     override fun onSuccess() {}

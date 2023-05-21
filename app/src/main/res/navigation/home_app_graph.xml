@@ -172,8 +172,8 @@
         android:name="com.kindsundev.expense.manager.ui.home.budget.plan.detail.BudgetPlanDetailFragment"
         android:label="BudgetPlanDetailFragment">
         <argument
-            android:name="walletId"
-            app:argType="integer" />
+            android:name="wallet"
+            app:argType="com.kindsundev.expense.manager.data.model.WalletModel" />
         <argument
             android:name="date"
             app:argType="string"/>

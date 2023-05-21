@@ -4,16 +4,19 @@ import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Logger
 import com.kindsundev.expense.manager.data.firebase.PlanFirebase
 import com.kindsundev.expense.manager.data.model.PlanModel
+import com.kindsundev.expense.manager.data.model.WalletModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.*
 
 class BudgetPlanDetailPresenter(
     private val view: BudgetPlanDetailContract.View
 ): BudgetPlanDetailContract.Presenter {
     private val planFirebase by lazy { PlanFirebase() }
     private val compositeDisposable = CompositeDisposable()
+    private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
     override fun handleDeletePlan(walletId: Int, dateKey: String, planId: Int) {
         view.onLoad()
@@ -45,6 +48,17 @@ class BudgetPlanDetailPresenter(
                 onNext = {plan = it}
             )
         compositeDisposable.add(disposable)
+    }
+
+    override fun handleGetBills(wallet: WalletModel, planId: Int) {
+        view.onLoad()
+        scope.launch {
+            val bills = wallet.getBillsOfPlan(planId)
+            val result = wallet.sortBillsByNewest(bills)
+            withContext(Dispatchers.Main) {
+                view.onSuccessBill(ArrayList(result))
+            }
+        }
     }
 
     fun cleanUp() = compositeDisposable.dispose()

@@ -2,8 +2,11 @@ package com.kindsundev.expense.manager.data.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
+import kotlin.collections.HashSet
 
 @Parcelize
 data class WalletModel(
@@ -37,6 +40,38 @@ data class WalletModel(
             }
         }
         return bills
+    }
+
+    fun getBillsOfPlan(planId: Int): ArrayList<BillModel> {
+        val bills = ArrayList<BillModel>()
+        val uniqueDates = HashSet<String>()
+        transactions?.let {
+            for ((date, map) in it) {
+                val transactions = ArrayList<TransactionModel>()
+                for ((_, model) in map) {
+                    if (model.planId == planId) {
+                        transactions.add(model)
+                    }
+                    if (transactions.isNotEmpty() && date !in uniqueDates) {
+                        bills.add(BillModel(date, transactions))
+                        uniqueDates.add(date)
+                    }
+                }
+            }
+        }
+        return bills
+    }
+
+    fun sortBillsByNewest(data: ArrayList<BillModel>): List<BillModel> {
+        var list : List<BillModel> = listOf()
+        if (data.isNotEmpty()) {
+            list = data.sortedByDescending { bill ->
+                bill.date?.let {
+                    SimpleDateFormat("dd E MMMM yyyy", Locale.ENGLISH).parse(it)
+                }
+            }
+        }
+        return list
     }
 
     fun getPlannedList(): ArrayList<PlannedModel> {
