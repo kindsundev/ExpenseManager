@@ -81,8 +81,7 @@ class TransactionFirebase : BaseFirebase() {
                         subscriber.onNext(bill)
                         subscriber.onComplete()
                     } else {
-                        val transaction = BillModel("Null", ArrayList())
-                        subscriber.onNext(transaction)
+                        subscriber.onNext(BillModel())
                         subscriber.onComplete()
                     }
                 }

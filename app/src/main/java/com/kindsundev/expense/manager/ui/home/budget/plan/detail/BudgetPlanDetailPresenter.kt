@@ -3,6 +3,8 @@ package com.kindsundev.expense.manager.ui.home.budget.plan.detail
 import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Logger
 import com.kindsundev.expense.manager.data.firebase.PlanFirebase
+import com.kindsundev.expense.manager.data.firebase.WalletFirebase
+import com.kindsundev.expense.manager.data.model.BillModel
 import com.kindsundev.expense.manager.data.model.PlanModel
 import com.kindsundev.expense.manager.data.model.WalletModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -13,7 +15,7 @@ import kotlinx.coroutines.*
 
 class BudgetPlanDetailPresenter(
     private val view: BudgetPlanDetailContract.View
-): BudgetPlanDetailContract.Presenter {
+) : BudgetPlanDetailContract.Presenter {
     private val planFirebase by lazy { PlanFirebase() }
     private val compositeDisposable = CompositeDisposable()
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
@@ -45,12 +47,12 @@ class BudgetPlanDetailPresenter(
                     Logger.error(it.message.toString())
                 },
                 onComplete = { view.onSuccessPlan(plan) },
-                onNext = {plan = it}
+                onNext = { plan = it }
             )
         compositeDisposable.add(disposable)
     }
 
-    override fun handleGetBills(wallet: WalletModel, planId: Int) {
+    override fun handleExtractionBills(wallet: WalletModel, planId: Int) {
         view.onLoad()
         scope.launch {
             val bills = wallet.getBillsOfPlan(planId)
@@ -61,6 +63,25 @@ class BudgetPlanDetailPresenter(
         }
     }
 
-    fun cleanUp() = compositeDisposable.dispose()
+    override fun handleGetBills(walletId: Int, planId: Int) {
+        view.onLoad()
+        val bills = ArrayList<BillModel>()
+        val disposable = WalletFirebase().getWallet(walletId)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy(
+                onError = {
+                    view.onError(
+                        view.getCurrentContext().getString(R.string.something_error)
+                    )
+                },
+                onComplete = { view.onSuccessBill(bills) },
+                onNext = {
+                    bills.addAll(ArrayList(it.sortBillsByNewest(it.getBillsOfPlan(planId))))
+                }
+            )
+        compositeDisposable.add(disposable)
+    }
 
+    fun cleanUp() = compositeDisposable.dispose()
 }

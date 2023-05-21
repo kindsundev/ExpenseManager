@@ -11,5 +11,5 @@ data class TransactionModel(
     val amount: Double? = 0.0,
     val date: String? = "",
     val note: String? = "",
-    val planId: Int? = 0
+    val planId: Int? = null
 ) : Parcelable

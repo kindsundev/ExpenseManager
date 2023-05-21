@@ -25,9 +25,9 @@ class TransactionBottomSheet(
 ) : BottomSheetDialogFragment(), TransactionDetailContract.View {
     private var _binding: BottomSheetTransactionDetailBinding? = null
     private val binding get() = _binding
+    private val loadingDialog by lazy { LoadingDialog() }
 
     private lateinit var detailPresenter: TransactionDetailPresenter
-    private val loadingDialog by lazy { LoadingDialog() }
     private lateinit var mNewTransaction: TransactionModel
 
     override fun getCurrentContext(): Context = requireContext()
@@ -103,7 +103,8 @@ class TransactionBottomSheet(
         val categoryName = binding!!.tvCategoryName.text.toString().trim()
         val dateTime = binding!!.tvTime.text.toString().trim()
         val note = binding!!.edtDescription.text.toString().trim()
-        return TransactionModel(id, type, categoryName, amount.toDouble(), dateTime, note)
+        val planId = transaction.planId
+        return TransactionModel(id, type, categoryName, amount.toDouble(), dateTime, note, planId)
     }
 
     private fun onClickRemoveTransaction() {

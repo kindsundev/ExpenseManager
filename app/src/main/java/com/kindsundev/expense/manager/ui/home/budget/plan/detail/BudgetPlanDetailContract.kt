@@ -12,7 +12,9 @@ interface BudgetPlanDetailContract {
 
         fun handleGetPlan(walletId: Int, dateKey: String, planId: Int)
 
-        fun handleGetBills(wallet: WalletModel, planId: Int)
+        fun handleExtractionBills(wallet: WalletModel, planId: Int)
+
+        fun handleGetBills(walletId: Int, planId: Int)
     }
 
     interface View : BaseView {

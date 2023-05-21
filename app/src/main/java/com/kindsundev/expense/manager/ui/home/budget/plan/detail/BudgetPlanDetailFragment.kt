@@ -54,7 +54,7 @@ class BudgetPlanDetailFragment : Fragment(), BudgetPlanDetailContract.View {
         planDetailPresenter = BudgetPlanDetailPresenter(this)
         getDataFromBudgetPlan()
         initPlanData()
-        planDetailPresenter.handleGetBills(mWallet, mPlan.id!!)
+        planDetailPresenter.handleExtractionBills(mWallet, mPlan.id!!)
         initListener()
         return binding!!.root
     }
@@ -156,7 +156,6 @@ class BudgetPlanDetailFragment : Fragment(), BudgetPlanDetailContract.View {
         startLoadingDialog(loadingDialog, parentFragmentManager, false)
         mPlan = plan
         initPlanData()
-
     }
 
     override fun onSuccessBill(bills: ArrayList<BillModel>) {
@@ -178,7 +177,7 @@ class BudgetPlanDetailFragment : Fragment(), BudgetPlanDetailContract.View {
     private fun initTransactionBottomSheet(date: String, transaction: TransactionModel) {
         val bottomSheet = TransactionBottomSheet(object : TransactionDetailContract.Result {
             override fun onActionSuccess() {
-                // refresh
+                planDetailPresenter.handleGetBills(mWallet.id!!, mPlan.id!!)
             }
         }, mWallet, date, transaction)
         bottomSheet.show(parentFragmentManager, Constant.TRANSACTION_WALLET_BOTTOM_SHEET_TRANSACTION_NAME)
