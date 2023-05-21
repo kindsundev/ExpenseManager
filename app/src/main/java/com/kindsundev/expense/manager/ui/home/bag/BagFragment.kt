@@ -26,7 +26,7 @@ import com.kindsundev.expense.manager.ui.home.bag.wallet.BagWalletBottomSheet
 import com.kindsundev.expense.manager.utils.*
 import kotlin.properties.Delegates
 
-class BagFragment : Fragment(), BillAdapterContract.Listener, BagContract.View {
+class BagFragment : Fragment(), BagContract.View {
     private var _binding: FragmentBagBinding? = null
     private val binding get() = _binding
     private val loadingDialog by lazy { LoadingDialog() }
@@ -136,15 +136,6 @@ class BagFragment : Fragment(), BillAdapterContract.Listener, BagContract.View {
         findNavController().navigate(action)
     }
 
-    override fun onClickTransaction(date: String, transaction: TransactionModel) {
-        val bottomSheet = TransactionBottomSheet(object : TransactionDetailContract.Result {
-            override fun notificationSuccess(result: Boolean) {
-                if (result) { bagPresenter.handleGetWallets() }
-            }
-        }, mCurrentWallet, date, transaction)
-        bottomSheet.show(parentFragmentManager, Constant.TRANSACTION_WALLET_BOTTOM_SHEET_TRANSACTION_NAME)
-    }
-
     override fun onSuccess() {}
 
     override fun onSuccessWallets(result: ArrayList<WalletModel>) {
@@ -165,12 +156,24 @@ class BagFragment : Fragment(), BillAdapterContract.Listener, BagContract.View {
     }
 
     private fun initRecyclerViewTransactions(data: ArrayList<BillModel>) {
-        val mAdapter = BillParentAdapter(data, this)
         binding!!.rcvTransactionsContainer.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = mAdapter
+            layoutManager = LinearLayoutManager(getCurrentContext())
+            adapter = BillParentAdapter(data, object: BillAdapterContract.Listener {
+                override fun onClickTransaction(date: String, transaction: TransactionModel) {
+                    initTransactionBottomSheet(date, transaction)
+                }
+            })
         }
         initCurrentWalletInfo()
+    }
+
+    private fun initTransactionBottomSheet(date: String, transaction: TransactionModel) {
+        val bottomSheet = TransactionBottomSheet(object : TransactionDetailContract.Result {
+            override fun onActionSuccess() {
+                bagPresenter.handleGetWallets()
+            }
+        }, mCurrentWallet, date, transaction)
+        bottomSheet.show(parentFragmentManager, Constant.TRANSACTION_WALLET_BOTTOM_SHEET_TRANSACTION_NAME)
     }
 
     override fun onLoad() {

@@ -34,6 +34,6 @@ interface TransactionDetailContract {
     }
 
     interface Result {
-        fun notificationSuccess(result: Boolean)
+        fun onActionSuccess()
     }
 }

@@ -139,7 +139,7 @@ class TransactionBottomSheet(
     override fun onSuccess(message: String) {
         activity?.showMessage(message)
         hideBottomSheet()
-        callback.notificationSuccess(true)
+        callback.onActionSuccess()
         startLoadingDialog(loadingDialog, parentFragmentManager, false)
     }
 

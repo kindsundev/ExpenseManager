@@ -105,7 +105,7 @@ class TransactionSearchFragment: Fragment(), TransactionSearchContract.View {
             layoutManager = LinearLayoutManager(context)
             adapter = BillParentAdapter(bills, object: BillAdapterContract.Listener {
                 override fun onClickTransaction(date: String, transaction: TransactionModel) {
-                    showTransactionDetail(date, transaction)
+                    initTransactionDetail(date, transaction)
                 }
             })
         }
@@ -116,16 +116,12 @@ class TransactionSearchFragment: Fragment(), TransactionSearchContract.View {
         binding!!.rcvTransaction.visibility = View.VISIBLE
     }
 
-    private fun showTransactionDetail(date: String, transaction: TransactionModel?) {
+    private fun initTransactionDetail(date: String, transaction: TransactionModel?) {
         transactionBottomSheet = TransactionBottomSheet(object : TransactionDetailContract.Result {
-            override fun notificationSuccess(result: Boolean) {
-                if (result) { refreshData() }
+            override fun onActionSuccess() {
+                searchPresenter.searchTransactionInDay(mWallet.id!!, mCurrentTimePicker)
             }
         },mWallet, date, transaction!!)
         transactionBottomSheet.show(parentFragmentManager, Constant.BUDGET_SEARCH_WALLET_BOTTOM_SHEET_WALLET_NAME)
-    }
-
-    private fun refreshData() {
-        searchPresenter.searchTransactionInDay(mWallet.id!!, mCurrentTimePicker)
     }
 }
