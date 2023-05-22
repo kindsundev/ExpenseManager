@@ -11,7 +11,7 @@ class TransactionPlanPresenter(
         view.onLoad()
         CoroutineScope(Dispatchers.Default + SupervisorJob())
             .launch {
-                val result = wallet.getPlanList()
+                val result = wallet.getPlannedList()
                 withContext(Dispatchers.Main) {
                     view.onSuccessPlans(result)
                 }

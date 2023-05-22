@@ -8,12 +8,28 @@ interface TransactionContract {
     interface Presenter {
         fun createTransaction(walletID: Int, transaction: TransactionModel)
 
-        fun handlerUpdateBalance(walletID: Int, transactionType: String, balance: Double, amount: Double)
+        fun handleUpdateBalanceOfWallet(
+            walletID: Int,
+            transactionType: String,
+            balance: Double,
+            amount: Double
+        )
+
+        fun handleUpdateBalanceOfPlan(
+            walletId: Int,
+            dateKey: String,
+            planId: Int,
+            transactionType: String,
+            balance: Double,
+            amount: Double
+        )
     }
 
     interface View : BaseView {
         fun onShowMessage(message: String)
 
         fun onSuccess(message: String)
+
+        fun onSuccessPlan()
     }
 }

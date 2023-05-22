@@ -5,10 +5,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.kindsundev.expense.manager.data.model.PlanModel
+import com.kindsundev.expense.manager.data.model.PlannedModel
 import com.kindsundev.expense.manager.databinding.LayoutTransactionPlanItemBinding
 
 class TransactionPlanAdapter(
-    private val plans: ArrayList<PlanModel>,
+    private val plans: ArrayList<PlannedModel>,
     private val listener: TransactionPlanContract.Listener
 ) : RecyclerView.Adapter<TransactionPlanAdapter.PlanViewHolder>(){
 
@@ -20,16 +21,22 @@ class TransactionPlanAdapter(
         return PlanViewHolder(view)
     }
 
-    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: PlanViewHolder, position: Int) {
-        val plan = plans[position]
-        holder.binding.tvName.text = plan.name
+        val planned = plans[position]
+        planned.plan?.let {
+            updateDataToUi(holder.binding, it)
+            holder.binding.root.setOnClickListener {
+                listener.onClickPlanItem(planned)
+            }
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun updateDataToUi(binding: LayoutTransactionPlanItemBinding, plan: PlanModel) {
+        binding.tvName.text = plan.name
         val startDate = plan.startDate!!.split(",")
         val endDate = plan.endDate!!.split(",")
-        holder.binding.tvDate.text = "Date: ${startDate[1]} - ${endDate[1]}"
-        holder.binding.root.setOnClickListener {
-            listener.onClickPlanItem(plan)
-        }
+        binding.tvDate.text = "Date: ${startDate[1]} - ${endDate[1]}"
     }
 
     override fun getItemCount(): Int = plans.size

@@ -53,6 +53,24 @@ class PlanFirebase: BaseFirebase() {
                 }
     }
 
+    fun updateBalance(walletId: Int, dateKey: String, planId: Int, balance: Double) =
+        Completable.create { emitter ->
+            initPointerPlan(walletId)
+                .child(dateKey)
+                .child(planId.toString())
+                .child(Constant.REF_FIELD_CURRENT_BALANCE_OF_PLAN)
+                .setValue(balance)
+                .addOnCompleteListener {
+                    if (!emitter.isDisposed) {
+                        if (it.isSuccessful) {
+                            emitter.onComplete()
+                        } else {
+                            emitter.onError(it.exception!!)
+                        }
+                    }
+                }
+        }
+
     fun getPlanMap(walletId: Int): Observable<PlannedModel> =
         Observable.create { subscriber ->
             initPointerPlan(walletId).addValueEventListener(object : ValueEventListener {

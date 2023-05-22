@@ -42,7 +42,8 @@ class Constant {
         const val MY_REFERENCE_CHILD_WALLETS = "wallets"
         const val MY_REFERENCE_CHILD_TRANSACTIONS = "transactions"
         const val MY_REFERENCE_CHILD_PLANS = "plans"
-        const val REF_FIELD_BALANCE = "balance"
+        const val REF_FIELD_BALANCE_OF_TRANSACTION = "balance"
+        const val REF_FIELD_CURRENT_BALANCE_OF_PLAN = "currentBalance"
 
         const val KEY_CURRENT_WALLET_ID = "CURRENT_WALLET_ID"
         const val VALUE_DATA_IS_NULL= "NULL"

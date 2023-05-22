@@ -3,6 +3,7 @@ package com.kindsundev.expense.manager.ui.home.note.transaction
 import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Constant
 import com.kindsundev.expense.manager.common.Logger
+import com.kindsundev.expense.manager.data.firebase.PlanFirebase
 import com.kindsundev.expense.manager.data.firebase.TransactionFirebase
 import com.kindsundev.expense.manager.data.model.TransactionModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -53,7 +54,7 @@ class TransactionPresenter(
         compositeDisposable.add(disposable)
     }
 
-    override fun handlerUpdateBalance(
+    override fun handleUpdateBalanceOfWallet(
         walletID: Int,
         transactionType: String,
         balance: Double,
@@ -61,14 +62,14 @@ class TransactionPresenter(
     ) {
         if (transactionType == Constant.TRANSACTION_TYPE_EXPENSE) {
             val currentBalance = balance - amount
-            updateBalance(walletID, currentBalance)
+            updateBalanceOfWallet(walletID, currentBalance)
         } else if (transactionType == Constant.TRANSACTION_TYPE_INCOME) {
             val currentBalance = balance + amount
-            updateBalance(walletID, currentBalance)
+            updateBalanceOfWallet(walletID, currentBalance)
         }
     }
 
-    private fun updateBalance(walletID: Int, income: Double) {
+    private fun updateBalanceOfWallet(walletID: Int, income: Double) {
         val disposable = transactionFirebase.updateBalance(walletID, income)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -82,8 +83,39 @@ class TransactionPresenter(
             })
         compositeDisposable.add(disposable)
     }
-    
-    fun cleanUp() {
-        compositeDisposable.dispose()
+
+    override fun handleUpdateBalanceOfPlan(
+        walletId: Int,
+        dateKey: String,
+        planId: Int,
+        transactionType: String,
+        balance: Double,
+        amount: Double
+    ) {
+        if (transactionType == Constant.TRANSACTION_TYPE_EXPENSE) {
+            val currentBalance = balance - amount
+            updateBalanceOfPlan(walletId, dateKey, planId, currentBalance)
+        } else if (transactionType == Constant.TRANSACTION_TYPE_INCOME) {
+            val currentBalance = balance + amount
+            updateBalanceOfPlan(walletId, dateKey, planId, currentBalance)
+        }
     }
+
+    private fun updateBalanceOfPlan(walletId: Int, dateKey: String, planId: Int, balance: Double) {
+        view.onLoad()
+        val disposable = PlanFirebase().updateBalance(walletId, dateKey, planId, balance)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                view.onSuccessPlan()
+            }, {
+                view.onError(
+                    view.getCurrentContext().getString(R.string.something_error)
+                )
+                Logger.error(it.message.toString())
+            })
+        compositeDisposable.add(disposable)
+    }
+
+    fun cleanUp() = compositeDisposable.dispose()
 }

@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.kindsundev.expense.manager.R
 import com.kindsundev.expense.manager.common.Constant
 import com.kindsundev.expense.manager.data.model.PlanModel
+import com.kindsundev.expense.manager.data.model.PlannedModel
 import com.kindsundev.expense.manager.data.model.TransactionModel
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.FragmentTransactionBinding
@@ -42,6 +43,7 @@ class TransactionFragment : Fragment(), TransactionContract.View {
     private lateinit var mWallet: WalletModel
     private lateinit var mTransaction: TransactionModel
     private var mPlan: PlanModel? = null
+    private lateinit var dateKeyOfPlan: String
 
     override fun getCurrentContext(): Context = requireContext()
 
@@ -213,9 +215,10 @@ class TransactionFragment : Fragment(), TransactionContract.View {
         } else {
             planBottomSheet =
                 TransactionPlanBottomSheet(mWallet, object : TransactionPlanContract.Listener {
-                    override fun onClickPlanItem(plan: PlanModel) {
-                        mPlan = plan
-                        binding!!.advanced.tvPlan.text = plan.name
+                    override fun onClickPlanItem(planned: PlannedModel) {
+                        mPlan = planned.plan
+                        dateKeyOfPlan = planned.date!!
+                        binding!!.advanced.tvPlan.text = mPlan!!.name
                         binding!!.advanced.tvPlan.setTextColor(Color.BLACK)
                         planBottomSheet.dismiss()
                     }
@@ -242,15 +245,31 @@ class TransactionFragment : Fragment(), TransactionContract.View {
 
     override fun onSuccess(message: String) {
         activity?.showMessage(message)
-        findNavController().popBackStack()
+        if (mTransaction.planId != null) {
+            val amount =
+                binding!!.incomeAndExpense.edtAmount.text.toString().trim().replace(",", "")
+            transactionPresenter.handleUpdateBalanceOfPlan(
+                mWallet.id!!,
+                dateKeyOfPlan,
+                mPlan!!.id!!,
+                transactionType!!,
+                mPlan!!.currentBalance!!,
+                amount.toDouble()
+            )
+        }
     }
 
     override fun onSuccess() {
         startLoadingDialog(loadingDialog, parentFragmentManager, false)
-        transactionPresenter.handlerUpdateBalance(
+        transactionPresenter.handleUpdateBalanceOfWallet(
             mWallet.id!!, transactionType!!, mWallet.balance!!.toDouble(),
             mTransaction.amount!!
         )
+    }
+
+    override fun onSuccessPlan() {
+        startLoadingDialog(loadingDialog, parentFragmentManager, false)
+        findNavController().popBackStack()
     }
 
     override fun onDestroyView() {

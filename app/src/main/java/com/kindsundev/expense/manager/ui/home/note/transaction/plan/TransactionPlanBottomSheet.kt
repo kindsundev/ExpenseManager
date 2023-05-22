@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.kindsundev.expense.manager.data.model.PlanModel
+import com.kindsundev.expense.manager.data.model.PlannedModel
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.BottomSheetSelectPlanBinding
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
@@ -49,7 +49,7 @@ class TransactionPlanBottomSheet(
 
     override fun onSuccess() {}
 
-    override fun onSuccessPlans(plans: ArrayList<PlanModel>) {
+    override fun onSuccessPlans(plans: ArrayList<PlannedModel>) {
         binding!!.rvPlans.apply {
             layoutManager = LinearLayoutManager(getCurrentContext())
             adapter = TransactionPlanAdapter(plans, listener)
