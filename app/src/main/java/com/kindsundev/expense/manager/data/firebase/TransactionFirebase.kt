@@ -93,11 +93,11 @@ class TransactionFirebase : BaseFirebase() {
             })
     }
 
-    fun deleteTransaction(walletId: Int, dateKey: String, transactionId: String) =
+    fun deleteTransaction(walletId: Int, dateKey: String, transactionId: Int) =
         Completable.create { emitter ->
             initPointerTransaction(walletId)
                 .child(dateKey)
-                .child(transactionId)
+                .child(transactionId.toString())
                 .removeValue()
                 .addOnCompleteListener {
                     if (!emitter.isDisposed) {

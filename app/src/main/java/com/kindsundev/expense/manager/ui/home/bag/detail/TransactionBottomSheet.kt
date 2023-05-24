@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kindsundev.expense.manager.R
+import com.kindsundev.expense.manager.common.Logger
+import com.kindsundev.expense.manager.data.model.PlannedModel
 import com.kindsundev.expense.manager.data.model.TransactionModel
 import com.kindsundev.expense.manager.data.model.WalletModel
 import com.kindsundev.expense.manager.databinding.BottomSheetTransactionDetailBinding
@@ -29,12 +31,14 @@ class TransactionBottomSheet(
 
     private lateinit var detailPresenter: TransactionDetailPresenter
     private lateinit var mNewTransaction: TransactionModel
+    private lateinit var mPlanned: PlannedModel
 
     override fun getCurrentContext(): Context = requireContext()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         detailPresenter = TransactionDetailPresenter(this)
+        mNewTransaction = TransactionModel()
     }
 
     override fun onCreateView(
@@ -45,9 +49,12 @@ class TransactionBottomSheet(
         _binding = BottomSheetTransactionDetailBinding.inflate(layoutInflater)
         formatInputCurrencyBalance(binding!!.edtAmount)
         initTransactionData()
+        detailPresenter.handleExtractionPlan(wallet, transaction.planId)
         initListener()
         return binding!!.root
     }
+
+    override fun onExtractionPlanSuccess(planned: PlannedModel) { mPlanned = planned }
 
     private fun initTransactionData() {
         val amount = formatDisplayCurrencyBalance(transaction.amount.toString()).trim()
@@ -113,7 +120,7 @@ class TransactionBottomSheet(
             .setMessage(R.string.message_for_delete_transaction)
             .setCancelable(false)
             .setPositiveButton(R.string.ok) { _, _ ->
-                detailPresenter.handlerDeleteTransaction(wallet.id!!, date, transaction.id!!)
+                detailPresenter.handleDeleteTransaction(wallet.id!!, date, transaction.id!!)
             }
             .setNegativeButton(R.string.cancel) { dialog, _ -> dialog.dismiss() }
             .create()
@@ -124,36 +131,7 @@ class TransactionBottomSheet(
         alertDialog.show()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-        detailPresenter.cleanUp()
-    }
-
-    override fun onSuccess(status: Boolean) {
-        if (status) {
-            detailPresenter.checkAndRestoreBalance(
-                wallet.id!!, transaction.type!!, wallet.balance!!, transaction.amount!!)
-        }
-    }
-
-    override fun onSuccess(message: String) {
-        activity?.showMessage(message)
-        hideBottomSheet()
-        callback.onActionSuccess()
-        startLoadingDialog(loadingDialog, parentFragmentManager, false)
-    }
-
-    override fun onSuccess() {
-        startLoadingDialog(loadingDialog, parentFragmentManager, false)
-        detailPresenter.handlerUpdateBalance(
-            walletId = wallet.id!!,
-            transactionType = transaction.type.toString(),
-            currentBalance = wallet.balance!!.toDouble(),
-            beforeMoney = transaction.amount!!.toDouble(),
-            afterMoney = mNewTransaction.amount!!.toDouble()
-        )
-    }
+    override fun onSuccess() {}
 
     override fun onLoad() {
         startLoadingDialog(loadingDialog, parentFragmentManager, true)
@@ -162,5 +140,78 @@ class TransactionBottomSheet(
     override fun onError(message: String) {
         startLoadingDialog(loadingDialog, parentFragmentManager, false)
         activity?.showMessage(message)
+    }
+
+    override fun onUpdateTransactionSuccess(message: String) {
+        activity?.showMessage(message)
+        startLoadingDialog(loadingDialog, parentFragmentManager, false)
+        detailPresenter.handleUpdateBalanceOfWallet(
+            walletId = wallet.id!!,
+            transactionType = transaction.type.toString(),
+            currentBalance = wallet.balance!!.toDouble(),
+            beforeMoney = transaction.amount!!.toDouble(),
+            afterMoney = mNewTransaction.amount!!.toDouble()
+        )
+    }
+
+    override fun onUpdateBalanceWalletSuccess() {
+        if (transaction.planId == null) {
+            startLoadingDialog(loadingDialog, parentFragmentManager, false)
+        } else {
+            detailPresenter.handleUpdateBalanceOfPlan(
+                walletId =  wallet.id!!,
+                dateKey = mPlanned.date!!,
+                planId = transaction.planId,
+                transactionType = transaction.type!!,
+                currentBalance = mPlanned.plan!!.currentBalance!!,
+                beforeMoney = transaction.amount!!.toDouble(),
+                afterMoney = mNewTransaction.amount!!.toDouble(),
+            )
+        }
+        callback.onActionSuccess()
+        hideBottomSheet()
+    }
+
+    override fun onDeleteTransactionSuccess(message: String) {
+        activity?.showMessage(message)
+        detailPresenter.checkAndRestoreBalance(
+            walletId = wallet.id!!,
+            transactionType = transaction.type!!,
+            currentBalance = wallet.balance!!,
+            beforeMoney = transaction.amount!!.toDouble(),
+            ownPlan = transaction.planId != null
+        )
+        // call 2 lan, update wallet and plan
+        // cho 2 params: message and boolean
+        // if true show message and call update
+    }
+
+//    private fun test(message: String, updateWallet: Boolean) {
+//        if (updateWallet) {
+//            activity?.showMessage(message)
+//            detailPresenter.checkAndRestoreBalance(
+//                walletId = wallet.id!!,
+//                transactionType = transaction.type!!,
+//                currentBalance = wallet.balance!!,
+//                beforeMoney = transaction.amount!!.toDouble(),
+//                ownPlan = false
+//            )
+//        } else {
+//            activity?.showMessage(message)
+//            detailPresenter.checkAndRestoreBalance(
+//                walletId = wallet.id!!,
+//                transactionType = transaction.type!!,
+//                currentBalance = wallet.balance!!,
+//                beforeMoney = transaction.amount!!.toDouble(),
+//                ownPlan = true
+//            )
+//        }
+//    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Logger.error("dow")
+        _binding = null
+        detailPresenter.cleanUp()
     }
 }

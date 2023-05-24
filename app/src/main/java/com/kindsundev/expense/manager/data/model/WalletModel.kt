@@ -86,15 +86,18 @@ data class WalletModel(
         return list
     }
 
-    fun getPlanList(): ArrayList<PlanModel> {
-        val list = ArrayList<PlanModel>()
+    fun getPlanned(planId: Int?): PlannedModel {
+        var planned = PlannedModel()
         plans?.let {
-            for ((_, map) in it) {
+            for ((date, map) in it) {
                 for ((_, model) in map) {
-                    list.add(model)
+                    if (model.id == planId) {
+                        planned = PlannedModel(date, model)
+                        break
+                    }
                 }
             }
         }
-        return list
+        return planned
     }
 }

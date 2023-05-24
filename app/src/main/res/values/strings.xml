@@ -29,6 +29,7 @@
     <string name="do_not_enter_old_money">Balance cannot is special character</string>
     <string name="please_enter_amount">Please enter amount value</string>
     <string name="update_transaction_success">Update transaction successful</string>
+    <string name="update_balance_wallet_success">Update wallet balance successful</string>
     <string name="update_balance_failed">Update balance failed</string>
     <string name="delete_transaction_success">Delete transaction successful</string>
     <string name="delete_transaction_failed">Delete transaction failed</string>
