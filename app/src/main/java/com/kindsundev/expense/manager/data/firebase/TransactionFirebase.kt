@@ -50,9 +50,9 @@ class TransactionFirebase : BaseFirebase() {
                 }
         }
 
-    fun updateBalance(walletId: Int, newValue: Double) = Completable.create { emitter ->
+    fun updateBalanceOfWallet(walletId: Int, newValue: Double) = Completable.create { emitter ->
         initPointerGeneric().child(walletId.toString())
-            .child(Constant.REF_FIELD_BALANCE_OF_TRANSACTION).setValue(newValue)
+            .child(Constant.REF_FIELD_BALANCE_OF_WALLET).setValue(newValue)
             .addOnCompleteListener {
                 if (!emitter.isDisposed) {
                     if (it.isSuccessful) {

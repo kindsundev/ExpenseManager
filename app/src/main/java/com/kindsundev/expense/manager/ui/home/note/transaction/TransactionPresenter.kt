@@ -70,7 +70,7 @@ class TransactionPresenter(
     }
 
     private fun updateBalanceOfWallet(walletID: Int, income: Double) {
-        val disposable = transactionFirebase.updateBalance(walletID, income)
+        val disposable = transactionFirebase.updateBalanceOfWallet(walletID, income)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({

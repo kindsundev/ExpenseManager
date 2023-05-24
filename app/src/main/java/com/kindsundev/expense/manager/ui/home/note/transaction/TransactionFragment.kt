@@ -243,22 +243,6 @@ class TransactionFragment : Fragment(), TransactionContract.View {
         activity?.showMessage(message)
     }
 
-    override fun onSuccess(message: String) {
-        activity?.showMessage(message)
-        if (mTransaction.planId != null) {
-            val amount =
-                binding!!.incomeAndExpense.edtAmount.text.toString().trim().replace(",", "")
-            transactionPresenter.handleUpdateBalanceOfPlan(
-                mWallet.id!!,
-                dateKeyOfPlan,
-                mPlan!!.id!!,
-                transactionType!!,
-                mPlan!!.currentBalance!!,
-                amount.toDouble()
-            )
-        }
-    }
-
     override fun onSuccess() {
         startLoadingDialog(loadingDialog, parentFragmentManager, false)
         transactionPresenter.handleUpdateBalanceOfWallet(
@@ -267,7 +251,24 @@ class TransactionFragment : Fragment(), TransactionContract.View {
         )
     }
 
+    override fun onSuccess(message: String) {
+        if (mTransaction.planId != null) {
+            val amount = binding!!.incomeAndExpense.edtAmount.text.toString().trim()
+                .replace(",", "")
+            transactionPresenter.handleUpdateBalanceOfPlan(
+                mWallet.id!!, dateKeyOfPlan, mPlan!!.id!!, transactionType!!,
+                mPlan!!.currentBalance!!, amount.toDouble()
+            )
+        } else {
+            activity?.showMessage(message)
+            findNavController().popBackStack()
+        }
+    }
+
     override fun onSuccessPlan() {
+        activity?.showMessage(
+            getCurrentContext().getString(R.string.create_transaction_success)
+        )
         startLoadingDialog(loadingDialog, parentFragmentManager, false)
         findNavController().popBackStack()
     }
