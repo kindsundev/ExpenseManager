@@ -11,7 +11,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.*
-import kotlin.properties.Delegates
 
 class TransactionDetailPresenter(
     private val view: TransactionDetailContract.View
@@ -19,9 +18,6 @@ class TransactionDetailPresenter(
     private val transactionFirebase by lazy { TransactionFirebase() }
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
     private val compositeDisposable = CompositeDisposable()
-
-    private var mPlanId by Delegates.notNull<Int>()
-    private lateinit var mDatePlanKey: String
 
     override fun handleExtractionPlan(wallet: WalletModel, planId: Int?) {
         scope.launch {
@@ -43,11 +39,10 @@ class TransactionDetailPresenter(
                 )
             }, {
                 view.onError(view.getCurrentContext().getString(R.string.something_error))
-                Logger.error("Create transaction: ${it.message!!}")
+                Logger.error(it.message!!)
             })
         compositeDisposable.add(disposable)
     }
-
 
     /*
     * I will check each type of transaction
@@ -62,12 +57,13 @@ class TransactionDetailPresenter(
         afterMoney: Double
     ) {
         if (transactionType == Constant.TRANSACTION_TYPE_EXPENSE) {
-            calculateNewExpenseBalance(walletId, currentBalance, beforeMoney, afterMoney, false)
+            calculateNewExpenseBalance(
+                walletId, currentBalance, beforeMoney, afterMoney, false, null, null)
         } else if (transactionType == Constant.TRANSACTION_TYPE_INCOME) {
-            calculateNewIncomeBalance(walletId, currentBalance, beforeMoney, afterMoney, false)
+            calculateNewIncomeBalance(
+                walletId, currentBalance, beforeMoney, afterMoney, false, null, null)
         }
     }
-
 
     /*
     *   EXPENSE EXAMPLE DEMO:    [walletCurrentBalance] = 100, [previousMoney] = 20
@@ -84,27 +80,28 @@ class TransactionDetailPresenter(
         currentBalance: Double,
         beforeMoney: Double,
         afterMoney: Double,
-        ownPlan: Boolean
+        ownPlan: Boolean,
+        planId: Int?,
+        dateKey: String?
     ) {
         if (beforeMoney > afterMoney) {
             val surplus = beforeMoney - afterMoney
             val income = currentBalance + surplus
             if (ownPlan) {
-                updateBalanceOfPlan(walletId, mDatePlanKey, mPlanId, income)
+                updateBalanceOfPlan(walletId, dateKey!!, planId!!, income)
             } else {
-                updateBalanceOfWallet(walletId, income)
+                updateBalanceOfWallet(walletId, income, false)
             }
         } else {
             val surplus = afterMoney - beforeMoney
             val expense = currentBalance - surplus
             if (ownPlan) {
-                updateBalanceOfPlan(walletId, mDatePlanKey, mPlanId, expense)
+                updateBalanceOfPlan(walletId, dateKey!!, planId!!, expense)
             } else {
-                updateBalanceOfWallet(walletId, expense)
+                updateBalanceOfWallet(walletId, expense, false)
             }
         }
     }
-
 
     /*
     *   INCOME EXAMPLE DEMO:    [walletCurrentBalance] = 120, [previousMoney] = 20
@@ -121,34 +118,36 @@ class TransactionDetailPresenter(
         currentBalance: Double,
         beforeMoney: Double,
         afterMoney: Double,
-        ownPlan: Boolean
+        ownPlan: Boolean,
+        planId: Int?,
+        datePlanKey: String?
     ) {
         if (beforeMoney > afterMoney) {
             val surplus = beforeMoney - afterMoney
             val expense = currentBalance - surplus
             if (ownPlan) {
-                updateBalanceOfPlan(walletId, mDatePlanKey, mPlanId, expense)
+                updateBalanceOfPlan(walletId, datePlanKey!!, planId!!, expense)
             } else {
-                updateBalanceOfWallet(walletId, expense)
+                updateBalanceOfWallet(walletId, expense, false)
             }
         } else {
             val surplus = afterMoney - beforeMoney
             val income = currentBalance + surplus
             if (ownPlan) {
-                updateBalanceOfPlan(walletId, mDatePlanKey, mPlanId, income)
+                updateBalanceOfPlan(walletId, datePlanKey!!, planId!!, income)
             } else {
-                updateBalanceOfWallet(walletId, income)
+                updateBalanceOfWallet(walletId, income, false)
             }
         }
     }
 
-    private fun updateBalanceOfWallet(walletID: Int, newValue: Double) {
+    private fun updateBalanceOfWallet(walletID: Int, newValue: Double, isDeleteAction: Boolean) {
+        view.onLoad()
         val disposable = transactionFirebase.updateBalanceOfWallet(walletID, newValue)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                view.onUpdateBalanceWalletSuccess()
-                Logger.info("Update wallet balance successful")
+                view.onUpdateBalanceWalletSuccess(isDeleteAction)
             }, {
                 view.onError(view.getCurrentContext().getString(R.string.update_balance_failed))
                 Logger.error(it.message!!)
@@ -165,26 +164,27 @@ class TransactionDetailPresenter(
         beforeMoney: Double,
         afterMoney: Double?
     ) {
-        mPlanId = planId
-        mDatePlanKey = dateKey
         if (transactionType == Constant.TRANSACTION_TYPE_EXPENSE) {
-            calculateNewExpenseBalance(walletId, currentBalance, beforeMoney, afterMoney!!, true)
+            calculateNewExpenseBalance(
+                walletId, currentBalance, beforeMoney, afterMoney!!, true, planId, dateKey)
         } else if (transactionType == Constant.TRANSACTION_TYPE_INCOME) {
-            calculateNewIncomeBalance(walletId, currentBalance, beforeMoney, afterMoney!!, true)
+            calculateNewIncomeBalance(
+                walletId, currentBalance, beforeMoney, afterMoney!!, true, planId, dateKey)
         }
     }
 
     private fun updateBalanceOfPlan(
         walletId: Int,
-        mDatePlanKey: String,
-        mPlanId: Int,
+        datePlanKey: String,
+        planId: Int,
         balance: Double
     ) {
-        val disposable = PlanFirebase().updateBalance(walletId, mDatePlanKey, mPlanId, balance)
+        view.onLoad()
+        val disposable = PlanFirebase().updateBalance(walletId, datePlanKey, planId, balance)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                Logger.info("Update plan balance successful")
+                view.onUpdateBalancePlanSuccess()
             }, {
                 view.onError(view.getCurrentContext().getString(R.string.something_error))
                 Logger.error(it.message.toString())
@@ -213,21 +213,23 @@ class TransactionDetailPresenter(
         transactionType: String,
         currentBalance: Double,
         beforeMoney: Double,
-        ownPlan: Boolean
+        ownPlan: Boolean,
+        dateKey: String?,
+        planId: Int?
     ) {
         if (transactionType == Constant.TRANSACTION_TYPE_EXPENSE) {
             val income = currentBalance + beforeMoney
             if (ownPlan) {
-                updateBalanceOfPlan(walletId, mDatePlanKey, mPlanId, income)
+                updateBalanceOfPlan(walletId, dateKey!!, planId!!, income)
             } else {
-                updateBalanceOfWallet(walletId, income)
+                updateBalanceOfWallet(walletId, income, true)
             }
         } else if (transactionType == Constant.TRANSACTION_TYPE_INCOME) {
             val expense = currentBalance - beforeMoney
             if (ownPlan) {
-                updateBalanceOfPlan(walletId, mDatePlanKey, mPlanId, expense)
+                updateBalanceOfPlan(walletId, dateKey!!, planId!!, expense)
             } else {
-                updateBalanceOfWallet(walletId, expense)
+                updateBalanceOfWallet(walletId, expense, true)
             }
         }
     }

@@ -26,7 +26,9 @@ interface TransactionDetailContract {
             transactionType: String,
             currentBalance: Double,
             beforeMoney: Double,
-            ownPlan: Boolean
+            ownPlan: Boolean,
+            dateKey: String? = null,
+            planId: Int? = null,
         )
 
         fun handleExtractionPlan(wallet: WalletModel, planId: Int?)
@@ -47,7 +49,9 @@ interface TransactionDetailContract {
 
         fun onUpdateTransactionSuccess(message: String)
 
-        fun onUpdateBalanceWalletSuccess()
+        fun onUpdateBalanceWalletSuccess(isDeleteAction: Boolean)
+
+        fun onUpdateBalancePlanSuccess()
 
         fun onDeleteTransactionSuccess(message: String)
     }
