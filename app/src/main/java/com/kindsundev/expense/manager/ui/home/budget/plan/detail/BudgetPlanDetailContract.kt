@@ -14,7 +14,7 @@ interface BudgetPlanDetailContract {
 
         fun handleExtractionBills(wallet: WalletModel, planId: Int)
 
-        fun handleGetBills(walletId: Int, planId: Int)
+        fun handleGetBills(walletId: Int, planId: Int, isRequestPlan: Boolean = false)
     }
 
     interface View : BaseView {
@@ -22,7 +22,7 @@ interface BudgetPlanDetailContract {
 
         fun onSuccessPlan(plan: PlanModel)
 
-        fun onSuccessBill(bills: ArrayList<BillModel>)
+        fun onSuccessBill(bills: ArrayList<BillModel>, isRequestPlan: Boolean)
     }
 
 }

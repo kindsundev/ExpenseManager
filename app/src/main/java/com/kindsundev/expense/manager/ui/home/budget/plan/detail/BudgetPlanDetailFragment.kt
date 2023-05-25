@@ -36,11 +36,11 @@ class BudgetPlanDetailFragment : Fragment(), BudgetPlanDetailContract.View {
     private var isLayoutInfoVisible = true
     private val loadingDialog by lazy { LoadingDialog() }
 
+    private lateinit var planDetailPresenter: BudgetPlanDetailPresenter
     private val args by navArgs<BudgetPlanDetailFragmentArgs>()
     private lateinit var mWallet : WalletModel
     private lateinit var mPlan: PlanModel
     private lateinit var mDate: String
-    private lateinit var planDetailPresenter: BudgetPlanDetailPresenter
 
     override fun getCurrentContext(): Context = requireContext()
 
@@ -158,9 +158,12 @@ class BudgetPlanDetailFragment : Fragment(), BudgetPlanDetailContract.View {
         initPlanData()
     }
 
-    override fun onSuccessBill(bills: ArrayList<BillModel>) {
+    override fun onSuccessBill(bills: ArrayList<BillModel>, isRequestPlan: Boolean) {
         startLoadingDialog(loadingDialog, parentFragmentManager, false)
         initRecyclerView(bills)
+        if (isRequestPlan) {
+            planDetailPresenter.handleGetPlan(mWallet.id!!, mDate, mPlan.id!!)
+        }
     }
 
     private fun initRecyclerView(bills: ArrayList<BillModel>) {
@@ -177,7 +180,7 @@ class BudgetPlanDetailFragment : Fragment(), BudgetPlanDetailContract.View {
     private fun initTransactionBottomSheet(date: String, transaction: TransactionModel) {
         val bottomSheet = TransactionBottomSheet(object : TransactionDetailContract.Result {
             override fun onActionSuccess() {
-                planDetailPresenter.handleGetBills(mWallet.id!!, mPlan.id!!)
+                planDetailPresenter.handleGetBills(mWallet.id!!, mPlan.id!!, true)
             }
         }, mWallet, date, transaction)
         bottomSheet.show(parentFragmentManager, Constant.TRANSACTION_WALLET_BOTTOM_SHEET_TRANSACTION_NAME)

@@ -58,12 +58,12 @@ class BudgetPlanDetailPresenter(
             val bills = wallet.getBillsOfPlan(planId)
             val result = wallet.sortBillsByNewest(bills)
             withContext(Dispatchers.Main) {
-                view.onSuccessBill(ArrayList(result))
+                view.onSuccessBill(ArrayList(result), false)
             }
         }
     }
 
-    override fun handleGetBills(walletId: Int, planId: Int) {
+    override fun handleGetBills(walletId: Int, planId: Int, isRequestPlan: Boolean) {
         view.onLoad()
         val bills = ArrayList<BillModel>()
         val disposable = WalletFirebase().getWallet(walletId)
@@ -75,7 +75,7 @@ class BudgetPlanDetailPresenter(
                         view.getCurrentContext().getString(R.string.something_error)
                     )
                 },
-                onComplete = { view.onSuccessBill(bills) },
+                onComplete = { view.onSuccessBill(bills, isRequestPlan) },
                 onNext = {
                     bills.addAll(ArrayList(it.sortBillsByNewest(it.getBillsOfPlan(planId))))
                 }
