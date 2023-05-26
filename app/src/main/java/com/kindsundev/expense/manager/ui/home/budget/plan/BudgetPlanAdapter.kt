@@ -25,7 +25,6 @@ class BudgetPlanAdapter(
         val planned = plans[position]
         planned.plan?.let {
             initDataToPlan(holder.binding, planned.plan)
-            // set percentage..
             holder.binding.root.setOnClickListener {
                 listener.onClickPlanItem(planned)
             }
@@ -36,6 +35,8 @@ class BudgetPlanAdapter(
         binding.tvPlanName.text = plan.name
         binding.tvCurrentBalance.text = abbreviateNumber(plan.currentBalance!!)
         binding.tvEstimateAmount.text = abbreviateNumber(plan.estimatedAmount!!)
+        val percentage = (plan.currentBalance.toDouble() / plan.estimatedAmount!!.toDouble()) * 100
+        binding.progressBarPlan.progress = percentage.toInt()
     }
 
     override fun getItemCount(): Int = plans.size

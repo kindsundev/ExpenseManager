@@ -74,6 +74,9 @@ class BudgetPlanDetailFragment : Fragment(), BudgetPlanDetailContract.View {
         val endDay = mPlan.endDate!!.split(", ")
         binding!!.tvStartDate.text = startDay[1]
         binding!!.tvEndDate.text = endDay[1]
+
+        val percentage = (mPlan.currentBalance!!.toDouble() / mPlan.estimatedAmount!!.toDouble()) * 100
+        binding!!.progressBar.progress = percentage.toInt()
     }
 
     private fun initListener() {
