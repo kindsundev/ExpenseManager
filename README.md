@@ -15,7 +15,7 @@ Expense Manager is an Android application developed using Kotlin programming lan
 ### 4. Plan
 - Perform CRUD operations with plans, including creating, reading, updating and deleting plans.
 - Send notifications to users when the plan is complete or close to its due date.
-### 5. Transaction
+### 5. Transactions
 - Perform CRUD operations with transactions.
 - Diverse categories in each type of transaction
 - Strictly calculate the amount of the transaction each case when changing it
