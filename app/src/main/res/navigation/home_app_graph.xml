@@ -147,7 +147,11 @@
     <fragment
         android:id="@+id/notificationFragment"
         android:name="com.kindsundev.expense.manager.ui.home.bag.notification.NotificationFragment"
-        android:label="NotificationFragment" />
+        android:label="NotificationFragment">
+        <argument
+            android:name="plans"
+            app:argType="string"/>
+    </fragment>
 
     <fragment
         android:id="@+id/settingsFragment"

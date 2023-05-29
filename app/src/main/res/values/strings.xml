@@ -319,4 +319,7 @@
     <string name="confirm_delete_plan">Do you really want to delete this plan?</string>
     <string name="no_data_changed">No data changed, please try again</string>
     <string name="select_a_plan">Select a plan</string>
+    <string name="notification_message_success">You have set the goal of this plan</string>
+    <string name="notification_message_near_due_date">Your plan is about to expire</string>
+    <string name="notification_is_null">This wallet has not plan</string>
 </resources>
