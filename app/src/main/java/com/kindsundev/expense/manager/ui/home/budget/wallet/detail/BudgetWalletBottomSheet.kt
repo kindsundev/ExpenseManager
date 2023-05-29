@@ -84,7 +84,8 @@ class BudgetWalletBottomSheet(
         val origin = wallet.origin
         val balance = binding!!.edtBalance.text.toString().trim().replace(",","")
         val transactions = wallet.transactions
-        return WalletModel(id, name, currency, origin, balance.toDouble(), transactions)
+        val plans = wallet.plans
+        return WalletModel(id, name, currency, origin, balance.toDouble(), transactions, plans)
     }
 
     private fun onClickDeleteWallet() {
