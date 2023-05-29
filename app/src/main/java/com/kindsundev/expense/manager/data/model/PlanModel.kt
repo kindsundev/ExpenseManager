@@ -10,5 +10,7 @@ data class PlanModel(
     var estimatedAmount: Double? = 0.0,
     var startDate: String? = "",
     var endDate: String? = "",
-    val currentBalance: Double? = 0.0
+    val currentBalance: Double? = 0.0,
+    var isNearDueDate: Boolean? = false,
+    var isDone: Boolean? = false
 ) : Parcelable

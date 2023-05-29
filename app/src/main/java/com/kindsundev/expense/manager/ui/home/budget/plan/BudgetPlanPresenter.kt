@@ -6,15 +6,20 @@ import com.kindsundev.expense.manager.data.firebase.PlanFirebase
 import com.kindsundev.expense.manager.data.model.PlanModel
 import com.kindsundev.expense.manager.data.model.PlannedModel
 import com.kindsundev.expense.manager.data.model.WalletModel
+import com.kindsundev.expense.manager.utils.getCurrentDateTime
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.*
+import java.text.SimpleDateFormat
+import java.util.*
+import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
 
 class BudgetPlanPresenter(
     private val view: BudgetPlanContract.View
-): BudgetPlanContract.Presenter {
+) : BudgetPlanContract.Presenter {
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
     private val compositeDisposable = CompositeDisposable()
     private val planFirebase = PlanFirebase()
@@ -30,7 +35,7 @@ class BudgetPlanPresenter(
         scope.launch {
             val plans = wallet.getPlannedList()
             withContext(Dispatchers.Main) {
-                view.onSuccessPlanMap(plans)
+                view.onSuccessPlans(plans)
             }
         }
     }
@@ -64,10 +69,35 @@ class BudgetPlanPresenter(
                     view.onError(message)
                     Logger.warn(it.message.toString())
                 },
-                onComplete = { view.onSuccessPlanMap(list) },
+                onComplete = { view.onSuccessPlans(list) },
                 onNext = { list.add(it) }
             )
         compositeDisposable.add(disposable)
+    }
+
+    override fun handleExtractionStatusOfPlan(plans: ArrayList<PlannedModel>): ArrayList<PlanModel> {
+        val planList = ArrayList<PlanModel>()
+        plans.forEach { planned ->
+            val plan = planned.plan!!.copy()
+            if ((plan.currentBalance!! >= plan.estimatedAmount!!) && (!planList.contains(plan))) {
+                plan.isDone = true
+                planList.add(plan)
+            }
+            if (isNearDueDate(plan.endDate!!) && (!planList.contains(plan))) {
+                plan.isNearDueDate = true
+                planList.add(plan)
+            }
+        }
+        return planList
+    }
+
+    private fun isNearDueDate(endDate: String): Boolean {
+        val sdf = SimpleDateFormat("HH:mm, dd-MM-yyyy", Locale.getDefault())
+        val current = sdf.parse(getCurrentDateTime())
+        val end = sdf.parse(endDate)
+        val differenceInMillis = (end!!.time) - (current!!.time)
+        val differenceInDays = TimeUnit.MILLISECONDS.toDays(differenceInMillis)
+        return differenceInDays in 1L..3L
     }
 
     fun cleanUp() = compositeDisposable.dispose()

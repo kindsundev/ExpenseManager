@@ -8,10 +8,13 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
 import com.kindsundev.expense.manager.R
+import com.kindsundev.expense.manager.common.Constant
 import com.kindsundev.expense.manager.data.model.PlanModel
 import com.kindsundev.expense.manager.data.model.PlannedModel
 import com.kindsundev.expense.manager.data.model.WalletModel
+import com.kindsundev.expense.manager.data.shared.PreferenceHelper
 import com.kindsundev.expense.manager.databinding.FragmentBudgetPlanBinding
 import com.kindsundev.expense.manager.ui.custom.LoadingDialog
 import com.kindsundev.expense.manager.ui.home.HomeActivity
@@ -82,11 +85,12 @@ class BudgetPlanFragment : Fragment(), BudgetPlanContract.View {
 
     }
 
-    override fun onSuccessPlanMap(plans: ArrayList<PlannedModel>) {
-        if (!toggleLayoutEmpty(plans.isEmpty())) {
+    override fun onSuccessPlans(planned: ArrayList<PlannedModel>) {
+        sharedStatusPlans(planned)
+        if (!toggleLayoutEmpty(planned.isEmpty())) {
             binding!!.rcvPlans.apply {
                 layoutManager = LinearLayoutManager(getCurrentContext())
-                adapter = BudgetPlanAdapter(plans, object : BudgetPlanContract.Listener {
+                adapter = BudgetPlanAdapter(planned, object : BudgetPlanContract.Listener {
                     override fun onClickPlanItem(planned: PlannedModel) {
                         navigatePlanDetailFragment(planned)
                     }
@@ -94,6 +98,16 @@ class BudgetPlanFragment : Fragment(), BudgetPlanContract.View {
             }
         }
         startLoadingDialog(loadingDialog, parentFragmentManager, false)
+    }
+
+    private fun sharedStatusPlans(planned : ArrayList<PlannedModel>) {
+        val result = mPlanPresenter.handleExtractionStatusOfPlan(planned)
+        if (result.isNotEmpty()) {
+            PreferenceHelper.setString(
+                getCurrentContext(), Constant.KEY_NOTIFICATION_PLANS + "${mWallet.id}",
+                Gson().toJson(result)
+            )
+        }
     }
 
     private fun toggleLayoutEmpty(enable: Boolean): Boolean {

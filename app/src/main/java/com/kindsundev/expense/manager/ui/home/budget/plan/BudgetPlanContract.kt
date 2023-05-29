@@ -13,12 +13,14 @@ interface BudgetPlanContract {
         fun handleCreatePlan(walletId: Int, plan: PlanModel)
 
         fun handleGetPlansInFirebase(walletId: Int)
+
+        fun handleExtractionStatusOfPlan(plans: ArrayList<PlannedModel>): ArrayList<PlanModel>
     }
 
     interface View : BaseView {
         fun onSuccess(message: String)
 
-        fun onSuccessPlanMap(plans: ArrayList<PlannedModel>)
+        fun onSuccessPlans(planned: ArrayList<PlannedModel>)
     }
 
     interface Listener {

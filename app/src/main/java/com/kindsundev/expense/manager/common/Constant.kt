@@ -47,5 +47,7 @@ class Constant {
 
         const val KEY_CURRENT_WALLET_ID = "CURRENT_WALLET_ID"
         const val VALUE_DATA_IS_NULL= "NULL"
+
+        const val KEY_NOTIFICATION_PLANS = "LIST_PLAN_NOTIFICATION_OF_"
     }
 }

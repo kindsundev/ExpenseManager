@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kindsundev.expense.manager.R
@@ -95,9 +94,17 @@ class BagFragment : Fragment(), BagContract.View {
         binding!!.btnVisibility.setOnClickListener { onClickVisibilityBalance() }
         binding!!.rlWallet.setOnClickListener { onClickSelectWallet() }
         binding!!.btnSearch.setOnClickListener { onClickSearchBalance() }
-        binding!!.btnNotifications.setOnClickListener {
-            it.findNavController().navigate(BagFragmentDirections.actionBagFragmentToNotificationFragment())
-        }
+        binding!!.btnNotifications.setOnClickListener { handleNavigateToNotificationFragment() }
+    }
+
+    private fun handleNavigateToNotificationFragment() {
+        val plans = PreferenceHelper.getString(
+            getCurrentContext(), Constant.KEY_NOTIFICATION_PLANS + mCurrentWalletId,
+            Constant.VALUE_DATA_IS_NULL
+        )
+        findNavController().navigate(
+            BagFragmentDirections.actionBagFragmentToNotificationFragment(plans!!)
+        )
     }
 
     private fun onClickVisibilityBalance() {
@@ -112,7 +119,9 @@ class BagFragment : Fragment(), BagContract.View {
                 getTransactionsOfCurrentWallet()
             }
         })
-        walletBottomSheet.show(parentFragmentManager, Constant.BUDGET_WALLET_BOTTOM_SHEET_WALLET_NAME)
+        walletBottomSheet.show(parentFragmentManager,
+            Constant.BUDGET_WALLET_BOTTOM_SHEET_WALLET_NAME
+        )
     }
 
     private fun getTransactionsOfCurrentWallet() {
@@ -132,7 +141,8 @@ class BagFragment : Fragment(), BagContract.View {
     }
 
     private fun onClickSearchBalance() {
-        val action = BagFragmentDirections.actionBagFragmentToTransactionSearchFragment(mCurrentWallet)
+        val action =
+            BagFragmentDirections.actionBagFragmentToTransactionSearchFragment(mCurrentWallet)
         findNavController().navigate(action)
     }
 
@@ -158,7 +168,7 @@ class BagFragment : Fragment(), BagContract.View {
     private fun initRecyclerViewTransactions(data: ArrayList<BillModel>) {
         binding!!.rcvTransactionsContainer.apply {
             layoutManager = LinearLayoutManager(getCurrentContext())
-            adapter = BillParentAdapter(data, object: BillAdapterContract.Listener {
+            adapter = BillParentAdapter(data, object : BillAdapterContract.Listener {
                 override fun onClickTransaction(date: String, transaction: TransactionModel) {
                     initTransactionBottomSheet(date, transaction)
                 }
@@ -173,7 +183,9 @@ class BagFragment : Fragment(), BagContract.View {
                 bagPresenter.handleGetWallets()
             }
         }, mCurrentWallet, date, transaction)
-        bottomSheet.show(parentFragmentManager, Constant.TRANSACTION_WALLET_BOTTOM_SHEET_TRANSACTION_NAME)
+        bottomSheet.show(parentFragmentManager,
+            Constant.TRANSACTION_WALLET_BOTTOM_SHEET_TRANSACTION_NAME
+        )
     }
 
     override fun onLoad() {
