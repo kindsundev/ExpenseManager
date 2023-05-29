@@ -4,22 +4,22 @@ Expense Manager is an Android application developed using Kotlin programming lan
 
 ## Features
 
-1. Login/Register
+### 1. Login/Register
 - Screen spalsh check network connection
 - Allow users to log in or register for a new account.
 - Check if you are already logged in, it will run directly into the application
-2. User
+### 2. User
 - Update user name, email, password and profile picture.
-3. Wallet
+### 3. Wallet
 - Perform CRUD (Create, Read, Update, Delete) operations with wallets.
-4. Plan
+### 4. Plan
 - Perform CRUD operations with plans, including creating, reading, updating and deleting plans.
 - Send notifications to users when the plan is complete or close to its due date.
-5. Transactions
+### 5. Transactions
 - Perform CRUD operations with transactions.
 - Diverse categories in each type of transaction
 - Strictly calculate the amount of the transaction each case when changing it
-6. Report
+### 6. Report
 - Search for transactions by date and plot various report charts.
 
 ## Technologies Used
