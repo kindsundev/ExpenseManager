@@ -33,28 +33,28 @@ Expense Manager is an Android application developed using Kotlin programming lan
 
 - Sign/Signup
 
-![Login](https://github.com/mrduongtien/ExpenseManager/assets/105474421/dafd2f1d-8f60-46bd-b1f0-6a1b8b3c069c)
+![Login](https://github.com/mrduongtien/ExpenseManager/assets/105474421/cfa476ec-f344-4ca7-b167-af587ca1f1de)
 
 - Prepare Wallet
 
-![Prepare](https://github.com/mrduongtien/ExpenseManager/assets/105474421/6c4c0c48-21a7-49bf-b318-cc5883efce1d)
+![Prepare](https://github.com/mrduongtien/ExpenseManager/assets/105474421/98f333e8-6f82-4f28-8ff5-650d6b4a9991)
 
 - Other Features
 
-![Other](https://github.com/mrduongtien/ExpenseManager/assets/105474421/0ba702c9-c967-4a24-8a97-39b1a5577351)
+![Other](https://github.com/mrduongtien/ExpenseManager/assets/105474421/a8fbd918-6281-4d28-8a6a-3bdc6e2b288f)
 
 - Manager
 
-![Budget](https://github.com/mrduongtien/ExpenseManager/assets/105474421/0e688525-2529-49c4-84ba-70c4790a7e08)
+![Budget](https://github.com/mrduongtien/ExpenseManager/assets/105474421/57e8c973-a739-4101-b58e-1ba9429a09e0)
 
 - Add Transaction
 
-![Add](https://github.com/mrduongtien/ExpenseManager/assets/105474421/614956b1-611e-4534-8cf0-3cac8eb99d07)
+![Add](https://github.com/mrduongtien/ExpenseManager/assets/105474421/70b3eb62-e801-4b8a-96f5-96fcfb3d80f5)
 
 - Home
 
-![Bag](https://github.com/mrduongtien/ExpenseManager/assets/105474421/5f4d9364-7e6c-4b68-8aef-7a82023e9429)
+![Bag](https://github.com/mrduongtien/ExpenseManager/assets/105474421/201f6736-cc90-4709-8ff2-36257ed5bf39)
 
 - Report
 
-![Report](https://github.com/mrduongtien/ExpenseManager/assets/105474421/9e64cd4f-8aff-423b-a583-ae383c93adf3)
+![Report](https://github.com/mrduongtien/ExpenseManager/assets/105474421/8759079b-e1e3-45a4-ba1f-8346125bcb82)
